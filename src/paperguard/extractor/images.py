@@ -25,7 +25,7 @@ def extract_pdf_images(
     raster_fallback: bool = True,
     raster_dpi: int = 150,
     raster_threshold: int = 2,
-    raster_max_pages: int = 40,
+    raster_max_pages: int = 5,
 ) -> list[Path]:
     """提取 PDF 嵌入位图,过滤掉太小的(公式/符号/字形片段)。
 

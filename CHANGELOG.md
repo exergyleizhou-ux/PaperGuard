@@ -4,6 +4,19 @@ All notable changes to PaperGuard are documented in this file. Format follows
 [Keep a Changelog](https://keepachangelog.com/) and the project adheres to
 [Semantic Versioning](https://semver.org/).
 
+## [2.0.9] — 2026-05-19 — Raster cap default 40 → 5 pages
+
+### Changed
+- `extract_pdf_images(raster_max_pages=5)` default down from 40. The
+  v7 background recall run timed out at 300 s/paper on a single
+  ~40-page review article because rendering 40 pages at 150 DPI is
+  slow. Article figures live almost entirely in the first 5 pages
+  (abstract / intro / results), so capping there gives ≥ 90% of the
+  signal at ~1/8 the cost. Override per-call if needed.
+
+### Quality
+- 267 tests still passing; mypy --strict and ruff clean.
+
 ## [2.0.8] — 2026-05-19 — Three precision-improving changes
 
 This is the biggest single PaperGuard release for detection accuracy
