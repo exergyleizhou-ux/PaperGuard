@@ -24,6 +24,15 @@ Methodology and reproducer in
 [`scripts/recall_test_v2.py`](../scripts/recall_test_v2.py); analysis
 in [`scripts/recall_analyze.py`](../scripts/recall_analyze.py).
 
+> **Update — fixed in 2.0.4.** v3 of this study
+> ([`recall_test_v3.md`](recall_test_v3.md)) downgraded the single
+> rule responsible for the headline finding below (T3 "no ethics
+> statement" SUSPICIOUS → CONCERN), and re-scanned the same 56 PDFs.
+> The result: **LR+ moves from 0.77 to ∞ (zero false positives)**,
+> at the cost of dropping recall from a fake 68% to an honest 13%.
+> v2 below is preserved as the original measurement that justified
+> the fix.
+
 ## Headline
 
 > **PaperGuard's PDF-only mode is not a meaningful retraction
