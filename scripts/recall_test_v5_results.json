@@ -1,0 +1,4297 @@
+{
+  "n_per_arm": 100,
+  "results": [
+    {
+      "arm": "retracted",
+      "doi": "10.1074/jbc.m800102200",
+      "openalex_id": "https://openalex.org/W1965827991",
+      "title": "Mitochondrial Autophagy Is an HIF-1-dependent Adaptive Metabolic Response to Hypoxia",
+      "year": 2008,
+      "subfield": "Epidemiology",
+      "download_ok": false,
+      "fetch_source": "",
+      "content_type": "",
+      "pdf_sha256": null,
+      "download_error": "no source returned a valid PDF (pmc/unpaywall/openalex all failed)"
+    },
+    {
+      "arm": "control",
+      "doi": "10.1016/j.cell.2007.12.018",
+      "openalex_id": "https://openalex.org/W2109034822",
+      "title": "Autophagy in the Pathogenesis of Disease",
+      "year": 2008,
+      "subfield": "Epidemiology",
+      "download_ok": false,
+      "fetch_source": "",
+      "content_type": "",
+      "pdf_sha256": null,
+      "download_error": "no source returned a valid PDF (pmc/unpaywall/openalex all failed)"
+    },
+    {
+      "arm": "retracted",
+      "doi": "10.1016/j.eng.2020.03.007",
+      "openalex_id": "https://openalex.org/W3012455685",
+      "title": "Experimental Treatment with Favipiravir for COVID-19: An Open-Label Control Study",
+      "year": 2020,
+      "subfield": "Infectious Diseases",
+      "download_ok": true,
+      "fetch_source": "pmc",
+      "content_type": "application/pdf",
+      "pdf_sha256": "906f96fb6c0d675bf0e91523af3a7027466883755054427d854ae0adbcb385f1",
+      "scan": {
+        "overall_severity": 2,
+        "n_findings": 2,
+        "severity_counts": {
+          "0": 0,
+          "1": 1,
+          "2": 1,
+          "3": 0
+        },
+        "detectors_fired": [
+          "T3"
+        ],
+        "detector_hits": {
+          "T3": 2
+        }
+      }
+    },
+    {
+      "arm": "control",
+      "doi": "10.1016/s0140-6736(20)30183-5",
+      "openalex_id": "https://openalex.org/W3001118548",
+      "title": "Clinical features of patients infected with 2019 novel coronavirus in Wuhan, China",
+      "year": 2020,
+      "subfield": "Infectious Diseases",
+      "download_ok": true,
+      "fetch_source": "pmc",
+      "content_type": "application/pdf",
+      "pdf_sha256": "c190fb11a9017478688f81c07e12a81f7de727c5b33cc8a2dc0c70d399a4ef14",
+      "scan": {
+        "overall_severity": 0,
+        "n_findings": 0,
+        "severity_counts": {
+          "0": 0,
+          "1": 0,
+          "2": 0,
+          "3": 0
+        },
+        "detectors_fired": [],
+        "detector_hits": {}
+      }
+    },
+    {
+      "arm": "retracted",
+      "doi": "10.1038/s41586-018-0448-9",
+      "openalex_id": "https://openalex.org/W2887997888",
+      "title": "RETRACTED ARTICLE: Parkin and PINK1 mitigate STING-induced inflammation",
+      "year": 2018,
+      "subfield": "Epidemiology",
+      "download_ok": false,
+      "fetch_source": "",
+      "content_type": "",
+      "pdf_sha256": null,
+      "download_error": "no source returned a valid PDF (pmc/unpaywall/openalex all failed)"
+    },
+    {
+      "arm": "control",
+      "doi": "10.1007/s00134-017-4683-6",
+      "openalex_id": "https://openalex.org/W3016555942",
+      "title": "Surviving Sepsis Campaign: International Guidelines for Management of Sepsis and Septic Shock: 2016",
+      "year": 2017,
+      "subfield": "Epidemiology",
+      "download_ok": true,
+      "fetch_source": "unpaywall",
+      "content_type": "application/pdf",
+      "pdf_sha256": "f755fbba816c009540acdb61d1872fed0f1a04af607c468b14ef8b9d98758f00",
+      "scan": {
+        "overall_severity": 4,
+        "n_findings": 2,
+        "severity_counts": {
+          "0": 0,
+          "1": 0,
+          "2": 1,
+          "3": 0,
+          "4": 1
+        },
+        "detectors_fired": [
+          "T3",
+          "T4"
+        ],
+        "detector_hits": {
+          "T3": 1,
+          "T4": 1
+        }
+      }
+    },
+    {
+      "arm": "retracted",
+      "doi": "10.1038/ni829",
+      "openalex_id": "https://openalex.org/W2136590857",
+      "title": "RETRACTED ARTICLE: DCs induce CD40-independent immunoglobulin class switching through BLyS and APRIL",
+      "year": 2002,
+      "subfield": "Immunology",
+      "download_ok": false,
+      "fetch_source": "",
+      "content_type": "",
+      "pdf_sha256": null,
+      "download_error": "no source returned a valid PDF (pmc/unpaywall/openalex all failed)"
+    },
+    {
+      "arm": "control",
+      "doi": "10.1084/jem.20030152",
+      "openalex_id": "https://openalex.org/W2120010406",
+      "title": "Conversion of Peripheral CD4+CD25− Naive T Cells to CD4+CD25+ Regulatory T Cells by TGF-β Induction of Transcription Factor <i>Foxp3 </i>",
+      "year": 2003,
+      "subfield": "Immunology",
+      "download_ok": true,
+      "fetch_source": "pmc",
+      "content_type": "application/pdf",
+      "pdf_sha256": "6145320f9790cdafd4d2f0d2b0b2b57fdd5e9dc2aca84b49bbf59d446ecaa779",
+      "scan": {
+        "overall_severity": 2,
+        "n_findings": 2,
+        "severity_counts": {
+          "0": 0,
+          "1": 1,
+          "2": 1,
+          "3": 0
+        },
+        "detectors_fired": [
+          "T3"
+        ],
+        "detector_hits": {
+          "T3": 2
+        }
+      }
+    },
+    {
+      "arm": "retracted",
+      "doi": "10.1186/1471-2148-4-18",
+      "openalex_id": "https://openalex.org/W1633681515",
+      "title": "RETRACTED ARTICLE: TREEFINDER: a powerful graphical analysis environment for molecular phylogenetics",
+      "year": 2004,
+      "subfield": "Molecular Biology",
+      "download_ok": true,
+      "fetch_source": "pmc",
+      "content_type": "application/pdf",
+      "pdf_sha256": "d2c8bc3c290a879b2f902de98257b9b582a26ec880ed8633c44d443e43962375",
+      "scan": {
+        "overall_severity": 2,
+        "n_findings": 2,
+        "severity_counts": {
+          "0": 0,
+          "1": 1,
+          "2": 1,
+          "3": 0
+        },
+        "detectors_fired": [
+          "T3"
+        ],
+        "detector_hits": {
+          "T3": 2
+        }
+      }
+    },
+    {
+      "arm": "control",
+      "doi": "10.1073/pnas.0506580102",
+      "openalex_id": "https://openalex.org/W2130410032",
+      "title": "Gene set enrichment analysis: A knowledge-based approach for interpreting genome-wide expression profiles",
+      "year": 2005,
+      "subfield": "Molecular Biology",
+      "download_ok": true,
+      "fetch_source": "pmc",
+      "content_type": "application/pdf",
+      "pdf_sha256": "9a53c105558bae9551c8718cba44f76370e0c7a3e5caa07478dfaaa188fa9444",
+      "scan": {
+        "overall_severity": 3,
+        "n_findings": 3,
+        "severity_counts": {
+          "0": 0,
+          "1": 1,
+          "2": 1,
+          "3": 1
+        },
+        "detectors_fired": [
+          "T3",
+          "T4"
+        ],
+        "detector_hits": {
+          "T3": 2,
+          "T4": 1
+        }
+      }
+    },
+    {
+      "arm": "retracted",
+      "doi": "10.1038/s41586-020-2095-1",
+      "openalex_id": "https://openalex.org/W3010810358",
+      "title": "RETRACTED ARTICLE: Microbiome analyses of blood and tissues suggest cancerdiagnostic approach",
+      "year": 2020,
+      "subfield": "Cancer Research",
+      "download_ok": false,
+      "fetch_source": "",
+      "content_type": "",
+      "pdf_sha256": null,
+      "download_error": "no source returned a valid PDF (pmc/unpaywall/openalex all failed)"
+    },
+    {
+      "arm": "control",
+      "doi": "10.1038/s41586-020-1943-3",
+      "openalex_id": "https://openalex.org/W3004480399",
+      "title": "The repertoire of mutational signatures in human cancer",
+      "year": 2020,
+      "subfield": "Cancer Research",
+      "download_ok": true,
+      "fetch_source": "pmc",
+      "content_type": "application/pdf",
+      "pdf_sha256": "b45eb4d606e28dd252c7272d9f5b79cd93f0927da39bf502c2babfbafffd9773",
+      "scan": {
+        "overall_severity": 0,
+        "n_findings": 0,
+        "severity_counts": {
+          "0": 0,
+          "1": 0,
+          "2": 0,
+          "3": 0
+        },
+        "detectors_fired": [],
+        "detector_hits": {}
+      }
+    },
+    {
+      "arm": "retracted",
+      "doi": "10.1007/s12652-021-03612-z",
+      "openalex_id": "https://openalex.org/W4205941964",
+      "title": "RETRACTED ARTICLE: Artificial intelligence in disease diagnosis: a systematic literature review, synthesizing framework and future research agenda",
+      "year": 2022,
+      "subfield": "Radiology, Nuclear Medicine and Imaging",
+      "download_ok": true,
+      "fetch_source": "pmc",
+      "content_type": "application/pdf",
+      "pdf_sha256": "93e979fdfd4d779597916cb845ee6f53b0a994032fd3d3b3491f3a41301ccbd9",
+      "scan": {
+        "overall_severity": 4,
+        "n_findings": 2,
+        "severity_counts": {
+          "0": 0,
+          "1": 0,
+          "2": 1,
+          "3": 0,
+          "4": 1
+        },
+        "detectors_fired": [
+          "T3",
+          "T4"
+        ],
+        "detector_hits": {
+          "T3": 1,
+          "T4": 1
+        }
+      }
+    },
+    {
+      "arm": "control",
+      "doi": "10.1016/j.jacc.2023.11.007",
+      "openalex_id": "https://openalex.org/W4389574595",
+      "title": "Global Burden of Cardiovascular Diseases and Risks, 1990-2022",
+      "year": 2023,
+      "subfield": "Radiology, Nuclear Medicine and Imaging",
+      "download_ok": true,
+      "fetch_source": "pmc",
+      "content_type": "application/pdf",
+      "pdf_sha256": "f70a4d6d10feb211d382a2c377d62a10a5a9fd785035aaa767647a779e197bc5",
+      "scan": {
+        "overall_severity": 4,
+        "n_findings": 983,
+        "severity_counts": {
+          "0": 0,
+          "1": 1,
+          "2": 558,
+          "3": 275,
+          "4": 149
+        },
+        "detectors_fired": [
+          "F1",
+          "T3"
+        ],
+        "detector_hits": {
+          "T3": 2,
+          "F1": 981
+        }
+      }
+    },
+    {
+      "arm": "retracted",
+      "doi": "10.1038/nmicrobiol.2016.203",
+      "openalex_id": "https://openalex.org/W2549670165",
+      "title": "RETRACTED ARTICLE: Culture of previously uncultured members of the human gut microbiota by culturomics",
+      "year": 2016,
+      "subfield": "Molecular Biology",
+      "download_ok": true,
+      "fetch_source": "unpaywall",
+      "content_type": "application/pdf",
+      "pdf_sha256": "98eed86a6699e30cb72f168c5d6ae6f9e73d2a7105ebf522482acce20ea2237e",
+      "scan": {
+        "overall_severity": 0,
+        "n_findings": 0,
+        "severity_counts": {
+          "0": 0,
+          "1": 0,
+          "2": 0,
+          "3": 0
+        },
+        "detectors_fired": [],
+        "detector_hits": {}
+      }
+    },
+    {
+      "arm": "control",
+      "doi": "10.1093/molbev/msw054",
+      "openalex_id": "https://openalex.org/W2311203695",
+      "title": "MEGA7: Molecular Evolutionary Genetics Analysis Version 7.0 for Bigger Datasets",
+      "year": 2016,
+      "subfield": "Molecular Biology",
+      "download_ok": true,
+      "fetch_source": "pmc",
+      "content_type": "application/pdf",
+      "pdf_sha256": "fe2f6249e1afd8a0df11d3efc8b9e35cf2b1c05d8c479bdb96e6300961a20c3a",
+      "scan": {
+        "overall_severity": 2,
+        "n_findings": 2,
+        "severity_counts": {
+          "0": 0,
+          "1": 1,
+          "2": 1,
+          "3": 0
+        },
+        "detectors_fired": [
+          "T3"
+        ],
+        "detector_hits": {
+          "T3": 2
+        }
+      }
+    },
+    {
+      "arm": "retracted",
+      "doi": "10.2337/db06-1595",
+      "openalex_id": "https://openalex.org/W2137274603",
+      "title": "Loss-of-Function Mutation in Toll-Like Receptor 4 Prevents Diet-Induced Obesity and Insulin Resistance",
+      "year": 2007,
+      "subfield": "Epidemiology",
+      "download_ok": false,
+      "fetch_source": "",
+      "content_type": "",
+      "pdf_sha256": null,
+      "download_error": "no source returned a valid PDF (pmc/unpaywall/openalex all failed)"
+    },
+    {
+      "arm": "control",
+      "doi": "10.1016/j.cell.2007.12.018",
+      "openalex_id": "https://openalex.org/W2109034822",
+      "title": "Autophagy in the Pathogenesis of Disease",
+      "year": 2008,
+      "subfield": "Epidemiology",
+      "download_ok": false,
+      "fetch_source": "",
+      "content_type": "",
+      "pdf_sha256": null,
+      "download_error": "no source returned a valid PDF (pmc/unpaywall/openalex all failed)"
+    },
+    {
+      "arm": "retracted",
+      "doi": "10.1038/s41419-018-0454-8",
+      "openalex_id": "https://openalex.org/W2795546864",
+      "title": "RETRACTED ARTICLE: CircHIPK3 promotes colorectal cancer growth and metastasis by sponging miR-7",
+      "year": 2018,
+      "subfield": "Molecular Biology",
+      "download_ok": true,
+      "fetch_source": "pmc",
+      "content_type": "application/pdf",
+      "pdf_sha256": "12fb5426f73ad132ec58b25abbd27909bf76e3d05d504281414dce6351d16941",
+      "scan": {
+        "overall_severity": 2,
+        "n_findings": 2,
+        "severity_counts": {
+          "0": 0,
+          "1": 1,
+          "2": 1,
+          "3": 0
+        },
+        "detectors_fired": [
+          "T3"
+        ],
+        "detector_hits": {
+          "T3": 2
+        }
+      }
+    },
+    {
+      "arm": "control",
+      "doi": "10.1093/molbev/msy096",
+      "openalex_id": "https://openalex.org/W2799524357",
+      "title": "MEGA X: Molecular Evolutionary Genetics Analysis across Computing Platforms",
+      "year": 2018,
+      "subfield": "Molecular Biology",
+      "download_ok": true,
+      "fetch_source": "pmc",
+      "content_type": "application/pdf",
+      "pdf_sha256": "1ae1867cb0478fafe15d66d1dee6889e600bbcd8b9ce11178a492d06f5767ae8",
+      "scan": {
+        "overall_severity": 2,
+        "n_findings": 2,
+        "severity_counts": {
+          "0": 0,
+          "1": 1,
+          "2": 1,
+          "3": 0
+        },
+        "detectors_fired": [
+          "T3"
+        ],
+        "detector_hits": {
+          "T3": 2
+        }
+      }
+    },
+    {
+      "arm": "retracted",
+      "doi": "10.1161/01.cir.0000025609.13806.31",
+      "openalex_id": "https://openalex.org/W2001044397",
+      "title": "Multiple Atherosclerotic Plaque Rupture in Acute Coronary Syndrome",
+      "year": 2002,
+      "subfield": "Surgery",
+      "download_ok": false,
+      "fetch_source": "",
+      "content_type": "",
+      "pdf_sha256": null,
+      "download_error": "no source returned a valid PDF (pmc/unpaywall/openalex all failed)"
+    },
+    {
+      "arm": "control",
+      "doi": "10.1016/s0195-668x(03)00114-3",
+      "openalex_id": "https://openalex.org/W2107165713",
+      "title": "Estimation of ten-year risk of fatal cardiovascular disease in Europe: the SCORE project",
+      "year": 2003,
+      "subfield": "Surgery",
+      "download_ok": false,
+      "fetch_source": "",
+      "content_type": "",
+      "pdf_sha256": null,
+      "download_error": "no source returned a valid PDF (pmc/unpaywall/openalex all failed)"
+    },
+    {
+      "arm": "retracted",
+      "doi": "10.1038/nbt.1610",
+      "openalex_id": "https://openalex.org/W2045117117",
+      "title": "RETRACTED ARTICLE: Rescue of the spinal muscular atrophy phenotype in a mouse model by early postnatal delivery of SMN",
+      "year": 2010,
+      "subfield": "Genetics",
+      "download_ok": false,
+      "fetch_source": "",
+      "content_type": "",
+      "pdf_sha256": null,
+      "download_error": "no source returned a valid PDF (pmc/unpaywall/openalex all failed)"
+    },
+    {
+      "arm": "control",
+      "doi": "10.1016/j.ccr.2009.12.020",
+      "openalex_id": "https://openalex.org/W2161289668",
+      "title": "Integrated Genomic Analysis Identifies Clinically Relevant Subtypes of Glioblastoma Characterized by Abnormalities in PDGFRA, IDH1, EGFR, and NF1",
+      "year": 2010,
+      "subfield": "Genetics",
+      "download_ok": false,
+      "fetch_source": "",
+      "content_type": "",
+      "pdf_sha256": null,
+      "download_error": "no source returned a valid PDF (pmc/unpaywall/openalex all failed)"
+    },
+    {
+      "arm": "retracted",
+      "doi": "10.1038/ijo.2011.153",
+      "openalex_id": "https://openalex.org/W2115742500",
+      "title": "RETRACTED ARTICLE: Obesity-associated gut microbiota is enriched in Lactobacillus reuteri and depleted in Bifidobacterium animalis and Methanobrevibacter smithii",
+      "year": 2011,
+      "subfield": "Molecular Biology",
+      "download_ok": true,
+      "fetch_source": "pmc",
+      "content_type": "application/pdf",
+      "pdf_sha256": "32aa2310beef549bcbe8209df166327ba8751eeef36d0aee1d59a6d8ef2055e2",
+      "scan": {
+        "overall_severity": 2,
+        "n_findings": 1,
+        "severity_counts": {
+          "0": 0,
+          "1": 0,
+          "2": 1,
+          "3": 0
+        },
+        "detectors_fired": [
+          "T3"
+        ],
+        "detector_hits": {
+          "T3": 1
+        }
+      }
+    },
+    {
+      "arm": "control",
+      "doi": "10.1093/bioinformatics/bts635",
+      "openalex_id": "https://openalex.org/W2169456326",
+      "title": "STAR: ultrafast universal RNA-seq aligner",
+      "year": 2012,
+      "subfield": "Molecular Biology",
+      "download_ok": true,
+      "fetch_source": "pmc",
+      "content_type": "application/pdf",
+      "pdf_sha256": "3cb4cec27b9b2e861e6ff41a899ad4bfb49851f7dc41c439b4efcbb29e274d2a",
+      "scan": {
+        "overall_severity": 2,
+        "n_findings": 1,
+        "severity_counts": {
+          "0": 0,
+          "1": 0,
+          "2": 1,
+          "3": 0
+        },
+        "detectors_fired": [
+          "T3"
+        ],
+        "detector_hits": {
+          "T3": 1
+        }
+      }
+    },
+    {
+      "arm": "retracted",
+      "doi": "10.1038/ncomms3932",
+      "openalex_id": "https://openalex.org/W2114789645",
+      "title": "RETRACTED ARTICLE: Pericyte loss influences Alzheimer-like neurodegeneration in mice",
+      "year": 2013,
+      "subfield": "Physiology",
+      "download_ok": true,
+      "fetch_source": "unpaywall",
+      "content_type": "application/pdf",
+      "pdf_sha256": "92976cbaab8d5868db30ff18dbc9fae7b2c207e7201ab3f8719ec9b570b262d6",
+      "scan": {
+        "overall_severity": 2,
+        "n_findings": 2,
+        "severity_counts": {
+          "0": 0,
+          "1": 1,
+          "2": 1,
+          "3": 0
+        },
+        "detectors_fired": [
+          "T3"
+        ],
+        "detector_hits": {
+          "T3": 2
+        }
+      }
+    },
+    {
+      "arm": "control",
+      "doi": "10.1159/000350087",
+      "openalex_id": "https://openalex.org/W2018289835",
+      "title": "Short-Term Effects of Nose-Only Cigarette Smoke Exposure on Glutathione Redox Homeostasis, Cytochrome P450 1A1/2 and Respiratory Enzyme Activities in Mice Tissues",
+      "year": 2013,
+      "subfield": "Physiology",
+      "download_ok": false,
+      "fetch_source": "",
+      "content_type": "",
+      "pdf_sha256": null,
+      "download_error": "no source returned a valid PDF (pmc/unpaywall/openalex all failed)"
+    },
+    {
+      "arm": "retracted",
+      "doi": "10.1371/journal.pone.0019194",
+      "openalex_id": "https://openalex.org/W2055969761",
+      "title": "Age Related Changes in NAD+ Metabolism Oxidative Stress and Sirt1 Activity in Wistar Rats",
+      "year": 2011,
+      "subfield": "Geriatrics and Gerontology",
+      "download_ok": true,
+      "fetch_source": "unpaywall",
+      "content_type": "application/pdf",
+      "pdf_sha256": "bdaeb5da087f02d02a89124d51f7c24283e7efbfcdc57641ea6ceee64b6b45d7",
+      "scan": {
+        "overall_severity": 3,
+        "n_findings": 2,
+        "severity_counts": {
+          "0": 0,
+          "1": 0,
+          "2": 2,
+          "3": 0
+        },
+        "detectors_fired": [
+          "F1",
+          "T3"
+        ],
+        "detector_hits": {
+          "T3": 1,
+          "F1": 1
+        }
+      }
+    },
+    {
+      "arm": "control",
+      "doi": "10.1016/s0140-6736(12)61729-2",
+      "openalex_id": "https://openalex.org/W2108344016",
+      "title": "Years lived with disability (YLDs) for 1160 sequelae of 289 diseases and injuries 1990–2010: a systematic analysis for the Global Burden of Disease Study 2010",
+      "year": 2012,
+      "subfield": "Geriatrics and Gerontology",
+      "download_ok": true,
+      "fetch_source": "unpaywall",
+      "content_type": "application/pdf;charset=utf-8",
+      "pdf_sha256": "b1e0bf2e1a31a7c3959d263a78814e250cf19b1973359eab89da3b2c3d4c8ef1",
+      "scan": {
+        "overall_severity": 4,
+        "n_findings": 2,
+        "severity_counts": {
+          "0": 0,
+          "1": 0,
+          "2": 1,
+          "3": 0,
+          "4": 1
+        },
+        "detectors_fired": [
+          "T3",
+          "T4"
+        ],
+        "detector_hits": {
+          "T3": 1,
+          "T4": 1
+        }
+      }
+    },
+    {
+      "arm": "retracted",
+      "doi": "10.1371/journal.ppat.0020025",
+      "openalex_id": "https://openalex.org/W2063905114",
+      "title": "Identification of a Novel Gammaretrovirus in Prostate Tumors of Patients Homozygous for R462Q RNASEL Variant",
+      "year": 2006,
+      "subfield": "Animal Science and Zoology",
+      "download_ok": true,
+      "fetch_source": "pmc",
+      "content_type": "application/pdf",
+      "pdf_sha256": "f2b16b7750e321a9764e20e70de8335d8c7ae37a15bc3fb7ed7877e7de10d5f1",
+      "scan": {
+        "overall_severity": 2,
+        "n_findings": 1,
+        "severity_counts": {
+          "0": 0,
+          "1": 0,
+          "2": 1,
+          "3": 0
+        },
+        "detectors_fired": [
+          "T3"
+        ],
+        "detector_hits": {
+          "T3": 1
+        }
+      }
+    },
+    {
+      "arm": "control",
+      "doi": "10.3382/ps.2007-00249",
+      "openalex_id": "https://openalex.org/W2160302809",
+      "title": "History of the Use of Antibiotic as Growth Promoters in European Poultry Feeds",
+      "year": 2007,
+      "subfield": "Animal Science and Zoology",
+      "download_ok": false,
+      "fetch_source": "",
+      "content_type": "",
+      "pdf_sha256": null,
+      "download_error": "no source returned a valid PDF (pmc/unpaywall/openalex all failed)"
+    },
+    {
+      "arm": "retracted",
+      "doi": "10.1186/s13045-019-0830-6",
+      "openalex_id": "https://openalex.org/W2993675487",
+      "title": "RETRACTED ARTICLE: m6A mRNA methylation initiated by METTL3 directly promotes YAP translation and increases YAP activity by regulating the MALAT1-miR-1914-3p-YAP axis to induce NSCLC drug resistance a",
+      "year": 2019,
+      "subfield": "Molecular Biology",
+      "download_ok": true,
+      "fetch_source": "pmc",
+      "content_type": "application/pdf",
+      "pdf_sha256": "95b72eeba55ef48a623cdc1f33b7c8b60c991ae03daa9479acceeb227a6fc23b",
+      "scan": {
+        "overall_severity": 0,
+        "n_findings": 0,
+        "severity_counts": {
+          "0": 0,
+          "1": 0,
+          "2": 0,
+          "3": 0
+        },
+        "detectors_fired": [],
+        "detector_hits": {}
+      }
+    },
+    {
+      "arm": "control",
+      "doi": "10.1093/molbev/msy096",
+      "openalex_id": "https://openalex.org/W2799524357",
+      "title": "MEGA X: Molecular Evolutionary Genetics Analysis across Computing Platforms",
+      "year": 2018,
+      "subfield": "Molecular Biology",
+      "download_ok": true,
+      "fetch_source": "pmc",
+      "content_type": "application/pdf",
+      "pdf_sha256": "1ae1867cb0478fafe15d66d1dee6889e600bbcd8b9ce11178a492d06f5767ae8",
+      "scan": {
+        "overall_severity": 2,
+        "n_findings": 2,
+        "severity_counts": {
+          "0": 0,
+          "1": 1,
+          "2": 1,
+          "3": 0
+        },
+        "detectors_fired": [
+          "T3"
+        ],
+        "detector_hits": {
+          "T3": 2
+        }
+      }
+    },
+    {
+      "arm": "retracted",
+      "doi": "10.1038/s41467-019-09865-9",
+      "openalex_id": "https://openalex.org/W2942683196",
+      "title": "RETRACTED ARTICLE: RNA m6A methylation regulates the epithelial mesenchymal transition of cancer cells and translation of Snail",
+      "year": 2019,
+      "subfield": "Molecular Biology",
+      "download_ok": true,
+      "fetch_source": "pmc",
+      "content_type": "application/pdf",
+      "pdf_sha256": "3bd72a487d8e3992f366e8c1a9ba835686122fdff73e1bc6cfe07ef262f9c809",
+      "scan": {
+        "overall_severity": 0,
+        "n_findings": 0,
+        "severity_counts": {
+          "0": 0,
+          "1": 0,
+          "2": 0,
+          "3": 0
+        },
+        "detectors_fired": [],
+        "detector_hits": {}
+      }
+    },
+    {
+      "arm": "control",
+      "doi": "10.1093/molbev/msy096",
+      "openalex_id": "https://openalex.org/W2799524357",
+      "title": "MEGA X: Molecular Evolutionary Genetics Analysis across Computing Platforms",
+      "year": 2018,
+      "subfield": "Molecular Biology",
+      "download_ok": true,
+      "fetch_source": "pmc",
+      "content_type": "application/pdf",
+      "pdf_sha256": "1ae1867cb0478fafe15d66d1dee6889e600bbcd8b9ce11178a492d06f5767ae8",
+      "scan": {
+        "overall_severity": 2,
+        "n_findings": 2,
+        "severity_counts": {
+          "0": 0,
+          "1": 1,
+          "2": 1,
+          "3": 0
+        },
+        "detectors_fired": [
+          "T3"
+        ],
+        "detector_hits": {
+          "T3": 2
+        }
+      }
+    },
+    {
+      "arm": "retracted",
+      "doi": "10.1172/jci81187",
+      "openalex_id": "https://openalex.org/W2142169541",
+      "title": "TIGIT predominantly regulates the immune response via regulatory T cells",
+      "year": 2015,
+      "subfield": "Immunology",
+      "download_ok": true,
+      "fetch_source": "pmc",
+      "content_type": "application/pdf",
+      "pdf_sha256": "8fc54b5ffbf97c0fede873155a22dd651d749b98746c1a2a245911d177645e18",
+      "scan": {
+        "overall_severity": 2,
+        "n_findings": 1,
+        "severity_counts": {
+          "0": 0,
+          "1": 0,
+          "2": 1,
+          "3": 0
+        },
+        "detectors_fired": [
+          "T3"
+        ],
+        "detector_hits": {
+          "T3": 1
+        }
+      }
+    },
+    {
+      "arm": "control",
+      "doi": "10.1016/j.immuni.2014.06.008",
+      "openalex_id": "https://openalex.org/W2159560463",
+      "title": "Macrophage Activation and Polarization: Nomenclature and Experimental Guidelines",
+      "year": 2014,
+      "subfield": "Immunology",
+      "download_ok": false,
+      "fetch_source": "",
+      "content_type": "",
+      "pdf_sha256": null,
+      "download_error": "no source returned a valid PDF (pmc/unpaywall/openalex all failed)"
+    },
+    {
+      "arm": "retracted",
+      "doi": "10.1074/jbc.m806041200",
+      "openalex_id": "https://openalex.org/W1982535740",
+      "title": "MicroRNA-221/222 Negatively Regulates Estrogen Receptorα and Is Associated with Tamoxifen Resistance in Breast Cancer",
+      "year": 2008,
+      "subfield": "Cancer Research",
+      "download_ok": true,
+      "fetch_source": "pmc",
+      "content_type": "application/pdf",
+      "pdf_sha256": "271df9b77f20e1dbbb0b3545bebad6d628e60b6ea38a283314718a582d8f00e3",
+      "scan": {
+        "overall_severity": 2,
+        "n_findings": 2,
+        "severity_counts": {
+          "0": 0,
+          "1": 1,
+          "2": 1,
+          "3": 0
+        },
+        "detectors_fired": [
+          "T3"
+        ],
+        "detector_hits": {
+          "T3": 2
+        }
+      }
+    },
+    {
+      "arm": "control",
+      "doi": "10.1101/gr.082701.108",
+      "openalex_id": "https://openalex.org/W2026570544",
+      "title": "Most mammalian mRNAs are conserved targets of microRNAs",
+      "year": 2008,
+      "subfield": "Cancer Research",
+      "download_ok": true,
+      "fetch_source": "pmc",
+      "content_type": "application/pdf",
+      "pdf_sha256": "127a8340f3810969d056fbf6815bc0623fc9b7a0788032b121428d1fe02958ef",
+      "scan": {
+        "overall_severity": 2,
+        "n_findings": 2,
+        "severity_counts": {
+          "0": 0,
+          "1": 1,
+          "2": 1,
+          "3": 0
+        },
+        "detectors_fired": [
+          "T3"
+        ],
+        "detector_hits": {
+          "T3": 2
+        }
+      }
+    },
+    {
+      "arm": "retracted",
+      "doi": "10.1038/nature23272",
+      "openalex_id": "https://openalex.org/W2729726531",
+      "title": "RETRACTED ARTICLE: Crystal structures of agonist-bound human cannabinoid receptor CB1",
+      "year": 2017,
+      "subfield": "Pharmacology",
+      "download_ok": false,
+      "fetch_source": "",
+      "content_type": "",
+      "pdf_sha256": null,
+      "download_error": "no source returned a valid PDF (pmc/unpaywall/openalex all failed)"
+    },
+    {
+      "arm": "control",
+      "doi": "10.15585/mmwr.mm6736a2",
+      "openalex_id": "https://openalex.org/W2891660975",
+      "title": "Prevalence of Chronic Pain and High-Impact Chronic Pain Among Adults — United States, 2016",
+      "year": 2018,
+      "subfield": "Pharmacology",
+      "download_ok": true,
+      "fetch_source": "pmc",
+      "content_type": "application/pdf",
+      "pdf_sha256": "0f1acf0116d3db77748e531f9b59107995d252344c7de1a6c978454d8db60230",
+      "scan": {
+        "overall_severity": 2,
+        "n_findings": 1,
+        "severity_counts": {
+          "0": 0,
+          "1": 0,
+          "2": 1,
+          "3": 0
+        },
+        "detectors_fired": [
+          "T3"
+        ],
+        "detector_hits": {
+          "T3": 1
+        }
+      }
+    },
+    {
+      "arm": "retracted",
+      "doi": "10.1186/1741-7015-11-222",
+      "openalex_id": "https://openalex.org/W2035159051",
+      "title": "RETRACTED ARTICLE: DNA barcoding detects contamination and substitution in North American herbal products",
+      "year": 2013,
+      "subfield": "Molecular Biology",
+      "download_ok": true,
+      "fetch_source": "pmc",
+      "content_type": "application/pdf",
+      "pdf_sha256": "170c34d1a0192ffae7dca008e8ab759ba22a85b0cf0c2e1b6a6f8c8270ade637",
+      "scan": {
+        "overall_severity": 3,
+        "n_findings": 2,
+        "severity_counts": {
+          "0": 0,
+          "1": 0,
+          "2": 1,
+          "3": 1
+        },
+        "detectors_fired": [
+          "T3",
+          "T4"
+        ],
+        "detector_hits": {
+          "T3": 1,
+          "T4": 1
+        }
+      }
+    },
+    {
+      "arm": "control",
+      "doi": "10.1093/bioinformatics/btu170",
+      "openalex_id": "https://openalex.org/W2131271579",
+      "title": "Trimmomatic: a flexible trimmer for Illumina sequence data",
+      "year": 2014,
+      "subfield": "Molecular Biology",
+      "download_ok": true,
+      "fetch_source": "pmc",
+      "content_type": "application/pdf",
+      "pdf_sha256": "0610baa7db19b5de70930ebe2b3cfad95ccb1db9d8c80f5236dbe4c9bd9650ae",
+      "scan": {
+        "overall_severity": 2,
+        "n_findings": 1,
+        "severity_counts": {
+          "0": 0,
+          "1": 0,
+          "2": 1,
+          "3": 0
+        },
+        "detectors_fired": [
+          "T3"
+        ],
+        "detector_hits": {
+          "T3": 1
+        }
+      }
+    },
+    {
+      "arm": "retracted",
+      "doi": "10.1074/jbc.m112.442939",
+      "openalex_id": "https://openalex.org/W2140607197",
+      "title": "Hypoxia-inducible Factor 1 (HIF-1) Promotes Extracellular Matrix Remodeling under Hypoxic Conditions by Inducing P4HA1, P4HA2, and PLOD2 Expression in Fibroblasts",
+      "year": 2013,
+      "subfield": "Cancer Research",
+      "download_ok": false,
+      "fetch_source": "",
+      "content_type": "",
+      "pdf_sha256": null,
+      "download_error": "no source returned a valid PDF (pmc/unpaywall/openalex all failed)"
+    },
+    {
+      "arm": "control",
+      "doi": "10.1186/s13059-014-0550-8",
+      "openalex_id": "https://openalex.org/W2179438025",
+      "title": "Moderated estimation of fold change and dispersion for RNA-seq data with DESeq2",
+      "year": 2014,
+      "subfield": "Cancer Research",
+      "download_ok": true,
+      "fetch_source": "pmc",
+      "content_type": "application/pdf",
+      "pdf_sha256": "bf6e86ec8bea5834bce478b907bf527af76fcecfa31680c0ae8291ab1f915572",
+      "scan": {
+        "overall_severity": 2,
+        "n_findings": 1,
+        "severity_counts": {
+          "0": 0,
+          "1": 0,
+          "2": 1,
+          "3": 0
+        },
+        "detectors_fired": [
+          "T3"
+        ],
+        "detector_hits": {
+          "T3": 1
+        }
+      }
+    },
+    {
+      "arm": "retracted",
+      "doi": "10.1074/jbc.m404421200",
+      "openalex_id": "https://openalex.org/W2024182816",
+      "title": "Activation of the AMP-activated Protein Kinase by the Anti-diabetic Drug Metformin in Vivo",
+      "year": 2004,
+      "subfield": "Molecular Biology",
+      "download_ok": false,
+      "fetch_source": "",
+      "content_type": "",
+      "pdf_sha256": null,
+      "download_error": "no source returned a valid PDF (pmc/unpaywall/openalex all failed)"
+    },
+    {
+      "arm": "control",
+      "doi": "10.1073/pnas.0506580102",
+      "openalex_id": "https://openalex.org/W2130410032",
+      "title": "Gene set enrichment analysis: A knowledge-based approach for interpreting genome-wide expression profiles",
+      "year": 2005,
+      "subfield": "Molecular Biology",
+      "download_ok": true,
+      "fetch_source": "pmc",
+      "content_type": "application/pdf",
+      "pdf_sha256": "9a53c105558bae9551c8718cba44f76370e0c7a3e5caa07478dfaaa188fa9444",
+      "scan": {
+        "overall_severity": 3,
+        "n_findings": 3,
+        "severity_counts": {
+          "0": 0,
+          "1": 1,
+          "2": 1,
+          "3": 1
+        },
+        "detectors_fired": [
+          "T3",
+          "T4"
+        ],
+        "detector_hits": {
+          "T3": 2,
+          "T4": 1
+        }
+      }
+    },
+    {
+      "arm": "retracted",
+      "doi": "10.1038/nature16142",
+      "openalex_id": "https://openalex.org/W2202899490",
+      "title": "RETRACTED ARTICLE: A mechanism for the suppression of homologous recombination in G1 cells",
+      "year": 2015,
+      "subfield": "Molecular Biology",
+      "download_ok": false,
+      "fetch_source": "",
+      "content_type": "",
+      "pdf_sha256": null,
+      "download_error": "no source returned a valid PDF (pmc/unpaywall/openalex all failed)"
+    },
+    {
+      "arm": "control",
+      "doi": "10.1093/bioinformatics/btu170",
+      "openalex_id": "https://openalex.org/W2131271579",
+      "title": "Trimmomatic: a flexible trimmer for Illumina sequence data",
+      "year": 2014,
+      "subfield": "Molecular Biology",
+      "download_ok": true,
+      "fetch_source": "pmc",
+      "content_type": "application/pdf",
+      "pdf_sha256": "0610baa7db19b5de70930ebe2b3cfad95ccb1db9d8c80f5236dbe4c9bd9650ae",
+      "scan": {
+        "overall_severity": 2,
+        "n_findings": 1,
+        "severity_counts": {
+          "0": 0,
+          "1": 0,
+          "2": 1,
+          "3": 0
+        },
+        "detectors_fired": [
+          "T3"
+        ],
+        "detector_hits": {
+          "T3": 1
+        }
+      }
+    },
+    {
+      "arm": "retracted",
+      "doi": "10.1038/nature14492",
+      "openalex_id": "https://openalex.org/W1593145356",
+      "title": "RETRACTED ARTICLE: The hypoxic cancer secretome induces pre-metastatic bone lesions through lysyl oxidase",
+      "year": 2015,
+      "subfield": "Molecular Biology",
+      "download_ok": false,
+      "fetch_source": "",
+      "content_type": "",
+      "pdf_sha256": null,
+      "download_error": "no source returned a valid PDF (pmc/unpaywall/openalex all failed)"
+    },
+    {
+      "arm": "control",
+      "doi": "10.1093/bioinformatics/btu170",
+      "openalex_id": "https://openalex.org/W2131271579",
+      "title": "Trimmomatic: a flexible trimmer for Illumina sequence data",
+      "year": 2014,
+      "subfield": "Molecular Biology",
+      "download_ok": true,
+      "fetch_source": "pmc",
+      "content_type": "application/pdf",
+      "pdf_sha256": "0610baa7db19b5de70930ebe2b3cfad95ccb1db9d8c80f5236dbe4c9bd9650ae",
+      "scan": {
+        "overall_severity": 2,
+        "n_findings": 1,
+        "severity_counts": {
+          "0": 0,
+          "1": 0,
+          "2": 1,
+          "3": 0
+        },
+        "detectors_fired": [
+          "T3"
+        ],
+        "detector_hits": {
+          "T3": 1
+        }
+      }
+    },
+    {
+      "arm": "retracted",
+      "doi": "10.1161/01.res.0000046227.65158.f8",
+      "openalex_id": "https://openalex.org/W2102744645",
+      "title": "Novel Role of gp91 <sup>phox</sup> -Containing NAD(P)H Oxidase in Vascular Endothelial Growth Factor–Induced Signaling and Angiogenesis",
+      "year": 2002,
+      "subfield": "Physiology",
+      "download_ok": false,
+      "fetch_source": "",
+      "content_type": "",
+      "pdf_sha256": null,
+      "download_error": "no source returned a valid PDF (pmc/unpaywall/openalex all failed)"
+    },
+    {
+      "arm": "control",
+      "doi": "10.1016/s0896-6273(03)00434-3",
+      "openalex_id": "https://openalex.org/W1967464880",
+      "title": "Triple-Transgenic Model of Alzheimer's Disease with Plaques and Tangles",
+      "year": 2003,
+      "subfield": "Physiology",
+      "download_ok": false,
+      "fetch_source": "",
+      "content_type": "",
+      "pdf_sha256": null,
+      "download_error": "no source returned a valid PDF (pmc/unpaywall/openalex all failed)"
+    },
+    {
+      "arm": "retracted",
+      "doi": "10.1074/jbc.m707465200",
+      "openalex_id": "https://openalex.org/W2156140889",
+      "title": "The Role of CXCR7/RDC1 as a Chemokine Receptor for CXCL12/SDF-1 in Prostate Cancer",
+      "year": 2007,
+      "subfield": "Oncology",
+      "download_ok": false,
+      "fetch_source": "",
+      "content_type": "",
+      "pdf_sha256": null,
+      "download_error": "no source returned a valid PDF (pmc/unpaywall/openalex all failed)"
+    },
+    {
+      "arm": "control",
+      "doi": "10.3322/ca.2007.0010",
+      "openalex_id": "https://openalex.org/W2043103956",
+      "title": "Cancer Statistics, 2008",
+      "year": 2008,
+      "subfield": "Oncology",
+      "download_ok": false,
+      "fetch_source": "",
+      "content_type": "",
+      "pdf_sha256": null,
+      "download_error": "no source returned a valid PDF (pmc/unpaywall/openalex all failed)"
+    },
+    {
+      "arm": "retracted",
+      "doi": "10.1016/s0140-6736(14)60921-1",
+      "openalex_id": "https://openalex.org/W2113302343",
+      "title": "ST-segment elevation myocardial infarction in China from 2001 to 2011 (the China PEACE-Retrospective Acute Myocardial Infarction Study): a retrospective analysis of hospital data",
+      "year": 2014,
+      "subfield": "Cardiology and Cardiovascular Medicine",
+      "download_ok": false,
+      "fetch_source": "",
+      "content_type": "",
+      "pdf_sha256": null,
+      "download_error": "no source returned a valid PDF (pmc/unpaywall/openalex all failed)"
+    },
+    {
+      "arm": "control",
+      "doi": "10.1093/eurheartj/eht151",
+      "openalex_id": "https://openalex.org/W2133416234",
+      "title": "2013 ESH/ESC Guidelines for the management of arterial hypertension",
+      "year": 2013,
+      "subfield": "Cardiology and Cardiovascular Medicine",
+      "download_ok": false,
+      "fetch_source": "",
+      "content_type": "",
+      "pdf_sha256": null,
+      "download_error": "no source returned a valid PDF (pmc/unpaywall/openalex all failed)"
+    },
+    {
+      "arm": "retracted",
+      "doi": "10.1186/s12943-019-0947-9",
+      "openalex_id": "https://openalex.org/W2930633744",
+      "title": "RETRACTED ARTICLE: Long non-coding RNA PVT1 promotes tumor progression by regulating the miR-143/HK2 axis in gallbladder cancer",
+      "year": 2019,
+      "subfield": "Cancer Research",
+      "download_ok": true,
+      "fetch_source": "pmc",
+      "content_type": "application/pdf",
+      "pdf_sha256": "0c9b49dc8ed350ad75bcafefd4af86909e2c790ae42923f189bc17a8aba55fcc",
+      "scan": {
+        "overall_severity": 0,
+        "n_findings": 0,
+        "severity_counts": {
+          "0": 0,
+          "1": 0,
+          "2": 0,
+          "3": 0
+        },
+        "detectors_fired": [],
+        "detector_hits": {}
+      }
+    },
+    {
+      "arm": "control",
+      "doi": "10.1101/gr.239244.118",
+      "openalex_id": "https://openalex.org/W2896872272",
+      "title": "Maftools: efficient and comprehensive analysis of somatic variants in cancer",
+      "year": 2018,
+      "subfield": "Cancer Research",
+      "download_ok": true,
+      "fetch_source": "pmc",
+      "content_type": "application/pdf",
+      "pdf_sha256": "462a9bc767bcb96b5fac6e1656adaccdc7c2994914e0cb32bc96d8eff909d62d",
+      "scan": {
+        "overall_severity": 2,
+        "n_findings": 2,
+        "severity_counts": {
+          "0": 0,
+          "1": 1,
+          "2": 1,
+          "3": 0
+        },
+        "detectors_fired": [
+          "T3"
+        ],
+        "detector_hits": {
+          "T3": 2
+        }
+      }
+    },
+    {
+      "arm": "retracted",
+      "doi": "10.1096/fj.09-135467",
+      "openalex_id": "https://openalex.org/W2152783224",
+      "title": "Genetic requirements for <i>Staphylococcus aureus</i> abscess formation and persistence in host tissues",
+      "year": 2009,
+      "subfield": "Infectious Diseases",
+      "download_ok": true,
+      "fetch_source": "pmc",
+      "content_type": "application/pdf",
+      "pdf_sha256": "5b7b66f4c86f142dfeb859d57698679ce9fb0ed64132717f87068acaeb41178e",
+      "scan": {
+        "overall_severity": 2,
+        "n_findings": 2,
+        "severity_counts": {
+          "0": 0,
+          "1": 1,
+          "2": 1,
+          "3": 0
+        },
+        "detectors_fired": [
+          "T3"
+        ],
+        "detector_hits": {
+          "T3": 2
+        }
+      }
+    },
+    {
+      "arm": "control",
+      "doi": "10.3201/eid1701.p11101",
+      "openalex_id": "https://openalex.org/W2128591134",
+      "title": "Foodborne Illness Acquired in the United States—Major Pathogens",
+      "year": 2010,
+      "subfield": "Infectious Diseases",
+      "download_ok": true,
+      "fetch_source": "pmc",
+      "content_type": "application/pdf",
+      "pdf_sha256": "81f394d7dbb67f8a1683dd8ce2316c1012252dd1448941174887c8d4587b1353",
+      "scan": {
+        "overall_severity": 2,
+        "n_findings": 2,
+        "severity_counts": {
+          "0": 0,
+          "1": 1,
+          "2": 1,
+          "3": 0
+        },
+        "detectors_fired": [
+          "T3"
+        ],
+        "detector_hits": {
+          "T3": 2
+        }
+      }
+    },
+    {
+      "arm": "retracted",
+      "doi": "10.1038/35044106",
+      "openalex_id": "https://openalex.org/W2078325631",
+      "title": "Remission in models of type 1 diabetes by gene therapy using a single-chain insulin analogue",
+      "year": 2000,
+      "subfield": "Surgery",
+      "download_ok": false,
+      "fetch_source": "",
+      "content_type": "",
+      "pdf_sha256": null,
+      "download_error": "no source returned a valid PDF (pmc/unpaywall/openalex all failed)"
+    },
+    {
+      "arm": "control",
+      "doi": "10.1056/nejm200007273430401",
+      "openalex_id": "https://openalex.org/W2328786770",
+      "title": "Islet Transplantation in Seven Patients with Type 1 Diabetes Mellitus Using a Glucocorticoid-Free Immunosuppressive Regimen",
+      "year": 2000,
+      "subfield": "Surgery",
+      "download_ok": false,
+      "fetch_source": "",
+      "content_type": "",
+      "pdf_sha256": null,
+      "download_error": "no source returned a valid PDF (pmc/unpaywall/openalex all failed)"
+    },
+    {
+      "arm": "retracted",
+      "doi": "10.1128/mcb.25.11.4727-4741.2005",
+      "openalex_id": "https://openalex.org/W2136905998",
+      "title": "RETRACTED ARTICLE: 5-Aza-Deoxycytidine Induces Selective Degradation of DNA Methyltransferase 1 by a Proteasomal Pathway That Requires the KEN Box, Bromo-Adjacent Homology Domain, and Nuclear Localiza",
+      "year": 2005,
+      "subfield": "Molecular Biology",
+      "download_ok": true,
+      "fetch_source": "pmc",
+      "content_type": "application/pdf",
+      "pdf_sha256": "46a11c616b8344d4e3e7a93a7e94fbd4b50e268753132b4b88a82094582f6526",
+      "scan": {
+        "overall_severity": 4,
+        "n_findings": 3,
+        "severity_counts": {
+          "0": 0,
+          "1": 1,
+          "2": 1,
+          "3": 0,
+          "4": 1
+        },
+        "detectors_fired": [
+          "T3",
+          "T4"
+        ],
+        "detector_hits": {
+          "T3": 2,
+          "T4": 1
+        }
+      }
+    },
+    {
+      "arm": "control",
+      "doi": "10.1073/pnas.0506580102",
+      "openalex_id": "https://openalex.org/W2130410032",
+      "title": "Gene set enrichment analysis: A knowledge-based approach for interpreting genome-wide expression profiles",
+      "year": 2005,
+      "subfield": "Molecular Biology",
+      "download_ok": true,
+      "fetch_source": "pmc",
+      "content_type": "application/pdf",
+      "pdf_sha256": "9a53c105558bae9551c8718cba44f76370e0c7a3e5caa07478dfaaa188fa9444",
+      "scan": {
+        "overall_severity": 3,
+        "n_findings": 3,
+        "severity_counts": {
+          "0": 0,
+          "1": 1,
+          "2": 1,
+          "3": 1
+        },
+        "detectors_fired": [
+          "T3",
+          "T4"
+        ],
+        "detector_hits": {
+          "T3": 2,
+          "T4": 1
+        }
+      }
+    },
+    {
+      "arm": "retracted",
+      "doi": "10.1158/0008-5472.can-09-4598",
+      "openalex_id": "https://openalex.org/W2014442719",
+      "title": "Gemcitabine Sensitivity Can Be Induced in Pancreatic Cancer Cells through Modulation of miR-200 and miR-21 Expression by Curcumin or Its Analogue CDF",
+      "year": 2010,
+      "subfield": "Molecular Medicine",
+      "download_ok": false,
+      "fetch_source": "",
+      "content_type": "",
+      "pdf_sha256": null,
+      "download_error": "no source returned a valid PDF (pmc/unpaywall/openalex all failed)"
+    },
+    {
+      "arm": "control",
+      "doi": "10.1016/s1473-3099(10)70143-2",
+      "openalex_id": "https://openalex.org/W2154556219",
+      "title": "Emergence of a new antibiotic resistance mechanism in India, Pakistan, and the UK: a molecular, biological, and epidemiological study",
+      "year": 2010,
+      "subfield": "Molecular Medicine",
+      "download_ok": false,
+      "fetch_source": "",
+      "content_type": "",
+      "pdf_sha256": null,
+      "download_error": "no source returned a valid PDF (pmc/unpaywall/openalex all failed)"
+    },
+    {
+      "arm": "retracted",
+      "doi": "10.1074/jbc.m312044200",
+      "openalex_id": "https://openalex.org/W2164032619",
+      "title": "Akt Phosphorylation and Stabilization of X-linked Inhibitor of Apoptosis Protein (XIAP)",
+      "year": 2004,
+      "subfield": "Molecular Biology",
+      "download_ok": false,
+      "fetch_source": "",
+      "content_type": "",
+      "pdf_sha256": null,
+      "download_error": "no source returned a valid PDF (pmc/unpaywall/openalex all failed)"
+    },
+    {
+      "arm": "control",
+      "doi": "10.1073/pnas.0506580102",
+      "openalex_id": "https://openalex.org/W2130410032",
+      "title": "Gene set enrichment analysis: A knowledge-based approach for interpreting genome-wide expression profiles",
+      "year": 2005,
+      "subfield": "Molecular Biology",
+      "download_ok": true,
+      "fetch_source": "pmc",
+      "content_type": "application/pdf",
+      "pdf_sha256": "9a53c105558bae9551c8718cba44f76370e0c7a3e5caa07478dfaaa188fa9444",
+      "scan": {
+        "overall_severity": 3,
+        "n_findings": 3,
+        "severity_counts": {
+          "0": 0,
+          "1": 1,
+          "2": 1,
+          "3": 1
+        },
+        "detectors_fired": [
+          "T3",
+          "T4"
+        ],
+        "detector_hits": {
+          "T3": 2,
+          "T4": 1
+        }
+      }
+    },
+    {
+      "arm": "retracted",
+      "doi": "10.1371/journal.pone.0019338",
+      "openalex_id": "https://openalex.org/W2098069894",
+      "title": "Passive Immunization Reduces Behavioral and Neuropathological Deficits in an Alpha-Synuclein Transgenic Model of Lewy Body Disease",
+      "year": 2011,
+      "subfield": "Neurology",
+      "download_ok": true,
+      "fetch_source": "unpaywall",
+      "content_type": "application/pdf",
+      "pdf_sha256": "61998cb7f040b38aea9700ac9eb39b1e80e4e02f4b3577c0be70ede2cda0aeab",
+      "scan": {
+        "overall_severity": 2,
+        "n_findings": 1,
+        "severity_counts": {
+          "0": 0,
+          "1": 0,
+          "2": 1,
+          "3": 0
+        },
+        "detectors_fired": [
+          "T3"
+        ],
+        "detector_hits": {
+          "T3": 1
+        }
+      }
+    },
+    {
+      "arm": "control",
+      "doi": "10.1016/j.neuron.2011.09.010",
+      "openalex_id": "https://openalex.org/W2150523249",
+      "title": "A Hexanucleotide Repeat Expansion in C9ORF72 Is the Cause of Chromosome 9p21-Linked ALS-FTD",
+      "year": 2011,
+      "subfield": "Neurology",
+      "download_ok": false,
+      "fetch_source": "",
+      "content_type": "",
+      "pdf_sha256": null,
+      "download_error": "no source returned a valid PDF (pmc/unpaywall/openalex all failed)"
+    },
+    {
+      "arm": "retracted",
+      "doi": "10.1038/onc.2017.89",
+      "openalex_id": "https://openalex.org/W2605363845",
+      "title": "circRNA_100290 plays a role in oral cancer by functioning as a sponge of the miR-29 family",
+      "year": 2017,
+      "subfield": "Molecular Biology",
+      "download_ok": true,
+      "fetch_source": "pmc",
+      "content_type": "application/pdf",
+      "pdf_sha256": "2cecb9ede19bc2c33918ffb4eaf0f3dba8555b2b5b8924e252bfad2bbc4dcca3",
+      "scan": {
+        "overall_severity": 2,
+        "n_findings": 1,
+        "severity_counts": {
+          "0": 0,
+          "1": 0,
+          "2": 1,
+          "3": 0
+        },
+        "detectors_fired": [
+          "T3"
+        ],
+        "detector_hits": {
+          "T3": 1
+        }
+      }
+    },
+    {
+      "arm": "control",
+      "doi": "10.1093/molbev/msw054",
+      "openalex_id": "https://openalex.org/W2311203695",
+      "title": "MEGA7: Molecular Evolutionary Genetics Analysis Version 7.0 for Bigger Datasets",
+      "year": 2016,
+      "subfield": "Molecular Biology",
+      "download_ok": true,
+      "fetch_source": "pmc",
+      "content_type": "application/pdf",
+      "pdf_sha256": "fe2f6249e1afd8a0df11d3efc8b9e35cf2b1c05d8c479bdb96e6300961a20c3a",
+      "scan": {
+        "overall_severity": 2,
+        "n_findings": 2,
+        "severity_counts": {
+          "0": 0,
+          "1": 1,
+          "2": 1,
+          "3": 0
+        },
+        "detectors_fired": [
+          "T3"
+        ],
+        "detector_hits": {
+          "T3": 2
+        }
+      }
+    },
+    {
+      "arm": "retracted",
+      "doi": "10.2119/molmed.2011.00389",
+      "openalex_id": "https://openalex.org/W1672954108",
+      "title": "Redox Modification of Cysteine Residues Regulates the Cytokine Activity of High Mobility Group Box-1 (HMGB1)",
+      "year": 2011,
+      "subfield": "Clinical Biochemistry",
+      "download_ok": true,
+      "fetch_source": "pmc",
+      "content_type": "application/pdf",
+      "pdf_sha256": "faa038fae518d8486111ee0d1ff6b587acc98fcc9271404ca4c55521be115a9f",
+      "scan": {
+        "overall_severity": 2,
+        "n_findings": 1,
+        "severity_counts": {
+          "0": 0,
+          "1": 0,
+          "2": 1,
+          "3": 0
+        },
+        "detectors_fired": [
+          "T3"
+        ],
+        "detector_hits": {
+          "T3": 1
+        }
+      }
+    },
+    {
+      "arm": "control",
+      "doi": "10.1016/j.jada.2010.03.018",
+      "openalex_id": "https://openalex.org/W2037141143",
+      "title": "Advanced Glycation End Products in Foods and a Practical Guide to Their Reduction in the Diet",
+      "year": 2010,
+      "subfield": "Clinical Biochemistry",
+      "download_ok": false,
+      "fetch_source": "",
+      "content_type": "",
+      "pdf_sha256": null,
+      "download_error": "no source returned a valid PDF (pmc/unpaywall/openalex all failed)"
+    },
+    {
+      "arm": "retracted",
+      "doi": "10.1074/jbc.m701194200",
+      "openalex_id": "https://openalex.org/W2155452700",
+      "title": "Tissue-specific Autophagy Alterations and Increased Tumorigenesis in Mice Deficient in Atg4C/Autophagin-3",
+      "year": 2007,
+      "subfield": "Epidemiology",
+      "download_ok": false,
+      "fetch_source": "",
+      "content_type": "",
+      "pdf_sha256": null,
+      "download_error": "no source returned a valid PDF (pmc/unpaywall/openalex all failed)"
+    },
+    {
+      "arm": "control",
+      "doi": "10.1016/j.cell.2007.12.018",
+      "openalex_id": "https://openalex.org/W2109034822",
+      "title": "Autophagy in the Pathogenesis of Disease",
+      "year": 2008,
+      "subfield": "Epidemiology",
+      "download_ok": false,
+      "fetch_source": "",
+      "content_type": "",
+      "pdf_sha256": null,
+      "download_error": "no source returned a valid PDF (pmc/unpaywall/openalex all failed)"
+    },
+    {
+      "arm": "retracted",
+      "doi": "10.1186/s12943-020-01206-5",
+      "openalex_id": "https://openalex.org/W3021568391",
+      "title": "RETRACTED ARTICLE: LncRNA BCRT1 promotes breast cancer progression by targeting miR-1303/PTBP3 axis",
+      "year": 2020,
+      "subfield": "Cancer Research",
+      "download_ok": true,
+      "fetch_source": "unpaywall",
+      "content_type": "application/pdf",
+      "pdf_sha256": "f12117952543a1ce78ab6319616a30e30d28dec2ddf75d2a265b4fd8eb409f4f",
+      "scan": {
+        "overall_severity": 0,
+        "n_findings": 0,
+        "severity_counts": {
+          "0": 0,
+          "1": 0,
+          "2": 0,
+          "3": 0
+        },
+        "detectors_fired": [],
+        "detector_hits": {}
+      }
+    },
+    {
+      "arm": "control",
+      "doi": "10.1038/s41586-020-1943-3",
+      "openalex_id": "https://openalex.org/W3004480399",
+      "title": "The repertoire of mutational signatures in human cancer",
+      "year": 2020,
+      "subfield": "Cancer Research",
+      "download_ok": true,
+      "fetch_source": "pmc",
+      "content_type": "application/pdf",
+      "pdf_sha256": "b45eb4d606e28dd252c7272d9f5b79cd93f0927da39bf502c2babfbafffd9773",
+      "scan": {
+        "overall_severity": 0,
+        "n_findings": 0,
+        "severity_counts": {
+          "0": 0,
+          "1": 0,
+          "2": 0,
+          "3": 0
+        },
+        "detectors_fired": [],
+        "detector_hits": {}
+      }
+    },
+    {
+      "arm": "retracted",
+      "doi": "10.1371/journal.pone.0158347",
+      "openalex_id": "https://openalex.org/W2464299117",
+      "title": "The Circular RNA Cdr1as Act as an Oncogene in Hepatocellular Carcinoma through Targeting miR-7 Expression",
+      "year": 2016,
+      "subfield": "Molecular Biology",
+      "download_ok": true,
+      "fetch_source": "pmc",
+      "content_type": "application/pdf",
+      "pdf_sha256": "1477c53810e8f4d35f05405794c0a3c8e1e2d2422ac4214db091f34d90ef0bed",
+      "scan": {
+        "overall_severity": 0,
+        "n_findings": 0,
+        "severity_counts": {
+          "0": 0,
+          "1": 0,
+          "2": 0,
+          "3": 0
+        },
+        "detectors_fired": [],
+        "detector_hits": {}
+      }
+    },
+    {
+      "arm": "control",
+      "doi": "10.1093/molbev/msw054",
+      "openalex_id": "https://openalex.org/W2311203695",
+      "title": "MEGA7: Molecular Evolutionary Genetics Analysis Version 7.0 for Bigger Datasets",
+      "year": 2016,
+      "subfield": "Molecular Biology",
+      "download_ok": true,
+      "fetch_source": "pmc",
+      "content_type": "application/pdf",
+      "pdf_sha256": "fe2f6249e1afd8a0df11d3efc8b9e35cf2b1c05d8c479bdb96e6300961a20c3a",
+      "scan": {
+        "overall_severity": 2,
+        "n_findings": 2,
+        "severity_counts": {
+          "0": 0,
+          "1": 1,
+          "2": 1,
+          "3": 0
+        },
+        "detectors_fired": [
+          "T3"
+        ],
+        "detector_hits": {
+          "T3": 2
+        }
+      }
+    },
+    {
+      "arm": "retracted",
+      "doi": "10.1038/nature17950",
+      "openalex_id": "https://openalex.org/W2338725336",
+      "title": "RETRACTED ARTICLE: Noncanonical autophagy inhibits the autoinflammatory, lupus-like response to dying cells",
+      "year": 2016,
+      "subfield": "Epidemiology",
+      "download_ok": false,
+      "fetch_source": "",
+      "content_type": "",
+      "pdf_sha256": null,
+      "download_error": "no source returned a valid PDF (pmc/unpaywall/openalex all failed)"
+    },
+    {
+      "arm": "control",
+      "doi": "10.1001/jama.2016.0287",
+      "openalex_id": "https://openalex.org/W2280404143",
+      "title": "The Third International Consensus Definitions for Sepsis and Septic Shock (Sepsis-3)",
+      "year": 2016,
+      "subfield": "Epidemiology",
+      "download_ok": false,
+      "fetch_source": "",
+      "content_type": "",
+      "pdf_sha256": null,
+      "download_error": "no source returned a valid PDF (pmc/unpaywall/openalex all failed)"
+    },
+    {
+      "arm": "retracted",
+      "doi": "10.1074/jbc.m110.101055",
+      "openalex_id": "https://openalex.org/W2098150383",
+      "title": "MicroRNA-155 Regulates Cell Survival, Growth, and Chemosensitivity by Targeting FOXO3a in Breast Cancer",
+      "year": 2010,
+      "subfield": "Molecular Biology",
+      "download_ok": false,
+      "fetch_source": "",
+      "content_type": "",
+      "pdf_sha256": null,
+      "download_error": "no source returned a valid PDF (pmc/unpaywall/openalex all failed)"
+    },
+    {
+      "arm": "control",
+      "doi": "10.1093/bioinformatics/btp352",
+      "openalex_id": "https://openalex.org/W2108234281",
+      "title": "The Sequence Alignment/Map format and SAMtools",
+      "year": 2009,
+      "subfield": "Molecular Biology",
+      "download_ok": true,
+      "fetch_source": "pmc",
+      "content_type": "application/pdf",
+      "pdf_sha256": "7d03dcf4170e2ea9b011ffd945721f3fc655ea20fb0b53d9ef96364fff7f0255",
+      "scan": {
+        "overall_severity": 2,
+        "n_findings": 2,
+        "severity_counts": {
+          "0": 0,
+          "1": 1,
+          "2": 1,
+          "3": 0
+        },
+        "detectors_fired": [
+          "T3"
+        ],
+        "detector_hits": {
+          "T3": 2
+        }
+      }
+    },
+    {
+      "arm": "retracted",
+      "doi": "10.1186/s12943-018-0933-7",
+      "openalex_id": "https://openalex.org/W2943283123",
+      "title": "RETRACTED ARTICLE: The circRNA circAGFG1 acts as a sponge of miR-195-5p to promote triple-negative breast cancer progression through regulating CCNE1 expression",
+      "year": 2019,
+      "subfield": "Molecular Biology",
+      "download_ok": true,
+      "fetch_source": "pmc",
+      "content_type": "application/pdf",
+      "pdf_sha256": "61a98ef86a0e5d98b8114b19ec214a4b39325d0f2655bb554f428d51bf2ad072",
+      "scan": {
+        "overall_severity": 0,
+        "n_findings": 0,
+        "severity_counts": {
+          "0": 0,
+          "1": 0,
+          "2": 0,
+          "3": 0
+        },
+        "detectors_fired": [],
+        "detector_hits": {}
+      }
+    },
+    {
+      "arm": "control",
+      "doi": "10.1093/molbev/msy096",
+      "openalex_id": "https://openalex.org/W2799524357",
+      "title": "MEGA X: Molecular Evolutionary Genetics Analysis across Computing Platforms",
+      "year": 2018,
+      "subfield": "Molecular Biology",
+      "download_ok": true,
+      "fetch_source": "pmc",
+      "content_type": "application/pdf",
+      "pdf_sha256": "1ae1867cb0478fafe15d66d1dee6889e600bbcd8b9ce11178a492d06f5767ae8",
+      "scan": {
+        "overall_severity": 2,
+        "n_findings": 2,
+        "severity_counts": {
+          "0": 0,
+          "1": 1,
+          "2": 1,
+          "3": 0
+        },
+        "detectors_fired": [
+          "T3"
+        ],
+        "detector_hits": {
+          "T3": 2
+        }
+      }
+    },
+    {
+      "arm": "retracted",
+      "doi": "10.1038/ng.317",
+      "openalex_id": "https://openalex.org/W2114499007",
+      "title": "A TARBP2 mutation in human cancer impairs microRNA processing and DICER1 function",
+      "year": 2009,
+      "subfield": "Cancer Research",
+      "download_ok": false,
+      "fetch_source": "",
+      "content_type": "",
+      "pdf_sha256": null,
+      "download_error": "no source returned a valid PDF (pmc/unpaywall/openalex all failed)"
+    },
+    {
+      "arm": "control",
+      "doi": "10.1101/gr.082701.108",
+      "openalex_id": "https://openalex.org/W2026570544",
+      "title": "Most mammalian mRNAs are conserved targets of microRNAs",
+      "year": 2008,
+      "subfield": "Cancer Research",
+      "download_ok": true,
+      "fetch_source": "pmc",
+      "content_type": "application/pdf",
+      "pdf_sha256": "127a8340f3810969d056fbf6815bc0623fc9b7a0788032b121428d1fe02958ef",
+      "scan": {
+        "overall_severity": 2,
+        "n_findings": 2,
+        "severity_counts": {
+          "0": 0,
+          "1": 1,
+          "2": 1,
+          "3": 0
+        },
+        "detectors_fired": [
+          "T3"
+        ],
+        "detector_hits": {
+          "T3": 2
+        }
+      }
+    },
+    {
+      "arm": "retracted",
+      "doi": "10.1074/jbc.m205838200",
+      "openalex_id": "https://openalex.org/W2114189030",
+      "title": "Phosphatidylinositol 3-Kinase/Akt Pathway Regulates Tuberous Sclerosis Tumor Suppressor Complex by Phosphorylation of Tuberin",
+      "year": 2002,
+      "subfield": "Physiology",
+      "download_ok": false,
+      "fetch_source": "",
+      "content_type": "",
+      "pdf_sha256": null,
+      "download_error": "no source returned a valid PDF (pmc/unpaywall/openalex all failed)"
+    },
+    {
+      "arm": "control",
+      "doi": "10.1016/s0896-6273(03)00434-3",
+      "openalex_id": "https://openalex.org/W1967464880",
+      "title": "Triple-Transgenic Model of Alzheimer's Disease with Plaques and Tangles",
+      "year": 2003,
+      "subfield": "Physiology",
+      "download_ok": false,
+      "fetch_source": "",
+      "content_type": "",
+      "pdf_sha256": null,
+      "download_error": "no source returned a valid PDF (pmc/unpaywall/openalex all failed)"
+    },
+    {
+      "arm": "retracted",
+      "doi": "10.1371/journal.pone.0009313",
+      "openalex_id": "https://openalex.org/W2078207717",
+      "title": "Selective Molecular Alterations in the Autophagy Pathway in Patients with Lewy Body Disease and in Models of α-Synucleinopathy",
+      "year": 2010,
+      "subfield": "Epidemiology",
+      "download_ok": true,
+      "fetch_source": "unpaywall",
+      "content_type": "application/pdf",
+      "pdf_sha256": "701fa9b7f69c3d1c3822cf7586d187d8718bff0eccf995b06f5ed9c21768cc33",
+      "scan": {
+        "overall_severity": 3,
+        "n_findings": 2,
+        "severity_counts": {
+          "0": 0,
+          "1": 0,
+          "2": 2,
+          "3": 0
+        },
+        "detectors_fired": [
+          "A6",
+          "T3"
+        ],
+        "detector_hits": {
+          "A6": 1,
+          "T3": 1
+        }
+      }
+    },
+    {
+      "arm": "control",
+      "doi": "10.1186/1471-2105-12-77",
+      "openalex_id": "https://openalex.org/W2006617902",
+      "title": "pROC: an open-source package for R and S+ to analyze and compare ROC curves",
+      "year": 2011,
+      "subfield": "Epidemiology",
+      "download_ok": true,
+      "fetch_source": "pmc",
+      "content_type": "application/pdf",
+      "pdf_sha256": "ea71a0df43d9899fc024de003a69d18adb483c0ea294355a516811cd4517ca17",
+      "scan": {
+        "overall_severity": 2,
+        "n_findings": 2,
+        "severity_counts": {
+          "0": 0,
+          "1": 1,
+          "2": 1,
+          "3": 0
+        },
+        "detectors_fired": [
+          "T3"
+        ],
+        "detector_hits": {
+          "T3": 2
+        }
+      }
+    },
+    {
+      "arm": "retracted",
+      "doi": "10.1038/nm.2577",
+      "openalex_id": "https://openalex.org/W2124808167",
+      "title": "RETRACTED ARTICLE: EGFR and MET receptor tyrosine kinase–altered microRNA expression induces tumorigenesis and gefitinib resistance in lung cancers",
+      "year": 2011,
+      "subfield": "Cancer Research",
+      "download_ok": false,
+      "fetch_source": "",
+      "content_type": "",
+      "pdf_sha256": null,
+      "download_error": "no source returned a valid PDF (pmc/unpaywall/openalex all failed)"
+    },
+    {
+      "arm": "control",
+      "doi": "10.1158/2159-8290.cd-12-0095",
+      "openalex_id": "https://openalex.org/W2149441684",
+      "title": "The cBio Cancer Genomics Portal: An Open Platform for Exploring Multidimensional Cancer Genomics Data",
+      "year": 2012,
+      "subfield": "Cancer Research",
+      "download_ok": false,
+      "fetch_source": "",
+      "content_type": "",
+      "pdf_sha256": null,
+      "download_error": "no source returned a valid PDF (pmc/unpaywall/openalex all failed)"
+    },
+    {
+      "arm": "retracted",
+      "doi": "10.1158/1940-6207.capr-10-0381",
+      "openalex_id": "https://openalex.org/W2145533373",
+      "title": "Obesity Is Associated with Inflammation and Elevated Aromatase Expression in the Mouse Mammary Gland",
+      "year": 2011,
+      "subfield": "Genetics",
+      "download_ok": false,
+      "fetch_source": "",
+      "content_type": "",
+      "pdf_sha256": null,
+      "download_error": "no source returned a valid PDF (pmc/unpaywall/openalex all failed)"
+    },
+    {
+      "arm": "control",
+      "doi": "10.1093/bioinformatics/btr330",
+      "openalex_id": "https://openalex.org/W2149992227",
+      "title": "The variant call format and VCFtools",
+      "year": 2011,
+      "subfield": "Genetics",
+      "download_ok": true,
+      "fetch_source": "pmc",
+      "content_type": "application/pdf",
+      "pdf_sha256": "ebda64850491aa4d6ebd276d0ed8f5f5d22ffd3fd5dd2c52f7bce9745054783a",
+      "scan": {
+        "overall_severity": 3,
+        "n_findings": 3,
+        "severity_counts": {
+          "0": 0,
+          "1": 1,
+          "2": 1,
+          "3": 1
+        },
+        "detectors_fired": [
+          "T3",
+          "T4"
+        ],
+        "detector_hits": {
+          "T3": 2,
+          "T4": 1
+        }
+      }
+    },
+    {
+      "arm": "retracted",
+      "doi": "10.1038/s41467-020-17687-3",
+      "openalex_id": "https://openalex.org/W3080845626",
+      "title": "RETRACTED ARTICLE: Origin and cross-species transmission of bat coronaviruses in China",
+      "year": 2020,
+      "subfield": "Public Health, Environmental and Occupational Health",
+      "download_ok": true,
+      "fetch_source": "unpaywall",
+      "content_type": "application/pdf",
+      "pdf_sha256": "9faad2debd6cbe5ca6c413a55657abed7fbde21a6cf34d1a18997ef9f5698870",
+      "scan": {
+        "overall_severity": 0,
+        "n_findings": 0,
+        "severity_counts": {
+          "0": 0,
+          "1": 0,
+          "2": 0,
+          "3": 0
+        },
+        "detectors_fired": [],
+        "detector_hits": {}
+      }
+    },
+    {
+      "arm": "control",
+      "doi": "10.1016/s0140-6736(19)30041-8",
+      "openalex_id": "https://openalex.org/W2928467655",
+      "title": "Health effects of dietary risks in 195 countries, 1990–2017: a systematic analysis for the Global Burden of Disease Study 2017",
+      "year": 2019,
+      "subfield": "Public Health, Environmental and Occupational Health",
+      "download_ok": false,
+      "fetch_source": "",
+      "content_type": "",
+      "pdf_sha256": null,
+      "download_error": "no source returned a valid PDF (pmc/unpaywall/openalex all failed)"
+    },
+    {
+      "arm": "retracted",
+      "doi": "10.1038/ijo.2013.20",
+      "openalex_id": "https://openalex.org/W2017879525",
+      "title": "RETRACTED ARTICLE: Correlation between body mass index and gut concentrations of Lactobacillus reuteri, Bifidobacterium animalis, Methanobrevibacter smithii and Escherichia coli",
+      "year": 2013,
+      "subfield": "Molecular Biology",
+      "download_ok": true,
+      "fetch_source": "pmc",
+      "content_type": "application/pdf",
+      "pdf_sha256": "83868a6dcc4da1974ded329b757e82c891fa7d1641009f745a1c96e0dda9a415",
+      "scan": {
+        "overall_severity": 2,
+        "n_findings": 1,
+        "severity_counts": {
+          "0": 0,
+          "1": 0,
+          "2": 1,
+          "3": 0
+        },
+        "detectors_fired": [
+          "T3"
+        ],
+        "detector_hits": {
+          "T3": 1
+        }
+      }
+    },
+    {
+      "arm": "control",
+      "doi": "10.1093/bioinformatics/btu170",
+      "openalex_id": "https://openalex.org/W2131271579",
+      "title": "Trimmomatic: a flexible trimmer for Illumina sequence data",
+      "year": 2014,
+      "subfield": "Molecular Biology",
+      "download_ok": true,
+      "fetch_source": "pmc",
+      "content_type": "application/pdf",
+      "pdf_sha256": "0610baa7db19b5de70930ebe2b3cfad95ccb1db9d8c80f5236dbe4c9bd9650ae",
+      "scan": {
+        "overall_severity": 2,
+        "n_findings": 1,
+        "severity_counts": {
+          "0": 0,
+          "1": 0,
+          "2": 1,
+          "3": 0
+        },
+        "detectors_fired": [
+          "T3"
+        ],
+        "detector_hits": {
+          "T3": 1
+        }
+      }
+    },
+    {
+      "arm": "retracted",
+      "doi": "10.1074/jbc.m804788200",
+      "openalex_id": "https://openalex.org/W2042907812",
+      "title": "Down-regulation of Micro-RNA-1 (miR-1) in Lung Cancer: Suppression of Tumorigenic Property of Lung Cancer Cells and Their Sensitization to Doxorubicin-Induced Apoptosis by miR-1",
+      "year": 2008,
+      "subfield": "Cancer Research",
+      "download_ok": false,
+      "fetch_source": "",
+      "content_type": "",
+      "pdf_sha256": null,
+      "download_error": "no source returned a valid PDF (pmc/unpaywall/openalex all failed)"
+    },
+    {
+      "arm": "control",
+      "doi": "10.1101/gr.082701.108",
+      "openalex_id": "https://openalex.org/W2026570544",
+      "title": "Most mammalian mRNAs are conserved targets of microRNAs",
+      "year": 2008,
+      "subfield": "Cancer Research",
+      "download_ok": true,
+      "fetch_source": "pmc",
+      "content_type": "application/pdf",
+      "pdf_sha256": "127a8340f3810969d056fbf6815bc0623fc9b7a0788032b121428d1fe02958ef",
+      "scan": {
+        "overall_severity": 2,
+        "n_findings": 2,
+        "severity_counts": {
+          "0": 0,
+          "1": 1,
+          "2": 1,
+          "3": 0
+        },
+        "detectors_fired": [
+          "T3"
+        ],
+        "detector_hits": {
+          "T3": 2
+        }
+      }
+    },
+    {
+      "arm": "retracted",
+      "doi": "10.1128/mcb.19.8.5363",
+      "openalex_id": "https://openalex.org/W2148032010",
+      "title": "RETRACTED ARTICLE: Purification and Identification of p68 RNA Helicase Acting as a Transcriptional Coactivator Specific for the Activation Function 1 of Human Estrogen Receptor α",
+      "year": 1999,
+      "subfield": "Genetics",
+      "download_ok": true,
+      "fetch_source": "pmc",
+      "content_type": "application/pdf",
+      "pdf_sha256": "252da9077b8e7a7fef67695a5d57cf2e0788508f325ba741f25484a84aec9189",
+      "scan": {
+        "overall_severity": 2,
+        "n_findings": 2,
+        "severity_counts": {
+          "0": 0,
+          "1": 1,
+          "2": 1,
+          "3": 0
+        },
+        "detectors_fired": [
+          "T3"
+        ],
+        "detector_hits": {
+          "T3": 2
+        }
+      }
+    },
+    {
+      "arm": "control",
+      "doi": "10.1093/genetics/155.2.945",
+      "openalex_id": "https://openalex.org/W2098126593",
+      "title": "Inference of Population Structure Using Multilocus Genotype Data",
+      "year": 2000,
+      "subfield": "Genetics",
+      "download_ok": true,
+      "fetch_source": "pmc",
+      "content_type": "application/pdf",
+      "pdf_sha256": "3a0d354f6cd8e7d2ad7a3883af747d803f8991d97dd37069b37c78af028d9f89",
+      "scan": {
+        "overall_severity": 2,
+        "n_findings": 2,
+        "severity_counts": {
+          "0": 0,
+          "1": 1,
+          "2": 1,
+          "3": 0
+        },
+        "detectors_fired": [
+          "T3"
+        ],
+        "detector_hits": {
+          "T3": 2
+        }
+      }
+    },
+    {
+      "arm": "retracted",
+      "doi": "10.1186/s12943-019-1128-6",
+      "openalex_id": "https://openalex.org/W3000655765",
+      "title": "RETRACTED ARTICLE: m6A demethylase ALKBH5 inhibits pancreatic cancer tumorigenesis by decreasing WIF-1 RNA methylation and mediating Wnt signaling",
+      "year": 2020,
+      "subfield": "Molecular Biology",
+      "download_ok": true,
+      "fetch_source": "pmc",
+      "content_type": "application/pdf",
+      "pdf_sha256": "ac16984692259a32fa90f464a8346eb573bd188717cbe74a58392b6fd776d207",
+      "scan": {
+        "overall_severity": 0,
+        "n_findings": 0,
+        "severity_counts": {
+          "0": 0,
+          "1": 0,
+          "2": 0,
+          "3": 0
+        },
+        "detectors_fired": [],
+        "detector_hits": {}
+      }
+    },
+    {
+      "arm": "control",
+      "doi": "10.1038/s41586-021-03819-2",
+      "openalex_id": "https://openalex.org/W3177828909",
+      "title": "Highly accurate protein structure prediction with AlphaFold",
+      "year": 2021,
+      "subfield": "Molecular Biology",
+      "download_ok": true,
+      "fetch_source": "pmc",
+      "content_type": "application/pdf",
+      "pdf_sha256": "6eae057a9faf4f671c3101e0745ed704460c6d3dec77243dfd3a9f2d2ab68970",
+      "scan": {
+        "overall_severity": 4,
+        "n_findings": 7,
+        "severity_counts": {
+          "0": 0,
+          "1": 0,
+          "2": 2,
+          "3": 1,
+          "4": 4
+        },
+        "detectors_fired": [
+          "F1"
+        ],
+        "detector_hits": {
+          "F1": 7
+        }
+      }
+    },
+    {
+      "arm": "retracted",
+      "doi": "10.1371/journal.pone.0078700",
+      "openalex_id": "https://openalex.org/W1994947876",
+      "title": "Resveratrol Inhibits Invasion and Metastasis of Colorectal Cancer Cells via MALAT1 Mediated Wnt/β-Catenin Signal Pathway",
+      "year": 2013,
+      "subfield": "Cancer Research",
+      "download_ok": true,
+      "fetch_source": "pmc",
+      "content_type": "application/pdf",
+      "pdf_sha256": "a57384da4c46bd8bdd12fb9db0477d1cf223e2134a689dba680fab6fc40c35fc",
+      "scan": {
+        "overall_severity": 2,
+        "n_findings": 1,
+        "severity_counts": {
+          "0": 0,
+          "1": 0,
+          "2": 1,
+          "3": 0
+        },
+        "detectors_fired": [
+          "T3"
+        ],
+        "detector_hits": {
+          "T3": 1
+        }
+      }
+    },
+    {
+      "arm": "control",
+      "doi": "10.1186/s13059-014-0550-8",
+      "openalex_id": "https://openalex.org/W2179438025",
+      "title": "Moderated estimation of fold change and dispersion for RNA-seq data with DESeq2",
+      "year": 2014,
+      "subfield": "Cancer Research",
+      "download_ok": true,
+      "fetch_source": "pmc",
+      "content_type": "application/pdf",
+      "pdf_sha256": "bf6e86ec8bea5834bce478b907bf527af76fcecfa31680c0ae8291ab1f915572",
+      "scan": {
+        "overall_severity": 2,
+        "n_findings": 1,
+        "severity_counts": {
+          "0": 0,
+          "1": 0,
+          "2": 1,
+          "3": 0
+        },
+        "detectors_fired": [
+          "T3"
+        ],
+        "detector_hits": {
+          "T3": 1
+        }
+      }
+    },
+    {
+      "arm": "retracted",
+      "doi": "10.1186/s13046-020-01648-1",
+      "openalex_id": "https://openalex.org/W3047616340",
+      "title": "RETRACTED ARTICLE: Circular RNA circ-CPA4/ let-7 miRNA/PD-L1 axis regulates cell growth, stemness, drug resistance and immune evasion in non-small cell lung cancer (NSCLC)",
+      "year": 2020,
+      "subfield": "Molecular Biology",
+      "download_ok": true,
+      "fetch_source": "pmc",
+      "content_type": "application/pdf",
+      "pdf_sha256": "8ba7c0e2d9262010a7784340a0775d51d033e48e750fc0eec2f214edc9713d84",
+      "scan": {
+        "overall_severity": 0,
+        "n_findings": 0,
+        "severity_counts": {
+          "0": 0,
+          "1": 0,
+          "2": 0,
+          "3": 0
+        },
+        "detectors_fired": [],
+        "detector_hits": {}
+      }
+    },
+    {
+      "arm": "control",
+      "doi": "10.1038/s41586-021-03819-2",
+      "openalex_id": "https://openalex.org/W3177828909",
+      "title": "Highly accurate protein structure prediction with AlphaFold",
+      "year": 2021,
+      "subfield": "Molecular Biology",
+      "download_ok": true,
+      "fetch_source": "pmc",
+      "content_type": "application/pdf",
+      "pdf_sha256": "6eae057a9faf4f671c3101e0745ed704460c6d3dec77243dfd3a9f2d2ab68970",
+      "scan": {
+        "overall_severity": 4,
+        "n_findings": 7,
+        "severity_counts": {
+          "0": 0,
+          "1": 0,
+          "2": 2,
+          "3": 1,
+          "4": 4
+        },
+        "detectors_fired": [
+          "F1"
+        ],
+        "detector_hits": {
+          "F1": 7
+        }
+      }
+    },
+    {
+      "arm": "retracted",
+      "doi": "10.1164/rccm.200803-380oc",
+      "openalex_id": "https://openalex.org/W2138336750",
+      "title": "Decline in NRF2-regulated Antioxidants in Chronic Obstructive Pulmonary Disease Lungs Due to Loss of Its Positive Regulator, DJ-1",
+      "year": 2008,
+      "subfield": "Molecular Biology",
+      "download_ok": false,
+      "fetch_source": "",
+      "content_type": "",
+      "pdf_sha256": null,
+      "download_error": "no source returned a valid PDF (pmc/unpaywall/openalex all failed)"
+    },
+    {
+      "arm": "control",
+      "doi": "10.1093/bioinformatics/btp352",
+      "openalex_id": "https://openalex.org/W2108234281",
+      "title": "The Sequence Alignment/Map format and SAMtools",
+      "year": 2009,
+      "subfield": "Molecular Biology",
+      "download_ok": true,
+      "fetch_source": "pmc",
+      "content_type": "application/pdf",
+      "pdf_sha256": "7d03dcf4170e2ea9b011ffd945721f3fc655ea20fb0b53d9ef96364fff7f0255",
+      "scan": {
+        "overall_severity": 2,
+        "n_findings": 2,
+        "severity_counts": {
+          "0": 0,
+          "1": 1,
+          "2": 1,
+          "3": 0
+        },
+        "detectors_fired": [
+          "T3"
+        ],
+        "detector_hits": {
+          "T3": 2
+        }
+      }
+    },
+    {
+      "arm": "retracted",
+      "doi": "10.1007/s10489-020-01714-3",
+      "openalex_id": "https://openalex.org/W3019186020",
+      "title": "RETRACTED ARTICLE: Deep learning system to screen coronavirus disease 2019 pneumonia",
+      "year": 2020,
+      "subfield": "Radiology, Nuclear Medicine and Imaging",
+      "download_ok": true,
+      "fetch_source": "pmc",
+      "content_type": "application/pdf",
+      "pdf_sha256": "5df4b74e3ba764523d1f79e56ab5826cd1c89fa95365a157541226269a6befe7",
+      "scan": {
+        "overall_severity": 2,
+        "n_findings": 2,
+        "severity_counts": {
+          "0": 0,
+          "1": 1,
+          "2": 1,
+          "3": 0
+        },
+        "detectors_fired": [
+          "T3"
+        ],
+        "detector_hits": {
+          "T3": 2
+        }
+      }
+    },
+    {
+      "arm": "control",
+      "doi": "10.1093/eurheartj/ehz425",
+      "openalex_id": "https://openalex.org/W3011371150",
+      "title": "2019 ESC Guidelines for the diagnosis and management of chronic coronary syndromes",
+      "year": 2019,
+      "subfield": "Radiology, Nuclear Medicine and Imaging",
+      "download_ok": false,
+      "fetch_source": "",
+      "content_type": "",
+      "pdf_sha256": null,
+      "download_error": "no source returned a valid PDF (pmc/unpaywall/openalex all failed)"
+    },
+    {
+      "arm": "retracted",
+      "doi": "10.1186/1471-2180-10-1",
+      "openalex_id": "https://openalex.org/W2140132276",
+      "title": "Molecular characterization of Legionella pneumophila-induced interleukin-8 expression in T cells",
+      "year": 2010,
+      "subfield": "Endocrinology",
+      "download_ok": true,
+      "fetch_source": "pmc",
+      "content_type": "application/pdf",
+      "pdf_sha256": "c59bab29c966ae438282b1463ceda1c67d47d31c98924f14c8e44e727cb1fac7",
+      "scan": {
+        "overall_severity": 2,
+        "n_findings": 2,
+        "severity_counts": {
+          "0": 0,
+          "1": 1,
+          "2": 1,
+          "3": 0
+        },
+        "detectors_fired": [
+          "T3"
+        ],
+        "detector_hits": {
+          "T3": 2
+        }
+      }
+    },
+    {
+      "arm": "control",
+      "doi": "10.1371/journal.pgen.1000344",
+      "openalex_id": "https://openalex.org/W2142402047",
+      "title": "Organised Genome Dynamics in the Escherichia coli Species Results in Highly Diverse Adaptive Paths",
+      "year": 2009,
+      "subfield": "Endocrinology",
+      "download_ok": true,
+      "fetch_source": "pmc",
+      "content_type": "application/pdf",
+      "pdf_sha256": "199b996a17837fec448e2b2d6db87a0c181cf231b8040d051b294cc5ddc0ac68",
+      "scan": {
+        "overall_severity": 2,
+        "n_findings": 1,
+        "severity_counts": {
+          "0": 0,
+          "1": 0,
+          "2": 1,
+          "3": 0
+        },
+        "detectors_fired": [
+          "T3"
+        ],
+        "detector_hits": {
+          "T3": 1
+        }
+      }
+    },
+    {
+      "arm": "retracted",
+      "doi": "10.1038/nmeth.4293",
+      "openalex_id": "https://openalex.org/W2619806210",
+      "title": "Unexpected mutations after CRISPR–Cas9 editing in vivo",
+      "year": 2017,
+      "subfield": "Molecular Biology",
+      "download_ok": false,
+      "fetch_source": "",
+      "content_type": "",
+      "pdf_sha256": null,
+      "download_error": "no source returned a valid PDF (pmc/unpaywall/openalex all failed)"
+    },
+    {
+      "arm": "control",
+      "doi": "10.1093/molbev/msw054",
+      "openalex_id": "https://openalex.org/W2311203695",
+      "title": "MEGA7: Molecular Evolutionary Genetics Analysis Version 7.0 for Bigger Datasets",
+      "year": 2016,
+      "subfield": "Molecular Biology",
+      "download_ok": true,
+      "fetch_source": "pmc",
+      "content_type": "application/pdf",
+      "pdf_sha256": "fe2f6249e1afd8a0df11d3efc8b9e35cf2b1c05d8c479bdb96e6300961a20c3a",
+      "scan": {
+        "overall_severity": 2,
+        "n_findings": 2,
+        "severity_counts": {
+          "0": 0,
+          "1": 1,
+          "2": 1,
+          "3": 0
+        },
+        "detectors_fired": [
+          "T3"
+        ],
+        "detector_hits": {
+          "T3": 2
+        }
+      }
+    },
+    {
+      "arm": "retracted",
+      "doi": "10.1038/s41419-020-2336-0",
+      "openalex_id": "https://openalex.org/W3007173362",
+      "title": "RETRACTED ARTICLE: Circular RNA circRNF20 promotes breast cancer tumorigenesis and Warburg effect through miR-487a/HIF-1α/HK2",
+      "year": 2020,
+      "subfield": "Molecular Biology",
+      "download_ok": true,
+      "fetch_source": "unpaywall",
+      "content_type": "application/pdf",
+      "pdf_sha256": "9a1b9cbb386a7dad9e043d3d3a5d9c593d2e619c5b3c6830fce3f7df1ea8711b",
+      "scan": {
+        "overall_severity": 3,
+        "n_findings": 3,
+        "severity_counts": {
+          "0": 0,
+          "1": 1,
+          "2": 1,
+          "3": 1
+        },
+        "detectors_fired": [
+          "T3",
+          "T4"
+        ],
+        "detector_hits": {
+          "T3": 2,
+          "T4": 1
+        }
+      }
+    },
+    {
+      "arm": "control",
+      "doi": "10.1038/s41586-021-03819-2",
+      "openalex_id": "https://openalex.org/W3177828909",
+      "title": "Highly accurate protein structure prediction with AlphaFold",
+      "year": 2021,
+      "subfield": "Molecular Biology",
+      "download_ok": true,
+      "fetch_source": "pmc",
+      "content_type": "application/pdf",
+      "pdf_sha256": "6eae057a9faf4f671c3101e0745ed704460c6d3dec77243dfd3a9f2d2ab68970",
+      "scan": {
+        "overall_severity": 4,
+        "n_findings": 7,
+        "severity_counts": {
+          "0": 0,
+          "1": 0,
+          "2": 2,
+          "3": 1,
+          "4": 4
+        },
+        "detectors_fired": [
+          "F1"
+        ],
+        "detector_hits": {
+          "F1": 7
+        }
+      }
+    },
+    {
+      "arm": "retracted",
+      "doi": "10.1172/jci34378",
+      "openalex_id": "https://openalex.org/W4235311234",
+      "title": "In utero supplementation with methyl donors enhances allergic airway disease in mice",
+      "year": 2008,
+      "subfield": "Molecular Biology",
+      "download_ok": true,
+      "fetch_source": "pmc",
+      "content_type": "application/pdf",
+      "pdf_sha256": "dedd088d615ce98d9172bb67bac6f271cbbbc2721255a9279c18f359ec1e97ab",
+      "scan": {
+        "overall_severity": 3,
+        "n_findings": 2,
+        "severity_counts": {
+          "0": 0,
+          "1": 0,
+          "2": 1,
+          "3": 1
+        },
+        "detectors_fired": [
+          "T3",
+          "T4"
+        ],
+        "detector_hits": {
+          "T3": 1,
+          "T4": 1
+        }
+      }
+    },
+    {
+      "arm": "control",
+      "doi": "10.1093/bioinformatics/btp352",
+      "openalex_id": "https://openalex.org/W2108234281",
+      "title": "The Sequence Alignment/Map format and SAMtools",
+      "year": 2009,
+      "subfield": "Molecular Biology",
+      "download_ok": true,
+      "fetch_source": "pmc",
+      "content_type": "application/pdf",
+      "pdf_sha256": "7d03dcf4170e2ea9b011ffd945721f3fc655ea20fb0b53d9ef96364fff7f0255",
+      "scan": {
+        "overall_severity": 2,
+        "n_findings": 2,
+        "severity_counts": {
+          "0": 0,
+          "1": 1,
+          "2": 1,
+          "3": 0
+        },
+        "detectors_fired": [
+          "T3"
+        ],
+        "detector_hits": {
+          "T3": 2
+        }
+      }
+    },
+    {
+      "arm": "retracted",
+      "doi": "10.1038/onc.2011.365",
+      "openalex_id": "https://openalex.org/W2020105314",
+      "title": "RETRACTED ARTICLE: HIF-1-dependent expression of angiopoietin-like 4 and L1CAM mediates vascular metastasis of hypoxic breast cancer cells to the lungs",
+      "year": 2011,
+      "subfield": "Cancer Research",
+      "download_ok": false,
+      "fetch_source": "",
+      "content_type": "",
+      "pdf_sha256": null,
+      "download_error": "no source returned a valid PDF (pmc/unpaywall/openalex all failed)"
+    },
+    {
+      "arm": "control",
+      "doi": "10.1158/2159-8290.cd-12-0095",
+      "openalex_id": "https://openalex.org/W2149441684",
+      "title": "The cBio Cancer Genomics Portal: An Open Platform for Exploring Multidimensional Cancer Genomics Data",
+      "year": 2012,
+      "subfield": "Cancer Research",
+      "download_ok": false,
+      "fetch_source": "",
+      "content_type": "",
+      "pdf_sha256": null,
+      "download_error": "no source returned a valid PDF (pmc/unpaywall/openalex all failed)"
+    },
+    {
+      "arm": "retracted",
+      "doi": "10.1371/journal.pbio.1000465",
+      "openalex_id": "https://openalex.org/W2030818171",
+      "title": "IL-6 and IL-10 Anti-Inflammatory Activity Links Exercise to Hypothalamic Insulin and Leptin Sensitivity through IKKβ and ER Stress Inhibition",
+      "year": 2010,
+      "subfield": "Physiology",
+      "download_ok": true,
+      "fetch_source": "unpaywall",
+      "content_type": "application/pdf",
+      "pdf_sha256": "e491c3667aa08902f8eb4a71a77d319e1067f623eb2bc5fb0eb5a87afa660102",
+      "scan": {
+        "overall_severity": 2,
+        "n_findings": 1,
+        "severity_counts": {
+          "0": 0,
+          "1": 0,
+          "2": 1,
+          "3": 0
+        },
+        "detectors_fired": [
+          "T3"
+        ],
+        "detector_hits": {
+          "T3": 1
+        }
+      }
+    },
+    {
+      "arm": "control",
+      "doi": "10.1093/ageing/afq034",
+      "openalex_id": "https://openalex.org/W2102902846",
+      "title": "Sarcopenia: European consensus on definition and diagnosis",
+      "year": 2010,
+      "subfield": "Physiology",
+      "download_ok": true,
+      "fetch_source": "pmc",
+      "content_type": "application/pdf",
+      "pdf_sha256": "9d1f235a1674c6530927c573e179e232e4704cfcf4e8e27d2c036d02458847c1",
+      "scan": {
+        "overall_severity": 2,
+        "n_findings": 2,
+        "severity_counts": {
+          "0": 0,
+          "1": 1,
+          "2": 1,
+          "3": 0
+        },
+        "detectors_fired": [
+          "T3"
+        ],
+        "detector_hits": {
+          "T3": 2
+        }
+      }
+    },
+    {
+      "arm": "retracted",
+      "doi": "10.1172/jci28423",
+      "openalex_id": "https://openalex.org/W2112078889",
+      "title": "Heat shock protein 60 enhances CD4+ CD25+ regulatory T cell function via innate TLR2 signaling",
+      "year": 2006,
+      "subfield": "Immunology",
+      "download_ok": true,
+      "fetch_source": "pmc",
+      "content_type": "application/pdf",
+      "pdf_sha256": "b835daca1ad072f1170040adc0ef6780bf881d1d2dd517ec708cdb1cf8634620",
+      "scan": {
+        "overall_severity": 2,
+        "n_findings": 1,
+        "severity_counts": {
+          "0": 0,
+          "1": 0,
+          "2": 1,
+          "3": 0
+        },
+        "detectors_fired": [
+          "T3"
+        ],
+        "detector_hits": {
+          "T3": 1
+        }
+      }
+    },
+    {
+      "arm": "control",
+      "doi": "10.1016/j.cell.2006.07.035",
+      "openalex_id": "https://openalex.org/W2142017607",
+      "title": "The Orphan Nuclear Receptor RORγt Directs the Differentiation Program of Proinflammatory IL-17+ T Helper Cells",
+      "year": 2006,
+      "subfield": "Immunology",
+      "download_ok": false,
+      "fetch_source": "",
+      "content_type": "",
+      "pdf_sha256": null,
+      "download_error": "no source returned a valid PDF (pmc/unpaywall/openalex all failed)"
+    },
+    {
+      "arm": "retracted",
+      "doi": "10.3390/md203123",
+      "openalex_id": "https://openalex.org/W2094685319",
+      "title": "Biomedical Compounds from Marine organisms",
+      "year": 2004,
+      "subfield": "Biotechnology",
+      "download_ok": false,
+      "fetch_source": "",
+      "content_type": "",
+      "pdf_sha256": null,
+      "download_error": "no source returned a valid PDF (pmc/unpaywall/openalex all failed)"
+    },
+    {
+      "arm": "control",
+      "doi": "10.1002/anie.200390115",
+      "openalex_id": "https://openalex.org/W2171513236",
+      "title": "Salinosporamide A: A Highly Cytotoxic Proteasome Inhibitor from a Novel Microbial Source, a Marine Bacterium of the New Genus <i>Salinospora</i>",
+      "year": 2003,
+      "subfield": "Biotechnology",
+      "download_ok": false,
+      "fetch_source": "",
+      "content_type": "",
+      "pdf_sha256": null,
+      "download_error": "no source returned a valid PDF (pmc/unpaywall/openalex all failed)"
+    },
+    {
+      "arm": "retracted",
+      "doi": "10.1161/circresaha.110.223024",
+      "openalex_id": "https://openalex.org/W2037424183",
+      "title": "Cardiomyogenesis in the Adult Human Heart",
+      "year": 2010,
+      "subfield": "Molecular Biology",
+      "download_ok": false,
+      "fetch_source": "",
+      "content_type": "",
+      "pdf_sha256": null,
+      "download_error": "no source returned a valid PDF (pmc/unpaywall/openalex all failed)"
+    },
+    {
+      "arm": "control",
+      "doi": "10.1093/bioinformatics/btp352",
+      "openalex_id": "https://openalex.org/W2108234281",
+      "title": "The Sequence Alignment/Map format and SAMtools",
+      "year": 2009,
+      "subfield": "Molecular Biology",
+      "download_ok": true,
+      "fetch_source": "pmc",
+      "content_type": "application/pdf",
+      "pdf_sha256": "7d03dcf4170e2ea9b011ffd945721f3fc655ea20fb0b53d9ef96364fff7f0255",
+      "scan": {
+        "overall_severity": 2,
+        "n_findings": 2,
+        "severity_counts": {
+          "0": 0,
+          "1": 1,
+          "2": 1,
+          "3": 0
+        },
+        "detectors_fired": [
+          "T3"
+        ],
+        "detector_hits": {
+          "T3": 2
+        }
+      }
+    },
+    {
+      "arm": "retracted",
+      "doi": "10.1158/0008-5472.can-05-4281",
+      "openalex_id": "https://openalex.org/W2149226292",
+      "title": "Down-regulation of Notch-1 Inhibits Invasion by Inactivation of Nuclear Factor-κB, Vascular Endothelial Growth Factor, and Matrix Metalloproteinase-9 in Pancreatic Cancer Cells",
+      "year": 2006,
+      "subfield": "Molecular Biology",
+      "download_ok": false,
+      "fetch_source": "",
+      "content_type": "",
+      "pdf_sha256": null,
+      "download_error": "no source returned a valid PDF (pmc/unpaywall/openalex all failed)"
+    },
+    {
+      "arm": "control",
+      "doi": "10.1073/pnas.0506580102",
+      "openalex_id": "https://openalex.org/W2130410032",
+      "title": "Gene set enrichment analysis: A knowledge-based approach for interpreting genome-wide expression profiles",
+      "year": 2005,
+      "subfield": "Molecular Biology",
+      "download_ok": true,
+      "fetch_source": "pmc",
+      "content_type": "application/pdf",
+      "pdf_sha256": "9a53c105558bae9551c8718cba44f76370e0c7a3e5caa07478dfaaa188fa9444",
+      "scan": {
+        "overall_severity": 3,
+        "n_findings": 3,
+        "severity_counts": {
+          "0": 0,
+          "1": 1,
+          "2": 1,
+          "3": 1
+        },
+        "detectors_fired": [
+          "T3",
+          "T4"
+        ],
+        "detector_hits": {
+          "T3": 2,
+          "T4": 1
+        }
+      }
+    },
+    {
+      "arm": "retracted",
+      "doi": "10.1038/s41388-018-0619-z",
+      "openalex_id": "https://openalex.org/W2905556019",
+      "title": "RETRACTED ARTICLE: Exosome circRNA secreted from adipocytes promotes the growth of hepatocellular carcinoma by targeting deubiquitination-related USP7",
+      "year": 2018,
+      "subfield": "Molecular Biology",
+      "download_ok": true,
+      "fetch_source": "pmc",
+      "content_type": "application/pdf",
+      "pdf_sha256": "21ea6ed74ffe3b9726f585e53fd6f9dda98adf0957e401ec73d8bc3d0ef6e746",
+      "scan": {
+        "overall_severity": 2,
+        "n_findings": 2,
+        "severity_counts": {
+          "0": 0,
+          "1": 1,
+          "2": 1,
+          "3": 0
+        },
+        "detectors_fired": [
+          "T3"
+        ],
+        "detector_hits": {
+          "T3": 2
+        }
+      }
+    },
+    {
+      "arm": "control",
+      "doi": "10.1093/molbev/msy096",
+      "openalex_id": "https://openalex.org/W2799524357",
+      "title": "MEGA X: Molecular Evolutionary Genetics Analysis across Computing Platforms",
+      "year": 2018,
+      "subfield": "Molecular Biology",
+      "download_ok": true,
+      "fetch_source": "pmc",
+      "content_type": "application/pdf",
+      "pdf_sha256": "1ae1867cb0478fafe15d66d1dee6889e600bbcd8b9ce11178a492d06f5767ae8",
+      "scan": {
+        "overall_severity": 2,
+        "n_findings": 2,
+        "severity_counts": {
+          "0": 0,
+          "1": 1,
+          "2": 1,
+          "3": 0
+        },
+        "detectors_fired": [
+          "T3"
+        ],
+        "detector_hits": {
+          "T3": 2
+        }
+      }
+    },
+    {
+      "arm": "retracted",
+      "doi": "10.1074/jbc.m110.111021",
+      "openalex_id": "https://openalex.org/W2046600125",
+      "title": "A Phosphate Transporter from the Root Endophytic Fungus Piriformospora indica Plays a Role in Phosphate Transport to the Host Plant",
+      "year": 2010,
+      "subfield": "Plant Science",
+      "download_ok": true,
+      "fetch_source": "pmc",
+      "content_type": "application/pdf",
+      "pdf_sha256": "41caff6520095e3fcb2fad83a1d025ef0302b16dfd3af5d94ab685e858e5254f",
+      "scan": {
+        "overall_severity": 2,
+        "n_findings": 2,
+        "severity_counts": {
+          "0": 0,
+          "1": 1,
+          "2": 1,
+          "3": 0
+        },
+        "detectors_fired": [
+          "T3"
+        ],
+        "detector_hits": {
+          "T3": 2
+        }
+      }
+    },
+    {
+      "arm": "control",
+      "doi": "10.4161/psb.5.8.12337",
+      "openalex_id": "https://openalex.org/W2089051496",
+      "title": "Induced root-secreted phenolic compounds as a belowground plant defense",
+      "year": 2010,
+      "subfield": "Plant Science",
+      "download_ok": true,
+      "fetch_source": "pmc",
+      "content_type": "application/pdf",
+      "pdf_sha256": "a5b510a72450ded7720023201a2c669d03141a39b819bad4f2bc9863e49806ec",
+      "scan": {
+        "overall_severity": 2,
+        "n_findings": 2,
+        "severity_counts": {
+          "0": 0,
+          "1": 1,
+          "2": 1,
+          "3": 0
+        },
+        "detectors_fired": [
+          "T3"
+        ],
+        "detector_hits": {
+          "T3": 2
+        }
+      }
+    },
+    {
+      "arm": "retracted",
+      "doi": "10.1126/science.1086870",
+      "openalex_id": "https://openalex.org/W2070987160",
+      "title": "Hairpin RNAs and Retrotransposon LTRs Effect RNAi and Chromatin-Based Gene Silencing",
+      "year": 2003,
+      "subfield": "Plant Science",
+      "download_ok": true,
+      "fetch_source": "unpaywall",
+      "content_type": "application/pdf;charset=utf-8",
+      "pdf_sha256": "ff1b2163e461bb2584cd3b40671b30ca9260728c5154024f574b233b72beabaf",
+      "scan": {
+        "overall_severity": 2,
+        "n_findings": 2,
+        "severity_counts": {
+          "0": 0,
+          "1": 1,
+          "2": 1,
+          "3": 0
+        },
+        "detectors_fired": [
+          "T3"
+        ],
+        "detector_hits": {
+          "T3": 2
+        }
+      }
+    },
+    {
+      "arm": "control",
+      "doi": "10.1093/nar/30.1.325",
+      "openalex_id": "https://openalex.org/W2035908878",
+      "title": "PlantCARE, a database of plant cis-acting regulatory elements and a portal to tools for in silico analysis of promoter sequences",
+      "year": 2002,
+      "subfield": "Plant Science",
+      "download_ok": true,
+      "fetch_source": "pmc",
+      "content_type": "application/pdf",
+      "pdf_sha256": "0b66f48f6ffc3dded762a5753b017256647b6fd7cf5b0ac02a859f082c7534dd",
+      "scan": {
+        "overall_severity": 2,
+        "n_findings": 2,
+        "severity_counts": {
+          "0": 0,
+          "1": 1,
+          "2": 1,
+          "3": 0
+        },
+        "detectors_fired": [
+          "T3"
+        ],
+        "detector_hits": {
+          "T3": 2
+        }
+      }
+    },
+    {
+      "arm": "retracted",
+      "doi": "10.1371/journal.ppat.1000480",
+      "openalex_id": "https://openalex.org/W2029717255",
+      "title": "Innate Immune Sensing of Modified Vaccinia Virus Ankara (MVA) Is Mediated by TLR2-TLR6, MDA-5 and the NALP3 Inflammasome",
+      "year": 2009,
+      "subfield": "Immunology",
+      "download_ok": true,
+      "fetch_source": "pmc",
+      "content_type": "application/pdf",
+      "pdf_sha256": "855b23546d80e43af45c7aae6ccf755478daf0393349aed522e8b676aaa608d7",
+      "scan": {
+        "overall_severity": 2,
+        "n_findings": 1,
+        "severity_counts": {
+          "0": 0,
+          "1": 0,
+          "2": 1,
+          "3": 0
+        },
+        "detectors_fired": [
+          "T3"
+        ],
+        "detector_hits": {
+          "T3": 1
+        }
+      }
+    },
+    {
+      "arm": "control",
+      "doi": "10.1056/nejmoa1003466",
+      "openalex_id": "https://openalex.org/W2097995306",
+      "title": "Improved Survival with Ipilimumab in Patients with Metastatic Melanoma",
+      "year": 2010,
+      "subfield": "Immunology",
+      "download_ok": false,
+      "fetch_source": "",
+      "content_type": "",
+      "pdf_sha256": null,
+      "download_error": "no source returned a valid PDF (pmc/unpaywall/openalex all failed)"
+    },
+    {
+      "arm": "retracted",
+      "doi": "10.1016/s2213-8587(18)30150-5",
+      "openalex_id": "https://openalex.org/W4242474094",
+      "title": "Worldwide burden of cancer attributable to diabetes and high body-mass index: a comparative risk assessment",
+      "year": 2018,
+      "subfield": "Molecular Biology",
+      "download_ok": true,
+      "fetch_source": "pmc",
+      "content_type": "application/pdf",
+      "pdf_sha256": "80eeb9f9b38351d24cc867ea14d84ef837e1b92c819bfc9c23d250a98af02716",
+      "scan": {
+        "overall_severity": 2,
+        "n_findings": 1,
+        "severity_counts": {
+          "0": 0,
+          "1": 0,
+          "2": 1,
+          "3": 0
+        },
+        "detectors_fired": [
+          "T3"
+        ],
+        "detector_hits": {
+          "T3": 1
+        }
+      }
+    },
+    {
+      "arm": "control",
+      "doi": "10.1093/molbev/msy096",
+      "openalex_id": "https://openalex.org/W2799524357",
+      "title": "MEGA X: Molecular Evolutionary Genetics Analysis across Computing Platforms",
+      "year": 2018,
+      "subfield": "Molecular Biology",
+      "download_ok": true,
+      "fetch_source": "pmc",
+      "content_type": "application/pdf",
+      "pdf_sha256": "1ae1867cb0478fafe15d66d1dee6889e600bbcd8b9ce11178a492d06f5767ae8",
+      "scan": {
+        "overall_severity": 2,
+        "n_findings": 2,
+        "severity_counts": {
+          "0": 0,
+          "1": 1,
+          "2": 1,
+          "3": 0
+        },
+        "detectors_fired": [
+          "T3"
+        ],
+        "detector_hits": {
+          "T3": 2
+        }
+      }
+    },
+    {
+      "arm": "retracted",
+      "doi": "10.1074/jbc.273.11.6525",
+      "openalex_id": "https://openalex.org/W2088432812",
+      "title": "Characterization of a Cytosolic Heat-shock Protein-Caveolin Chaperone Complex",
+      "year": 1998,
+      "subfield": "Cell Biology",
+      "download_ok": false,
+      "fetch_source": "",
+      "content_type": "",
+      "pdf_sha256": null,
+      "download_error": "no source returned a valid PDF (pmc/unpaywall/openalex all failed)"
+    },
+    {
+      "arm": "control",
+      "doi": "10.1093/oxfordjournals.molbev.a026092",
+      "openalex_id": "https://openalex.org/W2006444758",
+      "title": "Phylogenetic relationships among ascomycetes: evidence from an RNA polymerse II subunit",
+      "year": 1999,
+      "subfield": "Cell Biology",
+      "download_ok": false,
+      "fetch_source": "",
+      "content_type": "",
+      "pdf_sha256": null,
+      "download_error": "no source returned a valid PDF (pmc/unpaywall/openalex all failed)"
+    },
+    {
+      "arm": "retracted",
+      "doi": "10.1074/jbc.m110.211466",
+      "openalex_id": "https://openalex.org/W2049175236",
+      "title": "Exercise Increases Mitochondrial PGC-1α Content and Promotes Nuclear-Mitochondrial Cross-talk to Coordinate Mitochondrial Biogenesis",
+      "year": 2011,
+      "subfield": "Physiology",
+      "download_ok": true,
+      "fetch_source": "pmc",
+      "content_type": "application/pdf",
+      "pdf_sha256": "8ef1dcc58e172c89b4822044846bf4f08257206db23db95a785763520ecae491",
+      "scan": {
+        "overall_severity": 2,
+        "n_findings": 2,
+        "severity_counts": {
+          "0": 0,
+          "1": 1,
+          "2": 1,
+          "3": 0
+        },
+        "detectors_fired": [
+          "T3"
+        ],
+        "detector_hits": {
+          "T3": 2
+        }
+      }
+    },
+    {
+      "arm": "control",
+      "doi": "10.1093/ageing/afq034",
+      "openalex_id": "https://openalex.org/W2102902846",
+      "title": "Sarcopenia: European consensus on definition and diagnosis",
+      "year": 2010,
+      "subfield": "Physiology",
+      "download_ok": true,
+      "fetch_source": "pmc",
+      "content_type": "application/pdf",
+      "pdf_sha256": "9d1f235a1674c6530927c573e179e232e4704cfcf4e8e27d2c036d02458847c1",
+      "scan": {
+        "overall_severity": 2,
+        "n_findings": 2,
+        "severity_counts": {
+          "0": 0,
+          "1": 1,
+          "2": 1,
+          "3": 0
+        },
+        "detectors_fired": [
+          "T3"
+        ],
+        "detector_hits": {
+          "T3": 2
+        }
+      }
+    },
+    {
+      "arm": "retracted",
+      "doi": "10.1038/ng1121",
+      "openalex_id": "https://openalex.org/W4229809569",
+      "title": "Mutations in CLCN2 encoding a voltage-gated chloride channel are associated with idiopathic generalized epilepsies",
+      "year": 2003,
+      "subfield": "Molecular Biology",
+      "download_ok": false,
+      "fetch_source": "",
+      "content_type": "",
+      "pdf_sha256": null,
+      "download_error": "no source returned a valid PDF (pmc/unpaywall/openalex all failed)"
+    },
+    {
+      "arm": "control",
+      "doi": "10.1101/gr.1239303",
+      "openalex_id": "https://openalex.org/W2159675211",
+      "title": "Cytoscape: A Software Environment for Integrated Models of Biomolecular Interaction Networks",
+      "year": 2003,
+      "subfield": "Molecular Biology",
+      "download_ok": true,
+      "fetch_source": "pmc",
+      "content_type": "application/pdf",
+      "pdf_sha256": "338d5ca40b3e683f513e281db792764db326683b721410c96d344c72efedef37",
+      "scan": {
+        "overall_severity": 2,
+        "n_findings": 2,
+        "severity_counts": {
+          "0": 0,
+          "1": 1,
+          "2": 1,
+          "3": 0
+        },
+        "detectors_fired": [
+          "T3"
+        ],
+        "detector_hits": {
+          "T3": 2
+        }
+      }
+    },
+    {
+      "arm": "retracted",
+      "doi": "10.3892/or.2015.3712",
+      "openalex_id": "https://openalex.org/W2001764001",
+      "title": "Erastin sensitizes glioblastoma cells to temozolomide by restraining xCT and cystathionine-γ-lyase function",
+      "year": 2015,
+      "subfield": "Biochemistry",
+      "download_ok": true,
+      "fetch_source": "unpaywall",
+      "content_type": "application/pdf;charset=utf-8",
+      "pdf_sha256": "4d8176eaa4cfc2c54f9da555fd5ac706f9ac4b556e8fdce00686d7f4cd24e1be",
+      "scan": {
+        "overall_severity": 2,
+        "n_findings": 2,
+        "severity_counts": {
+          "0": 0,
+          "1": 1,
+          "2": 1,
+          "3": 0
+        },
+        "detectors_fired": [
+          "T3"
+        ],
+        "detector_hits": {
+          "T3": 2
+        }
+      }
+    },
+    {
+      "arm": "control",
+      "doi": "10.1016/j.devcel.2015.01.029",
+      "openalex_id": "https://openalex.org/W2035310767",
+      "title": "Fatty Acid Trafficking in Starved Cells: Regulation by Lipid Droplet Lipolysis, Autophagy, and Mitochondrial Fusion Dynamics",
+      "year": 2015,
+      "subfield": "Biochemistry",
+      "download_ok": false,
+      "fetch_source": "",
+      "content_type": "",
+      "pdf_sha256": null,
+      "download_error": "no source returned a valid PDF (pmc/unpaywall/openalex all failed)"
+    },
+    {
+      "arm": "retracted",
+      "doi": "10.4049/jimmunol.176.3.1534",
+      "openalex_id": "https://openalex.org/W1893364625",
+      "title": "Pregnancy-Associated Exosomes and Their Modulation of T Cell Signaling",
+      "year": 2006,
+      "subfield": "Immunology",
+      "download_ok": false,
+      "fetch_source": "",
+      "content_type": "",
+      "pdf_sha256": null,
+      "download_error": "no source returned a valid PDF (pmc/unpaywall/openalex all failed)"
+    },
+    {
+      "arm": "control",
+      "doi": "10.1016/j.cell.2006.07.035",
+      "openalex_id": "https://openalex.org/W2142017607",
+      "title": "The Orphan Nuclear Receptor RORγt Directs the Differentiation Program of Proinflammatory IL-17+ T Helper Cells",
+      "year": 2006,
+      "subfield": "Immunology",
+      "download_ok": false,
+      "fetch_source": "",
+      "content_type": "",
+      "pdf_sha256": null,
+      "download_error": "no source returned a valid PDF (pmc/unpaywall/openalex all failed)"
+    },
+    {
+      "arm": "retracted",
+      "doi": "10.1042/bj20061653",
+      "openalex_id": "https://openalex.org/W2120434334",
+      "title": "Mechanism of short-term ERK activation by electromagnetic fields at mobile phone frequencies",
+      "year": 2007,
+      "subfield": "Biophysics",
+      "download_ok": true,
+      "fetch_source": "pmc",
+      "content_type": "application/pdf",
+      "pdf_sha256": "659b26518e41de24dd79680cd124063fc69b018f29646a8d0339d41b44056522",
+      "scan": {
+        "overall_severity": 2,
+        "n_findings": 2,
+        "severity_counts": {
+          "0": 0,
+          "1": 1,
+          "2": 1,
+          "3": 0
+        },
+        "detectors_fired": [
+          "T3"
+        ],
+        "detector_hits": {
+          "T3": 2
+        }
+      }
+    },
+    {
+      "arm": "control",
+      "doi": "10.1038/nmeth929",
+      "openalex_id": "https://openalex.org/W1992858116",
+      "title": "Sub-diffraction-limit imaging by stochastic optical reconstruction microscopy (STORM)",
+      "year": 2006,
+      "subfield": "Biophysics",
+      "download_ok": false,
+      "fetch_source": "",
+      "content_type": "",
+      "pdf_sha256": null,
+      "download_error": "no source returned a valid PDF (pmc/unpaywall/openalex all failed)"
+    },
+    {
+      "arm": "retracted",
+      "doi": "10.1038/nm.4153",
+      "openalex_id": "https://openalex.org/W2481644027",
+      "title": "RETRACTED ARTICLE: NOX4-dependent fatty acid oxidation promotes NLRP3 inflammasome activation in macrophages",
+      "year": 2016,
+      "subfield": "Molecular Biology",
+      "download_ok": false,
+      "fetch_source": "",
+      "content_type": "",
+      "pdf_sha256": null,
+      "download_error": "no source returned a valid PDF (pmc/unpaywall/openalex all failed)"
+    },
+    {
+      "arm": "control",
+      "doi": "10.1093/molbev/msw054",
+      "openalex_id": "https://openalex.org/W2311203695",
+      "title": "MEGA7: Molecular Evolutionary Genetics Analysis Version 7.0 for Bigger Datasets",
+      "year": 2016,
+      "subfield": "Molecular Biology",
+      "download_ok": true,
+      "fetch_source": "pmc",
+      "content_type": "application/pdf",
+      "pdf_sha256": "fe2f6249e1afd8a0df11d3efc8b9e35cf2b1c05d8c479bdb96e6300961a20c3a",
+      "scan": {
+        "overall_severity": 2,
+        "n_findings": 2,
+        "severity_counts": {
+          "0": 0,
+          "1": 1,
+          "2": 1,
+          "3": 0
+        },
+        "detectors_fired": [
+          "T3"
+        ],
+        "detector_hits": {
+          "T3": 2
+        }
+      }
+    },
+    {
+      "arm": "retracted",
+      "doi": "10.1093/hmg/ddy042",
+      "openalex_id": "https://openalex.org/W2789405288",
+      "title": "Hippocampal mutant APP and amyloid beta-induced cognitive decline, dendritic spine loss, defective autophagy, mitophagy and mitochondrial abnormalities in a mouse model of Alzheimer’s disease",
+      "year": 2018,
+      "subfield": "Physiology",
+      "download_ok": false,
+      "fetch_source": "",
+      "content_type": "",
+      "pdf_sha256": null,
+      "download_error": "no source returned a valid PDF (pmc/unpaywall/openalex all failed)"
+    },
+    {
+      "arm": "control",
+      "doi": "10.1093/ageing/afy169",
+      "openalex_id": "https://openalex.org/W2897513125",
+      "title": "Sarcopenia: revised European consensus on definition and diagnosis",
+      "year": 2018,
+      "subfield": "Physiology",
+      "download_ok": true,
+      "fetch_source": "pmc",
+      "content_type": "application/pdf",
+      "pdf_sha256": "a20c9960c25feb378c179fcbdda636d86662bb04098020ea65daa992a5b874b0",
+      "scan": {
+        "overall_severity": 2,
+        "n_findings": 1,
+        "severity_counts": {
+          "0": 0,
+          "1": 0,
+          "2": 1,
+          "3": 0
+        },
+        "detectors_fired": [
+          "T3"
+        ],
+        "detector_hits": {
+          "T3": 1
+        }
+      }
+    },
+    {
+      "arm": "retracted",
+      "doi": "10.1161/circresaha.110.231498",
+      "openalex_id": "https://openalex.org/W2169908939",
+      "title": "Myocyte Turnover in the Aging Human Heart",
+      "year": 2010,
+      "subfield": "Molecular Biology",
+      "download_ok": false,
+      "fetch_source": "",
+      "content_type": "",
+      "pdf_sha256": null,
+      "download_error": "no source returned a valid PDF (pmc/unpaywall/openalex all failed)"
+    },
+    {
+      "arm": "control",
+      "doi": "10.1093/bioinformatics/btp352",
+      "openalex_id": "https://openalex.org/W2108234281",
+      "title": "The Sequence Alignment/Map format and SAMtools",
+      "year": 2009,
+      "subfield": "Molecular Biology",
+      "download_ok": true,
+      "fetch_source": "pmc",
+      "content_type": "application/pdf",
+      "pdf_sha256": "7d03dcf4170e2ea9b011ffd945721f3fc655ea20fb0b53d9ef96364fff7f0255",
+      "scan": {
+        "overall_severity": 2,
+        "n_findings": 2,
+        "severity_counts": {
+          "0": 0,
+          "1": 1,
+          "2": 1,
+          "3": 0
+        },
+        "detectors_fired": [
+          "T3"
+        ],
+        "detector_hits": {
+          "T3": 2
+        }
+      }
+    },
+    {
+      "arm": "retracted",
+      "doi": "10.1001/jamaoncol.2018.4070",
+      "openalex_id": "https://openalex.org/W2893123471",
+      "title": "Risk of Hepatocellular Carcinoma in Patients Treated With Entecavir vs Tenofovir for Chronic Hepatitis B",
+      "year": 2018,
+      "subfield": "Epidemiology",
+      "download_ok": false,
+      "fetch_source": "",
+      "content_type": "",
+      "pdf_sha256": null,
+      "download_error": "no source returned a valid PDF (pmc/unpaywall/openalex all failed)"
+    },
+    {
+      "arm": "control",
+      "doi": "10.1007/s00134-017-4683-6",
+      "openalex_id": "https://openalex.org/W3016555942",
+      "title": "Surviving Sepsis Campaign: International Guidelines for Management of Sepsis and Septic Shock: 2016",
+      "year": 2017,
+      "subfield": "Epidemiology",
+      "download_ok": true,
+      "fetch_source": "unpaywall",
+      "content_type": "application/pdf",
+      "pdf_sha256": "f755fbba816c009540acdb61d1872fed0f1a04af607c468b14ef8b9d98758f00",
+      "scan": {
+        "overall_severity": 4,
+        "n_findings": 2,
+        "severity_counts": {
+          "0": 0,
+          "1": 0,
+          "2": 1,
+          "3": 0,
+          "4": 1
+        },
+        "detectors_fired": [
+          "T3",
+          "T4"
+        ],
+        "detector_hits": {
+          "T3": 1,
+          "T4": 1
+        }
+      }
+    },
+    {
+      "arm": "retracted",
+      "doi": "10.1074/jbc.m503111200",
+      "openalex_id": "https://openalex.org/W1598733586",
+      "title": "RNA Interference-directed Knockdown of Urokinase Plasminogen Activator and Urokinase Plasminogen Activator Receptor Inhibits Prostate Cancer Cell Invasion, Survival, and Tumorigenicity in Vivo",
+      "year": 2005,
+      "subfield": "Cancer Research",
+      "download_ok": false,
+      "fetch_source": "",
+      "content_type": "",
+      "pdf_sha256": null,
+      "download_error": "no source returned a valid PDF (pmc/unpaywall/openalex all failed)"
+    },
+    {
+      "arm": "control",
+      "doi": "10.1056/nejmoa041588",
+      "openalex_id": "https://openalex.org/W2105882193",
+      "title": "A Multigene Assay to Predict Recurrence of Tamoxifen-Treated, Node-Negative Breast Cancer",
+      "year": 2004,
+      "subfield": "Cancer Research",
+      "download_ok": false,
+      "fetch_source": "",
+      "content_type": "",
+      "pdf_sha256": null,
+      "download_error": "no source returned a valid PDF (pmc/unpaywall/openalex all failed)"
+    },
+    {
+      "arm": "retracted",
+      "doi": "10.4306/pi.2010.7.2.102",
+      "openalex_id": "https://openalex.org/W2099442862",
+      "title": "Korean Version of Mini Mental Status Examination for Dementia Screening and Its' Short Form",
+      "year": 2010,
+      "subfield": "Psychiatry and Mental health",
+      "download_ok": false,
+      "fetch_source": "",
+      "content_type": "",
+      "pdf_sha256": null,
+      "download_error": "no source returned a valid PDF (pmc/unpaywall/openalex all failed)"
+    },
+    {
+      "arm": "control",
+      "doi": "10.1016/j.jalz.2011.03.005",
+      "openalex_id": "https://openalex.org/W2115017507",
+      "title": "The diagnosis of dementia due to Alzheimer's disease: Recommendations from the National Institute on Aging‐Alzheimer's Association workgroups on diagnostic guidelines for Alzheimer's disease",
+      "year": 2011,
+      "subfield": "Psychiatry and Mental health",
+      "download_ok": false,
+      "fetch_source": "",
+      "content_type": "",
+      "pdf_sha256": null,
+      "download_error": "no source returned a valid PDF (pmc/unpaywall/openalex all failed)"
+    },
+    {
+      "arm": "retracted",
+      "doi": "10.1155/2015/978654",
+      "openalex_id": "https://openalex.org/W2140443438",
+      "title": "Biomolecular Modulation of Neurodegenerative Events during Ageing",
+      "year": 2015,
+      "subfield": "Biochemistry",
+      "download_ok": true,
+      "fetch_source": "pmc",
+      "content_type": "application/pdf",
+      "pdf_sha256": "5a84bb490ff2bb1c25ffde156203e250e3cb2fee4bdf80e51ce27f5e3c07fd5d",
+      "scan": {
+        "overall_severity": 2,
+        "n_findings": 1,
+        "severity_counts": {
+          "0": 0,
+          "1": 0,
+          "2": 1,
+          "3": 0
+        },
+        "detectors_fired": [
+          "T3"
+        ],
+        "detector_hits": {
+          "T3": 1
+        }
+      }
+    },
+    {
+      "arm": "control",
+      "doi": "10.1016/j.devcel.2015.01.029",
+      "openalex_id": "https://openalex.org/W2035310767",
+      "title": "Fatty Acid Trafficking in Starved Cells: Regulation by Lipid Droplet Lipolysis, Autophagy, and Mitochondrial Fusion Dynamics",
+      "year": 2015,
+      "subfield": "Biochemistry",
+      "download_ok": false,
+      "fetch_source": "",
+      "content_type": "",
+      "pdf_sha256": null,
+      "download_error": "no source returned a valid PDF (pmc/unpaywall/openalex all failed)"
+    },
+    {
+      "arm": "retracted",
+      "doi": "10.1200/jco.2006.06.3743",
+      "openalex_id": "https://openalex.org/W2113629984",
+      "title": "An Integrated Genomic-Based Approach to Individualized Treatment of Patients With Advanced-Stage Ovarian Cancer",
+      "year": 2007,
+      "subfield": "Reproductive Medicine",
+      "download_ok": false,
+      "fetch_source": "",
+      "content_type": "",
+      "pdf_sha256": null,
+      "download_error": "no source returned a valid PDF (pmc/unpaywall/openalex all failed)"
+    },
+    {
+      "arm": "control",
+      "doi": "10.1056/nejmoa052985",
+      "openalex_id": "https://openalex.org/W2154175915",
+      "title": "Intraperitoneal Cisplatin and Paclitaxel in Ovarian Cancer",
+      "year": 2006,
+      "subfield": "Reproductive Medicine",
+      "download_ok": false,
+      "fetch_source": "",
+      "content_type": "",
+      "pdf_sha256": null,
+      "download_error": "no source returned a valid PDF (pmc/unpaywall/openalex all failed)"
+    },
+    {
+      "arm": "retracted",
+      "doi": "10.1038/s41467-017-01565-6",
+      "openalex_id": "https://openalex.org/W2765418773",
+      "title": "RETRACTED ARTICLE: A water-soluble nucleolin aptamer-paclitaxel conjugate for tumor-specific targeting in ovarian cancer",
+      "year": 2017,
+      "subfield": "Molecular Biology",
+      "download_ok": true,
+      "fetch_source": "unpaywall",
+      "content_type": "application/pdf",
+      "pdf_sha256": "0dff580ae6072679b154141060f60c0b319afd86085596ec53394d5694e07792",
+      "scan": {
+        "overall_severity": 3,
+        "n_findings": 2,
+        "severity_counts": {
+          "0": 0,
+          "1": 0,
+          "2": 1,
+          "3": 1
+        },
+        "detectors_fired": [
+          "F1",
+          "T3"
+        ],
+        "detector_hits": {
+          "T3": 1,
+          "F1": 1
+        }
+      }
+    },
+    {
+      "arm": "control",
+      "doi": "10.1093/molbev/msw054",
+      "openalex_id": "https://openalex.org/W2311203695",
+      "title": "MEGA7: Molecular Evolutionary Genetics Analysis Version 7.0 for Bigger Datasets",
+      "year": 2016,
+      "subfield": "Molecular Biology",
+      "download_ok": true,
+      "fetch_source": "pmc",
+      "content_type": "application/pdf",
+      "pdf_sha256": "fe2f6249e1afd8a0df11d3efc8b9e35cf2b1c05d8c479bdb96e6300961a20c3a",
+      "scan": {
+        "overall_severity": 2,
+        "n_findings": 2,
+        "severity_counts": {
+          "0": 0,
+          "1": 1,
+          "2": 1,
+          "3": 0
+        },
+        "detectors_fired": [
+          "T3"
+        ],
+        "detector_hits": {
+          "T3": 2
+        }
+      }
+    },
+    {
+      "arm": "retracted",
+      "doi": "10.1371/journal.pbio.1001212",
+      "openalex_id": "https://openalex.org/W1990908543",
+      "title": "Gut Microbiota Is a Key Modulator of Insulin Resistance in TLR 2 Knockout Mice",
+      "year": 2011,
+      "subfield": "Molecular Biology",
+      "download_ok": true,
+      "fetch_source": "pmc",
+      "content_type": "application/pdf",
+      "pdf_sha256": "e99ef5ece677bdcdcce76310b4a5c24b7414ef37e80cd7bfaab53adb70ff495f",
+      "scan": {
+        "overall_severity": 2,
+        "n_findings": 1,
+        "severity_counts": {
+          "0": 0,
+          "1": 0,
+          "2": 1,
+          "3": 0
+        },
+        "detectors_fired": [
+          "T3"
+        ],
+        "detector_hits": {
+          "T3": 1
+        }
+      }
+    },
+    {
+      "arm": "control",
+      "doi": "10.1093/bioinformatics/bts635",
+      "openalex_id": "https://openalex.org/W2169456326",
+      "title": "STAR: ultrafast universal RNA-seq aligner",
+      "year": 2012,
+      "subfield": "Molecular Biology",
+      "download_ok": true,
+      "fetch_source": "pmc",
+      "content_type": "application/pdf",
+      "pdf_sha256": "3cb4cec27b9b2e861e6ff41a899ad4bfb49851f7dc41c439b4efcbb29e274d2a",
+      "scan": {
+        "overall_severity": 2,
+        "n_findings": 1,
+        "severity_counts": {
+          "0": 0,
+          "1": 0,
+          "2": 1,
+          "3": 0
+        },
+        "detectors_fired": [
+          "T3"
+        ],
+        "detector_hits": {
+          "T3": 1
+        }
+      }
+    },
+    {
+      "arm": "retracted",
+      "doi": "10.1093/hmg/ddx381",
+      "openalex_id": "https://openalex.org/W2761011647",
+      "title": "Hippocampal phosphorylated tau induced cognitive decline, dendritic spine loss and mitochondrial abnormalities in a mouse model of Alzheimer’s disease",
+      "year": 2017,
+      "subfield": "Physiology",
+      "download_ok": false,
+      "fetch_source": "",
+      "content_type": "",
+      "pdf_sha256": null,
+      "download_error": "no source returned a valid PDF (pmc/unpaywall/openalex all failed)"
+    },
+    {
+      "arm": "control",
+      "doi": "10.1093/ageing/afy169",
+      "openalex_id": "https://openalex.org/W2897513125",
+      "title": "Sarcopenia: revised European consensus on definition and diagnosis",
+      "year": 2018,
+      "subfield": "Physiology",
+      "download_ok": true,
+      "fetch_source": "pmc",
+      "content_type": "application/pdf",
+      "pdf_sha256": "a20c9960c25feb378c179fcbdda636d86662bb04098020ea65daa992a5b874b0",
+      "scan": {
+        "overall_severity": 2,
+        "n_findings": 1,
+        "severity_counts": {
+          "0": 0,
+          "1": 0,
+          "2": 1,
+          "3": 0
+        },
+        "detectors_fired": [
+          "T3"
+        ],
+        "detector_hits": {
+          "T3": 1
+        }
+      }
+    },
+    {
+      "arm": "retracted",
+      "doi": "10.1371/journal.pone.0239799",
+      "openalex_id": "https://openalex.org/W3088259748",
+      "title": "Vitamin D sufficiency, a serum 25-hydroxyvitamin D at least 30 ng/mL reduced risk for adverse clinical outcomes in patients with COVID-19 infection",
+      "year": 2020,
+      "subfield": "Pathology and Forensic Medicine",
+      "download_ok": true,
+      "fetch_source": "pmc",
+      "content_type": "application/pdf",
+      "pdf_sha256": "17af71c7a321312b40068987ed44ad41c188c6b1750066b2b077504fc8e25328",
+      "scan": {
+        "overall_severity": 0,
+        "n_findings": 0,
+        "severity_counts": {
+          "0": 0,
+          "1": 0,
+          "2": 0,
+          "3": 0
+        },
+        "detectors_fired": [],
+        "detector_hits": {}
+      }
+    },
+    {
+      "arm": "control",
+      "doi": "10.1038/s41598-020-79139-8",
+      "openalex_id": "https://openalex.org/W3118577024",
+      "title": "Plasma Hsp90 levels in patients with systemic sclerosis and relation to lung and skin involvement: a cross-sectional and longitudinal study",
+      "year": 2021,
+      "subfield": "Pathology and Forensic Medicine",
+      "download_ok": true,
+      "fetch_source": "unpaywall",
+      "content_type": "application/pdf",
+      "pdf_sha256": "33743fcaa29ed2e5aa5f55259ae7fd0936277c312e5422c35d27a9a57c74b72b",
+      "scan": {
+        "overall_severity": 4,
+        "n_findings": 1,
+        "severity_counts": {
+          "0": 0,
+          "1": 0,
+          "2": 0,
+          "3": 0,
+          "4": 1
+        },
+        "detectors_fired": [
+          "T4"
+        ],
+        "detector_hits": {
+          "T4": 1
+        }
+      }
+    },
+    {
+      "arm": "retracted",
+      "doi": "10.1371/journal.pone.0003135",
+      "openalex_id": "https://openalex.org/W2065878937",
+      "title": "Mechanisms of Hybrid Oligomer Formation in the Pathogenesis of Combined Alzheimer's and Parkinson's Diseases",
+      "year": 2008,
+      "subfield": "Physiology",
+      "download_ok": true,
+      "fetch_source": "pmc",
+      "content_type": "application/pdf",
+      "pdf_sha256": "9e8021a1d779c52ee436121cfa30aedaef8219952f9b1b66c151bb6ff34577b5",
+      "scan": {
+        "overall_severity": 2,
+        "n_findings": 1,
+        "severity_counts": {
+          "0": 0,
+          "1": 0,
+          "2": 1,
+          "3": 0
+        },
+        "detectors_fired": [
+          "T3"
+        ],
+        "detector_hits": {
+          "T3": 1
+        }
+      }
+    },
+    {
+      "arm": "control",
+      "doi": "10.1161/circulationaha.107.185649",
+      "openalex_id": "https://openalex.org/W2135375808",
+      "title": "Physical Activity and Public Health",
+      "year": 2007,
+      "subfield": "Physiology",
+      "download_ok": false,
+      "fetch_source": "",
+      "content_type": "",
+      "pdf_sha256": null,
+      "download_error": "no source returned a valid PDF (pmc/unpaywall/openalex all failed)"
+    },
+    {
+      "arm": "retracted",
+      "doi": "10.1074/jbc.m603393200",
+      "openalex_id": "https://openalex.org/W2099846110",
+      "title": "Induction of the Unfolded Protein Response in Familial Amyotrophic Lateral Sclerosis and Association of Protein-disulfide Isomerase with Superoxide Dismutase 1",
+      "year": 2006,
+      "subfield": "Neurology",
+      "download_ok": false,
+      "fetch_source": "",
+      "content_type": "",
+      "pdf_sha256": null,
+      "download_error": "no source returned a valid PDF (pmc/unpaywall/openalex all failed)"
+    },
+    {
+      "arm": "control",
+      "doi": "10.1016/j.neuron.2005.02.014",
+      "openalex_id": "https://openalex.org/W2777987555",
+      "title": "Deep Brain Stimulation for Treatment-Resistant Depression",
+      "year": 2005,
+      "subfield": "Neurology",
+      "download_ok": false,
+      "fetch_source": "",
+      "content_type": "",
+      "pdf_sha256": null,
+      "download_error": "no source returned a valid PDF (pmc/unpaywall/openalex all failed)"
+    },
+    {
+      "arm": "retracted",
+      "doi": "10.1042/0264-6021:3490547",
+      "openalex_id": "https://openalex.org/W2012243761",
+      "title": "Regulation of BAD by cAMP-dependent protein kinase is mediated via phosphorylation of a novel site, Ser155",
+      "year": 2000,
+      "subfield": "Molecular Biology",
+      "download_ok": false,
+      "fetch_source": "",
+      "content_type": "",
+      "pdf_sha256": null,
+      "download_error": "no source returned a valid PDF (pmc/unpaywall/openalex all failed)"
+    },
+    {
+      "arm": "control",
+      "doi": "10.1038/75556",
+      "openalex_id": "https://openalex.org/W2103017472",
+      "title": "Gene Ontology: tool for the unification of biology",
+      "year": 2000,
+      "subfield": "Molecular Biology",
+      "download_ok": false,
+      "fetch_source": "",
+      "content_type": "",
+      "pdf_sha256": null,
+      "download_error": "no source returned a valid PDF (pmc/unpaywall/openalex all failed)"
+    },
+    {
+      "arm": "retracted",
+      "doi": "10.1158/1541-7786.mcr-12-0629",
+      "openalex_id": "https://openalex.org/W2139593382",
+      "title": "Procollagen Lysyl Hydroxylase 2 Is Essential for Hypoxia-Induced Breast Cancer Metastasis",
+      "year": 2013,
+      "subfield": "Cancer Research",
+      "download_ok": false,
+      "fetch_source": "",
+      "content_type": "",
+      "pdf_sha256": null,
+      "download_error": "no source returned a valid PDF (pmc/unpaywall/openalex all failed)"
+    },
+    {
+      "arm": "control",
+      "doi": "10.1186/s13059-014-0550-8",
+      "openalex_id": "https://openalex.org/W2179438025",
+      "title": "Moderated estimation of fold change and dispersion for RNA-seq data with DESeq2",
+      "year": 2014,
+      "subfield": "Cancer Research",
+      "download_ok": true,
+      "fetch_source": "pmc",
+      "content_type": "application/pdf",
+      "pdf_sha256": "bf6e86ec8bea5834bce478b907bf527af76fcecfa31680c0ae8291ab1f915572",
+      "scan": {
+        "overall_severity": 2,
+        "n_findings": 1,
+        "severity_counts": {
+          "0": 0,
+          "1": 0,
+          "2": 1,
+          "3": 0
+        },
+        "detectors_fired": [
+          "T3"
+        ],
+        "detector_hits": {
+          "T3": 1
+        }
+      }
+    },
+    {
+      "arm": "retracted",
+      "doi": "10.1192/bjo.2018.12",
+      "openalex_id": "https://openalex.org/W2785323391",
+      "title": "RETRACTED – Mental health in UK Biobank: development, implementation and results from an online questionnaire completed by 157 366 participants",
+      "year": 2018,
+      "subfield": "Genetics",
+      "download_ok": true,
+      "fetch_source": "pmc",
+      "content_type": "application/pdf",
+      "pdf_sha256": "e44a748a41143fd4f38994745b138ada0be3eb7df670b8dd2896981a042da048",
+      "scan": {
+        "overall_severity": 0,
+        "n_findings": 0,
+        "severity_counts": {
+          "0": 0,
+          "1": 0,
+          "2": 0,
+          "3": 0
+        },
+        "detectors_fired": [],
+        "detector_hits": {}
+      }
+    },
+    {
+      "arm": "control",
+      "doi": "10.32614/rj-2017-066",
+      "openalex_id": "https://openalex.org/W2786358356",
+      "title": "glmmTMB Balances Speed and Flexibility Among Packages for Zero-inflated Generalized Linear Mixed Modeling",
+      "year": 2017,
+      "subfield": "Genetics",
+      "download_ok": true,
+      "fetch_source": "unpaywall",
+      "content_type": "application/pdf",
+      "pdf_sha256": "7708f39ef6548c89fa0012e2d2e527bd7e5a14dc331ec2a3584ef00697b5d681",
+      "scan": {
+        "overall_severity": 2,
+        "n_findings": 2,
+        "severity_counts": {
+          "0": 0,
+          "1": 1,
+          "2": 1,
+          "3": 0
+        },
+        "detectors_fired": [
+          "T3"
+        ],
+        "detector_hits": {
+          "T3": 2
+        }
+      }
+    },
+    {
+      "arm": "retracted",
+      "doi": "10.1074/jbc.m007237200",
+      "openalex_id": "https://openalex.org/W2087259247",
+      "title": "Peroxisome Proliferator-activated Receptor γ Ligands Suppress the Transcriptional Activation of Cyclooxygenase-2",
+      "year": 2001,
+      "subfield": "Pharmacology",
+      "download_ok": false,
+      "fetch_source": "",
+      "content_type": "",
+      "pdf_sha256": null,
+      "download_error": "no source returned a valid PDF (pmc/unpaywall/openalex all failed)"
+    },
+    {
+      "arm": "control",
+      "doi": "10.1093/jac/48.suppl_1.5",
+      "openalex_id": "https://openalex.org/W2132963724",
+      "title": "Determination of minimum inhibitory concentrations",
+      "year": 2001,
+      "subfield": "Pharmacology",
+      "download_ok": false,
+      "fetch_source": "",
+      "content_type": "",
+      "pdf_sha256": null,
+      "download_error": "no source returned a valid PDF (pmc/unpaywall/openalex all failed)"
+    },
+    {
+      "arm": "retracted",
+      "doi": "10.1172/jci23187",
+      "openalex_id": "https://openalex.org/W2050941179",
+      "title": "Complementary roles of IRS-1 and IRS-2 in the hepatic regulation of metabolism",
+      "year": 2005,
+      "subfield": "Surgery",
+      "download_ok": true,
+      "fetch_source": "pmc",
+      "content_type": "application/pdf",
+      "pdf_sha256": "90d4ecc40cdb46a2079fde5939df1f78335be445e79a7cd720d05041188ef391",
+      "scan": {
+        "overall_severity": 2,
+        "n_findings": 1,
+        "severity_counts": {
+          "0": 0,
+          "1": 0,
+          "2": 1,
+          "3": 0
+        },
+        "detectors_fired": [
+          "T3"
+        ],
+        "detector_hits": {
+          "T3": 1
+        }
+      }
+    },
+    {
+      "arm": "control",
+      "doi": "10.1056/nejmoa040583",
+      "openalex_id": "https://openalex.org/W2159449551",
+      "title": "Intensive versus Moderate Lipid Lowering with Statins after Acute Coronary Syndromes",
+      "year": 2004,
+      "subfield": "Surgery",
+      "download_ok": false,
+      "fetch_source": "",
+      "content_type": "",
+      "pdf_sha256": null,
+      "download_error": "no source returned a valid PDF (pmc/unpaywall/openalex all failed)"
+    },
+    {
+      "arm": "retracted",
+      "doi": "10.1074/jbc.m608310200",
+      "openalex_id": "https://openalex.org/W2055579594",
+      "title": "Activation of Protein Phosphatase 2A by Palmitate Inhibits AMP-activated Protein Kinase",
+      "year": 2007,
+      "subfield": "Molecular Biology",
+      "download_ok": false,
+      "fetch_source": "",
+      "content_type": "",
+      "pdf_sha256": null,
+      "download_error": "no source returned a valid PDF (pmc/unpaywall/openalex all failed)"
+    },
+    {
+      "arm": "control",
+      "doi": "10.1016/j.jbi.2008.08.010",
+      "openalex_id": "https://openalex.org/W2093274439",
+      "title": "Research electronic data capture (REDCap)—A metadata-driven methodology and workflow process for providing translational research informatics support",
+      "year": 2008,
+      "subfield": "Molecular Biology",
+      "download_ok": false,
+      "fetch_source": "",
+      "content_type": "",
+      "pdf_sha256": null,
+      "download_error": "no source returned a valid PDF (pmc/unpaywall/openalex all failed)"
+    },
+    {
+      "arm": "retracted",
+      "doi": "10.1186/s12943-019-0981-7",
+      "openalex_id": "https://openalex.org/W2939737815",
+      "title": "RETRACTED ARTICLE: Exosome-transmitted miR-128-3p increase chemosensitivity of oxaliplatin-resistant colorectal cancer",
+      "year": 2019,
+      "subfield": "Molecular Biology",
+      "download_ok": true,
+      "fetch_source": "unpaywall",
+      "content_type": "application/pdf",
+      "pdf_sha256": "09562adae8ca0428395e4169fae4b7b1d51f6fdf56f51d8b23467eb66d3b4b8c",
+      "scan": {
+        "overall_severity": 0,
+        "n_findings": 0,
+        "severity_counts": {
+          "0": 0,
+          "1": 0,
+          "2": 0,
+          "3": 0
+        },
+        "detectors_fired": [],
+        "detector_hits": {}
+      }
+    },
+    {
+      "arm": "control",
+      "doi": "10.1093/molbev/msy096",
+      "openalex_id": "https://openalex.org/W2799524357",
+      "title": "MEGA X: Molecular Evolutionary Genetics Analysis across Computing Platforms",
+      "year": 2018,
+      "subfield": "Molecular Biology",
+      "download_ok": true,
+      "fetch_source": "pmc",
+      "content_type": "application/pdf",
+      "pdf_sha256": "1ae1867cb0478fafe15d66d1dee6889e600bbcd8b9ce11178a492d06f5767ae8",
+      "scan": {
+        "overall_severity": 2,
+        "n_findings": 2,
+        "severity_counts": {
+          "0": 0,
+          "1": 1,
+          "2": 1,
+          "3": 0
+        },
+        "detectors_fired": [
+          "T3"
+        ],
+        "detector_hits": {
+          "T3": 2
+        }
+      }
+    }
+  ]
+}
