@@ -9,6 +9,7 @@ import click
 from rich.console import Console
 from rich.table import Table
 
+from paperguard import __version__
 from paperguard.config import get_settings
 from paperguard.core.audit import AuditLog
 from paperguard.core.registry import DetectorRegistry
@@ -30,7 +31,7 @@ from paperguard.utils.hash import sha256_file
 
 
 @click.group()
-@click.version_option(version="2.0.0-dev1")
+@click.version_option(version=__version__)
 def main() -> None:
     """PaperGuard — 学术论文数据诚信审查工具。"""
 

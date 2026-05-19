@@ -4,6 +4,15 @@ All notable changes to PaperGuard are documented in this file. Format follows
 [Keep a Changelog](https://keepachangelog.com/) and the project adheres to
 [Semantic Versioning](https://semver.org/).
 
+## [2.0.2] — 2026-05-19 — CLI `--version` reads from `__version__`
+
+### Fixed
+- `paperguard --version` was hard-coded to `"2.0.0-dev1"` in
+  `cli.py`. It now reads from `paperguard.__version__` so a single
+  bump in `__init__.py` keeps everything consistent. Found
+  immediately after the 2.0.1 PyPI upload — installing from PyPI
+  showed the right metadata but `paperguard --version` lied.
+
 ## [2.0.1] — 2026-05-19 — macOS arm64 CI fix
 
 ### Fixed
