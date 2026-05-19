@@ -30,6 +30,27 @@ from paperguard.reporter.terminal import print_report
 from paperguard.utils.hash import sha256_file
 
 
+def _safe_pdf_tables(file_path: Path) -> tuple[dict[str, Any], str | None]:
+    """Wrap ``extract_pdf_tables`` to never crash on malformed PDFs.
+
+    Returns ``(sheets, error_message_or_None)``. Empty dict + message
+    when the parser raises. Saves callers from having to know which
+    publisher PDFs trip up pdfplumber/pdfminer.
+    """
+    try:
+        return dict(extract_pdf_tables(file_path)), None
+    except Exception as e:  # noqa: BLE001
+        return {}, f"{type(e).__name__}: {e}"
+
+
+def _safe_pdf_text(file_path: Path) -> tuple[str, str | None]:
+    """Wrap ``extract_pdf_text`` to never crash on malformed PDFs."""
+    try:
+        return extract_pdf_text(file_path), None
+    except Exception as e:  # noqa: BLE001
+        return "", f"{type(e).__name__}: {e}"
+
+
 @click.group()
 @click.version_option(version=__version__)
 def main() -> None:
@@ -135,7 +156,16 @@ def scan(
         elif suffix == ".docx":
             sheets = dict(parse_docx_tables(file_path))
         elif suffix == ".pdf":
-            sheets = dict(extract_pdf_tables(file_path))
+            sheets, pdf_table_err = _safe_pdf_tables(file_path)
+            if pdf_table_err is not None:
+                console.print(
+                    f"[yellow]  PDF table extraction failed for "
+                    f"{file_path.name}: {pdf_table_err}[/]"
+                )
+                audit.log_event(
+                    "pdf_table_extract_failed",
+                    {"file": str(file_path), "error": pdf_table_err},
+                )
         if sheets:
             console.print(
                 f"[dim]  Extracted {len(sheets)} table(s) from {file_path.name}[/]"
@@ -198,7 +228,16 @@ def scan(
         if suffix == ".docx":
             text = extract_text_from_docx(file_path)
         elif suffix == ".pdf":
-            text = extract_pdf_text(file_path)
+            text, pdf_text_err = _safe_pdf_text(file_path)
+            if pdf_text_err is not None:
+                console.print(
+                    f"[yellow]  PDF text extraction failed for "
+                    f"{file_path.name}: {pdf_text_err}[/]"
+                )
+                audit.log_event(
+                    "pdf_text_extract_failed",
+                    {"file": str(file_path), "error": pdf_text_err},
+                )
         if text:
             audit.log_event(
                 "text_extracted",
@@ -568,7 +607,7 @@ def _scan_single_file(file_path: Path, seed: int = 42) -> AuditReport:
     elif suffix == ".docx":
         sheets = dict(parse_docx_tables(file_path))
     elif suffix == ".pdf":
-        sheets = dict(extract_pdf_tables(file_path))
+        sheets, _ = _safe_pdf_tables(file_path)
 
     for _, df in sheets.items():
         for d_id in ("A1", "A2", "A3", "A5", "A6", "A7", "D1", "D2"):
@@ -583,7 +622,7 @@ def _scan_single_file(file_path: Path, seed: int = 42) -> AuditReport:
     if suffix == ".docx":
         text = extract_text_from_docx(file_path)
     elif suffix == ".pdf":
-        text = extract_pdf_text(file_path)
+        text, _ = _safe_pdf_text(file_path)
     if text:
         b4 = registry.get("B4")
         if b4 is not None:

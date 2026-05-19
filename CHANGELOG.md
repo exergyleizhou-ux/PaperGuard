@@ -4,6 +4,29 @@ All notable changes to PaperGuard are documented in this file. Format follows
 [Keep a Changelog](https://keepachangelog.com/) and the project adheres to
 [Semantic Versioning](https://semver.org/).
 
+## [2.0.3] — 2026-05-19 — Scan errors on malformed PDFs no longer crash CLI
+
+### Fixed
+- `paperguard scan` no longer exits non-zero when ``pdfplumber`` or
+  ``pymupdf`` raise on a malformed input (for example, an HTML
+  landing page mis-served as `.pdf`, a truncated download, or a
+  damaged xref table). Both `extract_pdf_tables` and `extract_pdf_text`
+  are now called through `_safe_pdf_tables` / `_safe_pdf_text`
+  wrappers in `cli.py`; an extraction failure is logged to the audit
+  log + printed in yellow and processing continues with whatever
+  detectors can still run on the remaining inputs.
+- This was the most actionable finding from the v1 recall pilot,
+  where 3 of 5 publisher OA "PDFs" were actually HTML landing pages
+  that derailed the whole batch with `exit=1`.
+
+### Added
+- 8 new tests in `tests/test_cli_safe_extractors.py` covering HTML
+  served as `.pdf`, empty files, truncated PDFs, and missing files.
+- `scripts/recall_test_v2.py` — v2 of the recall study with
+  Unpaywall-first PDF URL resolution, `%PDF-` header validation,
+  per-host rate limiting, and resumable streaming output. Designed
+  to run N = 100 + 100 unattended.
+
 ## [2.0.2] — 2026-05-19 — CLI `--version` reads from `__version__`
 
 ### Fixed
