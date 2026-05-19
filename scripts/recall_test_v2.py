@@ -41,7 +41,12 @@ import httpx
 
 OPENALEX = "https://api.openalex.org"
 UNPAYWALL = "https://api.unpaywall.org/v2"
-USER_AGENT = "PaperGuard/2.0.3 (recall-test; https://github.com/exergyleizhou-ux/PaperGuard)"
+USER_AGENT = (
+    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
+    "AppleWebKit/537.36 (KHTML, like Gecko) "
+    "Chrome/120.0.0.0 Safari/537.36 "
+    "PaperGuard-recall-test (github.com/exergyleizhou-ux/PaperGuard)"
+)
 # Unpaywall requires an email parameter; OpenAlex appreciates one for
 # the polite pool. Override with PAPERGUARD_CONTACT_EMAIL.
 CONTACT_EMAIL = os.environ.get("PAPERGUARD_CONTACT_EMAIL", "research@example.org")
@@ -61,10 +66,33 @@ def _rate_limit(url: str, min_interval: float = 1.0) -> None:
 
 
 def fetch(url: str, params: dict[str, Any] | None = None) -> dict[str, Any]:
-    _rate_limit(url, min_interval=0.2)
-    r = httpx.get(url, params=params, timeout=30, headers={"User-Agent": USER_AGENT})
-    r.raise_for_status()
-    return r.json()
+    """GET ``url`` as JSON with up to 3 retries on transient errors.
+
+    Retries on httpx.ReadError / ConnectError / RemoteProtocolError /
+    TimeoutException because the GFW occasionally corrupts TLS frames
+    mid-stream on long China-to-US sessions. Without this, a single
+    OpenAlex hiccup kills the whole batch.
+    """
+    last_exc: Exception | None = None
+    for attempt in range(3):
+        try:
+            _rate_limit(url, min_interval=0.2)
+            r = httpx.get(
+                url, params=params, timeout=30, headers={"User-Agent": USER_AGENT}
+            )
+            r.raise_for_status()
+            return r.json()  # type: ignore[no-any-return]
+        except (
+            httpx.ReadError,
+            httpx.ConnectError,
+            httpx.RemoteProtocolError,
+            httpx.TimeoutException,
+        ) as e:
+            last_exc = e
+            time.sleep(2 + attempt * 3)  # 2s, 5s, 8s back-off
+            continue
+    assert last_exc is not None
+    raise last_exc
 
 
 def is_retraction_notice(title: str | None) -> bool:
@@ -150,45 +178,75 @@ def get_matched_control(retracted: dict[str, Any]) -> dict[str, Any] | None:
     return None
 
 
+def _pmc_pdf_url(any_url: str) -> str | None:
+    """If ``any_url`` is a PMC landing page, rewrite to the PDF URL."""
+    import re
+
+    m = re.search(
+        r"ncbi\.nlm\.nih\.gov/pmc/articles/(?:PMC)?(\d+)/?", any_url
+    )
+    if not m:
+        return None
+    pmcid = m.group(1)
+    return f"https://www.ncbi.nlm.nih.gov/pmc/articles/PMC{pmcid}/pdf/"
+
+
 def resolve_pdf_url(work: dict[str, Any]) -> str | None:
-    """Try Unpaywall first, fall back to OpenAlex `oa_url`."""
+    """Try Unpaywall first, fall back to OpenAlex `oa_url`.
+
+    Special-cases PMC landing-page URLs to the actual PDF endpoint
+    (`.../pdf/`) — Unpaywall and OpenAlex frequently return the landing
+    page rather than the inline PDF, which our `%PDF-` validator
+    correctly rejects.
+    """
     doi = (work.get("doi") or "").replace("https://doi.org/", "")
+    candidates: list[str] = []
     if doi:
         try:
             data = fetch(f"{UNPAYWALL}/{doi}", params={"email": CONTACT_EMAIL})
             best = data.get("best_oa_location") or {}
-            pdf_url = best.get("url_for_pdf")
-            if pdf_url:
-                return str(pdf_url)
+            for k in ("url_for_pdf", "url"):
+                v = best.get(k)
+                if v:
+                    candidates.append(str(v))
         except Exception:  # noqa: BLE001
             pass
-    return (work.get("open_access") or {}).get("oa_url")
+    openalex_oa = (work.get("open_access") or {}).get("oa_url")
+    if openalex_oa:
+        candidates.append(openalex_oa)
+    # Rewrite any PMC landing-page URL to its PDF endpoint, prepend it.
+    rewritten = [_pmc_pdf_url(u) for u in candidates]
+    rewritten = [u for u in rewritten if u is not None]
+    return (rewritten + candidates)[0] if (rewritten + candidates) else None
 
 
 def download_pdf(url: str, dest: Path) -> tuple[bool, str, str]:
-    """Return (success, sha256_or_error, content_type)."""
+    """Return (success, sha256_or_error, content_type).
+
+    Reads the full response into memory first (fine for sub-50MB PDFs),
+    then sniffs the ``%PDF-`` header before writing to disk. This avoids
+    httpx's ``StreamConsumed`` error from calling ``iter_bytes`` twice
+    on the same response, which broke the first v2 run.
+    """
     try:
         _rate_limit(url, min_interval=1.0)
-        with httpx.stream(
-            "GET",
-            url,
+        with httpx.Client(
             timeout=60,
             follow_redirects=True,
-            headers={"User-Agent": USER_AGENT},
-        ) as r:
+            headers={
+                "User-Agent": USER_AGENT,
+                "Accept": "application/pdf,*/*;q=0.8",
+            },
+        ) as client:
+            r = client.get(url)
             r.raise_for_status()
             ctype = (r.headers.get("content-type") or "").lower()
-            # peek first 8 bytes to confirm PDF signature
-            first_chunk = next(r.iter_bytes(chunk_size=8192), b"")
-            if not first_chunk.startswith(b"%PDF-"):
-                return False, "not a PDF (first bytes != %PDF-)", ctype
-            h = hashlib.sha256()
-            h.update(first_chunk)
-            with dest.open("wb") as f:
-                f.write(first_chunk)
-                for chunk in r.iter_bytes(chunk_size=65536):
-                    h.update(chunk)
-                    f.write(chunk)
+            body = r.content
+        if not body.startswith(b"%PDF-"):
+            return False, f"not a PDF (got {len(body)}B, content-type={ctype})", ctype
+        h = hashlib.sha256(body)
+        with dest.open("wb") as f:
+            f.write(body)
         return True, h.hexdigest(), ctype
     except Exception as e:  # noqa: BLE001
         return False, f"error: {type(e).__name__}: {e}", ""
@@ -276,7 +334,15 @@ def main() -> int:
     print("Building matched control sample …", file=sys.stderr)
     pairs: list[tuple[dict[str, Any], dict[str, Any] | None]] = []
     for r in retracted:
-        c = get_matched_control(r)
+        try:
+            c = get_matched_control(r)
+        except Exception as e:  # noqa: BLE001
+            print(
+                f"  control lookup failed for {r['id']}: "
+                f"{type(e).__name__}",
+                file=sys.stderr,
+            )
+            c = None
         pairs.append((r, c))
 
     results: list[dict[str, Any]] = []

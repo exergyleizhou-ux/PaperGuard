@@ -313,6 +313,7 @@ tests/
 | Document | What it covers |
 |---|---|
 | [docs/quickstart.md](docs/quickstart.md) | **5-minute walk-through** — install, scan a fabricated CSV, scan a real retracted PDF (Wansink 2015), read the report |
+| [docs/recall_test_v2.md](docs/recall_test_v2.md) | **N=100+100 recall/precision study** — quantifies that PDF-only scanning is *not* a reliable retraction detector; explains why and what to do instead |
 | [README.md](README.md) | This file — overview, usage, install |
 | [README.zh.md](README.zh.md) | 中文版 |
 | [CHANGELOG.md](CHANGELOG.md) | Full release history 0.1 → 2.0.2 |
