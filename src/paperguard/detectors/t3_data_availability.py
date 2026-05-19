@@ -31,6 +31,16 @@ class DataAvailabilityInput:
     is_clinical_trial: bool = False  # 临床试验需要更严格的检查
     is_human_subjects: bool = False  # 人类受试者需要 IRB
     is_animal_study: bool = False    # 动物研究需要 IACUC / ethics
+    paper_year: int | None = None    # 出版年（用于年代分层 severity）
+
+
+# 政策时间线（用于按年代分层 severity） ----------------------------------
+# - 临床试验预注册（NCT/ISRCTN/...）: ICMJE 2005 起要求
+# - 数据可用性声明（DAS）: ICMJE 2018 起强制推荐
+# - 伦理审批声明: 长期惯例,无明确生效年
+_TRIAL_REG_REQUIRED_YEAR = 2005    # 此前不应触发 case-3
+_TRIAL_REG_STRICT_YEAR = 2010      # 2005-2010 CONCERN, 2010+ SUSPICIOUS
+_DATA_AVAIL_REQUIRED_YEAR = 2018   # 此前不应触发 case-1
 
 
 _DATA_STMT_PATTERNS = (
@@ -146,7 +156,10 @@ class T3DataAvailabilityDetector(BaseDetector):
         ]
 
         # 1) 完全缺数据声明
-        if not has_stmt:
+        # 年代分层: ICMJE 2018 起强制推荐 DAS; 此前不应触发
+        # 没提供年份时 default 视作"现代" (触发,保持向后兼容)
+        year = data.paper_year
+        if not has_stmt and (year is None or year >= _DATA_AVAIL_REQUIRED_YEAR):
             findings.append(
                 Finding(
                     detector_id=self.id,
@@ -157,8 +170,13 @@ class T3DataAvailabilityDetector(BaseDetector):
                         "Manuscript 全文中未匹配到任何 'data availability / "
                         "data sharing / 数据可用性' 类声明。ICMJE 自 2018 起"
                         "要求绝大多数生物医学投稿提供该声明。"
+                        + (
+                            f" 本论文年份 {year},处于 ICMJE 强制期内。"
+                            if year is not None
+                            else ""
+                        )
                     ),
-                    evidence={"has_statement": False},
+                    evidence={"has_statement": False, "paper_year": year},
                     innocent_explanations=[
                         "数据声明在 SI 而非 main text",
                         "本论文是 perspective / review / commentary，无数据",
@@ -198,29 +216,54 @@ class T3DataAvailabilityDetector(BaseDetector):
             )
 
         # 3) 临床试验未注册
+        # 年代分层:
+        #   pre-2005:        不触发 (NCT 注册体系 2005 才建立)
+        #   2005 - 2009:     CONCERN (要求已发布但执行松)
+        #   2010 +:          SUSPICIOUS (严格执行期)
+        #   未知年:          SUSPICIOUS (向后兼容)
         if data.is_clinical_trial:
             trial_ids = _find_all(text, _TRIAL_REGISTRATION)
             if not trial_ids:
-                findings.append(
-                    Finding(
-                        detector_id=self.id,
-                        detector_name=self.name,
-                        severity=Severity.SUSPICIOUS,
-                        summary="临床试验论文未发现注册号",
-                        detail=(
-                            "Manuscript 自报为临床试验但未匹配 NCT/ISRCTN/"
-                            "ChiCTR/EudraCT 等任一注册号格式。ICMJE 自 2005 起"
-                            "要求所有干预性临床试验必须公开预注册才能发表。"
-                        ),
-                        evidence={"trial_ids_found": []},
-                        innocent_explanations=[
-                            "注册号在 SI 或方法学小节中（提取层未捕获）",
-                            "本试验在公开注册体系建立之前已完成（应在论文中说明）",
-                            "属于回顾性观察研究（不需注册，应明确声明）",
-                        ],
-                        academic_reference=self.academic_basis,
+                if year is not None and year < _TRIAL_REG_REQUIRED_YEAR:
+                    trial_severity: Severity | None = None
+                elif year is not None and year < _TRIAL_REG_STRICT_YEAR:
+                    trial_severity = Severity.CONCERN
+                else:
+                    trial_severity = Severity.SUSPICIOUS
+                if trial_severity is not None:
+                    findings.append(
+                        Finding(
+                            detector_id=self.id,
+                            detector_name=self.name,
+                            severity=trial_severity,
+                            summary="临床试验论文未发现注册号",
+                            detail=(
+                                "Manuscript 自报为临床试验但未匹配 NCT/ISRCTN/"
+                                "ChiCTR/EudraCT 等任一注册号格式。ICMJE 自 2005 起"
+                                "要求所有干预性临床试验必须公开预注册才能发表。"
+                                + (
+                                    f" 本论文年份 {year}。"
+                                    if year is not None
+                                    else ""
+                                )
+                            ),
+                            evidence={
+                                "trial_ids_found": [],
+                                "paper_year": year,
+                                "severity_tier": (
+                                    "strict"
+                                    if trial_severity == Severity.SUSPICIOUS
+                                    else "early"
+                                ),
+                            },
+                            innocent_explanations=[
+                                "注册号在 SI 或方法学小节中（提取层未捕获）",
+                                "本试验在公开注册体系建立之前已完成（应在论文中说明）",
+                                "属于回顾性观察研究（不需注册，应明确声明）",
+                            ],
+                            academic_reference=self.academic_basis,
+                        )
                     )
-                )
 
         # 4) 涉及人/动物但无伦理审批
         if (data.is_human_subjects or data.is_animal_study) and not _has_match(

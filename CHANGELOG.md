@@ -4,6 +4,33 @@ All notable changes to PaperGuard are documented in this file. Format follows
 [Keep a Changelog](https://keepachangelog.com/) and the project adheres to
 [Semantic Versioning](https://semver.org/).
 
+## [2.0.7] — 2026-05-19 — T3 year-stratified severity
+
+### Changed
+- **T3 `paper_year` input** + year-aware severity tiers:
+  - **Data Availability statement missing**: silent on papers before
+    2018 (ICMJE only made the statement mandatory that year);
+    CONCERN at 2018+.
+  - **Clinical-trial paper without an NCT/ISRCTN/ChiCTR/EudraCT
+    registration ID**: silent before 2005 (NCT registry did not
+    exist), CONCERN 2005-2009 (early ICMJE adoption), SUSPICIOUS
+    2010+ (strict enforcement).
+- This is driven by the v5 recall study (N=200): T3 was firing at
+  89% on the matched-control arm, almost entirely on pre-policy
+  papers that legitimately predate the mandates. Year-stratifying
+  the rule should bring T3's false-positive rate down dramatically
+  on older biomedical samples.
+- Backward-compatible: when `paper_year` is None (the default for
+  text-only inputs), the detector applies the strictest tier — same
+  behaviour as 2.0.6.
+
+### Added
+- 11 new regression tests (`tests/test_t3_year_stratification.py`)
+  pinning the three-tier policy and pre-policy silence behaviour.
+
+### Quality
+- 259 tests passing; mypy --strict and ruff clean.
+
 ## [2.0.6] — 2026-05-19 — CLI refactor + diagnostic notes
 
 ### Changed
