@@ -4,6 +4,38 @@ All notable changes to PaperGuard are documented in this file. Format follows
 [Keep a Changelog](https://keepachangelog.com/) and the project adheres to
 [Semantic Versioning](https://semver.org/).
 
+## [2.0.6] — 2026-05-19 — CLI refactor + diagnostic notes
+
+### Changed
+- **CLI refactored**: the detector flow is now a single function
+  `_run_detectors_on_file` instead of being duplicated across the
+  `scan` command and the `_scan_single_file` helper (used by the
+  multi-tenant Web UI). The two had drifted over four release
+  cycles, with 2.0.3 having to patch the same PDF-crash bug in
+  both places. Single source of truth means future bug fixes only
+  have to land once. No behavioural change: 248 tests still pass.
+- **T5 detail text updated** to reflect the 2.0.5 tightened
+  thresholds. The old text described single-dimension Stapel
+  signatures; the new text correctly says "since 2.0.5 this
+  detector requires at least two dimensions to deviate by ≥70-100%".
+- **T5 module docstring** documents the per-subfield recalibration
+  roadmap item.
+
+### Diagnostics
+- README now honestly documents two known limitations from the v2
+  recall study:
+  - **i18n**: CLI panels are English, detector body text is Chinese.
+    `--lang en` switches the framework only. Full per-detector i18n
+    is roadmap.
+  - **Vector graphics**: F1 / F2 / F3 / F4 require raster images;
+    modern publisher PDFs store figures as vector. This is why the
+    image detectors did not fire in the v2/v3/v4 study and why
+    PaperGuard's image forensics work better on supplementary data
+    files and `.docx` drafts.
+
+### Quality
+- 248 tests passing; mypy --strict and ruff clean.
+
 ## [2.0.5] — 2026-05-19 — Tighten T5 stylometry + PMC-first OA fetcher
 
 ### Added

@@ -14,6 +14,17 @@ The Case of Diederik Stapel." PLOS ONE 9(8): e105937.
 或 CONCERN。多个同时偏离 → SUSPICIOUS。
 
 注意：这是探索性检测器，假阳性率比 A1/A3 高，仅作为补充信号。
+
+校准状态（2.0.5）：单一全局阈值对生物医学英文写作偏紧——v2 recall
+研究 (docs/recall_test_v2.md) 在 N=100+100 上发现 T5 几乎对所有
+论文都触发 NOTE。2.0.5 把单维偏离阈值上调到 1.0/0.7 并要求 2 维同
+时违反才发 finding；这把生物医学论文上的噪声从 ~98% 降到 0%，但
+保留了对真实 Stapel 风格(高方法学 + 高确定性 + 低形容词)的检测能力。
+
+未来工作 (v3.x+): 按 subfield 重新校准参考分布
+  - REF_METHODOLOGY_RATE: 当前 0.025，应该有医学/生物/计算机/社科分开
+  - REF_CERTAINTY_RATE: 当前 0.005，跨学科差异显著
+  - REF_ADJECTIVE_RATE: 当前 0.10，需要 ~10k 论文 OA 语料重训
 """
 from __future__ import annotations
 
@@ -134,14 +145,20 @@ class T5StylometryDetector(BaseDetector):
                 detail=(
                     f"Manuscript word count: {n}. "
                     f"Methodology-word rate: {meth_rate:.4f} "
-                    f"(Stapel-fraud signature: elevated). "
+                    f"(ref ≈ {self.REF_METHODOLOGY_RATE:.4f}; Stapel-style "
+                    f"signature is elevated). "
                     f"Certainty-word rate: {cert_rate:.4f} "
-                    f"(Stapel-fraud signature: elevated). "
+                    f"(ref ≈ {self.REF_CERTAINTY_RATE:.4f}; elevated). "
                     f"Adjective rate: {adj_rate:.4f} "
-                    f"(Stapel-fraud signature: depressed). "
-                    "These are exploratory ratios derived from "
-                    "Markowitz & Hancock (2014); cross-language and "
-                    "cross-discipline calibration is limited."
+                    f"(ref ≈ {self.REF_ADJECTIVE_RATE:.4f}; depressed). "
+                    "Since 2.0.5 this detector requires AT LEAST TWO "
+                    "dimensions to deviate by ≥70-100% (per dimension) "
+                    "before emitting any finding — the v2 recall study "
+                    "found the previous single-dimension thresholds "
+                    "fired near-universally on biomedical prose. The "
+                    "reference values come from Markowitz & Hancock "
+                    "(2014) and are calibrated for English psychology "
+                    "writing; cross-discipline calibration is limited."
                 ),
                 test_statistic=float(len(flags)),
                 test_name="dimensions deviating",

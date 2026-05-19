@@ -117,6 +117,23 @@ boring on purpose:
 Overall: PASS — 0 findings across 30 detectors.
 ```
 
+> **i18n note**. The sample above is curated for English readability.
+> The current real CLI output uses an English framework (panels,
+> headers, severity labels) plus per-detector body text in Chinese
+> (the original implementation language). The 2.0.x line is honest
+> about this partial state — `--lang en` switches headers and the
+> disclaimer, not detector internals. Full per-detector i18n is on
+> the v3.x roadmap.
+
+> **Image detectors note**. F1 / F2 / F3 / F4 require **raster**
+> images. Modern publisher PDFs (Springer, Nature, Lancet, etc.)
+> store figures as vector graphics, which ``pymupdf`` cannot pull
+> through ``page.get_images()``. As a result the image-forensics
+> detectors fire mainly on **supplementary data files** and
+> manuscript drafts (``.docx``), not on the typeset PDF. See
+> [`docs/recall_test_v5.md`](docs/recall_test_v5.md) for the
+> empirical confirmation.
+
 ## Installation
 
 ```bash

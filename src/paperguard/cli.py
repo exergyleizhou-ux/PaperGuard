@@ -51,6 +51,189 @@ def _safe_pdf_text(file_path: Path) -> tuple[str, str | None]:
         return "", f"{type(e).__name__}: {e}"
 
 
+def _run_detectors_on_file(
+    file_path: Path,
+    registry: DetectorRegistry,
+    report: AuditReport,
+    seed: int,
+    audit: AuditLog | None = None,
+    console: Console | None = None,
+) -> None:
+    """Run the common detector flow on a single file.
+
+    Used by both the interactive ``scan`` command (with audit + console)
+    and the headless ``_scan_single_file`` helper (without either).
+    Single source of truth for which detectors run on which file types
+    — historically these two paths had drifted apart and bugs had to
+    be fixed twice. Keep them in sync by routing both through here.
+
+    The audit log and console are optional; pass ``None`` for headless
+    use (e.g. multi-tenant Web UI scan submissions).
+    """
+    suffix = file_path.suffix.lower()
+
+    # --- 1) Table-data detectors (A1/A2/A3/A5/A6/A7/D1/D2) ----------------
+    sheets: dict[str, Any] = {}
+    if suffix in {".xlsx", ".xlsm", ".csv", ".tsv"}:
+        sheets = dict(parse_data_file(file_path))
+    elif suffix == ".docx":
+        sheets = dict(parse_docx_tables(file_path))
+    elif suffix == ".pdf":
+        sheets, pdf_table_err = _safe_pdf_tables(file_path)
+        if pdf_table_err is not None:
+            if console is not None:
+                console.print(
+                    f"[yellow]  PDF table extraction failed for "
+                    f"{file_path.name}: {pdf_table_err}[/]"
+                )
+            if audit is not None:
+                audit.log_event(
+                    "pdf_table_extract_failed",
+                    {"file": str(file_path), "error": pdf_table_err},
+                )
+
+    if sheets and console is not None:
+        console.print(
+            f"[dim]  Extracted {len(sheets)} table(s) from {file_path.name}[/]"
+        )
+
+    for sheet_name, df in sheets.items():
+        if audit is not None:
+            audit.log_event(
+                "sheet_processed",
+                {
+                    "file": str(file_path),
+                    "sheet": sheet_name,
+                    "rows": len(df),
+                    "cols": [str(c) for c in df.columns],
+                },
+            )
+        for d_id in ("A1", "A2", "A3", "A5", "A6", "A7", "D1", "D2"):
+            detector = registry.get(d_id)
+            if detector is None:
+                continue
+            result = detector.detect(df, seed=seed)
+            report.detector_results.append(result)
+            report.all_findings.extend(result.findings)
+
+    # --- 2) Full-text detectors (B4 / T3 / T4 / T5 / T6) ------------------
+    text = ""
+    if suffix == ".docx":
+        text = extract_text_from_docx(file_path)
+    elif suffix == ".pdf":
+        text, pdf_text_err = _safe_pdf_text(file_path)
+        if pdf_text_err is not None:
+            if console is not None:
+                console.print(
+                    f"[yellow]  PDF text extraction failed for "
+                    f"{file_path.name}: {pdf_text_err}[/]"
+                )
+            if audit is not None:
+                audit.log_event(
+                    "pdf_text_extract_failed",
+                    {"file": str(file_path), "error": pdf_text_err},
+                )
+
+    if text:
+        if audit is not None:
+            audit.log_event(
+                "text_extracted",
+                {"file": str(file_path), "chars": len(text)},
+            )
+        for d_id in ("B4", "T3", "T4", "T5", "T6"):
+            detector = registry.get(d_id)
+            if detector is None:
+                continue
+            result = detector.detect(text, seed=seed)
+            report.detector_results.append(result)
+            report.all_findings.extend(result.findings)
+
+    # --- 3) Metadata / forensics (G3 docx, G4 file metadata) --------------
+    g3 = registry.get("G3")
+    if g3 is not None and suffix == ".docx":
+        result = g3.detect(file_path, seed=seed)
+        report.detector_results.append(result)
+        report.all_findings.extend(result.findings)
+
+    g4 = registry.get("G4")
+    if g4 is not None:
+        g4_input = MetadataForensicsInput(
+            file_path=file_path,
+            claimed_authors=report.paper_authors,
+        )
+        result = g4.detect(g4_input, seed=seed)
+        report.detector_results.append(result)
+        report.all_findings.extend(result.findings)
+
+    # --- 4) Image forensics (F1 pHash on docx/pdf embedded images) --------
+    f1 = registry.get("F1")
+    if f1 is not None and suffix in {".docx", ".pdf"}:
+        from tempfile import TemporaryDirectory
+
+        from paperguard.detectors.f1_image_duplication import (
+            ImageDuplicationInput,
+        )
+        from paperguard.extractor.images import (
+            extract_docx_images,
+            extract_pdf_images,
+        )
+
+        with TemporaryDirectory() as tdir:
+            tdir_path = Path(tdir)
+            imgs = (
+                extract_docx_images(file_path, tdir_path)
+                if suffix == ".docx"
+                else extract_pdf_images(file_path, tdir_path)
+            )
+            if len(imgs) >= 2:
+                result = f1.detect(
+                    ImageDuplicationInput(image_paths=imgs), seed=seed
+                )
+                report.detector_results.append(result)
+                report.all_findings.extend(result.findings)
+                if audit is not None:
+                    audit.log_event(
+                        "images_extracted",
+                        {"file": str(file_path), "n_images": len(imgs)},
+                    )
+
+    # --- 5) PDF-specific: C1 Carlisle on auto-extracted baseline tables ---
+    if suffix == ".pdf":
+        from paperguard.detectors.c1_carlisle import CarlisleInput
+        from paperguard.extractor.baseline_tables import extract_baseline_tables
+
+        c1 = registry.get("C1")
+        if c1 is not None:
+            try:
+                baselines = extract_baseline_tables(file_path)
+            except Exception as e:  # noqa: BLE001
+                if audit is not None:
+                    audit.log_event(
+                        "baseline_extract_failed",
+                        {"file": str(file_path), "error": str(e)},
+                    )
+                baselines = []
+            for bt in baselines:
+                if len(bt.variables) < 5:
+                    continue
+                inp = CarlisleInput(
+                    trial_id=f"{file_path.name}#p{bt.page_number}",
+                    variables=bt.variables,
+                )
+                result = c1.detect(inp, seed=seed)
+                report.detector_results.append(result)
+                report.all_findings.extend(result.findings)
+                if audit is not None:
+                    audit.log_event(
+                        "c1_auto_run",
+                        {
+                            "page": bt.page_number,
+                            "n_variables": len(bt.variables),
+                            "caption": bt.caption[:80],
+                        },
+                    )
+
+
 @click.group()
 @click.version_option(version=__version__)
 def main() -> None:
@@ -147,178 +330,9 @@ def scan(
             "file_loaded",
             {"path": str(file_path), "sha256": file_hash},
         )
-
-        # 1) 表格数据检测器（A1、A2、A3、A5）
-        suffix = file_path.suffix.lower()
-        sheets: dict[str, Any] = {}
-        if suffix in {".xlsx", ".xlsm", ".csv", ".tsv"}:
-            sheets = dict(parse_data_file(file_path))
-        elif suffix == ".docx":
-            sheets = dict(parse_docx_tables(file_path))
-        elif suffix == ".pdf":
-            sheets, pdf_table_err = _safe_pdf_tables(file_path)
-            if pdf_table_err is not None:
-                console.print(
-                    f"[yellow]  PDF table extraction failed for "
-                    f"{file_path.name}: {pdf_table_err}[/]"
-                )
-                audit.log_event(
-                    "pdf_table_extract_failed",
-                    {"file": str(file_path), "error": pdf_table_err},
-                )
-        if sheets:
-            console.print(
-                f"[dim]  Extracted {len(sheets)} table(s) from {file_path.name}[/]"
-            )
-
-        # PDF 专属：自动抽 baseline 表 → C1 Carlisle
-        if suffix == ".pdf":
-            from paperguard.detectors.c1_carlisle import CarlisleInput
-            from paperguard.extractor.baseline_tables import extract_baseline_tables
-
-            c1 = registry.get("C1")
-            if c1 is not None:
-                try:
-                    baselines = extract_baseline_tables(file_path)
-                except Exception as e:  # noqa: BLE001
-                    audit.log_event(
-                        "baseline_extract_failed",
-                        {"file": str(file_path), "error": str(e)},
-                    )
-                    baselines = []
-                for bt in baselines:
-                    if len(bt.variables) < 5:
-                        continue
-                    inp = CarlisleInput(
-                        trial_id=f"{file_path.name}#p{bt.page_number}",
-                        variables=bt.variables,
-                    )
-                    result = c1.detect(inp, seed=seed)
-                    report.detector_results.append(result)
-                    report.all_findings.extend(result.findings)
-                    audit.log_event(
-                        "c1_auto_run",
-                        {
-                            "page": bt.page_number,
-                            "n_variables": len(bt.variables),
-                            "caption": bt.caption[:80],
-                        },
-                    )
-
-        for sheet_name, df in sheets.items():
-            audit.log_event(
-                "sheet_processed",
-                {
-                    "file": str(file_path),
-                    "sheet": sheet_name,
-                    "rows": len(df),
-                    "cols": [str(c) for c in df.columns],
-                },
-            )
-            for d_id in ("A1", "A2", "A3", "A5", "A6", "A7", "D1", "D2"):
-                detector = registry.get(d_id)
-                if detector is None:
-                    continue
-                result = detector.detect(df, seed=seed)
-                report.detector_results.append(result)
-                report.all_findings.extend(result.findings)
-
-        # 2) 全文检测器（B4 statcheck）：从 docx/pdf 提取文本
-        text = ""
-        if suffix == ".docx":
-            text = extract_text_from_docx(file_path)
-        elif suffix == ".pdf":
-            text, pdf_text_err = _safe_pdf_text(file_path)
-            if pdf_text_err is not None:
-                console.print(
-                    f"[yellow]  PDF text extraction failed for "
-                    f"{file_path.name}: {pdf_text_err}[/]"
-                )
-                audit.log_event(
-                    "pdf_text_extract_failed",
-                    {"file": str(file_path), "error": pdf_text_err},
-                )
-        if text:
-            audit.log_event(
-                "text_extracted",
-                {"file": str(file_path), "chars": len(text)},
-            )
-            b4 = registry.get("B4")
-            if b4 is not None:
-                result = b4.detect(text, seed=seed)
-                report.detector_results.append(result)
-                report.all_findings.extend(result.findings)
-
-            t3 = registry.get("T3")
-            if t3 is not None:
-                result = t3.detect(text, seed=seed)
-                report.detector_results.append(result)
-                report.all_findings.extend(result.findings)
-
-            t4 = registry.get("T4")
-            if t4 is not None:
-                result = t4.detect(text, seed=seed)
-                report.detector_results.append(result)
-                report.all_findings.extend(result.findings)
-
-            t5 = registry.get("T5")
-            if t5 is not None:
-                result = t5.detect(text, seed=seed)
-                report.detector_results.append(result)
-                report.all_findings.extend(result.findings)
-
-            t6 = registry.get("T6")
-            if t6 is not None:
-                result = t6.detect(text, seed=seed)
-                report.detector_results.append(result)
-                report.all_findings.extend(result.findings)
-
-        # 3) 元数据/取证检测器：G3 (docx rsid), G4 (file metadata), F1 (images)
-        g3 = registry.get("G3")
-        if g3 is not None and suffix == ".docx":
-            result = g3.detect(file_path, seed=seed)
-            report.detector_results.append(result)
-            report.all_findings.extend(result.findings)
-
-        g4 = registry.get("G4")
-        if g4 is not None:
-            g4_input = MetadataForensicsInput(
-                file_path=file_path,
-                claimed_authors=report.paper_authors,
-            )
-            result = g4.detect(g4_input, seed=seed)
-            report.detector_results.append(result)
-            report.all_findings.extend(result.findings)
-
-        # 4) 图像取证（F1 pHash）：从 docx/pdf 提取嵌入图像后两两比较
-        f1 = registry.get("F1")
-        if f1 is not None and suffix in {".docx", ".pdf"}:
-            from tempfile import TemporaryDirectory
-
-            from paperguard.detectors.f1_image_duplication import (
-                ImageDuplicationInput,
-            )
-            from paperguard.extractor.images import (
-                extract_docx_images,
-                extract_pdf_images,
-            )
-
-            with TemporaryDirectory() as tdir:
-                tdir_path = Path(tdir)
-                if suffix == ".docx":
-                    imgs = extract_docx_images(file_path, tdir_path)
-                else:
-                    imgs = extract_pdf_images(file_path, tdir_path)
-                if len(imgs) >= 2:
-                    result = f1.detect(
-                        ImageDuplicationInput(image_paths=imgs), seed=seed
-                    )
-                    report.detector_results.append(result)
-                    report.all_findings.extend(result.findings)
-                    audit.log_event(
-                        "images_extracted",
-                        {"file": str(file_path), "n_images": len(imgs)},
-                    )
+        _run_detectors_on_file(
+            file_path, registry, report, seed, audit=audit, console=console
+        )
 
     # Auto-NCT → T2 trial outcome consistency
     # If a NCT/ISRCTN ID was found in any extracted text, auto-run T2 (best effort)
@@ -595,100 +609,16 @@ def batch(patterns: tuple[str, ...], out_dir: Path, seed: int) -> None:
 
 
 def _scan_single_file(file_path: Path, seed: int = 42) -> AuditReport:
-    """供 batch 命令使用的单文件 scan helper（不写 audit log，不查 DOI）。"""
+    """Headless single-file scan, used by the multi-tenant Web UI.
+
+    Thin wrapper over ``_run_detectors_on_file`` with no audit log
+    and no console output. Identical detector coverage to the
+    ``paperguard scan`` command since 2.0.6.
+    """
     registry = DetectorRegistry().register_default()
     report = AuditReport(paper_identifier=str(file_path), seed=seed)
     report.file_hashes[str(file_path)] = sha256_file(file_path)
-
-    suffix = file_path.suffix.lower()
-    sheets: dict[str, Any] = {}
-    if suffix in {".xlsx", ".xlsm", ".csv", ".tsv"}:
-        sheets = dict(parse_data_file(file_path))
-    elif suffix == ".docx":
-        sheets = dict(parse_docx_tables(file_path))
-    elif suffix == ".pdf":
-        sheets, _ = _safe_pdf_tables(file_path)
-
-    for _, df in sheets.items():
-        for d_id in ("A1", "A2", "A3", "A5", "A6", "A7", "D1", "D2"):
-            detector = registry.get(d_id)
-            if detector is None:
-                continue
-            result = detector.detect(df, seed=seed)
-            report.detector_results.append(result)
-            report.all_findings.extend(result.findings)
-
-    text = ""
-    if suffix == ".docx":
-        text = extract_text_from_docx(file_path)
-    elif suffix == ".pdf":
-        text, _ = _safe_pdf_text(file_path)
-    if text:
-        b4 = registry.get("B4")
-        if b4 is not None:
-            result = b4.detect(text, seed=seed)
-            report.detector_results.append(result)
-            report.all_findings.extend(result.findings)
-        t3 = registry.get("T3")
-        if t3 is not None:
-            result = t3.detect(text, seed=seed)
-            report.detector_results.append(result)
-            report.all_findings.extend(result.findings)
-        t4 = registry.get("T4")
-        if t4 is not None:
-            result = t4.detect(text, seed=seed)
-            report.detector_results.append(result)
-            report.all_findings.extend(result.findings)
-        t5 = registry.get("T5")
-        if t5 is not None:
-            result = t5.detect(text, seed=seed)
-            report.detector_results.append(result)
-            report.all_findings.extend(result.findings)
-        t6 = registry.get("T6")
-        if t6 is not None:
-            result = t6.detect(text, seed=seed)
-            report.detector_results.append(result)
-            report.all_findings.extend(result.findings)
-
-    g3 = registry.get("G3")
-    if g3 is not None and suffix == ".docx":
-        result = g3.detect(file_path, seed=seed)
-        report.detector_results.append(result)
-        report.all_findings.extend(result.findings)
-
-    g4 = registry.get("G4")
-    if g4 is not None:
-        g4_input = MetadataForensicsInput(file_path=file_path)
-        result = g4.detect(g4_input, seed=seed)
-        report.detector_results.append(result)
-        report.all_findings.extend(result.findings)
-
-    f1 = registry.get("F1")
-    if f1 is not None and suffix in {".docx", ".pdf"}:
-        from tempfile import TemporaryDirectory
-
-        from paperguard.detectors.f1_image_duplication import (
-            ImageDuplicationInput,
-        )
-        from paperguard.extractor.images import (
-            extract_docx_images,
-            extract_pdf_images,
-        )
-
-        with TemporaryDirectory() as tdir:
-            tdir_path = Path(tdir)
-            imgs = (
-                extract_docx_images(file_path, tdir_path)
-                if suffix == ".docx"
-                else extract_pdf_images(file_path, tdir_path)
-            )
-            if len(imgs) >= 2:
-                result = f1.detect(
-                    ImageDuplicationInput(image_paths=imgs), seed=seed
-                )
-                report.detector_results.append(result)
-                report.all_findings.extend(result.findings)
-
+    _run_detectors_on_file(file_path, registry, report, seed)
     combine_evidence(report)
     return report
 
