@@ -1,0 +1,241 @@
+{
+  "n_per_arm": 10,
+  "results": [
+    {
+      "arm": "retracted",
+      "doi": "10.1016/j.ijantimicag.2020.105949",
+      "openalex_id": "https://openalex.org/W3010930696",
+      "title": "RETRACTED: Hydroxychloroquine and azithromycin as a treatment of COVID-19: results of an open-label non-randomized clinical trial",
+      "year": 2020,
+      "oa_url": "https://www.ncbi.nlm.nih.gov/pmc/articles/7102549",
+      "pdf_sha256": "28d63b4a5a9187e6b8ce33062e612420c544d86187a646114a60711d8e1aa9e1",
+      "download_ok": true,
+      "scan": {
+        "error": "exit=1",
+        "stderr": "n occurred:\n\nTraceback (most recent call last):\n  File \"<frozen runpy>\", line 198, in _run_module_as_main\n  File \"<frozen runpy>\", line 88, in _run_code\n  File \"C:\\Users\\USER\\Desktop\\PROJECTPaperGuard\\.venv\\Scripts\\paperguard.exe\\__main__.py\", line 5, in <module>\n  File \"C:\\Users\\USER\\Desktop\\PROJECTPaperGuard\\.venv\\Lib\\site-packages\\click\\core.py\", line 1514, in __call__\n    return self.main(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\USER\\Desktop\\PROJECTPaperGuard\\.venv\\Lib\\site-packages\\click\\core.py\", line 1435, in main\n    rv = self.invoke(ctx)\n         ^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\USER\\Desktop\\PROJECTPaperGuard\\.venv\\Lib\\site-packages\\click\\core.py\", line 1902, in invoke\n    return _process_result(sub_ctx.command.invoke(sub_ctx))\n                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\USER\\Desktop\\PROJECTPaperGuard\\.venv\\Lib\\site-packages\\click\\core.py\", line 1298, in invoke\n    return ctx.invoke(self.callback, **ctx.params)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\USER\\Desktop\\PROJECTPaperGuard\\.venv\\Lib\\site-packages\\click\\core.py\", line 853, in invoke\n    return callback(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\USER\\Desktop\\PROJECTPaperGuard\\src\\paperguard\\cli.py\", line 138, in scan\n    sheets = dict(extract_pdf_tables(file_path))\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\USER\\Desktop\\PROJECTPaperGuard\\src\\paperguard\\extractor\\pdf_text.py\", line 37, in extract_pdf_tables\n    with pdfplumber.open(path) as pdf:\n         ^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\USER\\Desktop\\PROJECTPaperGuard\\.venv\\Lib\\site-packages\\pdfplumber\\pdf.py\", line 107, in open\n    return cls(\n           ^^^^\n  File \"C:\\Users\\USER\\Desktop\\PROJECTPaperGuard\\.venv\\Lib\\site-packages\\pdfplumber\\pdf.py\", line 52, in __init__\n    raise PdfminerException(e)\npdfplumber.utils.exceptions.PdfminerException: No /Root object! - Is this really a PDF?\n"
+      }
+    },
+    {
+      "arm": "control",
+      "doi": "10.1016/s0140-6736(20)30183-5",
+      "openalex_id": "https://openalex.org/W3001118548",
+      "title": "Clinical features of patients infected with 2019 novel coronavirus in Wuhan, China",
+      "year": 2020,
+      "oa_url": "http://www.thelancet.com/article/S0140673620301835/pdf",
+      "pdf_sha256": null,
+      "download_ok": false
+    },
+    {
+      "arm": "retracted",
+      "doi": "10.1016/s0140-6736(20)32656-8",
+      "openalex_id": "https://openalex.org/W3120387768",
+      "title": "RETRACTED: 6-month consequences of COVID-19 in patients discharged from hospital: a cohort study",
+      "year": 2021,
+      "oa_url": "http://www.thelancet.com/article/S0140673620326568/pdf",
+      "pdf_sha256": null,
+      "download_ok": false
+    },
+    {
+      "arm": "control",
+      "doi": "10.1001/jamainternmed.2020.0994",
+      "openalex_id": "https://openalex.org/W3011610993",
+      "title": "Risk Factors Associated With Acute Respiratory Distress Syndrome and Death in Patients With Coronavirus Disease 2019 Pneumonia in Wuhan, China",
+      "year": 2020,
+      "oa_url": "https://www.ncbi.nlm.nih.gov/pmc/articles/7070509",
+      "pdf_sha256": "a8e3c3cc9e9122f3ef648d5d0251814782fcf6f7fc37203a16600c000f3a8eef",
+      "download_ok": true,
+      "scan": {
+        "error": "exit=1",
+        "stderr": "n occurred:\n\nTraceback (most recent call last):\n  File \"<frozen runpy>\", line 198, in _run_module_as_main\n  File \"<frozen runpy>\", line 88, in _run_code\n  File \"C:\\Users\\USER\\Desktop\\PROJECTPaperGuard\\.venv\\Scripts\\paperguard.exe\\__main__.py\", line 5, in <module>\n  File \"C:\\Users\\USER\\Desktop\\PROJECTPaperGuard\\.venv\\Lib\\site-packages\\click\\core.py\", line 1514, in __call__\n    return self.main(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\USER\\Desktop\\PROJECTPaperGuard\\.venv\\Lib\\site-packages\\click\\core.py\", line 1435, in main\n    rv = self.invoke(ctx)\n         ^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\USER\\Desktop\\PROJECTPaperGuard\\.venv\\Lib\\site-packages\\click\\core.py\", line 1902, in invoke\n    return _process_result(sub_ctx.command.invoke(sub_ctx))\n                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\USER\\Desktop\\PROJECTPaperGuard\\.venv\\Lib\\site-packages\\click\\core.py\", line 1298, in invoke\n    return ctx.invoke(self.callback, **ctx.params)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\USER\\Desktop\\PROJECTPaperGuard\\.venv\\Lib\\site-packages\\click\\core.py\", line 853, in invoke\n    return callback(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\USER\\Desktop\\PROJECTPaperGuard\\src\\paperguard\\cli.py\", line 138, in scan\n    sheets = dict(extract_pdf_tables(file_path))\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\USER\\Desktop\\PROJECTPaperGuard\\src\\paperguard\\extractor\\pdf_text.py\", line 37, in extract_pdf_tables\n    with pdfplumber.open(path) as pdf:\n         ^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\USER\\Desktop\\PROJECTPaperGuard\\.venv\\Lib\\site-packages\\pdfplumber\\pdf.py\", line 107, in open\n    return cls(\n           ^^^^\n  File \"C:\\Users\\USER\\Desktop\\PROJECTPaperGuard\\.venv\\Lib\\site-packages\\pdfplumber\\pdf.py\", line 52, in __init__\n    raise PdfminerException(e)\npdfplumber.utils.exceptions.PdfminerException: No /Root object! - Is this really a PDF?\n"
+      }
+    },
+    {
+      "arm": "retracted",
+      "doi": "10.1056/nejmoa1200303",
+      "openalex_id": "https://openalex.org/W2166000498",
+      "title": "RETRACTED: Primary Prevention of Cardiovascular Disease with a Mediterranean Diet",
+      "year": 2013,
+      "oa_url": "https://www.nejm.org/doi/pdf/10.1056/NEJMoa1200303?articleTools=true",
+      "pdf_sha256": null,
+      "download_ok": false
+    },
+    {
+      "arm": "control",
+      "doi": "10.1016/s0140-6736(14)60460-8",
+      "openalex_id": "https://openalex.org/W2163710303",
+      "title": "Global, regional, and national prevalence of overweight and obesity in children and adults during 1980–2013: a systematic analysis for the Global Burden of Disease Study 2013",
+      "year": 2014,
+      "oa_url": "https://openrepository.aut.ac.nz/bitstreams/3ec6d9d6-95b1-455b-ab99-d68f31c8e543/download",
+      "pdf_sha256": "a1e49340daea74c66eba9ead191279e584cdd87ee9e04c5ed4c30ddb92c37a12",
+      "download_ok": true,
+      "scan": {
+        "overall_severity": 3,
+        "n_findings": 6,
+        "severity_counts": {
+          "0": 0,
+          "1": 2,
+          "2": 4,
+          "3": 0
+        },
+        "detectors_fired": [
+          "F1",
+          "T3",
+          "T5"
+        ],
+        "detector_hits": {
+          "T3": 2,
+          "T5": 1,
+          "F1": 3
+        }
+      }
+    },
+    {
+      "arm": "retracted",
+      "doi": "10.1111/j.1751-7176.2008.07572.x",
+      "openalex_id": "https://openalex.org/W1966242613",
+      "title": "Retracted: Predictive Validity of a Medication Adherence Measure in an Outpatient Setting",
+      "year": 2008,
+      "oa_url": "https://onlinelibrary.wiley.com/doi/pdfdirect/10.1111/j.1751-7176.2008.07572.x",
+      "pdf_sha256": null,
+      "download_ok": false
+    },
+    {
+      "arm": "control",
+      "doi": "10.1136/bmj.39553.670231.25",
+      "openalex_id": "https://openalex.org/W1980533403",
+      "title": "Adherence to prescribed antihypertensive drug treatments: longitudinal study of electronically compiled dosing histories",
+      "year": 2008,
+      "oa_url": "https://www.bmj.com/content/bmj/336/7653/1114.full.pdf",
+      "pdf_sha256": null,
+      "download_ok": false
+    },
+    {
+      "arm": "retracted",
+      "doi": "10.1046/j.1365-313x.2003.01676.x",
+      "openalex_id": "https://openalex.org/W2108733083",
+      "title": "Retracted: An enhanced transient expression system in plants based on suppression of gene silencing by the p19 protein of tomato bushy stunt virus",
+      "year": 2003,
+      "oa_url": "https://onlinelibrary.wiley.com/doi/pdfdirect/10.1046/j.1365-313X.2003.01676.x",
+      "pdf_sha256": null,
+      "download_ok": false
+    },
+    {
+      "arm": "control",
+      "doi": "10.1002/anie.200390115",
+      "openalex_id": "https://openalex.org/W2171513236",
+      "title": "Salinosporamide A: A Highly Cytotoxic Proteasome Inhibitor from a Novel Microbial Source, a Marine Bacterium of the New Genus <i>Salinospora</i>",
+      "year": 2003,
+      "oa_url": "https://onlinelibrary.wiley.com/doi/pdfdirect/10.1002/anie.200390115",
+      "pdf_sha256": null,
+      "download_ok": false
+    },
+    {
+      "arm": "retracted",
+      "doi": "10.1074/jbc.m800102200",
+      "openalex_id": "https://openalex.org/W1965827991",
+      "title": "Mitochondrial Autophagy Is an HIF-1-dependent Adaptive Metabolic Response to Hypoxia",
+      "year": 2008,
+      "oa_url": "http://www.jbc.org/article/S0021925820620579/pdf",
+      "pdf_sha256": null,
+      "download_ok": false
+    },
+    {
+      "arm": "control",
+      "doi": "10.1016/j.cell.2007.12.018",
+      "openalex_id": "https://openalex.org/W2109034822",
+      "title": "Autophagy in the Pathogenesis of Disease",
+      "year": 2008,
+      "oa_url": "http://www.cell.com/article/S0092867407016856/pdf",
+      "pdf_sha256": null,
+      "download_ok": false
+    },
+    {
+      "arm": "retracted",
+      "doi": "10.1056/nejmoa2007621",
+      "openalex_id": "https://openalex.org/W3023826646",
+      "title": "RETRACTED: Cardiovascular Disease, Drug Therapy, and Mortality in Covid-19",
+      "year": 2020,
+      "oa_url": "https://www.ncbi.nlm.nih.gov/pmc/articles/7206931",
+      "pdf_sha256": "4ac2650f2f840410c6c2c8ccfafd53ac47b379264a612aa632b5d2d372aab9a9",
+      "download_ok": true,
+      "scan": {
+        "error": "exit=1",
+        "stderr": "n occurred:\n\nTraceback (most recent call last):\n  File \"<frozen runpy>\", line 198, in _run_module_as_main\n  File \"<frozen runpy>\", line 88, in _run_code\n  File \"C:\\Users\\USER\\Desktop\\PROJECTPaperGuard\\.venv\\Scripts\\paperguard.exe\\__main__.py\", line 5, in <module>\n  File \"C:\\Users\\USER\\Desktop\\PROJECTPaperGuard\\.venv\\Lib\\site-packages\\click\\core.py\", line 1514, in __call__\n    return self.main(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\USER\\Desktop\\PROJECTPaperGuard\\.venv\\Lib\\site-packages\\click\\core.py\", line 1435, in main\n    rv = self.invoke(ctx)\n         ^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\USER\\Desktop\\PROJECTPaperGuard\\.venv\\Lib\\site-packages\\click\\core.py\", line 1902, in invoke\n    return _process_result(sub_ctx.command.invoke(sub_ctx))\n                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\USER\\Desktop\\PROJECTPaperGuard\\.venv\\Lib\\site-packages\\click\\core.py\", line 1298, in invoke\n    return ctx.invoke(self.callback, **ctx.params)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\USER\\Desktop\\PROJECTPaperGuard\\.venv\\Lib\\site-packages\\click\\core.py\", line 853, in invoke\n    return callback(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\USER\\Desktop\\PROJECTPaperGuard\\src\\paperguard\\cli.py\", line 138, in scan\n    sheets = dict(extract_pdf_tables(file_path))\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\USER\\Desktop\\PROJECTPaperGuard\\src\\paperguard\\extractor\\pdf_text.py\", line 37, in extract_pdf_tables\n    with pdfplumber.open(path) as pdf:\n         ^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\USER\\Desktop\\PROJECTPaperGuard\\.venv\\Lib\\site-packages\\pdfplumber\\pdf.py\", line 107, in open\n    return cls(\n           ^^^^\n  File \"C:\\Users\\USER\\Desktop\\PROJECTPaperGuard\\.venv\\Lib\\site-packages\\pdfplumber\\pdf.py\", line 52, in __init__\n    raise PdfminerException(e)\npdfplumber.utils.exceptions.PdfminerException: No /Root object! - Is this really a PDF?\n"
+      }
+    },
+    {
+      "arm": "control",
+      "doi": "10.1016/s0140-6736(20)30183-5",
+      "openalex_id": "https://openalex.org/W3001118548",
+      "title": "Clinical features of patients infected with 2019 novel coronavirus in Wuhan, China",
+      "year": 2020,
+      "oa_url": "http://www.thelancet.com/article/S0140673620301835/pdf",
+      "pdf_sha256": null,
+      "download_ok": false
+    },
+    {
+      "arm": "retracted",
+      "doi": "10.1207/s15326934crj1801_10",
+      "openalex_id": "https://openalex.org/W2151119690",
+      "title": "RETRACTED ARTICLE: The Nature of Creativity",
+      "year": 2006,
+      "oa_url": "https://www.tandfonline.com/doi/pdf/10.1207/s15326934crj1801_10?download=true",
+      "pdf_sha256": null,
+      "download_ok": false
+    },
+    {
+      "arm": "control",
+      "doi": "10.1207/s15326985ep4102_1",
+      "openalex_id": "https://openalex.org/W1976637107",
+      "title": "Why Minimal Guidance During Instruction Does Not Work: An Analysis of the Failure of Constructivist, Discovery, Problem-Based, Experiential, and Inquiry-Based Teaching",
+      "year": 2006,
+      "oa_url": "https://www.tandfonline.com/doi/epdf/10.1207/s15326985ep4102_1?needAccess=true&role=button",
+      "pdf_sha256": null,
+      "download_ok": false
+    },
+    {
+      "arm": "retracted",
+      "doi": "10.1016/j.eng.2020.03.007",
+      "openalex_id": "https://openalex.org/W3012455685",
+      "title": "Experimental Treatment with Favipiravir for COVID-19: An Open-Label Control Study",
+      "year": 2020,
+      "oa_url": "https://doi.org/10.1016/j.eng.2020.03.007",
+      "pdf_sha256": "6ffe01437bf6b22c74293203d2219e38505d90b2e0842faacf77160dc5ece99a",
+      "download_ok": true,
+      "scan": {
+        "error": "exit=1",
+        "stderr": "n occurred:\n\nTraceback (most recent call last):\n  File \"<frozen runpy>\", line 198, in _run_module_as_main\n  File \"<frozen runpy>\", line 88, in _run_code\n  File \"C:\\Users\\USER\\Desktop\\PROJECTPaperGuard\\.venv\\Scripts\\paperguard.exe\\__main__.py\", line 5, in <module>\n  File \"C:\\Users\\USER\\Desktop\\PROJECTPaperGuard\\.venv\\Lib\\site-packages\\click\\core.py\", line 1514, in __call__\n    return self.main(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\USER\\Desktop\\PROJECTPaperGuard\\.venv\\Lib\\site-packages\\click\\core.py\", line 1435, in main\n    rv = self.invoke(ctx)\n         ^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\USER\\Desktop\\PROJECTPaperGuard\\.venv\\Lib\\site-packages\\click\\core.py\", line 1902, in invoke\n    return _process_result(sub_ctx.command.invoke(sub_ctx))\n                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\USER\\Desktop\\PROJECTPaperGuard\\.venv\\Lib\\site-packages\\click\\core.py\", line 1298, in invoke\n    return ctx.invoke(self.callback, **ctx.params)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\USER\\Desktop\\PROJECTPaperGuard\\.venv\\Lib\\site-packages\\click\\core.py\", line 853, in invoke\n    return callback(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\USER\\Desktop\\PROJECTPaperGuard\\src\\paperguard\\cli.py\", line 138, in scan\n    sheets = dict(extract_pdf_tables(file_path))\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\USER\\Desktop\\PROJECTPaperGuard\\src\\paperguard\\extractor\\pdf_text.py\", line 37, in extract_pdf_tables\n    with pdfplumber.open(path) as pdf:\n         ^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\USER\\Desktop\\PROJECTPaperGuard\\.venv\\Lib\\site-packages\\pdfplumber\\pdf.py\", line 107, in open\n    return cls(\n           ^^^^\n  File \"C:\\Users\\USER\\Desktop\\PROJECTPaperGuard\\.venv\\Lib\\site-packages\\pdfplumber\\pdf.py\", line 52, in __init__\n    raise PdfminerException(e)\npdfplumber.utils.exceptions.PdfminerException: No /Root object! - Is this really a PDF?\n"
+      }
+    },
+    {
+      "arm": "control",
+      "doi": "10.1016/s0140-6736(20)30183-5",
+      "openalex_id": "https://openalex.org/W3001118548",
+      "title": "Clinical features of patients infected with 2019 novel coronavirus in Wuhan, China",
+      "year": 2020,
+      "oa_url": "http://www.thelancet.com/article/S0140673620301835/pdf",
+      "pdf_sha256": null,
+      "download_ok": false
+    },
+    {
+      "arm": "retracted",
+      "doi": "10.1155/2021/5102014",
+      "openalex_id": "https://openalex.org/W4200470043",
+      "title": "Nanomaterial by Sol‐Gel Method: Synthesis and Application",
+      "year": 2021,
+      "oa_url": "https://downloads.hindawi.com/journals/amse/2021/5102014.pdf",
+      "pdf_sha256": null,
+      "download_ok": false
+    },
+    {
+      "arm": "control",
+      "doi": "10.1093/nar/gkab1038",
+      "openalex_id": "https://openalex.org/W3208691473",
+      "title": "The PRIDE database resources in 2022: a hub for mass spectrometry-based proteomics evidences",
+      "year": 2021,
+      "oa_url": "https://academic.oup.com/nar/article-pdf/50/D1/D543/42057564/gkab1038.pdf",
+      "pdf_sha256": null,
+      "download_ok": false
+    }
+  ]
+}
