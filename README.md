@@ -312,9 +312,10 @@ tests/
 
 | Document | What it covers |
 |---|---|
+| [docs/quickstart.md](docs/quickstart.md) | **5-minute walk-through** — install, scan a fabricated CSV, scan a real retracted PDF (Wansink 2015), read the report |
 | [README.md](README.md) | This file — overview, usage, install |
 | [README.zh.md](README.zh.md) | 中文版 |
-| [CHANGELOG.md](CHANGELOG.md) | Full release history 0.1 → 2.0.1 |
+| [CHANGELOG.md](CHANGELOG.md) | Full release history 0.1 → 2.0.2 |
 | [docs/detectors/](docs/detectors/) | Auto-generated per-detector deep-dive (30 pages + index) |
 | [docs/fraud_case_studies.md](docs/fraud_case_studies.md) | 9 real-world cases (Stapel, Fujii, Hwang, Schön, Macchiarini, Wansink, Masliah, Geng-style, Bik 2016) mapped to detectors |
 | [docs/webui_multitenant.md](docs/webui_multitenant.md) | Multi-tenant Web UI architecture, env vars, invite flow, production checklist |
