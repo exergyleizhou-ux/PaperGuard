@@ -4,6 +4,45 @@ All notable changes to PaperGuard are documented in this file. Format follows
 [Keep a Changelog](https://keepachangelog.com/) and the project adheres to
 [Semantic Versioning](https://semver.org/).
 
+## [2.0.8] — 2026-05-19 — Three precision-improving changes
+
+This is the biggest single PaperGuard release for detection accuracy
+since 1.0. Three things land together:
+
+### Added — `--paper-year` plumbed through to T3 (Step 4)
+- `paperguard scan --paper-year YYYY` now flows through to the T3
+  detector's year-stratified severity logic (added in 2.0.7).
+- When `--doi` is given, `paper_year` is auto-filled from OpenAlex
+  metadata.
+- `_scan_single_file(file_path, seed, paper_year=None)` exposes the
+  same plumbing for headless callers (Web UI, batch scripts).
+
+### Added — Page-as-raster fallback for vector-figure PDFs (Step 2)
+- `extract_pdf_images` now renders each page via `pymupdf.get_pixmap`
+  when fewer than 2 embedded raster bitmaps are found. Modern
+  Springer / Nature / Lancet / Cell-Press PDFs store figures as
+  vector graphics that `page.get_images()` cannot see; this
+  fallback makes F1/F2/F3 actually fire on those PDFs for the first
+  time. Knobs: `raster_dpi=150`, `raster_threshold=2`,
+  `raster_max_pages=40`.
+- 5 new regression tests covering vector-only PDFs, raster cap, dpi
+  scaling, and explicit disable.
+
+### Added — Live ClinicalTrials.gov NCT verification (Step 1)
+- During scan, every extracted NCT id is verified against the
+  ClinicalTrials.gov v2 API.
+- 404 → SUSPICIOUS T2 finding: "Claimed trial registration {NCT}
+  does not exist in registry" — fabricated trial IDs in published
+  papers are a documented fraud pattern (Goldacre et al. 2019 COMPare).
+- 3 new tests covering the 200 / 404 / non-NCT-format paths (mocked
+  API).
+
+### Quality
+- 267 tests passing (was 259; +8 new); mypy --strict and ruff clean.
+- All three steps are part of the **v3.x roadmap** I documented in
+  the v5 study; this release is the first cut where PDF-only scans
+  have a meaningfully strengthened signal layer.
+
 ## [2.0.7] — 2026-05-19 — T3 year-stratified severity
 
 ### Changed

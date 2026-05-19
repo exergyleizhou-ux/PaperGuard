@@ -13,7 +13,7 @@ from paperguard import __version__
 from paperguard.config import get_settings
 from paperguard.core.audit import AuditLog
 from paperguard.core.registry import DetectorRegistry
-from paperguard.core.types import AuditReport
+from paperguard.core.types import AuditReport, DetectorResult, Finding, Severity
 from paperguard.detectors.g4_metadata_forensics import MetadataForensicsInput
 from paperguard.evidence.combiner import combine_evidence
 from paperguard.extractor.docx_tables import parse_docx_tables
@@ -140,11 +140,25 @@ def _run_detectors_on_file(
                 "text_extracted",
                 {"file": str(file_path), "chars": len(text)},
             )
+        # T3 wants paper_year for year-stratified severity (since 2.0.7).
+        # Build a DataAvailabilityInput so the year is plumbed through;
+        # other text detectors take raw text.
+        from paperguard.detectors.t3_data_availability import (
+            DataAvailabilityInput,
+        )
+
         for d_id in ("B4", "T3", "T4", "T5", "T6"):
             detector = registry.get(d_id)
             if detector is None:
                 continue
-            result = detector.detect(text, seed=seed)
+            if d_id == "T3":
+                t3_input = DataAvailabilityInput(
+                    text=text,
+                    paper_year=report.paper_year,
+                )
+                result = detector.detect(t3_input, seed=seed)
+            else:
+                result = detector.detect(text, seed=seed)
             report.detector_results.append(result)
             report.all_findings.extend(result.findings)
 
@@ -277,6 +291,16 @@ def main() -> None:
         "Will trigger many cached API calls on first run."
     ),
 )
+@click.option(
+    "--paper-year",
+    type=int,
+    default=None,
+    help=(
+        "Publication year, used for year-stratified severity in T3 "
+        "(ICMJE data-availability mandate 2018; NCT trial-reg 2005). "
+        "Auto-filled from DOI metadata when --doi is given."
+    ),
+)
 def scan(
     files: tuple[Path, ...],
     doi: str | None,
@@ -285,6 +309,7 @@ def scan(
     seed: int,
     lang: str | None,
     check_paper_mill: bool,
+    paper_year: int | None,
 ) -> None:
     """扫描本地数据文件 + 可选 DOI 元数据。"""
     console = Console(legacy_windows=False)
@@ -297,9 +322,17 @@ def scan(
         paper_identifier=doi or (str(files[0]) if files else "local"),
         seed=seed,
     )
+    if paper_year is not None:
+        report.paper_year = paper_year
 
     if doi:
         _fetch_metadata(report, audit, doi, settings.email, console)
+        # If --paper-year was not explicitly passed, fall back to what
+        # the DOI lookup populated (OpenAlex provides publication_year).
+        if paper_year is None and report.paper_year:
+            console.print(
+                f"[dim]  paper_year auto-filled from DOI: {report.paper_year}[/]"
+            )
 
     # 如果给了 --doi 但没给 -f，尝试通过 Unpaywall 自动拉 OA PDF
     if doi and not files:
@@ -369,6 +402,100 @@ def scan(
             + "[/]"
         )
         audit.log_event("trial_ids_extracted", {"ids": nct_ids_found})
+
+        # Live verify NCT IDs against ClinicalTrials.gov v2 API.
+        # If a paper claims NCT123… and the registry returns 404, that's
+        # a SUSPICIOUS finding (fabricated trial id is a real fraud pattern).
+        from paperguard.fetcher.clinicaltrials import ClinicalTrialsClient
+
+        nct_only = [n for n in nct_ids_found if n.upper().startswith("NCT")]
+        if nct_only:
+            with console.status(
+                f"[cyan]Verifying {len(nct_only)} NCT ID(s) against ClinicalTrials.gov..."
+            ):
+                ct_client = ClinicalTrialsClient(email=settings.email)
+                missing: list[str] = []
+                verified: list[str] = []
+                try:
+                    for nct in nct_only:
+                        try:
+                            study = ct_client.get_study(nct)
+                        except Exception as e:  # noqa: BLE001
+                            audit.log_event(
+                                "ct_gov_lookup_failed",
+                                {"nct": nct, "error": str(e)},
+                            )
+                            continue
+                        if study is None:
+                            missing.append(nct)
+                        else:
+                            verified.append(nct)
+                finally:
+                    ct_client.close()
+            if verified:
+                console.print(
+                    f"[green]  ✓ {len(verified)} NCT verified in registry[/]"
+                )
+                audit.log_event("ct_gov_verified", {"nct_ids": verified})
+            if missing:
+                console.print(
+                    f"[red]  ✗ {len(missing)} NCT NOT FOUND in registry: "
+                    f"{', '.join(missing[:3])}"
+                    + (
+                        f" (+{len(missing) - 3} more)"
+                        if len(missing) > 3
+                        else ""
+                    )
+                    + "[/]"
+                )
+                audit.log_event("ct_gov_missing", {"nct_ids": missing})
+                missing_findings: list[Finding] = []
+                for nct in missing:
+                    missing_findings.append(
+                        Finding(
+                            detector_id="T2",
+                            detector_name="Clinical Trial Outcome Consistency",
+                            severity=Severity.SUSPICIOUS,
+                            summary=(
+                                f"Claimed trial registration {nct} does not "
+                                "exist in ClinicalTrials.gov"
+                            ),
+                            detail=(
+                                f"The manuscript references {nct} as a "
+                                "trial-registration identifier, but the "
+                                "ClinicalTrials.gov v2 API returns 404. A "
+                                "registered, ICMJE-compliant trial must "
+                                "have a resolvable record. An unresolvable "
+                                "NCT in a published article is a strong "
+                                "signal worth investigating."
+                            ),
+                            evidence={"nct_id": nct, "ct_gov_status": "404"},
+                            innocent_explanations=[
+                                "OCR misread the NCT number (off by 1-2 digits)",
+                                "The trial actually registered with a non-US "
+                                "registry (ISRCTN/ChiCTR/ACTRN/EudraCT) and "
+                                "the NCT-like format is coincidental",
+                                "Very recent registration not yet indexed "
+                                "in the v2 API (rare; takes 24-48 h)",
+                                "Registry record was withdrawn by the "
+                                "submitter (rare; usually leaves a stub)",
+                            ],
+                            academic_reference=(
+                                "ICMJE 2005: required pre-registration of "
+                                "all interventional trials. Live API check "
+                                "against https://clinicaltrials.gov/api/v2"
+                            ),
+                        )
+                    )
+                if missing_findings:
+                    report.detector_results.append(
+                        DetectorResult(
+                            detector_id="T2",
+                            applicable=True,
+                            findings=missing_findings,
+                        )
+                    )
+                    report.all_findings.extend(missing_findings)
     _ = combined_text_for_ids  # silence linter
 
     # M1 — paper-mill citation-graph (opt-in via --check-paper-mill)
@@ -608,15 +735,24 @@ def batch(patterns: tuple[str, ...], out_dir: Path, seed: int) -> None:
     console.print(f"[green]Summary -> {summary_path}[/]")
 
 
-def _scan_single_file(file_path: Path, seed: int = 42) -> AuditReport:
+def _scan_single_file(
+    file_path: Path,
+    seed: int = 42,
+    paper_year: int | None = None,
+) -> AuditReport:
     """Headless single-file scan, used by the multi-tenant Web UI.
 
     Thin wrapper over ``_run_detectors_on_file`` with no audit log
     and no console output. Identical detector coverage to the
     ``paperguard scan`` command since 2.0.6.
+
+    ``paper_year`` (optional) is plumbed through to T3 for year-
+    stratified severity (since 2.0.8).
     """
     registry = DetectorRegistry().register_default()
     report = AuditReport(paper_identifier=str(file_path), seed=seed)
+    if paper_year is not None:
+        report.paper_year = paper_year
     report.file_hashes[str(file_path)] = sha256_file(file_path)
     _run_detectors_on_file(file_path, registry, report, seed)
     combine_evidence(report)

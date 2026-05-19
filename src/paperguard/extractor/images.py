@@ -2,7 +2,14 @@
 
 重要：PDF/docx 嵌入大量小尺寸 bitmap（数学符号、字体字形、装饰图标）。
 默认过滤掉 < 200×200 px 或 < 8KB 的图像 + 去重（基于 SHA-256），避免
-F1/F2 检测器在装饰资产上产生假阳性。"""
+F1/F2 检测器在装饰资产上产生假阳性。
+
+**Raster fallback (2.0.8)**: 现代 publisher PDF (Springer / Nature /
+Lancet / Cell Press) 把 figure 存成 vector graphics —— ``page.get_images()``
+拿不到。``extract_pdf_images`` 在嵌入位图 < threshold 时,会用
+``page.get_pixmap(dpi=150)`` 把每页 render 成 PNG,**包括** vector
+figures。这让 F1/F2/F3 在 v5 study 暴露的"PDF 上从不触发"问题终于
+能上场。"""
 from __future__ import annotations
 
 from pathlib import Path
@@ -15,13 +22,26 @@ def extract_pdf_images(
     min_width: int = 200,
     min_height: int = 200,
     min_bytes: int = 8_000,
+    raster_fallback: bool = True,
+    raster_dpi: int = 150,
+    raster_threshold: int = 2,
+    raster_max_pages: int = 40,
 ) -> list[Path]:
-    """提取 PDF 中嵌入的位图图像，过滤掉太小的（公式/符号/字形片段）。
+    """提取 PDF 嵌入位图,过滤掉太小的(公式/符号/字形片段)。
 
-    PDF 文件常嵌入大量小尺寸 bitmap（数学符号、特殊字符、装饰），
-    它们会污染下游 F1/F2 检测。默认阈值仅保留 ≥ 200×200、≥ 8KB 的位图，
-    这是大多数科研图（柱状图、散点图、显微图、WB）的下限。
+    优先取嵌入位图(快、像素精确)。当 embedded bitmaps < raster_threshold
+    时,**fallback 到 page-as-raster**:用 pymupdf 把每页 render 成 PNG
+    (默认 150 dpi)。这覆盖了 Nature/Lancet/Cell Press 的 vector figures
+    —— 那些用 page.get_images() 拿不到的图。
+
+    参数:
+        raster_fallback: 启用 page-raster fallback (默认 True)
+        raster_dpi: render dpi(150 是 figure 检测的合理 balance)
+        raster_threshold: 嵌入位图少于这个数就触发 raster fallback
+        raster_max_pages: render 最多多少页(防御 100+ 页 PDF 撑爆)
     """
+    import hashlib
+
     import pymupdf
 
     out_dir.mkdir(parents=True, exist_ok=True)
@@ -41,9 +61,6 @@ def extract_pdf_images(
                     continue
                 if len(data) < min_bytes:
                     continue
-                # 同一 xref 在多页出现只保留一次（Nature logo、letterhead 等）
-                import hashlib
-
                 fp = hashlib.sha256(data).digest()
                 if fp in seen:
                     continue
@@ -51,6 +68,24 @@ def extract_pdf_images(
                 ext = base.get("ext", "png")
                 dst = out_dir / f"p{page_idx + 1}_img{img_idx + 1}.{ext}"
                 dst.write_bytes(data)
+                saved.append(dst)
+
+        # Page-as-raster fallback for vector-figure PDFs
+        if raster_fallback and len(saved) < raster_threshold:
+            n_pages = min(doc.page_count, raster_max_pages)
+            for page_idx in range(n_pages):
+                page = doc[page_idx]
+                matrix = pymupdf.Matrix(raster_dpi / 72, raster_dpi / 72)  # type: ignore[no-untyped-call]
+                pix = page.get_pixmap(matrix=matrix, alpha=False)
+                raster_data = pix.tobytes("png")  # type: ignore[no-untyped-call]
+                if len(raster_data) < min_bytes:
+                    continue
+                fp = hashlib.sha256(raster_data).digest()
+                if fp in seen:
+                    continue
+                seen.add(fp)
+                dst = out_dir / f"raster_p{page_idx + 1}.png"
+                dst.write_bytes(raster_data)
                 saved.append(dst)
     finally:
         doc.close()  # type: ignore[no-untyped-call]
