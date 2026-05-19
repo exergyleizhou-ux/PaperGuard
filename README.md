@@ -3,7 +3,8 @@
 > Statistical anomaly screener for tabular research data.
 > **Flags anomalies, not fraud.** Every finding includes possible innocent explanations.
 
-![status](https://img.shields.io/badge/status-2.0.0-blue)
+[![CI](https://github.com/exergyleizhou-ux/PaperGuard/actions/workflows/ci.yml/badge.svg)](https://github.com/exergyleizhou-ux/PaperGuard/actions/workflows/ci.yml)
+![status](https://img.shields.io/badge/status-2.0.1-blue)
 ![python](https://img.shields.io/badge/python-3.11%2B-blue)
 ![tests](https://img.shields.io/badge/tests-223%20passing-brightgreen)
 ![coverage](https://img.shields.io/badge/coverage-74%25-green)
@@ -28,26 +29,31 @@ LLM-assisted explanation. See the Roadmap for what's still on deck.
 
 ## What This Tool Does
 
-- ✅ Detects suspicious **terminal-digit distributions** (Mosimann 1995)
+- ✅ Detects suspicious **terminal-digit distributions** (Mosimann 1995) and **last-digit 0/5 preference** (Geng method, 2025)
 - ✅ Detects **first-digit / Benford** deviations on wide-dynamic-range columns
 - ✅ Detects **inter-column arithmetic relations** (constant difference / ratio)
-- ✅ Detects **decimal-fraction consistency** anomalies
-- ✅ Runs the **GRIM** test on reported means (Brown & Heathers 2017)
-- ✅ **Recomputes reported p-values** (statcheck-style: t, F, χ², r, z) and flags decision reversals
-- ✅ Performs **file-metadata forensics** on .xlsx / .docx / .pdf
-- ✅ Extracts tables from **.docx / .pdf**; classifies free-text numbers (p-values, percentages, mean±SD)
-- ✅ Cross-checks **DOI metadata** via OpenAlex, **retractions** via CrossRef, and **public concerns** via PubPeer
-- ✅ **Batch mode** to scan many files at once; **HTML / JSON** report exports
+- ✅ Detects **decimal-fraction consistency** and **implausible values** (sentinel detection)
+- ✅ Runs **GRIM** (Brown & Heathers 2017), **GRIMMER** (Anaya 2016), **SPRITE** (Heathers 2018) plausibility checks
+- ✅ **Recomputes reported p-values** (statcheck for t/F/χ²/r/z/Q, one- and two-tailed) and flags decision reversals
+- ✅ **TIVA** (Schimmack 2014), **P-curve** (Simonsohn 2014), **residual smoothness** (Stapel case), **missing-pattern** (Carlisle) tests
+- ✅ **Carlisle baseline-imbalance** test for RCTs, with multi-arm support and auto-extraction of trial-registration IDs (NCT, ISRCTN, ChiCTR, ACTRN, EudraCT, DRKS)
+- ✅ Image forensics: **cross-image pHash** (F1), **intra-image ORB+RANSAC** (Bik-style, F2), **splice/copy-move** statistical forensics (F3), **persistent cross-paper pHash store** (F4), **EXIF clustering** (F5)
+- ✅ EXIF **temporal forensics** (G1), docx **rsid forensics** (G3), file-metadata **publisher-whitelisted** audit (G4)
+- ✅ Text: **similarity** vs corpus (T1), **clinical-trial outcome consistency** (T2), **data availability + ethics + COI** audit (T3), **150+ tortured-phrase paper-mill fingerprints** (T4), **stylometry** (T5), **AI-text heuristic** (T6)
+- ✅ **Paper-mill citation-graph signatures** (M1) — OpenAlex subgraph + 4 structural fingerprints
+- ✅ Cross-checks **DOI metadata** (OpenAlex), **retractions** (CrossRef + Retraction Watch CSV), **public concerns** (PubPeer), **ORI sanctions** (local CSV)
+- ✅ **Plugin system** — third-party detectors via entry-point group `paperguard.detectors`
+- ✅ **Multi-tenant Web UI** (opt-in) — invite-only accounts, persistent projects, per-report visibility (private/org/public)
+- ✅ **Batch mode**, HTML/JSON exports, **5-language i18n**, **WCAG 2.1 AA** reports, optional **LLM-assisted explanation**
 
 ## What This Tool Does **NOT** Do
 
-- ❌ **No plagiarism / text reuse detection**
-- ❌ **No peer-review fraud signals**
-- ❌ **No image-forensics beyond perceptual hash** (no internal-rotation
-  detection, no splicing detection à la Bik 2016 manual review)
-- ❌ **No ORI sanctions cross-check** (planned)
-- ❌ Not a substitute for **journal editors, institutional integrity offices,
-  or expert review**.
+- ❌ **No peer-review fraud signals** (no public data source)
+- ❌ **No ML-trained image classifier** for Western-blot duplication (requires labeled corpus + GPU)
+- ❌ **No full Cabanac PDCN model** (the M1 detector is the local-subgraph version)
+- ❌ Not a substitute for **journal editors, institutional integrity offices, or expert review**
+
+A flag is an **invitation to look more carefully**. It is never a conclusion.
 
 ## Epistemic Position
 
@@ -61,10 +67,61 @@ Every finding carries:
 
 A flag is an invitation to look more carefully. It is not a conclusion.
 
+## Sample output
+
+Running PaperGuard on `tests/fixtures/fabricated_geng_style.csv` (a
+deliberately constructed Geng-method fabrication pattern):
+
+```text
+╭────────────────────── PaperGuard Audit Report ──────────────────────╮
+│ Overall: CRITICAL                                                   │
+│ File:    fabricated_geng_style.csv                                  │
+╰─────────────────────────────────────────────────────────────────────╯
+
+Total findings: 7 | CRITICAL: 2, SUSPICIOUS: 3, CONCERN: 1
+Independent evidence clusters: 2
+
+╭── A1 — Terminal Digit Distribution Analysis ───────────── CRITICAL ──╮
+│ Column 'Cell_Count' last-digit distribution is non-uniform           │
+│   χ²(9) = 148.29, p = 0.00e+00, FDR-adjusted p = 0.00e+00            │
+│   Cramér's V = 0.485                                                 │
+│   Digits 0 and 5 account for 52.9% (expected 20%)                    │
+│                                                                      │
+│ Possible innocent explanations:                                      │
+│   • Instrument quantisation (e.g. balance with 0.05 step display)    │
+│   • Manual rounding to a specific precision at entry time            │
+│   • Cultural digit preference in self-reported data                  │
+│   • Derived values where the formula constrains the last digit       │
+│                                                                      │
+│ Reference: Mosimann et al. (1995). Data fabrication: Can people      │
+│ generate random digits? Accountability in Research, 4(1), 31-55.     │
+╰──────────────────────────────────────────────────────────────────────╯
+
+╭── A3 — Inter-Column Arithmetic Relation ─────────────── SUSPICIOUS ──╮
+│ Columns 'Control_OD' and 'Treatment_OD' differ by a constant         │
+│ -0.3000 (precision σ = 2.19e-16)                                     │
+│ … (4 innocent explanations and reference shown)                      │
+╰──────────────────────────────────────────────────────────────────────╯
+
+… 5 more findings …
+
+DISCLAIMER: PaperGuard flags statistical anomalies, not fraud.
+Every finding lists possible innocent explanations. Use the output as
+a starting point for further inquiry, never as a conclusion.
+```
+
+Running it on `tests/fixtures/genuine_random.csv` (real i.i.d. data) is
+boring on purpose:
+
+```text
+Overall: PASS — 0 findings across 30 detectors.
+```
+
 ## Installation
 
 ```bash
-git clone <repo>
+# from GitHub (current)
+git clone https://github.com/exergyleizhou-ux/PaperGuard.git
 cd PaperGuard
 python -m venv .venv
 # Linux/macOS:
@@ -72,8 +129,15 @@ source .venv/bin/activate
 # Windows PowerShell:
 .\.venv\Scripts\Activate.ps1
 
-pip install -e ".[dev]" types-openpyxl
+pip install -e ".[dev]"
 cp .env.example .env   # edit to set your email (used for API polite pools)
+```
+
+Once a PyPI release lands you will also be able to just:
+
+```bash
+pip install paperguard          # CLI + library only
+pip install paperguard[webui]   # adds FastAPI multi-tenant Web UI
 ```
 
 ## Usage
@@ -244,17 +308,38 @@ tests/
 └── test_*/                 # Detector, combiner, extractor, e2e, fetcher tests
 ```
 
+## Documentation
+
+| Document | What it covers |
+|---|---|
+| [README.md](README.md) | This file — overview, usage, install |
+| [README.zh.md](README.zh.md) | 中文版 |
+| [CHANGELOG.md](CHANGELOG.md) | Full release history 0.1 → 2.0.1 |
+| [docs/detectors/](docs/detectors/) | Auto-generated per-detector deep-dive (30 pages + index) |
+| [docs/fraud_case_studies.md](docs/fraud_case_studies.md) | 9 real-world cases (Stapel, Fujii, Hwang, Schön, Macchiarini, Wansink, Masliah, Geng-style, Bik 2016) mapped to detectors |
+| [docs/webui_multitenant.md](docs/webui_multitenant.md) | Multi-tenant Web UI architecture, env vars, invite flow, production checklist |
+| [CONTRIBUTING.md](CONTRIBUTING.md) | How to add a detector, code style, testing |
+| [SECURITY.md](SECURITY.md) | Security policy and responsible-disclosure contact |
+| [CITATION.cff](CITATION.cff) | Cite this software |
+| [ROADMAP.md](ROADMAP.md) | What's planned next |
+
 ## Roadmap
 
-See [`ROADMAP.md`](ROADMAP.md). Highlights:
+Shipped through 2.0.1. Still open (see [`ROADMAP.md`](ROADMAP.md) for detail):
 
-- **0.2.0** — A2 Benford detector, PubPeer integration, .docx inline-number extraction
-- **0.3.0** — B4 statcheck (recompute p-values from manuscript text), full PDF table extraction
-- **0.4.0** — C1 Carlisle test, F1 image-duplication (perceptual hash)
-- **0.5.0** — Full Retraction Watch database integration, HTML report exports
+- Full Cabanac 2025 PDCN model on a 5M-node citation graph (M1 is the local-subgraph variant)
+- ML-trained Western-blot specific image classifier (requires labelled corpus + GPU)
+- Reviewer-fraud signal extraction (no public data source yet)
+- Web UI 2.x: password reset, project-level shared membership, audit-log UI
 
 Pull requests welcome. New detectors should follow the `A1` template — see
 [`CONTRIBUTING.md`](CONTRIBUTING.md).
+
+## Citation
+
+If PaperGuard helped your work, please cite the software entry in
+[`CITATION.cff`](CITATION.cff) (GitHub renders a "Cite this repository"
+button on the right sidebar).
 
 ## License
 
