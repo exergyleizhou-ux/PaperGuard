@@ -4,6 +4,17 @@ All notable changes to PaperGuard are documented in this file. Format follows
 [Keep a Changelog](https://keepachangelog.com/) and the project adheres to
 [Semantic Versioning](https://semver.org/).
 
+## [2.0.1] — 2026-05-19 — macOS arm64 CI fix
+
+### Fixed
+- **`greenlet>=3.0`** added explicitly to the `[webui]` and `[dev]`
+  extras. SQLAlchemy 2.x needs `greenlet` for its async-to-sync
+  bridge; it is normally a transitive dep on Linux and Windows, but
+  the macOS arm64 wheel marks it optional in some versions, which
+  caused all 20 multi-tenant tests to error on the macos-latest
+  CI matrix. Local `pip install -e .[dev]` on macOS now pulls it in.
+- No source-code changes; only the dependency declaration moved.
+
 ## [2.0.0] — 2026-05-19 — Paper-mill graph + Carlisle automation + multi-tenant Web UI
 
 Second stable major. Folds in the two dev-1 shipped items (M1 paper-mill

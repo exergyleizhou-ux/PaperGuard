@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "paperguard"
-version = "2.0.0"
+version = "2.0.1"
 description = "Statistical anomaly screener for tabular research data"
 readme = "README.md"
 requires-python = ">=3.11"
@@ -54,6 +54,10 @@ webui = [
     "aiosqlite>=0.20",
     "bcrypt>=4.0",
     "itsdangerous>=2.2",
+    # SQLAlchemy 2.x needs greenlet for its async->sync bridge. It's a
+    # transitive dep on most platforms but is "optional" on macOS arm64
+    # in some versions, so declare it explicitly.
+    "greenlet>=3.0",
 ]
 dev = [
     "pytest>=8.0",
@@ -69,6 +73,7 @@ dev = [
     "aiosqlite>=0.20",
     "bcrypt>=4.0",
     "itsdangerous>=2.2",
+    "greenlet>=3.0",
     "mypy>=1.10",
     "pandas-stubs>=2.2",
     "scipy-stubs>=1.12",
