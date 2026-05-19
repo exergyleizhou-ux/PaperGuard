@@ -4,6 +4,31 @@ All notable changes to PaperGuard are documented in this file. Format follows
 [Keep a Changelog](https://keepachangelog.com/) and the project adheres to
 [Semantic Versioning](https://semver.org/).
 
+## [2.0.4] — 2026-05-19 — Recalibrate T3 ethics-statement severity
+
+### Changed
+- **T3 case-4 (no ethics statement on human / animal subjects research)
+  severity SUSPICIOUS → CONCERN**. The v2 recall study
+  (`docs/recall_test_v2.md`) showed this finding triggered at almost
+  identical rates on retracted and matched non-retracted papers
+  (~60-65% in both arms). The root cause is PDF extraction missing
+  ethics statements buried in supplementary information or methods
+  end-matter — not actual fraud signal. Real fraud papers usually
+  include (often fabricated) ethics statements. The detector still
+  flags the issue but no longer auto-escalates the overall report
+  severity into "suspicious" territory on this signal alone.
+- Findings without ethics statements now contribute to `CONCERN`
+  along with the other T3 cases (missing data-availability statement,
+  vague "available on request" without an accession). Clinical-trial-
+  registration omission (T3 case-3) is unchanged — that one remains
+  SUSPICIOUS because ICMJE has required pre-registration since 2005
+  and the signal is much more specific.
+
+### Quality
+- 231 tests still passing; mypy --strict and ruff clean.
+- The recalibration is documented and justified by N=100+100 data
+  rather than a guess.
+
 ## [2.0.3] — 2026-05-19 — Scan errors on malformed PDFs no longer crash CLI
 
 ### Fixed

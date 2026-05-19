@@ -1,0 +1,3233 @@
+{
+  "n_per_arm": 100,
+  "results": [
+    {
+      "arm": "retracted",
+      "doi": "10.1074/jbc.m800102200",
+      "openalex_id": "https://openalex.org/W1965827991",
+      "title": "Mitochondrial Autophagy Is an HIF-1-dependent Adaptive Metabolic Response to Hypoxia",
+      "year": 2008,
+      "subfield": "Epidemiology",
+      "pdf_url": "http://www.jbc.org/article/S0021925820620579/pdf",
+      "download_ok": false,
+      "content_type": "",
+      "pdf_sha256": null,
+      "download_error": "error: HTTPStatusError: Client error '403 Forbidden' for url 'https://www.jbc.org/article/S0021925820620579/pdf'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403"
+    },
+    {
+      "arm": "control",
+      "doi": "10.1016/j.cell.2007.12.018",
+      "openalex_id": "https://openalex.org/W2109034822",
+      "title": "Autophagy in the Pathogenesis of Disease",
+      "year": 2008,
+      "subfield": "Epidemiology",
+      "pdf_url": "http://www.cell.com/article/S0092867407016856/pdf",
+      "download_ok": false,
+      "content_type": "",
+      "pdf_sha256": null,
+      "download_error": "error: HTTPStatusError: Client error '403 Forbidden' for url 'https://www.cell.com/article/S0092867407016856/pdf'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403"
+    },
+    {
+      "arm": "retracted",
+      "doi": "10.1016/j.eng.2020.03.007",
+      "openalex_id": "https://openalex.org/W3012455685",
+      "title": "Experimental Treatment with Favipiravir for COVID-19: An Open-Label Control Study",
+      "year": 2020,
+      "subfield": "Infectious Diseases",
+      "pdf_url": "https://doi.org/10.1016/j.eng.2020.03.007",
+      "download_ok": false,
+      "content_type": "text/html;charset=utf-8",
+      "pdf_sha256": null,
+      "download_error": "not a PDF (got 2696B, content-type=text/html;charset=utf-8)"
+    },
+    {
+      "arm": "control",
+      "doi": "10.1016/s0140-6736(20)30183-5",
+      "openalex_id": "https://openalex.org/W3001118548",
+      "title": "Clinical features of patients infected with 2019 novel coronavirus in Wuhan, China",
+      "year": 2020,
+      "subfield": "Infectious Diseases",
+      "pdf_url": "http://www.thelancet.com/article/S0140673620301835/pdf",
+      "download_ok": false,
+      "content_type": "",
+      "pdf_sha256": null,
+      "download_error": "error: HTTPStatusError: Client error '403 Forbidden' for url 'https://www.thelancet.com/article/S0140673620301835/pdf'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403"
+    },
+    {
+      "arm": "retracted",
+      "doi": "10.1038/s41586-018-0448-9",
+      "openalex_id": "https://openalex.org/W2887997888",
+      "title": "RETRACTED ARTICLE: Parkin and PINK1 mitigate STING-induced inflammation",
+      "year": 2018,
+      "subfield": "Epidemiology",
+      "pdf_url": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC7362342/pdf/",
+      "download_ok": false,
+      "content_type": "",
+      "pdf_sha256": null,
+      "download_error": "error: HTTPStatusError: Client error '404 Not Found' for url 'https://pmc.ncbi.nlm.nih.gov/articles/PMC7362342/pdf/'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/404"
+    },
+    {
+      "arm": "control",
+      "doi": "10.1007/s00134-017-4683-6",
+      "openalex_id": "https://openalex.org/W3016555942",
+      "title": "Surviving Sepsis Campaign: International Guidelines for Management of Sepsis and Septic Shock: 2016",
+      "year": 2017,
+      "subfield": "Epidemiology",
+      "pdf_url": "https://link.springer.com/content/pdf/10.1007%2Fs00134-017-4683-6.pdf",
+      "download_ok": true,
+      "content_type": "application/pdf",
+      "pdf_sha256": "f755fbba816c009540acdb61d1872fed0f1a04af607c468b14ef8b9d98758f00",
+      "scan": {
+        "overall_severity": 0,
+        "n_findings": 0,
+        "severity_counts": {
+          "0": 0,
+          "1": 0,
+          "2": 0,
+          "3": 0
+        },
+        "detectors_fired": [],
+        "detector_hits": {}
+      }
+    },
+    {
+      "arm": "retracted",
+      "doi": "10.1038/ni829",
+      "openalex_id": "https://openalex.org/W2136590857",
+      "title": "RETRACTED ARTICLE: DCs induce CD40-independent immunoglobulin class switching through BLyS and APRIL",
+      "year": 2002,
+      "subfield": "Immunology",
+      "pdf_url": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4621779/pdf/",
+      "download_ok": false,
+      "content_type": "text/html; charset=utf-8",
+      "pdf_sha256": null,
+      "download_error": "not a PDF (got 20326B, content-type=text/html; charset=utf-8)"
+    },
+    {
+      "arm": "control",
+      "doi": "10.1084/jem.20030152",
+      "openalex_id": "https://openalex.org/W2120010406",
+      "title": "Conversion of Peripheral CD4+CD25− Naive T Cells to CD4+CD25+ Regulatory T Cells by TGF-β Induction of Transcription Factor <i>Foxp3 </i>",
+      "year": 2003,
+      "subfield": "Immunology",
+      "pdf_url": "https://rupress.org/jem/article-pdf/198/12/1875/1841613/jem198121875.pdf",
+      "download_ok": false,
+      "content_type": "",
+      "pdf_sha256": null,
+      "download_error": "error: HTTPStatusError: Client error '403 Forbidden' for url 'https://rupress.org/jem/article-pdf/198/12/1875/1841613/jem198121875.pdf'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403"
+    },
+    {
+      "arm": "retracted",
+      "doi": "10.1186/1471-2148-4-18",
+      "openalex_id": "https://openalex.org/W1633681515",
+      "title": "RETRACTED ARTICLE: TREEFINDER: a powerful graphical analysis environment for molecular phylogenetics",
+      "year": 2004,
+      "subfield": "Molecular Biology",
+      "pdf_url": "https://bmcecolevol.biomedcentral.com/counter/pdf/10.1186/1471-2148-4-18",
+      "download_ok": true,
+      "content_type": "application/pdf",
+      "pdf_sha256": "8834cf7517480a040e8638f40d1f621ec61f86460a6b03c60bbae7a3388b6990",
+      "scan": {
+        "overall_severity": 0,
+        "n_findings": 0,
+        "severity_counts": {
+          "0": 0,
+          "1": 0,
+          "2": 0,
+          "3": 0
+        },
+        "detectors_fired": [],
+        "detector_hits": {}
+      }
+    },
+    {
+      "arm": "control",
+      "doi": "10.1073/pnas.0506580102",
+      "openalex_id": "https://openalex.org/W2130410032",
+      "title": "Gene set enrichment analysis: A knowledge-based approach for interpreting genome-wide expression profiles",
+      "year": 2005,
+      "subfield": "Molecular Biology",
+      "pdf_url": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC1239896/pdf/",
+      "download_ok": false,
+      "content_type": "text/html; charset=utf-8",
+      "pdf_sha256": null,
+      "download_error": "not a PDF (got 1816B, content-type=text/html; charset=utf-8)"
+    },
+    {
+      "arm": "retracted",
+      "doi": "10.1038/s41586-020-2095-1",
+      "openalex_id": "https://openalex.org/W3010810358",
+      "title": "RETRACTED ARTICLE: Microbiome analyses of blood and tissues suggest cancerdiagnostic approach",
+      "year": 2020,
+      "subfield": "Cancer Research",
+      "pdf_url": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC7500457/pdf/",
+      "download_ok": false,
+      "content_type": "",
+      "pdf_sha256": null,
+      "download_error": "error: HTTPStatusError: Client error '404 Not Found' for url 'https://pmc.ncbi.nlm.nih.gov/articles/PMC7500457/pdf/'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/404"
+    },
+    {
+      "arm": "control",
+      "doi": "10.1038/s41586-020-1943-3",
+      "openalex_id": "https://openalex.org/W3004480399",
+      "title": "The repertoire of mutational signatures in human cancer",
+      "year": 2020,
+      "subfield": "Cancer Research",
+      "pdf_url": "https://www.nature.com/articles/s41586-020-1943-3.pdf",
+      "download_ok": true,
+      "content_type": "application/pdf",
+      "pdf_sha256": "b45eb4d606e28dd252c7272d9f5b79cd93f0927da39bf502c2babfbafffd9773",
+      "scan": {
+        "overall_severity": 0,
+        "n_findings": 0,
+        "severity_counts": {
+          "0": 0,
+          "1": 0,
+          "2": 0,
+          "3": 0
+        },
+        "detectors_fired": [],
+        "detector_hits": {}
+      }
+    },
+    {
+      "arm": "retracted",
+      "doi": "10.1007/s12652-021-03612-z",
+      "openalex_id": "https://openalex.org/W4205941964",
+      "title": "RETRACTED ARTICLE: Artificial intelligence in disease diagnosis: a systematic literature review, synthesizing framework and future research agenda",
+      "year": 2022,
+      "subfield": "Radiology, Nuclear Medicine and Imaging",
+      "pdf_url": "https://link.springer.com/content/pdf/10.1007/s12652-021-03612-z.pdf",
+      "download_ok": false,
+      "content_type": "text/html; charset=utf-8",
+      "pdf_sha256": null,
+      "download_error": "not a PDF (got 578369B, content-type=text/html; charset=utf-8)"
+    },
+    {
+      "arm": "control",
+      "doi": "10.1016/j.jacc.2023.11.007",
+      "openalex_id": "https://openalex.org/W4389574595",
+      "title": "Global Burden of Cardiovascular Diseases and Risks, 1990-2022",
+      "year": 2023,
+      "subfield": "Radiology, Nuclear Medicine and Imaging",
+      "pdf_url": "https://pureportal.coventry.ac.uk/en/publications/b2f6b043-3868-4c66-b82a-28d9429740df",
+      "download_ok": false,
+      "content_type": "",
+      "pdf_sha256": null,
+      "download_error": "error: RemoteProtocolError: Server disconnected without sending a response."
+    },
+    {
+      "arm": "retracted",
+      "doi": "10.1038/nmicrobiol.2016.203",
+      "openalex_id": "https://openalex.org/W2549670165",
+      "title": "RETRACTED ARTICLE: Culture of previously uncultured members of the human gut microbiota by culturomics",
+      "year": 2016,
+      "subfield": "Molecular Biology",
+      "pdf_url": "https://www.nature.com/articles/nmicrobiol2016203.pdf",
+      "download_ok": true,
+      "content_type": "application/pdf",
+      "pdf_sha256": "98eed86a6699e30cb72f168c5d6ae6f9e73d2a7105ebf522482acce20ea2237e",
+      "scan": {
+        "overall_severity": 0,
+        "n_findings": 0,
+        "severity_counts": {
+          "0": 0,
+          "1": 0,
+          "2": 0,
+          "3": 0
+        },
+        "detectors_fired": [],
+        "detector_hits": {}
+      }
+    },
+    {
+      "arm": "control",
+      "doi": "10.1093/molbev/msw054",
+      "openalex_id": "https://openalex.org/W2311203695",
+      "title": "MEGA7: Molecular Evolutionary Genetics Analysis Version 7.0 for Bigger Datasets",
+      "year": 2016,
+      "subfield": "Molecular Biology",
+      "pdf_url": "https://academic.oup.com/mbe/article-pdf/33/7/1870/7948752/msw054.pdf",
+      "download_ok": false,
+      "content_type": "",
+      "pdf_sha256": null,
+      "download_error": "error: HTTPStatusError: Client error '403 Forbidden' for url 'https://academic.oup.com/mbe/article-pdf/33/7/1870/7948752/msw054.pdf'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403"
+    },
+    {
+      "arm": "retracted",
+      "doi": "10.2337/db06-1595",
+      "openalex_id": "https://openalex.org/W2137274603",
+      "title": "Loss-of-Function Mutation in Toll-Like Receptor 4 Prevents Diet-Induced Obesity and Insulin Resistance",
+      "year": 2007,
+      "subfield": "Epidemiology",
+      "pdf_url": "https://diabetesjournals.org/diabetes/article-pdf/56/8/1986/388950/zdb00807001986.pdf",
+      "download_ok": false,
+      "content_type": "",
+      "pdf_sha256": null,
+      "download_error": "error: HTTPStatusError: Client error '403 Forbidden' for url 'https://diabetesjournals.org/diabetes/article-pdf/56/8/1986/388950/zdb00807001986.pdf'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403"
+    },
+    {
+      "arm": "control",
+      "doi": "10.1016/j.cell.2007.12.018",
+      "openalex_id": "https://openalex.org/W2109034822",
+      "title": "Autophagy in the Pathogenesis of Disease",
+      "year": 2008,
+      "subfield": "Epidemiology",
+      "pdf_url": "http://www.cell.com/article/S0092867407016856/pdf",
+      "download_ok": false,
+      "content_type": "",
+      "pdf_sha256": null,
+      "download_error": "error: HTTPStatusError: Client error '403 Forbidden' for url 'https://www.cell.com/article/S0092867407016856/pdf'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403"
+    },
+    {
+      "arm": "retracted",
+      "doi": "10.1038/s41419-018-0454-8",
+      "openalex_id": "https://openalex.org/W2795546864",
+      "title": "RETRACTED ARTICLE: CircHIPK3 promotes colorectal cancer growth and metastasis by sponging miR-7",
+      "year": 2018,
+      "subfield": "Molecular Biology",
+      "pdf_url": "https://www.nature.com/articles/s41419-018-0454-8.pdf",
+      "download_ok": true,
+      "content_type": "application/pdf",
+      "pdf_sha256": "12fb5426f73ad132ec58b25abbd27909bf76e3d05d504281414dce6351d16941",
+      "scan": {
+        "overall_severity": 0,
+        "n_findings": 0,
+        "severity_counts": {
+          "0": 0,
+          "1": 0,
+          "2": 0,
+          "3": 0
+        },
+        "detectors_fired": [],
+        "detector_hits": {}
+      }
+    },
+    {
+      "arm": "control",
+      "doi": "10.1093/molbev/msy096",
+      "openalex_id": "https://openalex.org/W2799524357",
+      "title": "MEGA X: Molecular Evolutionary Genetics Analysis across Computing Platforms",
+      "year": 2018,
+      "subfield": "Molecular Biology",
+      "pdf_url": "https://academic.oup.com/mbe/article-pdf/35/6/1547/25091958/msy096.pdf",
+      "download_ok": false,
+      "content_type": "",
+      "pdf_sha256": null,
+      "download_error": "error: HTTPStatusError: Client error '403 Forbidden' for url 'https://academic.oup.com/mbe/article-pdf/35/6/1547/25091958/msy096.pdf'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403"
+    },
+    {
+      "arm": "retracted",
+      "doi": "10.1161/01.cir.0000025609.13806.31",
+      "openalex_id": "https://openalex.org/W2001044397",
+      "title": "Multiple Atherosclerotic Plaque Rupture in Acute Coronary Syndrome",
+      "year": 2002,
+      "subfield": "Surgery",
+      "pdf_url": "https://www.ahajournals.org/doi/pdf/10.1161/01.CIR.0000025609.13806.31",
+      "download_ok": false,
+      "content_type": "",
+      "pdf_sha256": null,
+      "download_error": "error: HTTPStatusError: Client error '403 Forbidden' for url 'https://www.ahajournals.org/doi/pdf/10.1161/01.CIR.0000025609.13806.31'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403"
+    },
+    {
+      "arm": "control",
+      "doi": "10.1016/s0195-668x(03)00114-3",
+      "openalex_id": "https://openalex.org/W2107165713",
+      "title": "Estimation of ten-year risk of fatal cardiovascular disease in Europe: the SCORE project",
+      "year": 2003,
+      "subfield": "Surgery",
+      "pdf_url": "https://academic.oup.com/eurheartj/article-pdf/24/11/987/17885802/987.pdf",
+      "download_ok": false,
+      "content_type": "",
+      "pdf_sha256": null,
+      "download_error": "error: HTTPStatusError: Client error '403 Forbidden' for url 'https://academic.oup.com/eurheartj/article-pdf/24/11/987/17885802/987.pdf'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403"
+    },
+    {
+      "arm": "retracted",
+      "doi": "10.1038/nbt.1610",
+      "openalex_id": "https://openalex.org/W2045117117",
+      "title": "RETRACTED ARTICLE: Rescue of the spinal muscular atrophy phenotype in a mouse model by early postnatal delivery of SMN",
+      "year": 2010,
+      "subfield": "Genetics",
+      "pdf_url": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC2889698/pdf/",
+      "download_ok": false,
+      "content_type": "",
+      "pdf_sha256": null,
+      "download_error": "error: HTTPStatusError: Client error '404 Not Found' for url 'https://pmc.ncbi.nlm.nih.gov/articles/PMC2889698/pdf/'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/404"
+    },
+    {
+      "arm": "control",
+      "doi": "10.1016/j.ccr.2009.12.020",
+      "openalex_id": "https://openalex.org/W2161289668",
+      "title": "Integrated Genomic Analysis Identifies Clinically Relevant Subtypes of Glioblastoma Characterized by Abnormalities in PDGFRA, IDH1, EGFR, and NF1",
+      "year": 2010,
+      "subfield": "Genetics",
+      "pdf_url": "http://www.cell.com/article/S1535610809004322/pdf",
+      "download_ok": false,
+      "content_type": "",
+      "pdf_sha256": null,
+      "download_error": "error: HTTPStatusError: Client error '403 Forbidden' for url 'https://www.cell.com/article/S1535610809004322/pdf'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403"
+    },
+    {
+      "arm": "retracted",
+      "doi": "10.1038/ijo.2011.153",
+      "openalex_id": "https://openalex.org/W2115742500",
+      "title": "RETRACTED ARTICLE: Obesity-associated gut microbiota is enriched in Lactobacillus reuteri and depleted in Bifidobacterium animalis and Methanobrevibacter smithii",
+      "year": 2011,
+      "subfield": "Molecular Biology",
+      "pdf_url": "https://www.nature.com/articles/ijo2011153.pdf",
+      "download_ok": true,
+      "content_type": "application/pdf",
+      "pdf_sha256": "e73f537d1aff67b149b97367b48de1975b7a5368a950fe0ca494da0a31a5032e",
+      "scan": {
+        "overall_severity": 0,
+        "n_findings": 0,
+        "severity_counts": {
+          "0": 0,
+          "1": 0,
+          "2": 0,
+          "3": 0
+        },
+        "detectors_fired": [],
+        "detector_hits": {}
+      }
+    },
+    {
+      "arm": "control",
+      "doi": "10.1093/bioinformatics/bts635",
+      "openalex_id": "https://openalex.org/W2169456326",
+      "title": "STAR: ultrafast universal RNA-seq aligner",
+      "year": 2012,
+      "subfield": "Molecular Biology",
+      "pdf_url": "https://academic.oup.com/bioinformatics/article-pdf/29/1/15/17101697/bts635.pdf",
+      "download_ok": false,
+      "content_type": "",
+      "pdf_sha256": null,
+      "download_error": "error: HTTPStatusError: Client error '403 Forbidden' for url 'https://academic.oup.com/bioinformatics/article-pdf/29/1/15/17101697/bts635.pdf'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403"
+    },
+    {
+      "arm": "retracted",
+      "doi": "10.1038/ncomms3932",
+      "openalex_id": "https://openalex.org/W2114789645",
+      "title": "RETRACTED ARTICLE: Pericyte loss influences Alzheimer-like neurodegeneration in mice",
+      "year": 2013,
+      "subfield": "Physiology",
+      "pdf_url": "https://www.nature.com/articles/ncomms3932.pdf",
+      "download_ok": true,
+      "content_type": "application/pdf",
+      "pdf_sha256": "92976cbaab8d5868db30ff18dbc9fae7b2c207e7201ab3f8719ec9b570b262d6",
+      "scan": {
+        "overall_severity": 0,
+        "n_findings": 0,
+        "severity_counts": {
+          "0": 0,
+          "1": 0,
+          "2": 0,
+          "3": 0
+        },
+        "detectors_fired": [],
+        "detector_hits": {}
+      }
+    },
+    {
+      "arm": "control",
+      "doi": "10.1159/000350087",
+      "openalex_id": "https://openalex.org/W2018289835",
+      "title": "Short-Term Effects of Nose-Only Cigarette Smoke Exposure on Glutathione Redox Homeostasis, Cytochrome P450 1A1/2 and Respiratory Enzyme Activities in Mice Tissues",
+      "year": 2013,
+      "subfield": "Physiology",
+      "pdf_url": "https://karger.com/cpb/article-pdf/31/4-5/683/2424835/000350087.pdf",
+      "download_ok": false,
+      "content_type": "",
+      "pdf_sha256": null,
+      "download_error": "error: HTTPStatusError: Client error '403 Forbidden' for url 'https://karger.com/cpb/article-pdf/31/4-5/683/2424835/000350087.pdf'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403"
+    },
+    {
+      "arm": "retracted",
+      "doi": "10.1371/journal.pone.0019194",
+      "openalex_id": "https://openalex.org/W2055969761",
+      "title": "Age Related Changes in NAD+ Metabolism Oxidative Stress and Sirt1 Activity in Wistar Rats",
+      "year": 2011,
+      "subfield": "Geriatrics and Gerontology",
+      "pdf_url": "https://journals.plos.org/plosone/article/file?id=10.1371/journal.pone.0019194&type=printable",
+      "download_ok": true,
+      "content_type": "application/pdf",
+      "pdf_sha256": "bdaeb5da087f02d02a89124d51f7c24283e7efbfcdc57641ea6ceee64b6b45d7",
+      "scan": {
+        "overall_severity": 0,
+        "n_findings": 0,
+        "severity_counts": {
+          "0": 0,
+          "1": 0,
+          "2": 0,
+          "3": 0
+        },
+        "detectors_fired": [],
+        "detector_hits": {}
+      }
+    },
+    {
+      "arm": "control",
+      "doi": "10.1016/s0140-6736(12)61729-2",
+      "openalex_id": "https://openalex.org/W2108344016",
+      "title": "Years lived with disability (YLDs) for 1160 sequelae of 289 diseases and injuries 1990–2010: a systematic analysis for the Global Burden of Disease Study 2010",
+      "year": 2012,
+      "subfield": "Geriatrics and Gerontology",
+      "pdf_url": "https://openrepository.aut.ac.nz/bitstreams/2dc3b648-470c-4fcc-a8a2-9f7c3313607b/download",
+      "download_ok": true,
+      "content_type": "application/pdf;charset=utf-8",
+      "pdf_sha256": "b1e0bf2e1a31a7c3959d263a78814e250cf19b1973359eab89da3b2c3d4c8ef1",
+      "scan": {
+        "overall_severity": 0,
+        "n_findings": 0,
+        "severity_counts": {
+          "0": 0,
+          "1": 0,
+          "2": 0,
+          "3": 0
+        },
+        "detectors_fired": [],
+        "detector_hits": {}
+      }
+    },
+    {
+      "arm": "retracted",
+      "doi": "10.1371/journal.ppat.0020025",
+      "openalex_id": "https://openalex.org/W2063905114",
+      "title": "Identification of a Novel Gammaretrovirus in Prostate Tumors of Patients Homozygous for R462Q RNASEL Variant",
+      "year": 2006,
+      "subfield": "Animal Science and Zoology",
+      "pdf_url": "https://journals.plos.org/plospathogens/article/file?id=10.1371/journal.ppat.0020025&type=printable",
+      "download_ok": true,
+      "content_type": "application/pdf",
+      "pdf_sha256": "f2b16b7750e321a9764e20e70de8335d8c7ae37a15bc3fb7ed7877e7de10d5f1",
+      "scan": {
+        "overall_severity": 0,
+        "n_findings": 0,
+        "severity_counts": {
+          "0": 0,
+          "1": 0,
+          "2": 0,
+          "3": 0
+        },
+        "detectors_fired": [],
+        "detector_hits": {}
+      }
+    },
+    {
+      "arm": "control",
+      "doi": "10.3382/ps.2007-00249",
+      "openalex_id": "https://openalex.org/W2160302809",
+      "title": "History of the Use of Antibiotic as Growth Promoters in European Poultry Feeds",
+      "year": 2007,
+      "subfield": "Animal Science and Zoology",
+      "pdf_url": "https://doi.org/10.3382/ps.2007-00249",
+      "download_ok": false,
+      "content_type": "text/html;charset=utf-8",
+      "pdf_sha256": null,
+      "download_error": "not a PDF (got 2693B, content-type=text/html;charset=utf-8)"
+    },
+    {
+      "arm": "retracted",
+      "doi": "10.1186/s13045-019-0830-6",
+      "openalex_id": "https://openalex.org/W2993675487",
+      "title": "RETRACTED ARTICLE: m6A mRNA methylation initiated by METTL3 directly promotes YAP translation and increases YAP activity by regulating the MALAT1-miR-1914-3p-YAP axis to induce NSCLC drug resistance a",
+      "year": 2019,
+      "subfield": "Molecular Biology",
+      "pdf_url": "https://jhoonline.biomedcentral.com/track/pdf/10.1186/s13045-019-0830-6",
+      "download_ok": true,
+      "content_type": "application/pdf",
+      "pdf_sha256": "20f63c123979dc72764244f65c1e6387ab333fdcecdc91d6231d95e1415a6875",
+      "scan": {
+        "overall_severity": 0,
+        "n_findings": 0,
+        "severity_counts": {
+          "0": 0,
+          "1": 0,
+          "2": 0,
+          "3": 0
+        },
+        "detectors_fired": [],
+        "detector_hits": {}
+      }
+    },
+    {
+      "arm": "control",
+      "doi": "10.1093/molbev/msy096",
+      "openalex_id": "https://openalex.org/W2799524357",
+      "title": "MEGA X: Molecular Evolutionary Genetics Analysis across Computing Platforms",
+      "year": 2018,
+      "subfield": "Molecular Biology",
+      "pdf_url": "https://academic.oup.com/mbe/article-pdf/35/6/1547/25091958/msy096.pdf",
+      "download_ok": false,
+      "content_type": "",
+      "pdf_sha256": null,
+      "download_error": "error: HTTPStatusError: Client error '403 Forbidden' for url 'https://academic.oup.com/mbe/article-pdf/35/6/1547/25091958/msy096.pdf'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403"
+    },
+    {
+      "arm": "retracted",
+      "doi": "10.1038/s41467-019-09865-9",
+      "openalex_id": "https://openalex.org/W2942683196",
+      "title": "RETRACTED ARTICLE: RNA m6A methylation regulates the epithelial mesenchymal transition of cancer cells and translation of Snail",
+      "year": 2019,
+      "subfield": "Molecular Biology",
+      "pdf_url": "https://www.nature.com/articles/s41467-019-09865-9.pdf",
+      "download_ok": true,
+      "content_type": "application/pdf",
+      "pdf_sha256": "3bd72a487d8e3992f366e8c1a9ba835686122fdff73e1bc6cfe07ef262f9c809",
+      "scan": {
+        "overall_severity": 0,
+        "n_findings": 0,
+        "severity_counts": {
+          "0": 0,
+          "1": 0,
+          "2": 0,
+          "3": 0
+        },
+        "detectors_fired": [],
+        "detector_hits": {}
+      }
+    },
+    {
+      "arm": "control",
+      "doi": "10.1093/molbev/msy096",
+      "openalex_id": "https://openalex.org/W2799524357",
+      "title": "MEGA X: Molecular Evolutionary Genetics Analysis across Computing Platforms",
+      "year": 2018,
+      "subfield": "Molecular Biology",
+      "pdf_url": "https://academic.oup.com/mbe/article-pdf/35/6/1547/25091958/msy096.pdf",
+      "download_ok": false,
+      "content_type": "",
+      "pdf_sha256": null,
+      "download_error": "error: HTTPStatusError: Client error '403 Forbidden' for url 'https://academic.oup.com/mbe/article-pdf/35/6/1547/25091958/msy096.pdf'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403"
+    },
+    {
+      "arm": "retracted",
+      "doi": "10.1172/jci81187",
+      "openalex_id": "https://openalex.org/W2142169541",
+      "title": "TIGIT predominantly regulates the immune response via regulatory T cells",
+      "year": 2015,
+      "subfield": "Immunology",
+      "pdf_url": "http://www.jci.org/articles/view/81187/files/pdf",
+      "download_ok": true,
+      "content_type": "application/pdf",
+      "pdf_sha256": "8fc54b5ffbf97c0fede873155a22dd651d749b98746c1a2a245911d177645e18",
+      "scan": {
+        "overall_severity": 0,
+        "n_findings": 0,
+        "severity_counts": {
+          "0": 0,
+          "1": 0,
+          "2": 0,
+          "3": 0
+        },
+        "detectors_fired": [],
+        "detector_hits": {}
+      }
+    },
+    {
+      "arm": "control",
+      "doi": "10.1016/j.immuni.2014.06.008",
+      "openalex_id": "https://openalex.org/W2159560463",
+      "title": "Macrophage Activation and Polarization: Nomenclature and Experimental Guidelines",
+      "year": 2014,
+      "subfield": "Immunology",
+      "pdf_url": "http://www.cell.com/article/S1074761314002283/pdf",
+      "download_ok": false,
+      "content_type": "",
+      "pdf_sha256": null,
+      "download_error": "error: HTTPStatusError: Client error '403 Forbidden' for url 'https://www.cell.com/article/S1074761314002283/pdf'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403"
+    },
+    {
+      "arm": "retracted",
+      "doi": "10.1074/jbc.m806041200",
+      "openalex_id": "https://openalex.org/W1982535740",
+      "title": "MicroRNA-221/222 Negatively Regulates Estrogen Receptorα and Is Associated with Tamoxifen Resistance in Breast Cancer",
+      "year": 2008,
+      "subfield": "Cancer Research",
+      "pdf_url": "http://www.jbc.org/article/S0021925820646841/pdf",
+      "download_ok": false,
+      "content_type": "",
+      "pdf_sha256": null,
+      "download_error": "error: HTTPStatusError: Client error '403 Forbidden' for url 'https://www.jbc.org/article/S0021925820646841/pdf'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403"
+    },
+    {
+      "arm": "control",
+      "doi": "10.1101/gr.082701.108",
+      "openalex_id": "https://openalex.org/W2026570544",
+      "title": "Most mammalian mRNAs are conserved targets of microRNAs",
+      "year": 2008,
+      "subfield": "Cancer Research",
+      "pdf_url": "https://genome.cshlp.org/content/19/1/92.full.pdf",
+      "download_ok": false,
+      "content_type": "",
+      "pdf_sha256": null,
+      "download_error": "error: HTTPStatusError: Client error '403 Forbidden' for url 'https://genome.cshlp.org/content/genome%3A%3A%3A19%3A%3A%3A1%3A%3A%3A92.full.pdf?implicit-login=true%26524'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403"
+    },
+    {
+      "arm": "retracted",
+      "doi": "10.1038/nature23272",
+      "openalex_id": "https://openalex.org/W2729726531",
+      "title": "RETRACTED ARTICLE: Crystal structures of agonist-bound human cannabinoid receptor CB1",
+      "year": 2017,
+      "subfield": "Pharmacology",
+      "pdf_url": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5793864/pdf/",
+      "download_ok": false,
+      "content_type": "",
+      "pdf_sha256": null,
+      "download_error": "error: HTTPStatusError: Client error '404 Not Found' for url 'https://pmc.ncbi.nlm.nih.gov/articles/PMC5793864/pdf/'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/404"
+    },
+    {
+      "arm": "control",
+      "doi": "10.15585/mmwr.mm6736a2",
+      "openalex_id": "https://openalex.org/W2891660975",
+      "title": "Prevalence of Chronic Pain and High-Impact Chronic Pain Among Adults — United States, 2016",
+      "year": 2018,
+      "subfield": "Pharmacology",
+      "pdf_url": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6146950/pdf/",
+      "download_ok": false,
+      "content_type": "text/html; charset=utf-8",
+      "pdf_sha256": null,
+      "download_error": "not a PDF (got 1814B, content-type=text/html; charset=utf-8)"
+    },
+    {
+      "arm": "retracted",
+      "doi": "10.1186/1741-7015-11-222",
+      "openalex_id": "https://openalex.org/W2035159051",
+      "title": "RETRACTED ARTICLE: DNA barcoding detects contamination and substitution in North American herbal products",
+      "year": 2013,
+      "subfield": "Molecular Biology",
+      "pdf_url": "https://bmcmedicine.biomedcentral.com/counter/pdf/10.1186/1741-7015-11-222",
+      "download_ok": true,
+      "content_type": "application/pdf",
+      "pdf_sha256": "1dcbdc5d467b75e37f5bdd27279d4dd462fe5ecef5263bd917cfa8d7170ffd6f",
+      "scan": {
+        "overall_severity": 0,
+        "n_findings": 0,
+        "severity_counts": {
+          "0": 0,
+          "1": 0,
+          "2": 0,
+          "3": 0
+        },
+        "detectors_fired": [],
+        "detector_hits": {}
+      }
+    },
+    {
+      "arm": "control",
+      "doi": "10.1093/bioinformatics/btu170",
+      "openalex_id": "https://openalex.org/W2131271579",
+      "title": "Trimmomatic: a flexible trimmer for Illumina sequence data",
+      "year": 2014,
+      "subfield": "Molecular Biology",
+      "pdf_url": "https://academic.oup.com/bioinformatics/article-pdf/30/15/2114/48924714/bioinformatics_30_15_2114.pdf",
+      "download_ok": false,
+      "content_type": "",
+      "pdf_sha256": null,
+      "download_error": "error: HTTPStatusError: Client error '403 Forbidden' for url 'https://academic.oup.com/bioinformatics/article-pdf/30/15/2114/48924714/bioinformatics_30_15_2114.pdf'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403"
+    },
+    {
+      "arm": "retracted",
+      "doi": "10.1074/jbc.m112.442939",
+      "openalex_id": "https://openalex.org/W2140607197",
+      "title": "Hypoxia-inducible Factor 1 (HIF-1) Promotes Extracellular Matrix Remodeling under Hypoxic Conditions by Inducing P4HA1, P4HA2, and PLOD2 Expression in Fibroblasts",
+      "year": 2013,
+      "subfield": "Cancer Research",
+      "pdf_url": "http://www.jbc.org/article/S0021925820673045/pdf",
+      "download_ok": false,
+      "content_type": "",
+      "pdf_sha256": null,
+      "download_error": "error: HTTPStatusError: Client error '403 Forbidden' for url 'https://www.jbc.org/article/S0021925820673045/pdf'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403"
+    },
+    {
+      "arm": "control",
+      "doi": "10.1186/s13059-014-0550-8",
+      "openalex_id": "https://openalex.org/W2179438025",
+      "title": "Moderated estimation of fold change and dispersion for RNA-seq data with DESeq2",
+      "year": 2014,
+      "subfield": "Cancer Research",
+      "pdf_url": "https://genomebiology.biomedcentral.com/counter/pdf/10.1186/s13059-014-0550-8",
+      "download_ok": true,
+      "content_type": "application/pdf",
+      "pdf_sha256": "96af759d0ffad2df06af8860e7ea7ae1ce380ce6e22843ad2519b801bc1999bb",
+      "scan": {
+        "overall_severity": 0,
+        "n_findings": 0,
+        "severity_counts": {
+          "0": 0,
+          "1": 0,
+          "2": 0,
+          "3": 0
+        },
+        "detectors_fired": [],
+        "detector_hits": {}
+      }
+    },
+    {
+      "arm": "retracted",
+      "doi": "10.1074/jbc.m404421200",
+      "openalex_id": "https://openalex.org/W2024182816",
+      "title": "Activation of the AMP-activated Protein Kinase by the Anti-diabetic Drug Metformin in Vivo",
+      "year": 2004,
+      "subfield": "Molecular Biology",
+      "pdf_url": "http://www.jbc.org/article/S0021925820680681/pdf",
+      "download_ok": false,
+      "content_type": "",
+      "pdf_sha256": null,
+      "download_error": "error: HTTPStatusError: Client error '403 Forbidden' for url 'https://www.jbc.org/article/S0021925820680681/pdf'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403"
+    },
+    {
+      "arm": "control",
+      "doi": "10.1073/pnas.0506580102",
+      "openalex_id": "https://openalex.org/W2130410032",
+      "title": "Gene set enrichment analysis: A knowledge-based approach for interpreting genome-wide expression profiles",
+      "year": 2005,
+      "subfield": "Molecular Biology",
+      "pdf_url": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC1239896/pdf/",
+      "download_ok": false,
+      "content_type": "text/html; charset=utf-8",
+      "pdf_sha256": null,
+      "download_error": "not a PDF (got 1817B, content-type=text/html; charset=utf-8)"
+    },
+    {
+      "arm": "retracted",
+      "doi": "10.1038/nature16142",
+      "openalex_id": "https://openalex.org/W2202899490",
+      "title": "RETRACTED ARTICLE: A mechanism for the suppression of homologous recombination in G1 cells",
+      "year": 2015,
+      "subfield": "Molecular Biology",
+      "pdf_url": "https://www.research.ed.ac.uk/en/publications/b335c065-f8e1-4d70-84dd-6426b17552d3",
+      "download_ok": false,
+      "content_type": "",
+      "pdf_sha256": null,
+      "download_error": "error: ReadError: [SSL: DECRYPTION_FAILED_OR_BAD_RECORD_MAC] decryption failed or bad record mac (_ssl.c:2570)"
+    },
+    {
+      "arm": "control",
+      "doi": "10.1093/bioinformatics/btu170",
+      "openalex_id": "https://openalex.org/W2131271579",
+      "title": "Trimmomatic: a flexible trimmer for Illumina sequence data",
+      "year": 2014,
+      "subfield": "Molecular Biology",
+      "pdf_url": "https://academic.oup.com/bioinformatics/article-pdf/30/15/2114/48924714/bioinformatics_30_15_2114.pdf",
+      "download_ok": false,
+      "content_type": "",
+      "pdf_sha256": null,
+      "download_error": "error: HTTPStatusError: Client error '403 Forbidden' for url 'https://academic.oup.com/bioinformatics/article-pdf/30/15/2114/48924714/bioinformatics_30_15_2114.pdf'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403"
+    },
+    {
+      "arm": "retracted",
+      "doi": "10.1038/nature14492",
+      "openalex_id": "https://openalex.org/W1593145356",
+      "title": "RETRACTED ARTICLE: The hypoxic cancer secretome induces pre-metastatic bone lesions through lysyl oxidase",
+      "year": 2015,
+      "subfield": "Molecular Biology",
+      "pdf_url": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4961239/pdf/",
+      "download_ok": false,
+      "content_type": "",
+      "pdf_sha256": null,
+      "download_error": "error: HTTPStatusError: Client error '404 Not Found' for url 'https://pmc.ncbi.nlm.nih.gov/articles/PMC4961239/pdf/'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/404"
+    },
+    {
+      "arm": "control",
+      "doi": "10.1093/bioinformatics/btu170",
+      "openalex_id": "https://openalex.org/W2131271579",
+      "title": "Trimmomatic: a flexible trimmer for Illumina sequence data",
+      "year": 2014,
+      "subfield": "Molecular Biology",
+      "pdf_url": "https://academic.oup.com/bioinformatics/article-pdf/30/15/2114/48924714/bioinformatics_30_15_2114.pdf",
+      "download_ok": false,
+      "content_type": "",
+      "pdf_sha256": null,
+      "download_error": "error: HTTPStatusError: Client error '403 Forbidden' for url 'https://academic.oup.com/bioinformatics/article-pdf/30/15/2114/48924714/bioinformatics_30_15_2114.pdf'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403"
+    },
+    {
+      "arm": "retracted",
+      "doi": "10.1161/01.res.0000046227.65158.f8",
+      "openalex_id": "https://openalex.org/W2102744645",
+      "title": "Novel Role of gp91 <sup>phox</sup> -Containing NAD(P)H Oxidase in Vascular Endothelial Growth Factor–Induced Signaling and Angiogenesis",
+      "year": 2002,
+      "subfield": "Physiology",
+      "pdf_url": "https://www.ahajournals.org/doi/pdf/10.1161/01.RES.0000046227.65158.F8",
+      "download_ok": false,
+      "content_type": "",
+      "pdf_sha256": null,
+      "download_error": "error: HTTPStatusError: Client error '403 Forbidden' for url 'https://www.ahajournals.org/doi/pdf/10.1161/01.RES.0000046227.65158.F8'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403"
+    },
+    {
+      "arm": "control",
+      "doi": "10.1016/s0896-6273(03)00434-3",
+      "openalex_id": "https://openalex.org/W1967464880",
+      "title": "Triple-Transgenic Model of Alzheimer's Disease with Plaques and Tangles",
+      "year": 2003,
+      "subfield": "Physiology",
+      "pdf_url": "http://www.cell.com/article/S0896627303004343/pdf",
+      "download_ok": false,
+      "content_type": "",
+      "pdf_sha256": null,
+      "download_error": "error: HTTPStatusError: Client error '403 Forbidden' for url 'https://www.cell.com/article/S0896627303004343/pdf'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403"
+    },
+    {
+      "arm": "retracted",
+      "doi": "10.1074/jbc.m707465200",
+      "openalex_id": "https://openalex.org/W2156140889",
+      "title": "The Role of CXCR7/RDC1 as a Chemokine Receptor for CXCL12/SDF-1 in Prostate Cancer",
+      "year": 2007,
+      "subfield": "Oncology",
+      "pdf_url": "http://www.jbc.org/article/S0021925820697381/pdf",
+      "download_ok": false,
+      "content_type": "",
+      "pdf_sha256": null,
+      "download_error": "error: HTTPStatusError: Client error '403 Forbidden' for url 'https://www.jbc.org/article/S0021925820697381/pdf'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403"
+    },
+    {
+      "arm": "control",
+      "doi": "10.3322/ca.2007.0010",
+      "openalex_id": "https://openalex.org/W2043103956",
+      "title": "Cancer Statistics, 2008",
+      "year": 2008,
+      "subfield": "Oncology",
+      "pdf_url": "https://doi.org/10.3322/ca.2007.0010",
+      "download_ok": false,
+      "content_type": "",
+      "pdf_sha256": null,
+      "download_error": "error: HTTPStatusError: Client error '403 Forbidden' for url 'http://doi.wiley.com/10.3322/CA.2007.0010'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403"
+    },
+    {
+      "arm": "retracted",
+      "doi": "10.1016/s0140-6736(14)60921-1",
+      "openalex_id": "https://openalex.org/W2113302343",
+      "title": "ST-segment elevation myocardial infarction in China from 2001 to 2011 (the China PEACE-Retrospective Acute Myocardial Infarction Study): a retrospective analysis of hospital data",
+      "year": 2014,
+      "subfield": "Cardiology and Cardiovascular Medicine",
+      "pdf_url": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4415374/pdf/",
+      "download_ok": false,
+      "content_type": "text/html; charset=utf-8",
+      "pdf_sha256": null,
+      "download_error": "not a PDF (got 1817B, content-type=text/html; charset=utf-8)"
+    },
+    {
+      "arm": "control",
+      "doi": "10.1093/eurheartj/eht151",
+      "openalex_id": "https://openalex.org/W2133416234",
+      "title": "2013 ESH/ESC Guidelines for the management of arterial hypertension",
+      "year": 2013,
+      "subfield": "Cardiology and Cardiovascular Medicine",
+      "pdf_url": "https://academic.oup.com/eurheartj/article-pdf/34/28/2159/17895598/eht151.pdf",
+      "download_ok": false,
+      "content_type": "",
+      "pdf_sha256": null,
+      "download_error": "error: HTTPStatusError: Client error '403 Forbidden' for url 'https://academic.oup.com/eurheartj/article-pdf/34/28/2159/17895598/eht151.pdf'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403"
+    },
+    {
+      "arm": "retracted",
+      "doi": "10.1186/s12943-019-0947-9",
+      "openalex_id": "https://openalex.org/W2930633744",
+      "title": "RETRACTED ARTICLE: Long non-coding RNA PVT1 promotes tumor progression by regulating the miR-143/HK2 axis in gallbladder cancer",
+      "year": 2019,
+      "subfield": "Cancer Research",
+      "pdf_url": "https://molecular-cancer.biomedcentral.com/track/pdf/10.1186/s12943-019-0947-9",
+      "download_ok": true,
+      "content_type": "application/pdf",
+      "pdf_sha256": "408d774be7414dcb9338f8033f9514568a2ffb25d6c705e57509f2b0b139ce2d",
+      "scan": {
+        "overall_severity": 0,
+        "n_findings": 0,
+        "severity_counts": {
+          "0": 0,
+          "1": 0,
+          "2": 0,
+          "3": 0
+        },
+        "detectors_fired": [],
+        "detector_hits": {}
+      }
+    },
+    {
+      "arm": "control",
+      "doi": "10.1101/gr.239244.118",
+      "openalex_id": "https://openalex.org/W2896872272",
+      "title": "Maftools: efficient and comprehensive analysis of somatic variants in cancer",
+      "year": 2018,
+      "subfield": "Cancer Research",
+      "pdf_url": "http://genome.cshlp.org/content/28/11/1747.full.pdf",
+      "download_ok": false,
+      "content_type": "",
+      "pdf_sha256": null,
+      "download_error": "error: HTTPStatusError: Client error '403 Forbidden' for url 'https://genome.cshlp.org/content/genome%3A%3A%3A28%3A%3A%3A11%3A%3A%3A1747.full.pdf?implicit-login=true%26231'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403"
+    },
+    {
+      "arm": "retracted",
+      "doi": "10.1096/fj.09-135467",
+      "openalex_id": "https://openalex.org/W2152783224",
+      "title": "Genetic requirements for <i>Staphylococcus aureus</i> abscess formation and persistence in host tissues",
+      "year": 2009,
+      "subfield": "Infectious Diseases",
+      "pdf_url": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC2747682/pdf/",
+      "download_ok": false,
+      "content_type": "",
+      "pdf_sha256": null,
+      "download_error": "error: RemoteProtocolError: Server disconnected without sending a response."
+    },
+    {
+      "arm": "control",
+      "doi": "10.3201/eid1701.p11101",
+      "openalex_id": "https://openalex.org/W2128591134",
+      "title": "Foodborne Illness Acquired in the United States—Major Pathogens",
+      "year": 2010,
+      "subfield": "Infectious Diseases",
+      "pdf_url": "https://wwwnc.cdc.gov/eid/article/17/1/pdfs/p1-1101.pdf",
+      "download_ok": true,
+      "content_type": "application/pdf",
+      "pdf_sha256": "81f394d7dbb67f8a1683dd8ce2316c1012252dd1448941174887c8d4587b1353",
+      "scan": {
+        "overall_severity": 0,
+        "n_findings": 0,
+        "severity_counts": {
+          "0": 0,
+          "1": 0,
+          "2": 0,
+          "3": 0
+        },
+        "detectors_fired": [],
+        "detector_hits": {}
+      }
+    },
+    {
+      "arm": "retracted",
+      "doi": "10.1038/35044106",
+      "openalex_id": "https://openalex.org/W2078325631",
+      "title": "Remission in models of type 1 diabetes by gene therapy using a single-chain insulin analogue",
+      "year": 2000,
+      "subfield": "Surgery",
+      "pdf_url": "https://ir.ymlib.yonsei.ac.kr/handle/22282913/171809",
+      "download_ok": false,
+      "content_type": "text/html;charset=utf-8",
+      "pdf_sha256": null,
+      "download_error": "not a PDF (got 28192B, content-type=text/html;charset=utf-8)"
+    },
+    {
+      "arm": "control",
+      "doi": "10.1056/nejm200007273430401",
+      "openalex_id": "https://openalex.org/W2328786770",
+      "title": "Islet Transplantation in Seven Patients with Type 1 Diabetes Mellitus Using a Glucocorticoid-Free Immunosuppressive Regimen",
+      "year": 2000,
+      "subfield": "Surgery",
+      "pdf_url": "https://www.nejm.org/doi/pdf/10.1056/NEJM200007273430401?articleTools=true",
+      "download_ok": false,
+      "content_type": "",
+      "pdf_sha256": null,
+      "download_error": "error: HTTPStatusError: Client error '403 Forbidden' for url 'https://www.nejm.org/doi/pdf/10.1056/NEJM200007273430401?articleTools=true'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403"
+    },
+    {
+      "arm": "retracted",
+      "doi": "10.1128/mcb.25.11.4727-4741.2005",
+      "openalex_id": "https://openalex.org/W2136905998",
+      "title": "RETRACTED ARTICLE: 5-Aza-Deoxycytidine Induces Selective Degradation of DNA Methyltransferase 1 by a Proteasomal Pathway That Requires the KEN Box, Bromo-Adjacent Homology Domain, and Nuclear Localiza",
+      "year": 2005,
+      "subfield": "Molecular Biology",
+      "pdf_url": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC1140649/pdf/",
+      "download_ok": false,
+      "content_type": "",
+      "pdf_sha256": null,
+      "download_error": "error: HTTPStatusError: Client error '404 Not Found' for url 'https://pmc.ncbi.nlm.nih.gov/articles/PMC1140649/pdf/'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/404"
+    },
+    {
+      "arm": "control",
+      "doi": "10.1073/pnas.0506580102",
+      "openalex_id": "https://openalex.org/W2130410032",
+      "title": "Gene set enrichment analysis: A knowledge-based approach for interpreting genome-wide expression profiles",
+      "year": 2005,
+      "subfield": "Molecular Biology",
+      "pdf_url": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC1239896/pdf/",
+      "download_ok": false,
+      "content_type": "text/html; charset=utf-8",
+      "pdf_sha256": null,
+      "download_error": "not a PDF (got 1817B, content-type=text/html; charset=utf-8)"
+    },
+    {
+      "arm": "retracted",
+      "doi": "10.1158/0008-5472.can-09-4598",
+      "openalex_id": "https://openalex.org/W2014442719",
+      "title": "Gemcitabine Sensitivity Can Be Induced in Pancreatic Cancer Cells through Modulation of miR-200 and miR-21 Expression by Curcumin or Its Analogue CDF",
+      "year": 2010,
+      "subfield": "Molecular Medicine",
+      "pdf_url": "https://aacrjournals.org/cancerres/article-pdf/70/9/3606/2650820/3606.pdf",
+      "download_ok": false,
+      "content_type": "",
+      "pdf_sha256": null,
+      "download_error": "error: HTTPStatusError: Client error '403 Forbidden' for url 'https://aacrjournals.org/cancerres/article-pdf/70/9/3606/2650820/3606.pdf'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403"
+    },
+    {
+      "arm": "control",
+      "doi": "10.1016/s1473-3099(10)70143-2",
+      "openalex_id": "https://openalex.org/W2154556219",
+      "title": "Emergence of a new antibiotic resistance mechanism in India, Pakistan, and the UK: a molecular, biological, and epidemiological study",
+      "year": 2010,
+      "subfield": "Molecular Medicine",
+      "pdf_url": "http://www.thelancet.com/article/S1473309910701432/pdf",
+      "download_ok": false,
+      "content_type": "",
+      "pdf_sha256": null,
+      "download_error": "error: HTTPStatusError: Client error '403 Forbidden' for url 'https://www.thelancet.com/article/S1473309910701432/pdf'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403"
+    },
+    {
+      "arm": "retracted",
+      "doi": "10.1074/jbc.m312044200",
+      "openalex_id": "https://openalex.org/W2164032619",
+      "title": "Akt Phosphorylation and Stabilization of X-linked Inhibitor of Apoptosis Protein (XIAP)",
+      "year": 2004,
+      "subfield": "Molecular Biology",
+      "pdf_url": "http://www.jbc.org/article/S0021925820748702/pdf",
+      "download_ok": false,
+      "content_type": "",
+      "pdf_sha256": null,
+      "download_error": "error: HTTPStatusError: Client error '403 Forbidden' for url 'https://www.jbc.org/article/S0021925820748702/pdf'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403"
+    },
+    {
+      "arm": "control",
+      "doi": "10.1073/pnas.0506580102",
+      "openalex_id": "https://openalex.org/W2130410032",
+      "title": "Gene set enrichment analysis: A knowledge-based approach for interpreting genome-wide expression profiles",
+      "year": 2005,
+      "subfield": "Molecular Biology",
+      "pdf_url": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC1239896/pdf/",
+      "download_ok": false,
+      "content_type": "text/html; charset=utf-8",
+      "pdf_sha256": null,
+      "download_error": "not a PDF (got 1817B, content-type=text/html; charset=utf-8)"
+    },
+    {
+      "arm": "retracted",
+      "doi": "10.1371/journal.pone.0019338",
+      "openalex_id": "https://openalex.org/W2098069894",
+      "title": "Passive Immunization Reduces Behavioral and Neuropathological Deficits in an Alpha-Synuclein Transgenic Model of Lewy Body Disease",
+      "year": 2011,
+      "subfield": "Neurology",
+      "pdf_url": "https://journals.plos.org/plosone/article/file?id=10.1371/journal.pone.0019338&type=printable",
+      "download_ok": true,
+      "content_type": "application/pdf",
+      "pdf_sha256": "61998cb7f040b38aea9700ac9eb39b1e80e4e02f4b3577c0be70ede2cda0aeab",
+      "scan": {
+        "overall_severity": 2,
+        "n_findings": 2,
+        "severity_counts": {
+          "0": 0,
+          "1": 1,
+          "2": 1,
+          "3": 0
+        },
+        "detectors_fired": [
+          "T3"
+        ],
+        "detector_hits": {
+          "T3": 2
+        }
+      }
+    },
+    {
+      "arm": "control",
+      "doi": "10.1016/j.neuron.2011.09.010",
+      "openalex_id": "https://openalex.org/W2150523249",
+      "title": "A Hexanucleotide Repeat Expansion in C9ORF72 Is the Cause of Chromosome 9p21-Linked ALS-FTD",
+      "year": 2011,
+      "subfield": "Neurology",
+      "pdf_url": "http://www.cell.com/article/S0896627311007975/pdf",
+      "download_ok": false,
+      "content_type": "",
+      "pdf_sha256": null,
+      "download_error": "error: HTTPStatusError: Client error '403 Forbidden' for url 'https://www.cell.com/article/S0896627311007975/pdf'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403"
+    },
+    {
+      "arm": "retracted",
+      "doi": "10.1038/onc.2017.89",
+      "openalex_id": "https://openalex.org/W2605363845",
+      "title": "circRNA_100290 plays a role in oral cancer by functioning as a sponge of the miR-29 family",
+      "year": 2017,
+      "subfield": "Molecular Biology",
+      "pdf_url": "https://www.nature.com/articles/onc201789.pdf",
+      "download_ok": true,
+      "content_type": "application/pdf",
+      "pdf_sha256": "6721213134d1965c2c2cfb5fe17fa4ae239dba52bff46266a9448dde1b5402a5",
+      "scan": {
+        "overall_severity": 0,
+        "n_findings": 0,
+        "severity_counts": {
+          "0": 0,
+          "1": 0,
+          "2": 0,
+          "3": 0
+        },
+        "detectors_fired": [],
+        "detector_hits": {}
+      }
+    },
+    {
+      "arm": "control",
+      "doi": "10.1093/molbev/msw054",
+      "openalex_id": "https://openalex.org/W2311203695",
+      "title": "MEGA7: Molecular Evolutionary Genetics Analysis Version 7.0 for Bigger Datasets",
+      "year": 2016,
+      "subfield": "Molecular Biology",
+      "pdf_url": "https://academic.oup.com/mbe/article-pdf/33/7/1870/7948752/msw054.pdf",
+      "download_ok": false,
+      "content_type": "",
+      "pdf_sha256": null,
+      "download_error": "error: HTTPStatusError: Client error '403 Forbidden' for url 'https://academic.oup.com/mbe/article-pdf/33/7/1870/7948752/msw054.pdf'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403"
+    },
+    {
+      "arm": "retracted",
+      "doi": "10.2119/molmed.2011.00389",
+      "openalex_id": "https://openalex.org/W1672954108",
+      "title": "Redox Modification of Cysteine Residues Regulates the Cytokine Activity of High Mobility Group Box-1 (HMGB1)",
+      "year": 2011,
+      "subfield": "Clinical Biochemistry",
+      "pdf_url": "https://molmed.biomedcentral.com/counter/pdf/10.2119/molmed.2011.00389",
+      "download_ok": true,
+      "content_type": "application/pdf",
+      "pdf_sha256": "f7b0affe1d6d2d44a33a4b83a90258f835e6da49668736e1df45c75e18750737",
+      "scan": {
+        "overall_severity": 0,
+        "n_findings": 0,
+        "severity_counts": {
+          "0": 0,
+          "1": 0,
+          "2": 0,
+          "3": 0
+        },
+        "detectors_fired": [],
+        "detector_hits": {}
+      }
+    },
+    {
+      "arm": "control",
+      "doi": "10.1016/j.jada.2010.03.018",
+      "openalex_id": "https://openalex.org/W2037141143",
+      "title": "Advanced Glycation End Products in Foods and a Practical Guide to Their Reduction in the Diet",
+      "year": 2010,
+      "subfield": "Clinical Biochemistry",
+      "pdf_url": "http://www.jandonline.org/article/S0002822310002385/pdf",
+      "download_ok": false,
+      "content_type": "",
+      "pdf_sha256": null,
+      "download_error": "error: HTTPStatusError: Client error '403 Forbidden' for url 'https://www.jandonline.org/article/S0002822310002385/pdf'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403"
+    },
+    {
+      "arm": "retracted",
+      "doi": "10.1074/jbc.m701194200",
+      "openalex_id": "https://openalex.org/W2155452700",
+      "title": "Tissue-specific Autophagy Alterations and Increased Tumorigenesis in Mice Deficient in Atg4C/Autophagin-3",
+      "year": 2007,
+      "subfield": "Epidemiology",
+      "pdf_url": "http://www.jbc.org/article/S002192582068958X/pdf",
+      "download_ok": false,
+      "content_type": "",
+      "pdf_sha256": null,
+      "download_error": "error: HTTPStatusError: Client error '403 Forbidden' for url 'https://www.jbc.org/article/S002192582068958X/pdf'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403"
+    },
+    {
+      "arm": "control",
+      "doi": "10.1016/j.cell.2007.12.018",
+      "openalex_id": "https://openalex.org/W2109034822",
+      "title": "Autophagy in the Pathogenesis of Disease",
+      "year": 2008,
+      "subfield": "Epidemiology",
+      "pdf_url": "http://www.cell.com/article/S0092867407016856/pdf",
+      "download_ok": false,
+      "content_type": "",
+      "pdf_sha256": null,
+      "download_error": "error: HTTPStatusError: Client error '403 Forbidden' for url 'https://www.cell.com/article/S0092867407016856/pdf'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403"
+    },
+    {
+      "arm": "retracted",
+      "doi": "10.1186/s12943-020-01206-5",
+      "openalex_id": "https://openalex.org/W3021568391",
+      "title": "RETRACTED ARTICLE: LncRNA BCRT1 promotes breast cancer progression by targeting miR-1303/PTBP3 axis",
+      "year": 2020,
+      "subfield": "Cancer Research",
+      "pdf_url": "https://molecular-cancer.biomedcentral.com/track/pdf/10.1186/s12943-020-01206-5",
+      "download_ok": true,
+      "content_type": "application/pdf",
+      "pdf_sha256": "f12117952543a1ce78ab6319616a30e30d28dec2ddf75d2a265b4fd8eb409f4f",
+      "scan": {
+        "overall_severity": 0,
+        "n_findings": 0,
+        "severity_counts": {
+          "0": 0,
+          "1": 0,
+          "2": 0,
+          "3": 0
+        },
+        "detectors_fired": [],
+        "detector_hits": {}
+      }
+    },
+    {
+      "arm": "control",
+      "doi": "10.1038/s41586-020-1943-3",
+      "openalex_id": "https://openalex.org/W3004480399",
+      "title": "The repertoire of mutational signatures in human cancer",
+      "year": 2020,
+      "subfield": "Cancer Research",
+      "pdf_url": "https://www.nature.com/articles/s41586-020-1943-3.pdf",
+      "download_ok": true,
+      "content_type": "application/pdf",
+      "pdf_sha256": "b45eb4d606e28dd252c7272d9f5b79cd93f0927da39bf502c2babfbafffd9773",
+      "scan": {
+        "overall_severity": 0,
+        "n_findings": 0,
+        "severity_counts": {
+          "0": 0,
+          "1": 0,
+          "2": 0,
+          "3": 0
+        },
+        "detectors_fired": [],
+        "detector_hits": {}
+      }
+    },
+    {
+      "arm": "retracted",
+      "doi": "10.1371/journal.pone.0158347",
+      "openalex_id": "https://openalex.org/W2464299117",
+      "title": "The Circular RNA Cdr1as Act as an Oncogene in Hepatocellular Carcinoma through Targeting miR-7 Expression",
+      "year": 2016,
+      "subfield": "Molecular Biology",
+      "pdf_url": "https://journals.plos.org/plosone/article/file?id=10.1371/journal.pone.0158347&type=printable",
+      "download_ok": true,
+      "content_type": "application/pdf",
+      "pdf_sha256": "cd0d4a3894b3120b00f1b0c720a5f6eec07d1b7e45778d0520b45ba53839e0db",
+      "scan": {
+        "overall_severity": 2,
+        "n_findings": 2,
+        "severity_counts": {
+          "0": 0,
+          "1": 1,
+          "2": 1,
+          "3": 0
+        },
+        "detectors_fired": [
+          "T3"
+        ],
+        "detector_hits": {
+          "T3": 2
+        }
+      }
+    },
+    {
+      "arm": "control",
+      "doi": "10.1093/molbev/msw054",
+      "openalex_id": "https://openalex.org/W2311203695",
+      "title": "MEGA7: Molecular Evolutionary Genetics Analysis Version 7.0 for Bigger Datasets",
+      "year": 2016,
+      "subfield": "Molecular Biology",
+      "pdf_url": "https://academic.oup.com/mbe/article-pdf/33/7/1870/7948752/msw054.pdf",
+      "download_ok": false,
+      "content_type": "",
+      "pdf_sha256": null,
+      "download_error": "error: HTTPStatusError: Client error '403 Forbidden' for url 'https://academic.oup.com/mbe/article-pdf/33/7/1870/7948752/msw054.pdf'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403"
+    },
+    {
+      "arm": "retracted",
+      "doi": "10.1038/nature17950",
+      "openalex_id": "https://openalex.org/W2338725336",
+      "title": "RETRACTED ARTICLE: Noncanonical autophagy inhibits the autoinflammatory, lupus-like response to dying cells",
+      "year": 2016,
+      "subfield": "Epidemiology",
+      "pdf_url": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4860026/pdf/",
+      "download_ok": false,
+      "content_type": "",
+      "pdf_sha256": null,
+      "download_error": "error: RemoteProtocolError: Server disconnected without sending a response."
+    },
+    {
+      "arm": "control",
+      "doi": "10.1001/jama.2016.0287",
+      "openalex_id": "https://openalex.org/W2280404143",
+      "title": "The Third International Consensus Definitions for Sepsis and Septic Shock (Sepsis-3)",
+      "year": 2016,
+      "subfield": "Epidemiology",
+      "pdf_url": "https://jamanetwork.com/journals/jama/articlepdf/2492881/jsc160002.pdf",
+      "download_ok": false,
+      "content_type": "",
+      "pdf_sha256": null,
+      "download_error": "error: HTTPStatusError: Client error '403 Forbidden' for url 'https://jamanetwork.com/journals/jama/articlepdf/2492881/jsc160002.pdf'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403"
+    },
+    {
+      "arm": "retracted",
+      "doi": "10.1074/jbc.m110.101055",
+      "openalex_id": "https://openalex.org/W2098150383",
+      "title": "MicroRNA-155 Regulates Cell Survival, Growth, and Chemosensitivity by Targeting FOXO3a in Breast Cancer",
+      "year": 2010,
+      "subfield": "Molecular Biology",
+      "pdf_url": "http://www.jbc.org/article/S0021925819355280/pdf",
+      "download_ok": false,
+      "content_type": "",
+      "pdf_sha256": null,
+      "download_error": "error: HTTPStatusError: Client error '403 Forbidden' for url 'https://www.jbc.org/article/S0021925819355280/pdf'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403"
+    },
+    {
+      "arm": "control",
+      "doi": "10.1093/bioinformatics/btp352",
+      "openalex_id": "https://openalex.org/W2108234281",
+      "title": "The Sequence Alignment/Map format and SAMtools",
+      "year": 2009,
+      "subfield": "Molecular Biology",
+      "pdf_url": "https://academic.oup.com/bioinformatics/article-pdf/25/16/2078/48994296/bioinformatics_25_16_2078.pdf",
+      "download_ok": false,
+      "content_type": "",
+      "pdf_sha256": null,
+      "download_error": "error: HTTPStatusError: Client error '403 Forbidden' for url 'https://academic.oup.com/bioinformatics/article-pdf/25/16/2078/48994296/bioinformatics_25_16_2078.pdf'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403"
+    },
+    {
+      "arm": "retracted",
+      "doi": "10.1186/s12943-018-0933-7",
+      "openalex_id": "https://openalex.org/W2943283123",
+      "title": "RETRACTED ARTICLE: The circRNA circAGFG1 acts as a sponge of miR-195-5p to promote triple-negative breast cancer progression through regulating CCNE1 expression",
+      "year": 2019,
+      "subfield": "Molecular Biology",
+      "pdf_url": "https://molecular-cancer.biomedcentral.com/track/pdf/10.1186/s12943-018-0933-7",
+      "download_ok": true,
+      "content_type": "application/pdf",
+      "pdf_sha256": "a830d0f6b6fdfeb22a2a946154cfa9c1104c3c45b0ce2d3124a80a48f663cd24",
+      "scan": {
+        "overall_severity": 0,
+        "n_findings": 0,
+        "severity_counts": {
+          "0": 0,
+          "1": 0,
+          "2": 0,
+          "3": 0
+        },
+        "detectors_fired": [],
+        "detector_hits": {}
+      }
+    },
+    {
+      "arm": "control",
+      "doi": "10.1093/molbev/msy096",
+      "openalex_id": "https://openalex.org/W2799524357",
+      "title": "MEGA X: Molecular Evolutionary Genetics Analysis across Computing Platforms",
+      "year": 2018,
+      "subfield": "Molecular Biology",
+      "pdf_url": "https://academic.oup.com/mbe/article-pdf/35/6/1547/25091958/msy096.pdf",
+      "download_ok": false,
+      "content_type": "",
+      "pdf_sha256": null,
+      "download_error": "error: HTTPStatusError: Client error '403 Forbidden' for url 'https://academic.oup.com/mbe/article-pdf/35/6/1547/25091958/msy096.pdf'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403"
+    },
+    {
+      "arm": "retracted",
+      "doi": "10.1038/ng.317",
+      "openalex_id": "https://openalex.org/W2114499007",
+      "title": "A TARBP2 mutation in human cancer impairs microRNA processing and DICER1 function",
+      "year": 2009,
+      "subfield": "Cancer Research",
+      "pdf_url": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4509508/pdf/",
+      "download_ok": false,
+      "content_type": "text/html; charset=utf-8",
+      "pdf_sha256": null,
+      "download_error": "not a PDF (got 20325B, content-type=text/html; charset=utf-8)"
+    },
+    {
+      "arm": "control",
+      "doi": "10.1101/gr.082701.108",
+      "openalex_id": "https://openalex.org/W2026570544",
+      "title": "Most mammalian mRNAs are conserved targets of microRNAs",
+      "year": 2008,
+      "subfield": "Cancer Research",
+      "pdf_url": "https://genome.cshlp.org/content/19/1/92.full.pdf",
+      "download_ok": false,
+      "content_type": "",
+      "pdf_sha256": null,
+      "download_error": "error: HTTPStatusError: Client error '403 Forbidden' for url 'https://genome.cshlp.org/content/genome%3A%3A%3A19%3A%3A%3A1%3A%3A%3A92.full.pdf?implicit-login=true%26903'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403"
+    },
+    {
+      "arm": "retracted",
+      "doi": "10.1074/jbc.m205838200",
+      "openalex_id": "https://openalex.org/W2114189030",
+      "title": "Phosphatidylinositol 3-Kinase/Akt Pathway Regulates Tuberous Sclerosis Tumor Suppressor Complex by Phosphorylation of Tuberin",
+      "year": 2002,
+      "subfield": "Physiology",
+      "pdf_url": "http://www.jbc.org/article/S0021925818367723/pdf",
+      "download_ok": false,
+      "content_type": "",
+      "pdf_sha256": null,
+      "download_error": "error: HTTPStatusError: Client error '403 Forbidden' for url 'https://www.jbc.org/article/S0021925818367723/pdf'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403"
+    },
+    {
+      "arm": "control",
+      "doi": "10.1016/s0896-6273(03)00434-3",
+      "openalex_id": "https://openalex.org/W1967464880",
+      "title": "Triple-Transgenic Model of Alzheimer's Disease with Plaques and Tangles",
+      "year": 2003,
+      "subfield": "Physiology",
+      "pdf_url": "http://www.cell.com/article/S0896627303004343/pdf",
+      "download_ok": false,
+      "content_type": "",
+      "pdf_sha256": null,
+      "download_error": "error: HTTPStatusError: Client error '403 Forbidden' for url 'https://www.cell.com/article/S0896627303004343/pdf'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403"
+    },
+    {
+      "arm": "retracted",
+      "doi": "10.1371/journal.pone.0009313",
+      "openalex_id": "https://openalex.org/W2078207717",
+      "title": "Selective Molecular Alterations in the Autophagy Pathway in Patients with Lewy Body Disease and in Models of α-Synucleinopathy",
+      "year": 2010,
+      "subfield": "Epidemiology",
+      "pdf_url": "https://journals.plos.org/plosone/article/file?id=10.1371/journal.pone.0009313&type=printable",
+      "download_ok": true,
+      "content_type": "application/pdf",
+      "pdf_sha256": "701fa9b7f69c3d1c3822cf7586d187d8718bff0eccf995b06f5ed9c21768cc33",
+      "scan": {
+        "overall_severity": 2,
+        "n_findings": 2,
+        "severity_counts": {
+          "0": 0,
+          "1": 1,
+          "2": 1,
+          "3": 0
+        },
+        "detectors_fired": [
+          "T3"
+        ],
+        "detector_hits": {
+          "T3": 2
+        }
+      }
+    },
+    {
+      "arm": "control",
+      "doi": "10.1186/1471-2105-12-77",
+      "openalex_id": "https://openalex.org/W2006617902",
+      "title": "pROC: an open-source package for R and S+ to analyze and compare ROC curves",
+      "year": 2011,
+      "subfield": "Epidemiology",
+      "pdf_url": "https://bmcbioinformatics.biomedcentral.com/counter/pdf/10.1186/1471-2105-12-77",
+      "download_ok": true,
+      "content_type": "application/pdf",
+      "pdf_sha256": "7497eb697fd7ed5ddac3304d7f8fb8a19ffa5ac72f5830e18ba65a8de67041c2",
+      "scan": {
+        "overall_severity": 0,
+        "n_findings": 0,
+        "severity_counts": {
+          "0": 0,
+          "1": 0,
+          "2": 0,
+          "3": 0
+        },
+        "detectors_fired": [],
+        "detector_hits": {}
+      }
+    },
+    {
+      "arm": "retracted",
+      "doi": "10.1038/nm.2577",
+      "openalex_id": "https://openalex.org/W2124808167",
+      "title": "RETRACTED ARTICLE: EGFR and MET receptor tyrosine kinase–altered microRNA expression induces tumorigenesis and gefitinib resistance in lung cancers",
+      "year": 2011,
+      "subfield": "Cancer Research",
+      "pdf_url": "http://nrs.harvard.edu/urn-3:HUL.InstRepos:10531918",
+      "download_ok": false,
+      "content_type": "text/html; charset=utf-8",
+      "pdf_sha256": null,
+      "download_error": "not a PDF (got 469390B, content-type=text/html; charset=utf-8)"
+    },
+    {
+      "arm": "control",
+      "doi": "10.1158/2159-8290.cd-12-0095",
+      "openalex_id": "https://openalex.org/W2149441684",
+      "title": "The cBio Cancer Genomics Portal: An Open Platform for Exploring Multidimensional Cancer Genomics Data",
+      "year": 2012,
+      "subfield": "Cancer Research",
+      "pdf_url": "https://doi.org/10.25504/fairsharing.6l6mja",
+      "download_ok": false,
+      "content_type": "text/html; charset=utf-8",
+      "pdf_sha256": null,
+      "download_error": "not a PDF (got 2438B, content-type=text/html; charset=utf-8)"
+    },
+    {
+      "arm": "retracted",
+      "doi": "10.1158/1940-6207.capr-10-0381",
+      "openalex_id": "https://openalex.org/W2145533373",
+      "title": "Obesity Is Associated with Inflammation and Elevated Aromatase Expression in the Mouse Mammary Gland",
+      "year": 2011,
+      "subfield": "Genetics",
+      "pdf_url": "https://aacrjournals.org/cancerpreventionresearch/article-pdf/4/3/329/3152160/329.pdf",
+      "download_ok": false,
+      "content_type": "",
+      "pdf_sha256": null,
+      "download_error": "error: HTTPStatusError: Client error '403 Forbidden' for url 'https://aacrjournals.org/cancerpreventionresearch/article-pdf/4/3/329/3152160/329.pdf'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403"
+    },
+    {
+      "arm": "control",
+      "doi": "10.1093/bioinformatics/btr330",
+      "openalex_id": "https://openalex.org/W2149992227",
+      "title": "The variant call format and VCFtools",
+      "year": 2011,
+      "subfield": "Genetics",
+      "pdf_url": "https://academic.oup.com/bioinformatics/article-pdf/27/15/2156/48863483/bioinformatics_27_15_2156.pdf",
+      "download_ok": false,
+      "content_type": "",
+      "pdf_sha256": null,
+      "download_error": "error: HTTPStatusError: Client error '403 Forbidden' for url 'https://academic.oup.com/bioinformatics/article-pdf/27/15/2156/48863483/bioinformatics_27_15_2156.pdf'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403"
+    },
+    {
+      "arm": "retracted",
+      "doi": "10.1038/s41467-020-17687-3",
+      "openalex_id": "https://openalex.org/W3080845626",
+      "title": "RETRACTED ARTICLE: Origin and cross-species transmission of bat coronaviruses in China",
+      "year": 2020,
+      "subfield": "Public Health, Environmental and Occupational Health",
+      "pdf_url": "https://www.nature.com/articles/s41467-020-17687-3.pdf",
+      "download_ok": true,
+      "content_type": "application/pdf",
+      "pdf_sha256": "9faad2debd6cbe5ca6c413a55657abed7fbde21a6cf34d1a18997ef9f5698870",
+      "scan": {
+        "overall_severity": 0,
+        "n_findings": 0,
+        "severity_counts": {
+          "0": 0,
+          "1": 0,
+          "2": 0,
+          "3": 0
+        },
+        "detectors_fired": [],
+        "detector_hits": {}
+      }
+    },
+    {
+      "arm": "control",
+      "doi": "10.1016/s0140-6736(19)30041-8",
+      "openalex_id": "https://openalex.org/W2928467655",
+      "title": "Health effects of dietary risks in 195 countries, 1990–2017: a systematic analysis for the Global Burden of Disease Study 2017",
+      "year": 2019,
+      "subfield": "Public Health, Environmental and Occupational Health",
+      "pdf_url": "http://www.thelancet.com/article/S0140673619300418/pdf",
+      "download_ok": false,
+      "content_type": "",
+      "pdf_sha256": null,
+      "download_error": "error: ReadError: [SSL: WRONG_VERSION_NUMBER] wrong version number (_ssl.c:2570)"
+    },
+    {
+      "arm": "retracted",
+      "doi": "10.1038/ijo.2013.20",
+      "openalex_id": "https://openalex.org/W2017879525",
+      "title": "RETRACTED ARTICLE: Correlation between body mass index and gut concentrations of Lactobacillus reuteri, Bifidobacterium animalis, Methanobrevibacter smithii and Escherichia coli",
+      "year": 2013,
+      "subfield": "Molecular Biology",
+      "pdf_url": "https://www.nature.com/articles/ijo201320.pdf",
+      "download_ok": true,
+      "content_type": "application/pdf",
+      "pdf_sha256": "f4d86f84b173fed1e484c194156245b568aba4740ea119ca30e4a26047f4f60a",
+      "scan": {
+        "overall_severity": 0,
+        "n_findings": 0,
+        "severity_counts": {
+          "0": 0,
+          "1": 0,
+          "2": 0,
+          "3": 0
+        },
+        "detectors_fired": [],
+        "detector_hits": {}
+      }
+    },
+    {
+      "arm": "control",
+      "doi": "10.1093/bioinformatics/btu170",
+      "openalex_id": "https://openalex.org/W2131271579",
+      "title": "Trimmomatic: a flexible trimmer for Illumina sequence data",
+      "year": 2014,
+      "subfield": "Molecular Biology",
+      "pdf_url": "https://academic.oup.com/bioinformatics/article-pdf/30/15/2114/48924714/bioinformatics_30_15_2114.pdf",
+      "download_ok": false,
+      "content_type": "",
+      "pdf_sha256": null,
+      "download_error": "error: HTTPStatusError: Client error '403 Forbidden' for url 'https://academic.oup.com/bioinformatics/article-pdf/30/15/2114/48924714/bioinformatics_30_15_2114.pdf'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403"
+    },
+    {
+      "arm": "retracted",
+      "doi": "10.1074/jbc.m804788200",
+      "openalex_id": "https://openalex.org/W2042907812",
+      "title": "Down-regulation of Micro-RNA-1 (miR-1) in Lung Cancer: Suppression of Tumorigenic Property of Lung Cancer Cells and Their Sensitization to Doxorubicin-Induced Apoptosis by miR-1",
+      "year": 2008,
+      "subfield": "Cancer Research",
+      "pdf_url": "https://doi.org/10.1074/jbc.m804788200",
+      "download_ok": false,
+      "content_type": "text/html;charset=utf-8",
+      "pdf_sha256": null,
+      "download_error": "not a PDF (got 2717B, content-type=text/html;charset=utf-8)"
+    },
+    {
+      "arm": "control",
+      "doi": "10.1101/gr.082701.108",
+      "openalex_id": "https://openalex.org/W2026570544",
+      "title": "Most mammalian mRNAs are conserved targets of microRNAs",
+      "year": 2008,
+      "subfield": "Cancer Research",
+      "pdf_url": "https://genome.cshlp.org/content/19/1/92.full.pdf",
+      "download_ok": false,
+      "content_type": "",
+      "pdf_sha256": null,
+      "download_error": "error: HTTPStatusError: Client error '403 Forbidden' for url 'https://genome.cshlp.org/content/genome%3A%3A%3A19%3A%3A%3A1%3A%3A%3A92.full.pdf?implicit-login=true%26934'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403"
+    },
+    {
+      "arm": "retracted",
+      "doi": "10.1128/mcb.19.8.5363",
+      "openalex_id": "https://openalex.org/W2148032010",
+      "title": "RETRACTED ARTICLE: Purification and Identification of p68 RNA Helicase Acting as a Transcriptional Coactivator Specific for the Activation Function 1 of Human Estrogen Receptor α",
+      "year": 1999,
+      "subfield": "Genetics",
+      "pdf_url": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC84379/pdf/",
+      "download_ok": false,
+      "content_type": "",
+      "pdf_sha256": null,
+      "download_error": "error: HTTPStatusError: Client error '404 Not Found' for url 'https://pmc.ncbi.nlm.nih.gov/articles/PMC84379/pdf/'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/404"
+    },
+    {
+      "arm": "control",
+      "doi": "10.1093/genetics/155.2.945",
+      "openalex_id": "https://openalex.org/W2098126593",
+      "title": "Inference of Population Structure Using Multilocus Genotype Data",
+      "year": 2000,
+      "subfield": "Genetics",
+      "pdf_url": "https://academic.oup.com/genetics/article-pdf/155/2/945/35125695/genetics0945.pdf",
+      "download_ok": false,
+      "content_type": "",
+      "pdf_sha256": null,
+      "download_error": "error: HTTPStatusError: Client error '403 Forbidden' for url 'https://academic.oup.com/genetics/article-pdf/155/2/945/35125695/genetics0945.pdf'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403"
+    },
+    {
+      "arm": "retracted",
+      "doi": "10.1186/s12943-019-1128-6",
+      "openalex_id": "https://openalex.org/W3000655765",
+      "title": "RETRACTED ARTICLE: m6A demethylase ALKBH5 inhibits pancreatic cancer tumorigenesis by decreasing WIF-1 RNA methylation and mediating Wnt signaling",
+      "year": 2020,
+      "subfield": "Molecular Biology",
+      "pdf_url": "https://molecular-cancer.biomedcentral.com/track/pdf/10.1186/s12943-019-1128-6",
+      "download_ok": true,
+      "content_type": "application/pdf",
+      "pdf_sha256": "ac16984692259a32fa90f464a8346eb573bd188717cbe74a58392b6fd776d207",
+      "scan": {
+        "overall_severity": 0,
+        "n_findings": 0,
+        "severity_counts": {
+          "0": 0,
+          "1": 0,
+          "2": 0,
+          "3": 0
+        },
+        "detectors_fired": [],
+        "detector_hits": {}
+      }
+    },
+    {
+      "arm": "control",
+      "doi": "10.1038/s41586-021-03819-2",
+      "openalex_id": "https://openalex.org/W3177828909",
+      "title": "Highly accurate protein structure prediction with AlphaFold",
+      "year": 2021,
+      "subfield": "Molecular Biology",
+      "pdf_url": "https://www.nature.com/articles/s41586-021-03819-2.pdf",
+      "download_ok": true,
+      "content_type": "application/pdf",
+      "pdf_sha256": "6eae057a9faf4f671c3101e0745ed704460c6d3dec77243dfd3a9f2d2ab68970",
+      "scan": {
+        "overall_severity": 0,
+        "n_findings": 0,
+        "severity_counts": {
+          "0": 0,
+          "1": 0,
+          "2": 0,
+          "3": 0
+        },
+        "detectors_fired": [],
+        "detector_hits": {}
+      }
+    },
+    {
+      "arm": "retracted",
+      "doi": "10.1371/journal.pone.0078700",
+      "openalex_id": "https://openalex.org/W1994947876",
+      "title": "Resveratrol Inhibits Invasion and Metastasis of Colorectal Cancer Cells via MALAT1 Mediated Wnt/β-Catenin Signal Pathway",
+      "year": 2013,
+      "subfield": "Cancer Research",
+      "pdf_url": "https://journals.plos.org/plosone/article/file?id=10.1371/journal.pone.0078700&type=printable",
+      "download_ok": true,
+      "content_type": "application/pdf",
+      "pdf_sha256": "42c571808bb8fb4cd17282cc593fd57b0e1272efcd032bccb2062cf0abdc85a4",
+      "scan": {
+        "overall_severity": 2,
+        "n_findings": 2,
+        "severity_counts": {
+          "0": 0,
+          "1": 1,
+          "2": 1,
+          "3": 0
+        },
+        "detectors_fired": [
+          "T3"
+        ],
+        "detector_hits": {
+          "T3": 2
+        }
+      }
+    },
+    {
+      "arm": "control",
+      "doi": "10.1186/s13059-014-0550-8",
+      "openalex_id": "https://openalex.org/W2179438025",
+      "title": "Moderated estimation of fold change and dispersion for RNA-seq data with DESeq2",
+      "year": 2014,
+      "subfield": "Cancer Research",
+      "pdf_url": "https://genomebiology.biomedcentral.com/counter/pdf/10.1186/s13059-014-0550-8",
+      "download_ok": true,
+      "content_type": "application/pdf",
+      "pdf_sha256": "96af759d0ffad2df06af8860e7ea7ae1ce380ce6e22843ad2519b801bc1999bb",
+      "scan": {
+        "overall_severity": 0,
+        "n_findings": 0,
+        "severity_counts": {
+          "0": 0,
+          "1": 0,
+          "2": 0,
+          "3": 0
+        },
+        "detectors_fired": [],
+        "detector_hits": {}
+      }
+    },
+    {
+      "arm": "retracted",
+      "doi": "10.1186/s13046-020-01648-1",
+      "openalex_id": "https://openalex.org/W3047616340",
+      "title": "RETRACTED ARTICLE: Circular RNA circ-CPA4/ let-7 miRNA/PD-L1 axis regulates cell growth, stemness, drug resistance and immune evasion in non-small cell lung cancer (NSCLC)",
+      "year": 2020,
+      "subfield": "Molecular Biology",
+      "pdf_url": "https://jeccr.biomedcentral.com/track/pdf/10.1186/s13046-020-01648-1",
+      "download_ok": true,
+      "content_type": "application/pdf",
+      "pdf_sha256": "f3b1ee1664be7b71320d77ea8e2b732ddecbe5aa6271d000e5dda79715a9ed3d",
+      "scan": {
+        "overall_severity": 0,
+        "n_findings": 0,
+        "severity_counts": {
+          "0": 0,
+          "1": 0,
+          "2": 0,
+          "3": 0
+        },
+        "detectors_fired": [],
+        "detector_hits": {}
+      }
+    },
+    {
+      "arm": "control",
+      "doi": "10.1038/s41586-021-03819-2",
+      "openalex_id": "https://openalex.org/W3177828909",
+      "title": "Highly accurate protein structure prediction with AlphaFold",
+      "year": 2021,
+      "subfield": "Molecular Biology",
+      "pdf_url": "https://www.nature.com/articles/s41586-021-03819-2.pdf",
+      "download_ok": true,
+      "content_type": "application/pdf",
+      "pdf_sha256": "6eae057a9faf4f671c3101e0745ed704460c6d3dec77243dfd3a9f2d2ab68970",
+      "scan": {
+        "overall_severity": 0,
+        "n_findings": 0,
+        "severity_counts": {
+          "0": 0,
+          "1": 0,
+          "2": 0,
+          "3": 0
+        },
+        "detectors_fired": [],
+        "detector_hits": {}
+      }
+    },
+    {
+      "arm": "retracted",
+      "doi": "10.1164/rccm.200803-380oc",
+      "openalex_id": "https://openalex.org/W2138336750",
+      "title": "Decline in NRF2-regulated Antioxidants in Chronic Obstructive Pulmonary Disease Lungs Due to Loss of Its Positive Regulator, DJ-1",
+      "year": 2008,
+      "subfield": "Molecular Biology",
+      "pdf_url": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC2542433/pdf/",
+      "download_ok": false,
+      "content_type": "",
+      "pdf_sha256": null,
+      "download_error": "error: HTTPStatusError: Client error '404 Not Found' for url 'https://pmc.ncbi.nlm.nih.gov/articles/PMC2542433/pdf/'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/404"
+    },
+    {
+      "arm": "control",
+      "doi": "10.1093/bioinformatics/btp352",
+      "openalex_id": "https://openalex.org/W2108234281",
+      "title": "The Sequence Alignment/Map format and SAMtools",
+      "year": 2009,
+      "subfield": "Molecular Biology",
+      "pdf_url": "https://academic.oup.com/bioinformatics/article-pdf/25/16/2078/48994296/bioinformatics_25_16_2078.pdf",
+      "download_ok": false,
+      "content_type": "",
+      "pdf_sha256": null,
+      "download_error": "error: HTTPStatusError: Client error '403 Forbidden' for url 'https://academic.oup.com/bioinformatics/article-pdf/25/16/2078/48994296/bioinformatics_25_16_2078.pdf'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403"
+    },
+    {
+      "arm": "retracted",
+      "doi": "10.1007/s10489-020-01714-3",
+      "openalex_id": "https://openalex.org/W3019186020",
+      "title": "RETRACTED ARTICLE: Deep learning system to screen coronavirus disease 2019 pneumonia",
+      "year": 2020,
+      "subfield": "Radiology, Nuclear Medicine and Imaging",
+      "pdf_url": "https://link.springer.com/content/pdf/10.1007/s10489-020-01714-3.pdf",
+      "download_ok": true,
+      "content_type": "application/pdf",
+      "pdf_sha256": "5df4b74e3ba764523d1f79e56ab5826cd1c89fa95365a157541226269a6befe7",
+      "scan": {
+        "overall_severity": 0,
+        "n_findings": 0,
+        "severity_counts": {
+          "0": 0,
+          "1": 0,
+          "2": 0,
+          "3": 0
+        },
+        "detectors_fired": [],
+        "detector_hits": {}
+      }
+    },
+    {
+      "arm": "control",
+      "doi": "10.1093/eurheartj/ehz425",
+      "openalex_id": "https://openalex.org/W3011371150",
+      "title": "2019 ESC Guidelines for the diagnosis and management of chronic coronary syndromes",
+      "year": 2019,
+      "subfield": "Radiology, Nuclear Medicine and Imaging",
+      "pdf_url": "https://academic.oup.com/eurheartj/article-pdf/41/3/407/32651471/ehz425.pdf",
+      "download_ok": false,
+      "content_type": "",
+      "pdf_sha256": null,
+      "download_error": "error: HTTPStatusError: Client error '403 Forbidden' for url 'https://academic.oup.com/eurheartj/article-pdf/41/3/407/32651471/ehz425.pdf'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403"
+    },
+    {
+      "arm": "retracted",
+      "doi": "10.1186/1471-2180-10-1",
+      "openalex_id": "https://openalex.org/W2140132276",
+      "title": "Molecular characterization of Legionella pneumophila-induced interleukin-8 expression in T cells",
+      "year": 2010,
+      "subfield": "Endocrinology",
+      "pdf_url": "https://bmcmicrobiol.biomedcentral.com/counter/pdf/10.1186/1471-2180-10-1",
+      "download_ok": true,
+      "content_type": "application/pdf",
+      "pdf_sha256": "8530f0d89d1eac38eb7c13a3ab0475939d6c4d67520339f6d52a1e95f59bfd02",
+      "scan": {
+        "overall_severity": 0,
+        "n_findings": 0,
+        "severity_counts": {
+          "0": 0,
+          "1": 0,
+          "2": 0,
+          "3": 0
+        },
+        "detectors_fired": [],
+        "detector_hits": {}
+      }
+    },
+    {
+      "arm": "control",
+      "doi": "10.1371/journal.pgen.1000344",
+      "openalex_id": "https://openalex.org/W2142402047",
+      "title": "Organised Genome Dynamics in the Escherichia coli Species Results in Highly Diverse Adaptive Paths",
+      "year": 2009,
+      "subfield": "Endocrinology",
+      "pdf_url": "https://journals.plos.org/plosgenetics/article/file?id=10.1371/journal.pgen.1000344&type=printable",
+      "download_ok": true,
+      "content_type": "application/pdf",
+      "pdf_sha256": "199b996a17837fec448e2b2d6db87a0c181cf231b8040d051b294cc5ddc0ac68",
+      "scan": {
+        "overall_severity": 0,
+        "n_findings": 0,
+        "severity_counts": {
+          "0": 0,
+          "1": 0,
+          "2": 0,
+          "3": 0
+        },
+        "detectors_fired": [],
+        "detector_hits": {}
+      }
+    },
+    {
+      "arm": "retracted",
+      "doi": "10.1038/nmeth.4293",
+      "openalex_id": "https://openalex.org/W2619806210",
+      "title": "Unexpected mutations after CRISPR–Cas9 editing in vivo",
+      "year": 2017,
+      "subfield": "Molecular Biology",
+      "pdf_url": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5796662/pdf/",
+      "download_ok": false,
+      "content_type": "text/html; charset=utf-8",
+      "pdf_sha256": null,
+      "download_error": "not a PDF (got 1817B, content-type=text/html; charset=utf-8)"
+    },
+    {
+      "arm": "control",
+      "doi": "10.1093/molbev/msw054",
+      "openalex_id": "https://openalex.org/W2311203695",
+      "title": "MEGA7: Molecular Evolutionary Genetics Analysis Version 7.0 for Bigger Datasets",
+      "year": 2016,
+      "subfield": "Molecular Biology",
+      "pdf_url": "https://academic.oup.com/mbe/article-pdf/33/7/1870/7948752/msw054.pdf",
+      "download_ok": false,
+      "content_type": "",
+      "pdf_sha256": null,
+      "download_error": "error: HTTPStatusError: Client error '403 Forbidden' for url 'https://academic.oup.com/mbe/article-pdf/33/7/1870/7948752/msw054.pdf'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403"
+    },
+    {
+      "arm": "retracted",
+      "doi": "10.1038/s41419-020-2336-0",
+      "openalex_id": "https://openalex.org/W3007173362",
+      "title": "RETRACTED ARTICLE: Circular RNA circRNF20 promotes breast cancer tumorigenesis and Warburg effect through miR-487a/HIF-1α/HK2",
+      "year": 2020,
+      "subfield": "Molecular Biology",
+      "pdf_url": "https://www.nature.com/articles/s41419-020-2336-0.pdf",
+      "download_ok": true,
+      "content_type": "application/pdf",
+      "pdf_sha256": "9a1b9cbb386a7dad9e043d3d3a5d9c593d2e619c5b3c6830fce3f7df1ea8711b",
+      "scan": {
+        "overall_severity": 0,
+        "n_findings": 0,
+        "severity_counts": {
+          "0": 0,
+          "1": 0,
+          "2": 0,
+          "3": 0
+        },
+        "detectors_fired": [],
+        "detector_hits": {}
+      }
+    },
+    {
+      "arm": "control",
+      "doi": "10.1038/s41586-021-03819-2",
+      "openalex_id": "https://openalex.org/W3177828909",
+      "title": "Highly accurate protein structure prediction with AlphaFold",
+      "year": 2021,
+      "subfield": "Molecular Biology",
+      "pdf_url": "https://www.nature.com/articles/s41586-021-03819-2.pdf",
+      "download_ok": true,
+      "content_type": "application/pdf",
+      "pdf_sha256": "6eae057a9faf4f671c3101e0745ed704460c6d3dec77243dfd3a9f2d2ab68970",
+      "scan": {
+        "overall_severity": 0,
+        "n_findings": 0,
+        "severity_counts": {
+          "0": 0,
+          "1": 0,
+          "2": 0,
+          "3": 0
+        },
+        "detectors_fired": [],
+        "detector_hits": {}
+      }
+    },
+    {
+      "arm": "retracted",
+      "doi": "10.1172/jci34378",
+      "openalex_id": "https://openalex.org/W4235311234",
+      "title": "In utero supplementation with methyl donors enhances allergic airway disease in mice",
+      "year": 2008,
+      "subfield": "Molecular Biology",
+      "pdf_url": "http://www.jci.org/articles/view/34378/files/pdf",
+      "download_ok": true,
+      "content_type": "application/pdf",
+      "pdf_sha256": "dedd088d615ce98d9172bb67bac6f271cbbbc2721255a9279c18f359ec1e97ab",
+      "scan": {
+        "overall_severity": 0,
+        "n_findings": 0,
+        "severity_counts": {
+          "0": 0,
+          "1": 0,
+          "2": 0,
+          "3": 0
+        },
+        "detectors_fired": [],
+        "detector_hits": {}
+      }
+    },
+    {
+      "arm": "control",
+      "doi": "10.1093/bioinformatics/btp352",
+      "openalex_id": "https://openalex.org/W2108234281",
+      "title": "The Sequence Alignment/Map format and SAMtools",
+      "year": 2009,
+      "subfield": "Molecular Biology",
+      "pdf_url": "https://academic.oup.com/bioinformatics/article-pdf/25/16/2078/48994296/bioinformatics_25_16_2078.pdf",
+      "download_ok": false,
+      "content_type": "",
+      "pdf_sha256": null,
+      "download_error": "error: HTTPStatusError: Client error '403 Forbidden' for url 'https://academic.oup.com/bioinformatics/article-pdf/25/16/2078/48994296/bioinformatics_25_16_2078.pdf'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403"
+    },
+    {
+      "arm": "retracted",
+      "doi": "10.1038/onc.2011.365",
+      "openalex_id": "https://openalex.org/W2020105314",
+      "title": "RETRACTED ARTICLE: HIF-1-dependent expression of angiopoietin-like 4 and L1CAM mediates vascular metastasis of hypoxic breast cancer cells to the lungs",
+      "year": 2011,
+      "subfield": "Cancer Research",
+      "pdf_url": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3223555/pdf/",
+      "download_ok": false,
+      "content_type": "",
+      "pdf_sha256": null,
+      "download_error": "error: HTTPStatusError: Client error '404 Not Found' for url 'https://pmc.ncbi.nlm.nih.gov/articles/PMC3223555/pdf/'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/404"
+    },
+    {
+      "arm": "control",
+      "doi": "10.1158/2159-8290.cd-12-0095",
+      "openalex_id": "https://openalex.org/W2149441684",
+      "title": "The cBio Cancer Genomics Portal: An Open Platform for Exploring Multidimensional Cancer Genomics Data",
+      "year": 2012,
+      "subfield": "Cancer Research",
+      "pdf_url": "https://doi.org/10.25504/fairsharing.6l6mja",
+      "download_ok": false,
+      "content_type": "text/html; charset=utf-8",
+      "pdf_sha256": null,
+      "download_error": "not a PDF (got 2438B, content-type=text/html; charset=utf-8)"
+    },
+    {
+      "arm": "retracted",
+      "doi": "10.1371/journal.pbio.1000465",
+      "openalex_id": "https://openalex.org/W2030818171",
+      "title": "IL-6 and IL-10 Anti-Inflammatory Activity Links Exercise to Hypothalamic Insulin and Leptin Sensitivity through IKKβ and ER Stress Inhibition",
+      "year": 2010,
+      "subfield": "Physiology",
+      "pdf_url": "https://journals.plos.org/plosbiology/article/file?id=10.1371/journal.pbio.1000465&type=printable",
+      "download_ok": true,
+      "content_type": "application/pdf",
+      "pdf_sha256": "e491c3667aa08902f8eb4a71a77d319e1067f623eb2bc5fb0eb5a87afa660102",
+      "scan": {
+        "overall_severity": 0,
+        "n_findings": 0,
+        "severity_counts": {
+          "0": 0,
+          "1": 0,
+          "2": 0,
+          "3": 0
+        },
+        "detectors_fired": [],
+        "detector_hits": {}
+      }
+    },
+    {
+      "arm": "control",
+      "doi": "10.1093/ageing/afq034",
+      "openalex_id": "https://openalex.org/W2102902846",
+      "title": "Sarcopenia: European consensus on definition and diagnosis",
+      "year": 2010,
+      "subfield": "Physiology",
+      "pdf_url": "https://academic.oup.com/ageing/article-pdf/39/4/412/49273228/ageing_39_4_412.pdf",
+      "download_ok": false,
+      "content_type": "",
+      "pdf_sha256": null,
+      "download_error": "error: HTTPStatusError: Client error '403 Forbidden' for url 'https://academic.oup.com/ageing/article-pdf/39/4/412/49273228/ageing_39_4_412.pdf'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403"
+    },
+    {
+      "arm": "retracted",
+      "doi": "10.1172/jci28423",
+      "openalex_id": "https://openalex.org/W2112078889",
+      "title": "Heat shock protein 60 enhances CD4+ CD25+ regulatory T cell function via innate TLR2 signaling",
+      "year": 2006,
+      "subfield": "Immunology",
+      "pdf_url": "http://www.jci.org/articles/view/28423/files/pdf",
+      "download_ok": true,
+      "content_type": "application/pdf",
+      "pdf_sha256": "b835daca1ad072f1170040adc0ef6780bf881d1d2dd517ec708cdb1cf8634620",
+      "scan": {
+        "overall_severity": 0,
+        "n_findings": 0,
+        "severity_counts": {
+          "0": 0,
+          "1": 0,
+          "2": 0,
+          "3": 0
+        },
+        "detectors_fired": [],
+        "detector_hits": {}
+      }
+    },
+    {
+      "arm": "control",
+      "doi": "10.1016/j.cell.2006.07.035",
+      "openalex_id": "https://openalex.org/W2142017607",
+      "title": "The Orphan Nuclear Receptor RORγt Directs the Differentiation Program of Proinflammatory IL-17+ T Helper Cells",
+      "year": 2006,
+      "subfield": "Immunology",
+      "pdf_url": "http://www.cell.com/article/S0092867406011056/pdf",
+      "download_ok": false,
+      "content_type": "",
+      "pdf_sha256": null,
+      "download_error": "error: HTTPStatusError: Client error '403 Forbidden' for url 'https://www.cell.com/article/S0092867406011056/pdf'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403"
+    },
+    {
+      "arm": "retracted",
+      "doi": "10.3390/md203123",
+      "openalex_id": "https://openalex.org/W2094685319",
+      "title": "Biomedical Compounds from Marine organisms",
+      "year": 2004,
+      "subfield": "Biotechnology",
+      "pdf_url": "https://www.mdpi.com/1660-3397/2/3/123/pdf?version=1424780405",
+      "download_ok": false,
+      "content_type": "",
+      "pdf_sha256": null,
+      "download_error": "error: HTTPStatusError: Client error '403 Forbidden' for url 'https://www.mdpi.com/1660-3397/2/3/123/pdf?version=1424780405'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403"
+    },
+    {
+      "arm": "control",
+      "doi": "10.1002/anie.200390115",
+      "openalex_id": "https://openalex.org/W2171513236",
+      "title": "Salinosporamide A: A Highly Cytotoxic Proteasome Inhibitor from a Novel Microbial Source, a Marine Bacterium of the New Genus <i>Salinospora</i>",
+      "year": 2003,
+      "subfield": "Biotechnology",
+      "pdf_url": "https://onlinelibrary.wiley.com/doi/pdfdirect/10.1002/anie.200390115",
+      "download_ok": false,
+      "content_type": "",
+      "pdf_sha256": null,
+      "download_error": "error: HTTPStatusError: Client error '403 Forbidden' for url 'https://onlinelibrary.wiley.com/doi/pdfdirect/10.1002/anie.200390115'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403"
+    },
+    {
+      "arm": "retracted",
+      "doi": "10.1161/circresaha.110.223024",
+      "openalex_id": "https://openalex.org/W2037424183",
+      "title": "Cardiomyogenesis in the Adult Human Heart",
+      "year": 2010,
+      "subfield": "Molecular Biology",
+      "pdf_url": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC2987602/pdf/",
+      "download_ok": false,
+      "content_type": "",
+      "pdf_sha256": null,
+      "download_error": "error: HTTPStatusError: Client error '404 Not Found' for url 'https://pmc.ncbi.nlm.nih.gov/articles/PMC2987602/pdf/'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/404"
+    },
+    {
+      "arm": "control",
+      "doi": "10.1093/bioinformatics/btp352",
+      "openalex_id": "https://openalex.org/W2108234281",
+      "title": "The Sequence Alignment/Map format and SAMtools",
+      "year": 2009,
+      "subfield": "Molecular Biology",
+      "pdf_url": "https://academic.oup.com/bioinformatics/article-pdf/25/16/2078/48994296/bioinformatics_25_16_2078.pdf",
+      "download_ok": false,
+      "content_type": "",
+      "pdf_sha256": null,
+      "download_error": "error: HTTPStatusError: Client error '403 Forbidden' for url 'https://academic.oup.com/bioinformatics/article-pdf/25/16/2078/48994296/bioinformatics_25_16_2078.pdf'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403"
+    },
+    {
+      "arm": "retracted",
+      "doi": "10.1158/0008-5472.can-05-4281",
+      "openalex_id": "https://openalex.org/W2149226292",
+      "title": "Down-regulation of Notch-1 Inhibits Invasion by Inactivation of Nuclear Factor-κB, Vascular Endothelial Growth Factor, and Matrix Metalloproteinase-9 in Pancreatic Cancer Cells",
+      "year": 2006,
+      "subfield": "Molecular Biology",
+      "pdf_url": "https://aacrjournals.org/cancerres/article-pdf/66/5/2778/2558900/2778.pdf",
+      "download_ok": false,
+      "content_type": "",
+      "pdf_sha256": null,
+      "download_error": "error: HTTPStatusError: Client error '403 Forbidden' for url 'https://aacrjournals.org/cancerres/article-pdf/66/5/2778/2558900/2778.pdf'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403"
+    },
+    {
+      "arm": "control",
+      "doi": "10.1073/pnas.0506580102",
+      "openalex_id": "https://openalex.org/W2130410032",
+      "title": "Gene set enrichment analysis: A knowledge-based approach for interpreting genome-wide expression profiles",
+      "year": 2005,
+      "subfield": "Molecular Biology",
+      "pdf_url": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC1239896/pdf/",
+      "download_ok": false,
+      "content_type": "text/html; charset=utf-8",
+      "pdf_sha256": null,
+      "download_error": "not a PDF (got 1817B, content-type=text/html; charset=utf-8)"
+    },
+    {
+      "arm": "retracted",
+      "doi": "10.1038/s41388-018-0619-z",
+      "openalex_id": "https://openalex.org/W2905556019",
+      "title": "RETRACTED ARTICLE: Exosome circRNA secreted from adipocytes promotes the growth of hepatocellular carcinoma by targeting deubiquitination-related USP7",
+      "year": 2018,
+      "subfield": "Molecular Biology",
+      "pdf_url": "https://www.nature.com/articles/s41388-018-0619-z.pdf",
+      "download_ok": true,
+      "content_type": "application/pdf",
+      "pdf_sha256": "21ea6ed74ffe3b9726f585e53fd6f9dda98adf0957e401ec73d8bc3d0ef6e746",
+      "scan": {
+        "overall_severity": 0,
+        "n_findings": 0,
+        "severity_counts": {
+          "0": 0,
+          "1": 0,
+          "2": 0,
+          "3": 0
+        },
+        "detectors_fired": [],
+        "detector_hits": {}
+      }
+    },
+    {
+      "arm": "control",
+      "doi": "10.1093/molbev/msy096",
+      "openalex_id": "https://openalex.org/W2799524357",
+      "title": "MEGA X: Molecular Evolutionary Genetics Analysis across Computing Platforms",
+      "year": 2018,
+      "subfield": "Molecular Biology",
+      "pdf_url": "https://academic.oup.com/mbe/article-pdf/35/6/1547/25091958/msy096.pdf",
+      "download_ok": false,
+      "content_type": "",
+      "pdf_sha256": null,
+      "download_error": "error: HTTPStatusError: Client error '403 Forbidden' for url 'https://academic.oup.com/mbe/article-pdf/35/6/1547/25091958/msy096.pdf'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403"
+    },
+    {
+      "arm": "retracted",
+      "doi": "10.1074/jbc.m110.111021",
+      "openalex_id": "https://openalex.org/W2046600125",
+      "title": "A Phosphate Transporter from the Root Endophytic Fungus Piriformospora indica Plays a Role in Phosphate Transport to the Host Plant",
+      "year": 2010,
+      "subfield": "Plant Science",
+      "pdf_url": "http://www.jbc.org/article/S0021925820596178/pdf",
+      "download_ok": false,
+      "content_type": "",
+      "pdf_sha256": null,
+      "download_error": "error: HTTPStatusError: Client error '403 Forbidden' for url 'https://www.jbc.org/article/S0021925820596178/pdf'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403"
+    },
+    {
+      "arm": "control",
+      "doi": "10.4161/psb.5.8.12337",
+      "openalex_id": "https://openalex.org/W2089051496",
+      "title": "Induced root-secreted phenolic compounds as a belowground plant defense",
+      "year": 2010,
+      "subfield": "Plant Science",
+      "pdf_url": "https://www.tandfonline.com/doi/pdf/10.4161/psb.5.8.12337?needAccess=true",
+      "download_ok": false,
+      "content_type": "",
+      "pdf_sha256": null,
+      "download_error": "error: HTTPStatusError: Client error '403 Forbidden' for url 'https://www.tandfonline.com/doi/pdf/10.4161/psb.5.8.12337?needAccess=true'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403"
+    },
+    {
+      "arm": "retracted",
+      "doi": "10.1126/science.1086870",
+      "openalex_id": "https://openalex.org/W2070987160",
+      "title": "Hairpin RNAs and Retrotransposon LTRs Effect RNAi and Chromatin-Based Gene Silencing",
+      "year": 2003,
+      "subfield": "Plant Science",
+      "pdf_url": "https://era.ed.ac.uk/bitstream/1842/451/1/1069.pdf",
+      "download_ok": true,
+      "content_type": "application/pdf;charset=utf-8",
+      "pdf_sha256": "ff1b2163e461bb2584cd3b40671b30ca9260728c5154024f574b233b72beabaf",
+      "scan": {
+        "overall_severity": 0,
+        "n_findings": 0,
+        "severity_counts": {
+          "0": 0,
+          "1": 0,
+          "2": 0,
+          "3": 0
+        },
+        "detectors_fired": [],
+        "detector_hits": {}
+      }
+    },
+    {
+      "arm": "control",
+      "doi": "10.1093/nar/30.1.325",
+      "openalex_id": "https://openalex.org/W2035908878",
+      "title": "PlantCARE, a database of plant cis-acting regulatory elements and a portal to tools for in silico analysis of promoter sequences",
+      "year": 2002,
+      "subfield": "Plant Science",
+      "pdf_url": "https://academic.oup.com/nar/article-pdf/30/1/325/9901071/300325.pdf",
+      "download_ok": false,
+      "content_type": "",
+      "pdf_sha256": null,
+      "download_error": "error: HTTPStatusError: Client error '403 Forbidden' for url 'https://academic.oup.com/nar/article-pdf/30/1/325/9901071/300325.pdf'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403"
+    },
+    {
+      "arm": "retracted",
+      "doi": "10.1371/journal.ppat.1000480",
+      "openalex_id": "https://openalex.org/W2029717255",
+      "title": "Innate Immune Sensing of Modified Vaccinia Virus Ankara (MVA) Is Mediated by TLR2-TLR6, MDA-5 and the NALP3 Inflammasome",
+      "year": 2009,
+      "subfield": "Immunology",
+      "pdf_url": "https://journals.plos.org/plospathogens/article/file?id=10.1371/journal.ppat.1000480&type=printable",
+      "download_ok": true,
+      "content_type": "application/pdf",
+      "pdf_sha256": "612d87e30f8309f1e7c3ccd56ebbdc963efb98fc19ccf082d6a7c56ecb911a4a",
+      "scan": {
+        "overall_severity": 2,
+        "n_findings": 2,
+        "severity_counts": {
+          "0": 0,
+          "1": 1,
+          "2": 1,
+          "3": 0
+        },
+        "detectors_fired": [
+          "T3"
+        ],
+        "detector_hits": {
+          "T3": 2
+        }
+      }
+    },
+    {
+      "arm": "control",
+      "doi": "10.1056/nejmoa1003466",
+      "openalex_id": "https://openalex.org/W2097995306",
+      "title": "Improved Survival with Ipilimumab in Patients with Metastatic Melanoma",
+      "year": 2010,
+      "subfield": "Immunology",
+      "pdf_url": "http://www.nejm.org/doi/pdf/10.1056/NEJMoa1003466",
+      "download_ok": false,
+      "content_type": "",
+      "pdf_sha256": null,
+      "download_error": "error: HTTPStatusError: Client error '403 Forbidden' for url 'https://www.nejm.org/doi/pdf/10.1056/NEJMoa1003466'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403"
+    },
+    {
+      "arm": "retracted",
+      "doi": "10.1016/s2213-8587(18)30150-5",
+      "openalex_id": "https://openalex.org/W4242474094",
+      "title": "Worldwide burden of cancer attributable to diabetes and high body-mass index: a comparative risk assessment",
+      "year": 2018,
+      "subfield": "Molecular Biology",
+      "pdf_url": "http://www.thelancet.com/article/S2213858718301505/pdf",
+      "download_ok": false,
+      "content_type": "",
+      "pdf_sha256": null,
+      "download_error": "error: HTTPStatusError: Client error '403 Forbidden' for url 'https://www.thelancet.com/article/S2213858718301505/pdf'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403"
+    },
+    {
+      "arm": "control",
+      "doi": "10.1093/molbev/msy096",
+      "openalex_id": "https://openalex.org/W2799524357",
+      "title": "MEGA X: Molecular Evolutionary Genetics Analysis across Computing Platforms",
+      "year": 2018,
+      "subfield": "Molecular Biology",
+      "pdf_url": "https://academic.oup.com/mbe/article-pdf/35/6/1547/25091958/msy096.pdf",
+      "download_ok": false,
+      "content_type": "",
+      "pdf_sha256": null,
+      "download_error": "error: HTTPStatusError: Client error '403 Forbidden' for url 'https://academic.oup.com/mbe/article-pdf/35/6/1547/25091958/msy096.pdf'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403"
+    },
+    {
+      "arm": "retracted",
+      "doi": "10.1074/jbc.273.11.6525",
+      "openalex_id": "https://openalex.org/W2088432812",
+      "title": "Characterization of a Cytosolic Heat-shock Protein-Caveolin Chaperone Complex",
+      "year": 1998,
+      "subfield": "Cell Biology",
+      "pdf_url": "https://doi.org/10.1074/jbc.273.11.6525",
+      "download_ok": false,
+      "content_type": "text/html;charset=utf-8",
+      "pdf_sha256": null,
+      "download_error": "not a PDF (got 2618B, content-type=text/html;charset=utf-8)"
+    },
+    {
+      "arm": "control",
+      "doi": "10.1093/oxfordjournals.molbev.a026092",
+      "openalex_id": "https://openalex.org/W2006444758",
+      "title": "Phylogenetic relationships among ascomycetes: evidence from an RNA polymerse II subunit",
+      "year": 1999,
+      "subfield": "Cell Biology",
+      "pdf_url": "https://academic.oup.com/mbe/article-pdf/16/12/1799/9592181/mbe1799.pdf",
+      "download_ok": false,
+      "content_type": "",
+      "pdf_sha256": null,
+      "download_error": "error: HTTPStatusError: Client error '403 Forbidden' for url 'https://academic.oup.com/mbe/article-pdf/16/12/1799/9592181/mbe1799.pdf'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403"
+    },
+    {
+      "arm": "retracted",
+      "doi": "10.1074/jbc.m110.211466",
+      "openalex_id": "https://openalex.org/W2049175236",
+      "title": "Exercise Increases Mitochondrial PGC-1α Content and Promotes Nuclear-Mitochondrial Cross-talk to Coordinate Mitochondrial Biogenesis",
+      "year": 2011,
+      "subfield": "Physiology",
+      "pdf_url": "http://www.jbc.org/article/S0021925820538842/pdf",
+      "download_ok": false,
+      "content_type": "",
+      "pdf_sha256": null,
+      "download_error": "error: HTTPStatusError: Client error '403 Forbidden' for url 'https://www.jbc.org/article/S0021925820538842/pdf'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403"
+    },
+    {
+      "arm": "control",
+      "doi": "10.1093/ageing/afq034",
+      "openalex_id": "https://openalex.org/W2102902846",
+      "title": "Sarcopenia: European consensus on definition and diagnosis",
+      "year": 2010,
+      "subfield": "Physiology",
+      "pdf_url": "https://academic.oup.com/ageing/article-pdf/39/4/412/49273228/ageing_39_4_412.pdf",
+      "download_ok": false,
+      "content_type": "",
+      "pdf_sha256": null,
+      "download_error": "error: HTTPStatusError: Client error '403 Forbidden' for url 'https://academic.oup.com/ageing/article-pdf/39/4/412/49273228/ageing_39_4_412.pdf'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403"
+    },
+    {
+      "arm": "retracted",
+      "doi": "10.1038/ng1121",
+      "openalex_id": "https://openalex.org/W4229809569",
+      "title": "Mutations in CLCN2 encoding a voltage-gated chloride channel are associated with idiopathic generalized epilepsies",
+      "year": 2003,
+      "subfield": "Molecular Biology",
+      "pdf_url": "https://www.nature.com/articles/ng1121.pdf",
+      "download_ok": false,
+      "content_type": "text/html; charset=\"utf-8\"",
+      "pdf_sha256": null,
+      "download_error": "not a PDF (got 355610B, content-type=text/html; charset=\"utf-8\")"
+    },
+    {
+      "arm": "control",
+      "doi": "10.1101/gr.1239303",
+      "openalex_id": "https://openalex.org/W2159675211",
+      "title": "Cytoscape: A Software Environment for Integrated Models of Biomolecular Interaction Networks",
+      "year": 2003,
+      "subfield": "Molecular Biology",
+      "pdf_url": "https://genome.cshlp.org/content/13/11/2498.full.pdf",
+      "download_ok": false,
+      "content_type": "",
+      "pdf_sha256": null,
+      "download_error": "error: HTTPStatusError: Client error '403 Forbidden' for url 'https://genome.cshlp.org/content/genome%3A%3A%3A13%3A%3A%3A11%3A%3A%3A2498.full.pdf?implicit-login=true%26660'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403"
+    },
+    {
+      "arm": "retracted",
+      "doi": "10.3892/or.2015.3712",
+      "openalex_id": "https://openalex.org/W2001764001",
+      "title": "Erastin sensitizes glioblastoma cells to temozolomide by restraining xCT and cystathionine-γ-lyase function",
+      "year": 2015,
+      "subfield": "Biochemistry",
+      "pdf_url": "http://www.spandidos-publications.com/10.3892/or.2015.3712/download",
+      "download_ok": true,
+      "content_type": "application/pdf;charset=utf-8",
+      "pdf_sha256": "4d8176eaa4cfc2c54f9da555fd5ac706f9ac4b556e8fdce00686d7f4cd24e1be",
+      "scan": {
+        "overall_severity": 0,
+        "n_findings": 0,
+        "severity_counts": {
+          "0": 0,
+          "1": 0,
+          "2": 0,
+          "3": 0
+        },
+        "detectors_fired": [],
+        "detector_hits": {}
+      }
+    },
+    {
+      "arm": "control",
+      "doi": "10.1016/j.devcel.2015.01.029",
+      "openalex_id": "https://openalex.org/W2035310767",
+      "title": "Fatty Acid Trafficking in Starved Cells: Regulation by Lipid Droplet Lipolysis, Autophagy, and Mitochondrial Fusion Dynamics",
+      "year": 2015,
+      "subfield": "Biochemistry",
+      "pdf_url": "http://www.cell.com/article/S1534580715000726/pdf",
+      "download_ok": false,
+      "content_type": "",
+      "pdf_sha256": null,
+      "download_error": "error: HTTPStatusError: Client error '403 Forbidden' for url 'https://www.cell.com/article/S1534580715000726/pdf'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403"
+    },
+    {
+      "arm": "retracted",
+      "doi": "10.4049/jimmunol.176.3.1534",
+      "openalex_id": "https://openalex.org/W1893364625",
+      "title": "Pregnancy-Associated Exosomes and Their Modulation of T Cell Signaling",
+      "year": 2006,
+      "subfield": "Immunology",
+      "pdf_url": "https://journals.aai.org/jimmunol/article-pdf/176/3/1534/1218378/1534.pdf",
+      "download_ok": false,
+      "content_type": "text/html",
+      "pdf_sha256": null,
+      "download_error": "not a PDF (got 1459B, content-type=text/html)"
+    },
+    {
+      "arm": "control",
+      "doi": "10.1016/j.cell.2006.07.035",
+      "openalex_id": "https://openalex.org/W2142017607",
+      "title": "The Orphan Nuclear Receptor RORγt Directs the Differentiation Program of Proinflammatory IL-17+ T Helper Cells",
+      "year": 2006,
+      "subfield": "Immunology",
+      "pdf_url": "http://www.cell.com/article/S0092867406011056/pdf",
+      "download_ok": false,
+      "content_type": "",
+      "pdf_sha256": null,
+      "download_error": "error: HTTPStatusError: Client error '403 Forbidden' for url 'https://www.cell.com/article/S0092867406011056/pdf'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403"
+    },
+    {
+      "arm": "retracted",
+      "doi": "10.1042/bj20061653",
+      "openalex_id": "https://openalex.org/W2120434334",
+      "title": "Mechanism of short-term ERK activation by electromagnetic fields at mobile phone frequencies",
+      "year": 2007,
+      "subfield": "Biophysics",
+      "pdf_url": "https://portlandpress.com/biochemj/article-pdf/405/3/559/647846/bj4050559.pdf",
+      "download_ok": false,
+      "content_type": "",
+      "pdf_sha256": null,
+      "download_error": "error: HTTPStatusError: Client error '403 Forbidden' for url 'https://portlandpress.com/biochemj/article-pdf/405/3/559/647846/bj4050559.pdf'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403"
+    },
+    {
+      "arm": "control",
+      "doi": "10.1038/nmeth929",
+      "openalex_id": "https://openalex.org/W1992858116",
+      "title": "Sub-diffraction-limit imaging by stochastic optical reconstruction microscopy (STORM)",
+      "year": 2006,
+      "subfield": "Biophysics",
+      "pdf_url": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC2700296/pdf/",
+      "download_ok": false,
+      "content_type": "text/html; charset=utf-8",
+      "pdf_sha256": null,
+      "download_error": "not a PDF (got 1817B, content-type=text/html; charset=utf-8)"
+    },
+    {
+      "arm": "retracted",
+      "doi": "10.1038/nm.4153",
+      "openalex_id": "https://openalex.org/W2481644027",
+      "title": "RETRACTED ARTICLE: NOX4-dependent fatty acid oxidation promotes NLRP3 inflammasome activation in macrophages",
+      "year": 2016,
+      "subfield": "Molecular Biology",
+      "pdf_url": "https://ir.ymlib.yonsei.ac.kr/handle/22282913/152073",
+      "download_ok": false,
+      "content_type": "text/html;charset=utf-8",
+      "pdf_sha256": null,
+      "download_error": "not a PDF (got 30900B, content-type=text/html;charset=utf-8)"
+    },
+    {
+      "arm": "control",
+      "doi": "10.1093/molbev/msw054",
+      "openalex_id": "https://openalex.org/W2311203695",
+      "title": "MEGA7: Molecular Evolutionary Genetics Analysis Version 7.0 for Bigger Datasets",
+      "year": 2016,
+      "subfield": "Molecular Biology",
+      "pdf_url": "https://academic.oup.com/mbe/article-pdf/33/7/1870/7948752/msw054.pdf",
+      "download_ok": false,
+      "content_type": "",
+      "pdf_sha256": null,
+      "download_error": "error: HTTPStatusError: Client error '403 Forbidden' for url 'https://academic.oup.com/mbe/article-pdf/33/7/1870/7948752/msw054.pdf'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403"
+    },
+    {
+      "arm": "retracted",
+      "doi": "10.1093/hmg/ddy042",
+      "openalex_id": "https://openalex.org/W2789405288",
+      "title": "Hippocampal mutant APP and amyloid beta-induced cognitive decline, dendritic spine loss, defective autophagy, mitophagy and mitochondrial abnormalities in a mouse model of Alzheimer’s disease",
+      "year": 2018,
+      "subfield": "Physiology",
+      "pdf_url": "https://academic.oup.com/hmg/article-pdf/27/8/1332/24527031/ddy042.pdf",
+      "download_ok": false,
+      "content_type": "",
+      "pdf_sha256": null,
+      "download_error": "error: HTTPStatusError: Client error '403 Forbidden' for url 'https://academic.oup.com/hmg/article-pdf/27/8/1332/24527031/ddy042.pdf'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403"
+    },
+    {
+      "arm": "control",
+      "doi": "10.1093/ageing/afy169",
+      "openalex_id": "https://openalex.org/W2897513125",
+      "title": "Sarcopenia: revised European consensus on definition and diagnosis",
+      "year": 2018,
+      "subfield": "Physiology",
+      "pdf_url": "https://academic.oup.com/ageing/article-pdf/48/1/16/28605038/afy169.pdf",
+      "download_ok": false,
+      "content_type": "",
+      "pdf_sha256": null,
+      "download_error": "error: HTTPStatusError: Client error '403 Forbidden' for url 'https://academic.oup.com/ageing/article-pdf/48/1/16/28605038/afy169.pdf'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403"
+    },
+    {
+      "arm": "retracted",
+      "doi": "10.1161/circresaha.110.231498",
+      "openalex_id": "https://openalex.org/W2169908939",
+      "title": "Myocyte Turnover in the Aging Human Heart",
+      "year": 2010,
+      "subfield": "Molecular Biology",
+      "pdf_url": "https://www.osti.gov/biblio/1119970",
+      "download_ok": false,
+      "content_type": "text/html;charset=utf-8",
+      "pdf_sha256": null,
+      "download_error": "not a PDF (got 107083B, content-type=text/html;charset=utf-8)"
+    },
+    {
+      "arm": "control",
+      "doi": "10.1093/bioinformatics/btp352",
+      "openalex_id": "https://openalex.org/W2108234281",
+      "title": "The Sequence Alignment/Map format and SAMtools",
+      "year": 2009,
+      "subfield": "Molecular Biology",
+      "pdf_url": "https://academic.oup.com/bioinformatics/article-pdf/25/16/2078/48994296/bioinformatics_25_16_2078.pdf",
+      "download_ok": false,
+      "content_type": "",
+      "pdf_sha256": null,
+      "download_error": "error: HTTPStatusError: Client error '403 Forbidden' for url 'https://academic.oup.com/bioinformatics/article-pdf/25/16/2078/48994296/bioinformatics_25_16_2078.pdf'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403"
+    },
+    {
+      "arm": "retracted",
+      "doi": "10.1001/jamaoncol.2018.4070",
+      "openalex_id": "https://openalex.org/W2893123471",
+      "title": "Risk of Hepatocellular Carcinoma in Patients Treated With Entecavir vs Tenofovir for Chronic Hepatitis B",
+      "year": 2018,
+      "subfield": "Epidemiology",
+      "pdf_url": "https://jamanetwork.com/journals/jamaoncology/articlepdf/2703887/jamaoncology_choi_2018_oi_180076_19268.pdf",
+      "download_ok": false,
+      "content_type": "",
+      "pdf_sha256": null,
+      "download_error": "error: HTTPStatusError: Client error '403 Forbidden' for url 'https://jamanetwork.com/journals/jamaoncology/articlepdf/2703887/jamaoncology_choi_2018_oi_180076_19268.pdf'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403"
+    },
+    {
+      "arm": "control",
+      "doi": "10.1007/s00134-017-4683-6",
+      "openalex_id": "https://openalex.org/W3016555942",
+      "title": "Surviving Sepsis Campaign: International Guidelines for Management of Sepsis and Septic Shock: 2016",
+      "year": 2017,
+      "subfield": "Epidemiology",
+      "pdf_url": "https://link.springer.com/content/pdf/10.1007%2Fs00134-017-4683-6.pdf",
+      "download_ok": true,
+      "content_type": "application/pdf",
+      "pdf_sha256": "f755fbba816c009540acdb61d1872fed0f1a04af607c468b14ef8b9d98758f00",
+      "scan": {
+        "overall_severity": 0,
+        "n_findings": 0,
+        "severity_counts": {
+          "0": 0,
+          "1": 0,
+          "2": 0,
+          "3": 0
+        },
+        "detectors_fired": [],
+        "detector_hits": {}
+      }
+    },
+    {
+      "arm": "retracted",
+      "doi": "10.1074/jbc.m503111200",
+      "openalex_id": "https://openalex.org/W1598733586",
+      "title": "RNA Interference-directed Knockdown of Urokinase Plasminogen Activator and Urokinase Plasminogen Activator Receptor Inhibits Prostate Cancer Cell Invasion, Survival, and Tumorigenicity in Vivo",
+      "year": 2005,
+      "subfield": "Cancer Research",
+      "pdf_url": "http://www.jbc.org/article/S0021925820594581/pdf",
+      "download_ok": false,
+      "content_type": "",
+      "pdf_sha256": null,
+      "download_error": "error: HTTPStatusError: Client error '403 Forbidden' for url 'https://www.jbc.org/article/S0021925820594581/pdf'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403"
+    },
+    {
+      "arm": "control",
+      "doi": "10.1056/nejmoa041588",
+      "openalex_id": "https://openalex.org/W2105882193",
+      "title": "A Multigene Assay to Predict Recurrence of Tamoxifen-Treated, Node-Negative Breast Cancer",
+      "year": 2004,
+      "subfield": "Cancer Research",
+      "pdf_url": "https://www.nejm.org/doi/pdf/10.1056/NEJMoa041588?articleTools=true",
+      "download_ok": false,
+      "content_type": "",
+      "pdf_sha256": null,
+      "download_error": "error: HTTPStatusError: Client error '403 Forbidden' for url 'https://www.nejm.org/doi/pdf/10.1056/NEJMoa041588?articleTools=true'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403"
+    },
+    {
+      "arm": "retracted",
+      "doi": "10.4306/pi.2010.7.2.102",
+      "openalex_id": "https://openalex.org/W2099442862",
+      "title": "Korean Version of Mini Mental Status Examination for Dementia Screening and Its' Short Form",
+      "year": 2010,
+      "subfield": "Psychiatry and Mental health",
+      "pdf_url": "https://doi.org/10.4306/pi.2010.7.2.102",
+      "download_ok": false,
+      "content_type": "text/html",
+      "pdf_sha256": null,
+      "download_error": "not a PDF (got 112192B, content-type=text/html)"
+    },
+    {
+      "arm": "control",
+      "doi": "10.1016/j.jalz.2011.03.005",
+      "openalex_id": "https://openalex.org/W2115017507",
+      "title": "The diagnosis of dementia due to Alzheimer's disease: Recommendations from the National Institute on Aging‐Alzheimer's Association workgroups on diagnostic guidelines for Alzheimer's disease",
+      "year": 2011,
+      "subfield": "Psychiatry and Mental health",
+      "pdf_url": "https://onlinelibrary.wiley.com/doi/pdfdirect/10.1016/j.jalz.2011.03.005",
+      "download_ok": false,
+      "content_type": "",
+      "pdf_sha256": null,
+      "download_error": "error: HTTPStatusError: Client error '403 Forbidden' for url 'https://onlinelibrary.wiley.com/doi/pdfdirect/10.1016/j.jalz.2011.03.005'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403"
+    },
+    {
+      "arm": "retracted",
+      "doi": "10.1155/2015/978654",
+      "openalex_id": "https://openalex.org/W2140443438",
+      "title": "Biomolecular Modulation of Neurodegenerative Events during Ageing",
+      "year": 2015,
+      "subfield": "Biochemistry",
+      "pdf_url": "https://downloads.hindawi.com/journals/omcl/2015/978654.pdf",
+      "download_ok": false,
+      "content_type": "",
+      "pdf_sha256": null,
+      "download_error": "error: HTTPStatusError: Client error '403 Forbidden' for url 'https://downloads.hindawi.com/journals/omcl/2015/978654.pdf'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403"
+    },
+    {
+      "arm": "control",
+      "doi": "10.1016/j.devcel.2015.01.029",
+      "openalex_id": "https://openalex.org/W2035310767",
+      "title": "Fatty Acid Trafficking in Starved Cells: Regulation by Lipid Droplet Lipolysis, Autophagy, and Mitochondrial Fusion Dynamics",
+      "year": 2015,
+      "subfield": "Biochemistry",
+      "pdf_url": "http://www.cell.com/article/S1534580715000726/pdf",
+      "download_ok": false,
+      "content_type": "",
+      "pdf_sha256": null,
+      "download_error": "error: HTTPStatusError: Client error '403 Forbidden' for url 'https://www.cell.com/article/S1534580715000726/pdf'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403"
+    },
+    {
+      "arm": "retracted",
+      "doi": "10.1200/jco.2006.06.3743",
+      "openalex_id": "https://openalex.org/W2113629984",
+      "title": "An Integrated Genomic-Based Approach to Individualized Treatment of Patients With Advanced-Stage Ovarian Cancer",
+      "year": 2007,
+      "subfield": "Reproductive Medicine",
+      "pdf_url": "https://ascopubs.org/doi/pdfdirect/10.1200/JCO.2006.06.3743?role=tab",
+      "download_ok": false,
+      "content_type": "",
+      "pdf_sha256": null,
+      "download_error": "error: HTTPStatusError: Client error '403 Forbidden' for url 'https://ascopubs.org/doi/pdfdirect/10.1200/JCO.2006.06.3743?role=tab'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403"
+    },
+    {
+      "arm": "control",
+      "doi": "10.1056/nejmoa052985",
+      "openalex_id": "https://openalex.org/W2154175915",
+      "title": "Intraperitoneal Cisplatin and Paclitaxel in Ovarian Cancer",
+      "year": 2006,
+      "subfield": "Reproductive Medicine",
+      "pdf_url": "https://www.nejm.org/doi/pdf/10.1056/NEJMoa052985?articleTools=true",
+      "download_ok": false,
+      "content_type": "",
+      "pdf_sha256": null,
+      "download_error": "error: HTTPStatusError: Client error '403 Forbidden' for url 'https://www.nejm.org/doi/pdf/10.1056/NEJMoa052985?articleTools=true'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403"
+    },
+    {
+      "arm": "retracted",
+      "doi": "10.1038/s41467-017-01565-6",
+      "openalex_id": "https://openalex.org/W2765418773",
+      "title": "RETRACTED ARTICLE: A water-soluble nucleolin aptamer-paclitaxel conjugate for tumor-specific targeting in ovarian cancer",
+      "year": 2017,
+      "subfield": "Molecular Biology",
+      "pdf_url": "https://www.nature.com/articles/s41467-017-01565-6.pdf",
+      "download_ok": true,
+      "content_type": "application/pdf",
+      "pdf_sha256": "0dff580ae6072679b154141060f60c0b319afd86085596ec53394d5694e07792",
+      "scan": {
+        "overall_severity": 0,
+        "n_findings": 0,
+        "severity_counts": {
+          "0": 0,
+          "1": 0,
+          "2": 0,
+          "3": 0
+        },
+        "detectors_fired": [],
+        "detector_hits": {}
+      }
+    },
+    {
+      "arm": "control",
+      "doi": "10.1093/molbev/msw054",
+      "openalex_id": "https://openalex.org/W2311203695",
+      "title": "MEGA7: Molecular Evolutionary Genetics Analysis Version 7.0 for Bigger Datasets",
+      "year": 2016,
+      "subfield": "Molecular Biology",
+      "pdf_url": "https://academic.oup.com/mbe/article-pdf/33/7/1870/7948752/msw054.pdf",
+      "download_ok": false,
+      "content_type": "",
+      "pdf_sha256": null,
+      "download_error": "error: HTTPStatusError: Client error '403 Forbidden' for url 'https://academic.oup.com/mbe/article-pdf/33/7/1870/7948752/msw054.pdf'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403"
+    },
+    {
+      "arm": "retracted",
+      "doi": "10.1371/journal.pbio.1001212",
+      "openalex_id": "https://openalex.org/W1990908543",
+      "title": "Gut Microbiota Is a Key Modulator of Insulin Resistance in TLR 2 Knockout Mice",
+      "year": 2011,
+      "subfield": "Molecular Biology",
+      "pdf_url": "https://journals.plos.org/plosbiology/article/file?id=10.1371/journal.pbio.1001212&type=printable",
+      "download_ok": false,
+      "content_type": "",
+      "pdf_sha256": null,
+      "download_error": "error: ReadError: [SSL: WRONG_VERSION_NUMBER] wrong version number (_ssl.c:2570)"
+    },
+    {
+      "arm": "control",
+      "doi": "10.1093/bioinformatics/bts635",
+      "openalex_id": "https://openalex.org/W2169456326",
+      "title": "STAR: ultrafast universal RNA-seq aligner",
+      "year": 2012,
+      "subfield": "Molecular Biology",
+      "pdf_url": "https://academic.oup.com/bioinformatics/article-pdf/29/1/15/17101697/bts635.pdf",
+      "download_ok": false,
+      "content_type": "",
+      "pdf_sha256": null,
+      "download_error": "error: ReadError: [SSL: WRONG_VERSION_NUMBER] wrong version number (_ssl.c:2570)"
+    },
+    {
+      "arm": "retracted",
+      "doi": "10.1093/hmg/ddx381",
+      "openalex_id": "https://openalex.org/W2761011647",
+      "title": "Hippocampal phosphorylated tau induced cognitive decline, dendritic spine loss and mitochondrial abnormalities in a mouse model of Alzheimer’s disease",
+      "year": 2017,
+      "subfield": "Physiology",
+      "pdf_url": "https://academic.oup.com/hmg/article-pdf/27/1/30/24325588/ddx381.pdf",
+      "download_ok": false,
+      "content_type": "",
+      "pdf_sha256": null,
+      "download_error": "error: HTTPStatusError: Client error '403 Forbidden' for url 'https://academic.oup.com/hmg/article-pdf/27/1/30/24325588/ddx381.pdf'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403"
+    },
+    {
+      "arm": "control",
+      "doi": "10.1093/ageing/afy169",
+      "openalex_id": "https://openalex.org/W2897513125",
+      "title": "Sarcopenia: revised European consensus on definition and diagnosis",
+      "year": 2018,
+      "subfield": "Physiology",
+      "pdf_url": "https://academic.oup.com/ageing/article-pdf/48/1/16/28605038/afy169.pdf",
+      "download_ok": false,
+      "content_type": "",
+      "pdf_sha256": null,
+      "download_error": "error: HTTPStatusError: Client error '403 Forbidden' for url 'https://academic.oup.com/ageing/article-pdf/48/1/16/28605038/afy169.pdf'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403"
+    },
+    {
+      "arm": "retracted",
+      "doi": "10.1371/journal.pone.0239799",
+      "openalex_id": "https://openalex.org/W3088259748",
+      "title": "Vitamin D sufficiency, a serum 25-hydroxyvitamin D at least 30 ng/mL reduced risk for adverse clinical outcomes in patients with COVID-19 infection",
+      "year": 2020,
+      "subfield": "Pathology and Forensic Medicine",
+      "pdf_url": "https://journals.plos.org/plosone/article/file?id=10.1371/journal.pone.0239799&type=printable",
+      "download_ok": true,
+      "content_type": "application/pdf",
+      "pdf_sha256": "44e14e0e59fd1bc63711a4dc21af426919da930126d824d3665540e2f440d719",
+      "scan": {
+        "overall_severity": 0,
+        "n_findings": 0,
+        "severity_counts": {
+          "0": 0,
+          "1": 0,
+          "2": 0,
+          "3": 0
+        },
+        "detectors_fired": [],
+        "detector_hits": {}
+      }
+    },
+    {
+      "arm": "control",
+      "doi": "10.1038/s41598-020-79139-8",
+      "openalex_id": "https://openalex.org/W3118577024",
+      "title": "Plasma Hsp90 levels in patients with systemic sclerosis and relation to lung and skin involvement: a cross-sectional and longitudinal study",
+      "year": 2021,
+      "subfield": "Pathology and Forensic Medicine",
+      "pdf_url": "https://www.nature.com/articles/s41598-020-79139-8.pdf",
+      "download_ok": true,
+      "content_type": "application/pdf",
+      "pdf_sha256": "33743fcaa29ed2e5aa5f55259ae7fd0936277c312e5422c35d27a9a57c74b72b",
+      "scan": {
+        "overall_severity": 0,
+        "n_findings": 0,
+        "severity_counts": {
+          "0": 0,
+          "1": 0,
+          "2": 0,
+          "3": 0
+        },
+        "detectors_fired": [],
+        "detector_hits": {}
+      }
+    },
+    {
+      "arm": "retracted",
+      "doi": "10.1371/journal.pone.0003135",
+      "openalex_id": "https://openalex.org/W2065878937",
+      "title": "Mechanisms of Hybrid Oligomer Formation in the Pathogenesis of Combined Alzheimer's and Parkinson's Diseases",
+      "year": 2008,
+      "subfield": "Physiology",
+      "pdf_url": "https://journals.plos.org/plosone/article/file?id=10.1371/journal.pone.0003135&type=printable",
+      "download_ok": true,
+      "content_type": "application/pdf",
+      "pdf_sha256": "5a7c13aae2373ee9d73f86a7c94736ddcad009d09ff478369b5e5403b509a99c",
+      "scan": {
+        "overall_severity": 0,
+        "n_findings": 0,
+        "severity_counts": {
+          "0": 0,
+          "1": 0,
+          "2": 0,
+          "3": 0
+        },
+        "detectors_fired": [],
+        "detector_hits": {}
+      }
+    },
+    {
+      "arm": "control",
+      "doi": "10.1161/circulationaha.107.185649",
+      "openalex_id": "https://openalex.org/W2135375808",
+      "title": "Physical Activity and Public Health",
+      "year": 2007,
+      "subfield": "Physiology",
+      "pdf_url": "https://www.ahajournals.org/doi/pdf/10.1161/CIRCULATIONAHA.107.185649",
+      "download_ok": false,
+      "content_type": "",
+      "pdf_sha256": null,
+      "download_error": "error: HTTPStatusError: Client error '403 Forbidden' for url 'https://www.ahajournals.org/doi/pdf/10.1161/CIRCULATIONAHA.107.185649'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403"
+    },
+    {
+      "arm": "retracted",
+      "doi": "10.1074/jbc.m603393200",
+      "openalex_id": "https://openalex.org/W2099846110",
+      "title": "Induction of the Unfolded Protein Response in Familial Amyotrophic Lateral Sclerosis and Association of Protein-disulfide Isomerase with Superoxide Dismutase 1",
+      "year": 2006,
+      "subfield": "Neurology",
+      "pdf_url": "https://doi.org/10.1074/jbc.m603393200",
+      "download_ok": false,
+      "content_type": "text/html;charset=utf-8",
+      "pdf_sha256": null,
+      "download_error": "not a PDF (got 2700B, content-type=text/html;charset=utf-8)"
+    },
+    {
+      "arm": "control",
+      "doi": "10.1016/j.neuron.2005.02.014",
+      "openalex_id": "https://openalex.org/W2777987555",
+      "title": "Deep Brain Stimulation for Treatment-Resistant Depression",
+      "year": 2005,
+      "subfield": "Neurology",
+      "pdf_url": "http://www.cell.com/article/S089662730500156X/pdf",
+      "download_ok": false,
+      "content_type": "",
+      "pdf_sha256": null,
+      "download_error": "error: HTTPStatusError: Client error '403 Forbidden' for url 'https://www.cell.com/article/S089662730500156X/pdf'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403"
+    },
+    {
+      "arm": "retracted",
+      "doi": "10.1042/0264-6021:3490547",
+      "openalex_id": "https://openalex.org/W2012243761",
+      "title": "Regulation of BAD by cAMP-dependent protein kinase is mediated via phosphorylation of a novel site, Ser155",
+      "year": 2000,
+      "subfield": "Molecular Biology",
+      "pdf_url": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC1221178/pdf/",
+      "download_ok": false,
+      "content_type": "",
+      "pdf_sha256": null,
+      "download_error": "error: HTTPStatusError: Client error '404 Not Found' for url 'https://pmc.ncbi.nlm.nih.gov/articles/PMC1221178/pdf/'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/404"
+    },
+    {
+      "arm": "control",
+      "doi": "10.1038/75556",
+      "openalex_id": "https://openalex.org/W2103017472",
+      "title": "Gene Ontology: tool for the unification of biology",
+      "year": 2000,
+      "subfield": "Molecular Biology",
+      "pdf_url": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3037419/pdf/",
+      "download_ok": false,
+      "content_type": "text/html; charset=utf-8",
+      "pdf_sha256": null,
+      "download_error": "not a PDF (got 1817B, content-type=text/html; charset=utf-8)"
+    },
+    {
+      "arm": "retracted",
+      "doi": "10.1158/1541-7786.mcr-12-0629",
+      "openalex_id": "https://openalex.org/W2139593382",
+      "title": "Procollagen Lysyl Hydroxylase 2 Is Essential for Hypoxia-Induced Breast Cancer Metastasis",
+      "year": 2013,
+      "subfield": "Cancer Research",
+      "pdf_url": "https://mcr.aacrjournals.org/content/molcanres/11/5/456.full.pdf",
+      "download_ok": false,
+      "content_type": "text/html",
+      "pdf_sha256": null,
+      "download_error": "not a PDF (got 1486B, content-type=text/html)"
+    },
+    {
+      "arm": "control",
+      "doi": "10.1186/s13059-014-0550-8",
+      "openalex_id": "https://openalex.org/W2179438025",
+      "title": "Moderated estimation of fold change and dispersion for RNA-seq data with DESeq2",
+      "year": 2014,
+      "subfield": "Cancer Research",
+      "pdf_url": "https://genomebiology.biomedcentral.com/counter/pdf/10.1186/s13059-014-0550-8",
+      "download_ok": true,
+      "content_type": "application/pdf",
+      "pdf_sha256": "96af759d0ffad2df06af8860e7ea7ae1ce380ce6e22843ad2519b801bc1999bb",
+      "scan": {
+        "overall_severity": 0,
+        "n_findings": 0,
+        "severity_counts": {
+          "0": 0,
+          "1": 0,
+          "2": 0,
+          "3": 0
+        },
+        "detectors_fired": [],
+        "detector_hits": {}
+      }
+    },
+    {
+      "arm": "retracted",
+      "doi": "10.1192/bjo.2018.12",
+      "openalex_id": "https://openalex.org/W2785323391",
+      "title": "RETRACTED – Mental health in UK Biobank: development, implementation and results from an online questionnaire completed by 157 366 participants",
+      "year": 2018,
+      "subfield": "Genetics",
+      "pdf_url": "https://www.cambridge.org/core/services/aop-cambridge-core/content/view/42FE5EE2594346359A2070A2897CE414/S2056472418000121a.pdf/div-class-title-retracted-mental-health-in-uk-biobank-development-implementation-and-results-from-an-online-questionnaire-completed-by-157-366-participants-div.pdf",
+      "download_ok": true,
+      "content_type": "application/pdf",
+      "pdf_sha256": "b04cf80b00c5dcd5b6a7cc18b6a8024943914b6c8cd8ba5d2a91e8a62a809728",
+      "scan": {
+        "error": "exit=1",
+        "stderr": "op\\PROJECTPaperGuard\\.venv\\Lib\\site-packages\\click\\core.py\", line 1435, in main\n    rv = self.invoke(ctx)\n         ^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\USER\\Desktop\\PROJECTPaperGuard\\.venv\\Lib\\site-packages\\click\\core.py\", line 1902, in invoke\n    return _process_result(sub_ctx.command.invoke(sub_ctx))\n                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\USER\\Desktop\\PROJECTPaperGuard\\.venv\\Lib\\site-packages\\click\\core.py\", line 1298, in invoke\n    return ctx.invoke(self.callback, **ctx.params)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\USER\\Desktop\\PROJECTPaperGuard\\.venv\\Lib\\site-packages\\click\\core.py\", line 853, in invoke\n    return callback(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\USER\\Desktop\\PROJECTPaperGuard\\src\\paperguard\\cli.py\", line 311, in scan\n    imgs = extract_pdf_images(file_path, tdir_path)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\USER\\Desktop\\PROJECTPaperGuard\\src\\paperguard\\extractor\\images.py\", line 30, in extract_pdf_images\n    doc = pymupdf.open(path)  # type: ignore[no-untyped-call]\n          ^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\USER\\Desktop\\PROJECTPaperGuard\\.venv\\Lib\\site-packages\\pymupdf\\__init__.py\", line 3012, in __init__\n    raise FileDataError(f'Failed to open file {filename!r}.') from e\npymupdf.FileDataError: Failed to open file 'C:\\\\Users\\\\USER\\\\AppData\\\\Local\\\\Temp\\\\pg_recall_v2_qgmw93dx\\\\retracted_096_10.1192_bjo.2018.12.pdf'.\n"
+      }
+    },
+    {
+      "arm": "control",
+      "doi": "10.32614/rj-2017-066",
+      "openalex_id": "https://openalex.org/W2786358356",
+      "title": "glmmTMB Balances Speed and Flexibility Among Packages for Zero-inflated Generalized Linear Mixed Modeling",
+      "year": 2017,
+      "subfield": "Genetics",
+      "pdf_url": "https://journal.r-project.org/archive/2017/RJ-2017-066/RJ-2017-066.pdf",
+      "download_ok": true,
+      "content_type": "application/pdf",
+      "pdf_sha256": "7708f39ef6548c89fa0012e2d2e527bd7e5a14dc331ec2a3584ef00697b5d681",
+      "scan": {
+        "overall_severity": 0,
+        "n_findings": 0,
+        "severity_counts": {
+          "0": 0,
+          "1": 0,
+          "2": 0,
+          "3": 0
+        },
+        "detectors_fired": [],
+        "detector_hits": {}
+      }
+    },
+    {
+      "arm": "retracted",
+      "doi": "10.1074/jbc.m007237200",
+      "openalex_id": "https://openalex.org/W2087259247",
+      "title": "Peroxisome Proliferator-activated Receptor γ Ligands Suppress the Transcriptional Activation of Cyclooxygenase-2",
+      "year": 2001,
+      "subfield": "Pharmacology",
+      "pdf_url": "http://www.jbc.org/article/S0021925819461358/pdf",
+      "download_ok": false,
+      "content_type": "",
+      "pdf_sha256": null,
+      "download_error": "error: HTTPStatusError: Client error '403 Forbidden' for url 'https://www.jbc.org/article/S0021925819461358/pdf'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403"
+    },
+    {
+      "arm": "control",
+      "doi": "10.1093/jac/48.suppl_1.5",
+      "openalex_id": "https://openalex.org/W2132963724",
+      "title": "Determination of minimum inhibitory concentrations",
+      "year": 2001,
+      "subfield": "Pharmacology",
+      "pdf_url": "https://academic.oup.com/jac/article-pdf/48/suppl_1/5/37465977/jac_48_suppl1_5.pdf",
+      "download_ok": false,
+      "content_type": "",
+      "pdf_sha256": null,
+      "download_error": "error: HTTPStatusError: Client error '403 Forbidden' for url 'https://academic.oup.com/jac/article-pdf/48/suppl_1/5/37465977/jac_48_suppl1_5.pdf'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403"
+    },
+    {
+      "arm": "retracted",
+      "doi": "10.1172/jci23187",
+      "openalex_id": "https://openalex.org/W2050941179",
+      "title": "Complementary roles of IRS-1 and IRS-2 in the hepatic regulation of metabolism",
+      "year": 2005,
+      "subfield": "Surgery",
+      "pdf_url": "http://www.jci.org/articles/view/23187/files/pdf",
+      "download_ok": true,
+      "content_type": "application/pdf",
+      "pdf_sha256": "90d4ecc40cdb46a2079fde5939df1f78335be445e79a7cd720d05041188ef391",
+      "scan": {
+        "overall_severity": 0,
+        "n_findings": 0,
+        "severity_counts": {
+          "0": 0,
+          "1": 0,
+          "2": 0,
+          "3": 0
+        },
+        "detectors_fired": [],
+        "detector_hits": {}
+      }
+    },
+    {
+      "arm": "control",
+      "doi": "10.1056/nejmoa040583",
+      "openalex_id": "https://openalex.org/W2159449551",
+      "title": "Intensive versus Moderate Lipid Lowering with Statins after Acute Coronary Syndromes",
+      "year": 2004,
+      "subfield": "Surgery",
+      "pdf_url": "https://www.nejm.org/doi/pdf/10.1056/NEJMoa040583?articleTools=true",
+      "download_ok": false,
+      "content_type": "",
+      "pdf_sha256": null,
+      "download_error": "error: HTTPStatusError: Client error '403 Forbidden' for url 'https://www.nejm.org/doi/pdf/10.1056/NEJMoa040583?articleTools=true'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403"
+    },
+    {
+      "arm": "retracted",
+      "doi": "10.1074/jbc.m608310200",
+      "openalex_id": "https://openalex.org/W2055579594",
+      "title": "Activation of Protein Phosphatase 2A by Palmitate Inhibits AMP-activated Protein Kinase",
+      "year": 2007,
+      "subfield": "Molecular Biology",
+      "pdf_url": "http://www.jbc.org/article/S0021925819336336/pdf",
+      "download_ok": false,
+      "content_type": "",
+      "pdf_sha256": null,
+      "download_error": "error: HTTPStatusError: Client error '403 Forbidden' for url 'https://www.jbc.org/article/S0021925819336336/pdf'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403"
+    },
+    {
+      "arm": "control",
+      "doi": "10.1016/j.jbi.2008.08.010",
+      "openalex_id": "https://openalex.org/W2093274439",
+      "title": "Research electronic data capture (REDCap)—A metadata-driven methodology and workflow process for providing translational research informatics support",
+      "year": 2008,
+      "subfield": "Molecular Biology",
+      "pdf_url": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC2700030/pdf/",
+      "download_ok": false,
+      "content_type": "text/html; charset=utf-8",
+      "pdf_sha256": null,
+      "download_error": "not a PDF (got 20327B, content-type=text/html; charset=utf-8)"
+    },
+    {
+      "arm": "retracted",
+      "doi": "10.1186/s12943-019-0981-7",
+      "openalex_id": "https://openalex.org/W2939737815",
+      "title": "RETRACTED ARTICLE: Exosome-transmitted miR-128-3p increase chemosensitivity of oxaliplatin-resistant colorectal cancer",
+      "year": 2019,
+      "subfield": "Molecular Biology",
+      "pdf_url": "https://molecular-cancer.biomedcentral.com/track/pdf/10.1186/s12943-019-0981-7",
+      "download_ok": true,
+      "content_type": "application/pdf",
+      "pdf_sha256": "09562adae8ca0428395e4169fae4b7b1d51f6fdf56f51d8b23467eb66d3b4b8c",
+      "scan": {
+        "overall_severity": 0,
+        "n_findings": 0,
+        "severity_counts": {
+          "0": 0,
+          "1": 0,
+          "2": 0,
+          "3": 0
+        },
+        "detectors_fired": [],
+        "detector_hits": {}
+      }
+    },
+    {
+      "arm": "control",
+      "doi": "10.1093/molbev/msy096",
+      "openalex_id": "https://openalex.org/W2799524357",
+      "title": "MEGA X: Molecular Evolutionary Genetics Analysis across Computing Platforms",
+      "year": 2018,
+      "subfield": "Molecular Biology",
+      "pdf_url": "https://academic.oup.com/mbe/article-pdf/35/6/1547/25091958/msy096.pdf",
+      "download_ok": false,
+      "content_type": "",
+      "pdf_sha256": null,
+      "download_error": "error: HTTPStatusError: Client error '403 Forbidden' for url 'https://academic.oup.com/mbe/article-pdf/35/6/1547/25091958/msy096.pdf'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403"
+    }
+  ]
+}

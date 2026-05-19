@@ -231,13 +231,17 @@ class T3DataAvailabilityDetector(BaseDetector):
                 Finding(
                     detector_id=self.id,
                     detector_name=self.name,
-                    severity=Severity.SUSPICIOUS,
+                    severity=Severity.CONCERN,
                     summary=(
                         f"涉及 {subject} 但未检测到伦理审批号 / IRB / IACUC 声明"
                     ),
                     detail=(
                         f"Manuscript 自报涉及 {subject}，但全文未匹配到任何"
                         "伦理审批 / IRB / IACUC / 委员会审查的表述。"
+                        " 注意:N=100+100 召回率研究 (docs/recall_test_v2.md)"
+                        " 发现该 finding 在已撤稿和未撤稿两组论文之间触发率几乎"
+                        "相同 (~60-65%),主要原因是 PDF 提取常常漏掉 SI/末尾"
+                        "的伦理声明,而非真造假信号。因此从 SUSPICIOUS 降为 CONCERN。"
                     ),
                     evidence={"ethics_match": False},
                     innocent_explanations=[
