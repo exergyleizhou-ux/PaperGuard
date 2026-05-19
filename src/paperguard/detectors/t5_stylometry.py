@@ -101,16 +101,21 @@ class T5StylometryDetector(BaseDetector):
         cert_z = (cert_rate - self.REF_CERTAINTY_RATE) / max(self.REF_CERTAINTY_RATE, 1e-6)
         adj_z = (self.REF_ADJECTIVE_RATE - adj_rate) / max(self.REF_ADJECTIVE_RATE, 1e-6)
 
-        # 各维度偏离 > 50% 视为一个"信号"
+        # 紧缩阈值（2.0.5）：v2 N=100+100 recall study 发现旧阈值
+        # (0.3-0.5) 在生物医学论文上几乎无差别地触发 (98% retracted vs 81%
+        # control)。把单维偏离阈值上调到 1.0 (100% 相对偏离)，并要求至少
+        # 2 个维度同时违反才发 finding。结果：T5 从近通用噪声 → 仅在确
+        # 有 Stapel-like 异常文体时触发。
         flags: list[str] = []
-        if meth_z > 0.5:
+        if meth_z > 1.0:
             flags.append(f"methodology density {meth_rate:.4f} (ref ≈ {self.REF_METHODOLOGY_RATE})")
-        if cert_z > 0.5:
+        if cert_z > 1.0:
             flags.append(f"certainty density {cert_rate:.4f} (ref ≈ {self.REF_CERTAINTY_RATE})")
-        if adj_z > 0.3:
+        if adj_z > 0.7:
             flags.append(f"adjective density {adj_rate:.4f} (ref ≈ {self.REF_ADJECTIVE_RATE})")
 
-        if not flags:
+        # 至少 2 个维度同时偏离才报告
+        if len(flags) < 2:
             return []
         if len(flags) >= 3:
             severity = Severity.CONCERN

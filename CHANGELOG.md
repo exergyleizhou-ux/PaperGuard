@@ -4,6 +4,31 @@ All notable changes to PaperGuard are documented in this file. Format follows
 [Keep a Changelog](https://keepachangelog.com/) and the project adheres to
 [Semantic Versioning](https://semver.org/).
 
+## [2.0.5] — 2026-05-19 — Tighten T5 stylometry + PMC-first OA fetcher
+
+### Added
+- **`paperguard.fetcher.oa_pdf`** — a PMC-first OA PDF fetcher.
+  Tries Europe PMC / PubMed Central before Unpaywall before
+  OpenAlex. Validates the `%PDF-` magic header on every download
+  so HTML landing pages no longer slip through. 13 unit tests
+  covering the fallback chain, header validation, and network
+  failure modes.
+
+### Changed
+- **T5 stylometry thresholds tightened.** v2 found T5 fired on 98%
+  of retracted and 81% of control papers — almost-universal noise.
+  Single-dimension threshold raised to ≥100% relative deviation
+  (methodology / certainty) or ≥70% (adjective), AND at least two
+  dimensions must violate before any finding is emitted.
+- The detector now stays silent on normal biomedical prose while
+  still triggering on synthetic Stapel-style text (high
+  methodology + high certainty + low adjective density). 4 new
+  regression tests cover both directions.
+
+### Quality
+- 248 tests passing (was 231; +17 new); mypy --strict and ruff clean.
+- Total: 30 detectors, 5 PyPI releases (2.0.0 → 2.0.5).
+
 ## [2.0.4] — 2026-05-19 — Recalibrate T3 ethics-statement severity
 
 ### Changed
