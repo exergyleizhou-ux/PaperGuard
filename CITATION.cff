@@ -1,0 +1,52 @@
+cff-version: 1.2.0
+message: "If you use PaperGuard in your research, please cite it."
+title: PaperGuard
+abstract: >
+  Statistical anomaly screener for tabular research data. Flags anomalies,
+  not fraud. Detectors cover terminal-digit, Benford, inter-column
+  arithmetic, decimal consistency, GRIM, statcheck, Carlisle baseline
+  balance, image duplication (pHash), EXIF temporal forensics, docx rsid
+  forensics, and file metadata forensics.
+authors:
+  - name: PaperGuard Contributors
+version: 2.0.0.dev1
+date-released: 2026-05-18
+license: MIT
+keywords:
+  - research-integrity
+  - scientific-misconduct
+  - statistical-forensics
+  - data-fabrication
+  - peer-review
+repository-code: https://example.com/paperguard
+references:
+  - type: article
+    authors:
+      - family-names: Mosimann
+        given-names: J. E.
+    title: "Data fabrication: Can people generate random digits?"
+    journal: Accountability in Research
+    year: 1995
+  - type: article
+    authors:
+      - family-names: Brown
+        given-names: N. J. L.
+      - family-names: Heathers
+        given-names: J. A. J.
+    title: "The GRIM Test: A simple technique detects numerous anomalies in the reporting of results in psychology"
+    journal: Social Psychological and Personality Science
+    year: 2017
+  - type: article
+    authors:
+      - family-names: Nuijten
+        given-names: M. B.
+    title: "The prevalence of statistical reporting errors in psychology (1985-2013)"
+    journal: Behavior Research Methods
+    year: 2016
+  - type: article
+    authors:
+      - family-names: Carlisle
+        given-names: J. B.
+    title: "Data fabrication and other reasons for non-random sampling in 5087 randomised controlled trials"
+    journal: Anaesthesia
+    year: 2017

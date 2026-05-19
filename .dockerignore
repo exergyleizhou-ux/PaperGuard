@@ -1,0 +1,17 @@
+.venv/
+.git/
+.github/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.paperguard/
+__pycache__/
+*.pyc
+build/
+dist/
+*.egg-info/
+tests/
+examples/
+docs/
+.env
+*.bak

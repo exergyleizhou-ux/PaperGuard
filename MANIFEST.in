@@ -1,0 +1,20 @@
+include LICENSE
+include README.md
+include README.zh.md
+include CHANGELOG.md
+include CITATION.cff
+include CONTRIBUTING.md
+include SECURITY.md
+include ROADMAP.md
+include pyproject.toml
+include .env.example
+
+recursive-include docs *.md
+recursive-include src/paperguard *.py
+recursive-include tests/fixtures *.csv *.py
+
+global-exclude __pycache__
+global-exclude *.py[cod]
+global-exclude *.so
+global-exclude .DS_Store
+global-exclude *.bak

@@ -1,0 +1,45 @@
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+dist/
+*.egg-info/
+.env
+.pytest_cache/
+.coverage
+htmlcov/
+.mypy_cache/
+.ruff_cache/
+.paperguard/
+*.tmp.pdf
+*.tmp.xlsx
+.venv/
+
+# 防止备份、审计日志、私人路径泄漏
+*.bak
+*.bak.*
+audits/
+*.log
+report.json
+/tmp/
+
+# Web UI multi-tenant: local SQLite databases never get committed
+paperguard.db
+paperguard.db-journal
+paperguard.db-wal
+paperguard.db-shm
+*.sqlite
+*.sqlite3
+
+# 编辑器配置
+.idea/
+.vscode/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+
+# Notebook checkpoints
+.ipynb_checkpoints/

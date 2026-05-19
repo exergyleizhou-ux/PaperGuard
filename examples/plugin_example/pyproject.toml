@@ -1,0 +1,22 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "paperguard-example-plugin"
+version = "0.1.0"
+description = "Example PaperGuard detector plugin (zero-variance column flag)"
+requires-python = ">=3.11"
+authors = [{ name = "Your Name", email = "you@example.com" }]
+license = { text = "MIT" }
+dependencies = [
+    "paperguard>=1.0.0",
+    "pandas>=2.2",
+    "numpy>=1.26",
+]
+
+[project.entry-points."paperguard.detectors"]
+zero_variance = "paperguard_example_plugin.detectors:ZeroVarianceDetector"
+
+[tool.setuptools.packages.find]
+where = ["src"]

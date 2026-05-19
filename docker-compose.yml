@@ -1,0 +1,42 @@
+# PaperGuard Web Server — production reference deployment.
+#
+# Usage:
+#   PAPERGUARD_API_TOKEN=your-secret docker compose up -d
+#
+# Listens on host port 8765 by default. Override with PAPERGUARD_PORT.
+
+services:
+  paperguard:
+    build: .
+    image: paperguard:1.0.0
+    container_name: paperguard-server
+    restart: unless-stopped
+    command:
+      - server
+      - --host
+      - "0.0.0.0"
+      - --port
+      - "8765"
+      - --workers
+      - "${PAPERGUARD_WORKERS:-2}"
+    ports:
+      - "${PAPERGUARD_PORT:-8765}:8765"
+    environment:
+      - PAPERGUARD_API_TOKEN=${PAPERGUARD_API_TOKEN:-}
+      - PAPERGUARD_EMAIL=${PAPERGUARD_EMAIL:-anonymous@example.com}
+      - PAPERGUARD_LANG=${PAPERGUARD_LANG:-en}
+      - PYTHONIOENCODING=utf-8
+    volumes:
+      # Mount the place where users keep papers to scan (read-only)
+      - ${PAPERGUARD_DATA_DIR:-./data}:/data:ro
+      # Persistent cache for fetcher API responses + audit logs
+      - paperguard-cache:/root/.paperguard
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q -O - http://localhost:8765/health || exit 1"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 15s
+
+volumes:
+  paperguard-cache:
