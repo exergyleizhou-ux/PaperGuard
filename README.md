@@ -315,6 +315,7 @@ tests/
 | [docs/quickstart.md](docs/quickstart.md) | **5-minute walk-through** — install, scan a fabricated CSV, scan a real retracted PDF (Wansink 2015), read the report |
 | [docs/recall_test_v2.md](docs/recall_test_v2.md) | **N=100+100 recall/precision study** — quantifies that PDF-only scanning is *not* a reliable retraction detector; explains why and what to do instead |
 | [docs/recall_test_v3.md](docs/recall_test_v3.md) | **2.0.4 follow-up** — single-rule recalibration takes LR+ from 0.77 (worse than coin flip) to ∞ (zero false positives) at the cost of dropping recall from a fake 68% to an honest 13% |
+| [docs/recall_test_v4.md](docs/recall_test_v4.md) | **2.0.5 follow-up** — T5 stylometry tightening removes near-universal NOTE noise from reports while preserving recall/FP at the v3 level (T5 was only ever NOTE-level so it didn't drive overall severity anyway) |
 | [README.md](README.md) | This file — overview, usage, install |
 | [README.zh.md](README.zh.md) | 中文版 |
 | [CHANGELOG.md](CHANGELOG.md) | Full release history 0.1 → 2.0.2 |
