@@ -4,6 +4,50 @@ All notable changes to PaperGuard are documented in this file. Format follows
 [Keep a Changelog](https://keepachangelog.com/) and the project adheres to
 [Semantic Versioning](https://semver.org/).
 
+## [2.0.11] — 2026-05-19 — Author retraction history + LLM content review
+
+Two external-signal additions. v7 confirmed PDF-internal features
+cannot distinguish retracted from non-retracted; both of these
+exploit data *outside* the PDF.
+
+### Added — Author retraction history scan
+- `paperguard scan --doi X` now queries OpenAlex for each author's
+  retraction history (≤ 200 most-recent works per author,
+  is_retracted flag synced with Retraction Watch).
+- Emits AUTHOR_HISTORY finding tiered by count:
+  - 1-2 retracted works → `SUSPICIOUS` (could be honest)
+  - 3+ retracted works → `CRITICAL` (Stapel / Fujii / Hwang pattern)
+- Lists 4 innocent explanations including "high-volume authors have
+  more absolute retractions at the same rate" and "may have been a
+  low-level contributor on multi-author retractions".
+- This is the cross-paper signal v7 specifically called out as the
+  practical path to non-PDF-only detection.
+
+### Added — Opt-in LLM content review
+- New `paperguard scan --llm-review` flag. Requires
+  `PAPERGUARD_LLM_PROVIDER` (openai / anthropic / ollama) + the
+  matching API key.
+- New `paperguard.llm.content_review.LLMContentReviewer` reads the
+  manuscript text and asks the LLM to flag passages in 5 specific
+  categories: **arithmetic** (numbers that don't add up),
+  **contradiction**, **missing** (referenced but not described
+  methodology / statistic / ethics), **implausible_precision**,
+  **stat_misuse**.
+- System prompt explicitly forbids verdict words ("fraud" /
+  "misconduct" / "造假") and intent attribution.
+- Output is gated through `issues_to_findings()` which severity-maps
+  per category and adds 4 innocent explanations.
+- Hallucination guard: any LLM-quoted "passage" not appearing in
+  the input text is dropped.
+- 9 new tests covering: disabled state, short-text guard,
+  malformed-JSON drop, hallucinated-passage filter, invalid-category
+  filter, 5-issue cap, severity mapping, innocent-explanations.
+
+### Quality
+- 276 tests passing (was 267; +9 new); mypy --strict and ruff clean.
+- The library + CLI are now at **11 releases across the 2.0 line**
+  with the precision-improvement work this session lands.
+
 ## [2.0.10] — 2026-05-19 — PubPeer commentary as a finding + F4 auto-corpus
 
 Two enhancements that move PaperGuard beyond "PDF-content-only" into

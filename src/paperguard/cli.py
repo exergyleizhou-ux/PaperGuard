@@ -344,6 +344,18 @@ def main() -> None:
         "Auto-filled from DOI metadata when --doi is given."
     ),
 )
+@click.option(
+    "--llm-review",
+    is_flag=True,
+    default=False,
+    help=(
+        "Opt-in: also run LLM-assisted content review over the "
+        "extracted manuscript text. Requires PAPERGUARD_LLM_PROVIDER "
+        "(openai / anthropic / ollama) + corresponding API key. The "
+        "LLM is restricted to 5 objective issue categories and "
+        "forbidden from making verdicts about authors."
+    ),
+)
 def scan(
     files: tuple[Path, ...],
     doi: str | None,
@@ -353,6 +365,7 @@ def scan(
     lang: str | None,
     check_paper_mill: bool,
     paper_year: int | None,
+    llm_review: bool,
 ) -> None:
     """扫描本地数据文件 + 可选 DOI 元数据。"""
     console = Console(legacy_windows=False)
@@ -576,6 +589,58 @@ def scan(
                     f"{len(result.findings)} finding(s)[/]"
                 )
 
+    # LLM content review (opt-in, after detector findings collected)
+    if llm_review:
+        from paperguard.llm.content_review import (
+            LLMContentReviewer,
+            issues_to_findings,
+        )
+
+        reviewer = LLMContentReviewer()
+        if not reviewer.enabled:
+            console.print(
+                "[yellow]--llm-review requested but PAPERGUARD_LLM_PROVIDER "
+                "is not set; skipping LLM review.[/]"
+            )
+        else:
+            # Re-extract text from each input file (cheap; results
+            # already in disk cache for pdf cases) and feed to LLM.
+            combined_text = ""
+            for fp in files:
+                suffix = fp.suffix.lower()
+                if suffix == ".docx":
+                    combined_text += extract_text_from_docx(fp) + "\n\n"
+                elif suffix == ".pdf":
+                    t, _ = _safe_pdf_text(fp)
+                    combined_text += t + "\n\n"
+            if combined_text.strip():
+                with console.status(
+                    f"[cyan]LLM review ({reviewer.provider}) "
+                    f"over {len(combined_text):,} chars..."
+                ):
+                    issues = reviewer.review(combined_text)
+                if issues:
+                    llm_findings = issues_to_findings(issues)
+                    llm_result = DetectorResult(
+                        detector_id="LLM_REVIEW",
+                        applicable=True,
+                        findings=llm_findings,
+                    )
+                    report.detector_results.append(llm_result)
+                    report.all_findings.extend(llm_findings)
+                    console.print(
+                        f"[yellow]  LLM flagged {len(llm_findings)} "
+                        f"issue(s) in the manuscript text[/]"
+                    )
+                    audit.log_event(
+                        "llm_review_completed",
+                        {
+                            "n_issues": len(llm_findings),
+                            "provider": reviewer.provider,
+                            "model": reviewer.model or "default",
+                        },
+                    )
+
     combine_evidence(report)
     audit.log_event(
         "evidence_combined",
@@ -624,6 +689,127 @@ def _fetch_metadata(
                     (a.get("author") or {}).get("display_name") or ""
                     for a in auths[:10]
                 ]
+                # Capture OpenAlex author IDs for the retraction-history
+                # cross-check below. These are stable OpenAlex URIs like
+                # 'https://openalex.org/A1234567890' that the retraction-
+                # rate endpoint accepts directly.
+                author_ids: list[tuple[str, str]] = [
+                    (
+                        (a.get("author") or {}).get("display_name") or "",
+                        (a.get("author") or {}).get("id") or "",
+                    )
+                    for a in auths[:10]
+                    if (a.get("author") or {}).get("id")
+                ]
+
+                # Author retraction-history scan. For each named author,
+                # query their last ≤200 works for is_retracted=true. Tier
+                # mapping is conservative: a single retraction can be
+                # honest (e.g. uncorrectable error), three+ across a
+                # career is highly atypical (Bik 2016; ORI investigation
+                # data) and worth elevating.
+                if author_ids:
+                    with console.status(
+                        f"[cyan]Checking retraction history of "
+                        f"{len(author_ids)} author(s)..."
+                    ):
+                        for name, aid in author_ids:
+                            try:
+                                stats = oa.get_author_retraction_rate(aid)
+                            except Exception as e:  # noqa: BLE001
+                                audit.log_event(
+                                    "author_retraction_lookup_failed",
+                                    {"author": name, "error": str(e)},
+                                )
+                                continue
+                            n_ret = int(stats.get("n_retracted", 0))
+                            n_total = int(stats.get("n_works_sampled", 0))
+                            if n_ret == 0:
+                                continue
+                            if n_ret >= 3:
+                                ar_sev = Severity.CRITICAL
+                            elif n_ret >= 1:
+                                ar_sev = Severity.SUSPICIOUS
+                            else:
+                                ar_sev = Severity.CONCERN
+                            ar_finding = Finding(
+                                detector_id="AUTHOR_HISTORY",
+                                detector_name="Author Retraction History",
+                                severity=ar_sev,
+                                summary=(
+                                    f"Co-author {name} has {n_ret} "
+                                    f"retracted work(s) on record "
+                                    f"({n_total} sampled)"
+                                ),
+                                detail=(
+                                    f"OpenAlex (synced with Retraction "
+                                    f"Watch) shows author {name} "
+                                    f"(OpenAlex ID {aid}) has "
+                                    f"{n_ret} of {n_total} sampled "
+                                    f"works marked is_retracted. "
+                                    f"Retraction rate "
+                                    f"{stats.get('retraction_rate', 0):.2%}. "
+                                    "Multiple retractions across an "
+                                    "author's career is highly atypical "
+                                    "(< 1% of researchers have any "
+                                    "retraction; ≥ 3 is rarer still and "
+                                    "warrants closer reading of the "
+                                    "current paper, especially in the "
+                                    "methodology + data sections."
+                                ),
+                                evidence={
+                                    "author_name": name,
+                                    "openalex_author_id": aid,
+                                    "n_retracted": n_ret,
+                                    "n_works_sampled": n_total,
+                                    "retraction_rate": stats.get(
+                                        "retraction_rate"
+                                    ),
+                                    "retracted_work_ids": (
+                                        stats.get("retracted_work_ids") or []
+                                    )[:10],
+                                },
+                                innocent_explanations=[
+                                    "Honest retractions for uncorrectable "
+                                    "errors are not misconduct (e.g. data "
+                                    "loss, reagent contamination found "
+                                    "post-publication)",
+                                    "Author may have been a low-level "
+                                    "contributor on retracted multi-author "
+                                    "papers led by someone else",
+                                    "Highly prolific authors have higher "
+                                    "absolute retraction counts at the "
+                                    "same misconduct rate as the field",
+                                    "Some 'retractions' in OpenAlex are "
+                                    "actually corrections or republications "
+                                    "with metadata still mis-flagged",
+                                ],
+                                academic_reference=(
+                                    "OpenAlex is_retracted flag, synced "
+                                    "with Retraction Watch. ORI 2010-2020 "
+                                    "investigation statistics on repeat-"
+                                    "offender base rates."
+                                ),
+                            )
+                            ar_result = DetectorResult(
+                                detector_id="AUTHOR_HISTORY",
+                                applicable=True,
+                                findings=[ar_finding],
+                            )
+                            report.detector_results.append(ar_result)
+                            report.all_findings.append(ar_finding)
+                            console.print(
+                                f"[red]  ⚠ {name}: {n_ret} retracted "
+                                f"work(s) in OpenAlex[/]"
+                            )
+                            audit.log_event(
+                                "author_retraction_history_flagged",
+                                {
+                                    "author": name,
+                                    "n_retracted": n_ret,
+                                    "n_sampled": n_total,
+                                },
+                            )
             oa.close()
             audit.log_event("openalex_fetched", {"doi": doi, "found": bool(work)})
 
