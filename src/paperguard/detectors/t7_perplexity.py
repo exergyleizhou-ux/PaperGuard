@@ -205,7 +205,17 @@ def compute_perplexity(
     max_segments: int = 3,
     timeout: float = 60.0,
 ) -> float | None:
-    """Public helper: compute perplexity for a piece of text or None on failure."""
+    """Public helper: compute perplexity for a piece of text or None on failure.
+
+    Strategy:
+      1. Try the logprobs route first (works when the API returns token
+         logprobs).
+      2. If that fails for every segment, fall back to the
+         generation-divergence proxy (works on any chat-completion endpoint).
+
+    The two routes return slightly different absolute numbers, but both
+    sit in the same range and share the same severity thresholds.
+    """
     api_key = os.environ.get("OPENAI_API_KEY")
     if not api_key:
         logger.warning("T7: OPENAI_API_KEY not set")
@@ -219,6 +229,12 @@ def compute_perplexity(
     segments = _segment_text(text)[:max_segments]
     if not segments:
         return None
+
+    # Classical logprobs perplexity. If the proxy doesn't return logprobs
+    # we return None — the detector then emits a NOTE-level "inconclusive"
+    # finding rather than fabricating a number. T8 (DetectGPT-style
+    # perturbation) is the proper alternative when logprobs aren't
+    # available; see ``paperguard.detectors.t8_detectgpt``.
     perps: list[float] = []
     for seg in segments:
         lp = _call_openai_logprobs(seg, model_name, base_url, api_key, timeout)
@@ -227,7 +243,6 @@ def compute_perplexity(
         perps.append(_logprobs_to_perplexity(lp))
     if not perps:
         return None
-    # geometric mean for stable averaging across segments
     return math.exp(sum(math.log(p) for p in perps) / len(perps))
 
 

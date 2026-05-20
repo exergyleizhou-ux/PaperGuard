@@ -77,5 +77,6 @@ def test_plugin_handles_load_exception(monkeypatch: pytest.MonkeyPatch) -> None:
 
 def test_register_default_with_plugins_disabled() -> None:
     reg = DetectorRegistry().register_default(load_plugins=False)
-    # 32 built-ins: 30 through 2.0.13 + E1 ICC (2.0.14) + T7 perplexity (2.0.15)
-    assert len(reg.all()) == 32
+    # 33 built-ins: 30 through 2.0.13 + E1 ICC (2.0.14) + T7 perplexity (2.0.15)
+    # + T8 DetectGPT (2.0.16)
+    assert len(reg.all()) == 33

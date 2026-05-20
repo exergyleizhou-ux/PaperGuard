@@ -150,15 +150,20 @@ def _run_detectors_on_file(
         )
 
         text_detector_ids: list[str] = ["B4", "T3", "T4", "T5", "T6"]
-        # T7 is opt-in via --perplexity-check; skip it otherwise so we
-        # don't waste an API call per scan even when the env var is set
-        # by a parent shell.
+        # T7 / T8 are opt-in via --perplexity-check / --detectgpt-check.
+        # Skip otherwise so we don't waste API calls per scan.
         if _os_local.environ.get(
             "PAPERGUARD_PERPLEXITY_CHECK", ""
         ).lower() in {
             "1", "true", "yes",
         }:
             text_detector_ids.append("T7")
+        if _os_local.environ.get(
+            "PAPERGUARD_DETECTGPT_CHECK", ""
+        ).lower() in {
+            "1", "true", "yes",
+        }:
+            text_detector_ids.append("T8")
         for d_id in text_detector_ids:
             detector = registry.get(d_id)
             if detector is None:
@@ -379,6 +384,17 @@ def main() -> None:
         "paraphrase-resistant LLM-authorship signal. Not a verdict."
     ),
 )
+@click.option(
+    "--detectgpt-check",
+    is_flag=True,
+    default=False,
+    help=(
+        "Opt-in: run T8 DetectGPT detector on the manuscript text. "
+        "Works on any chat-completion endpoint (no logprobs needed). "
+        "Requires OPENAI_API_KEY. Costs ~14 LLM calls per paper. "
+        "Not a verdict."
+    ),
+)
 def scan(
     files: tuple[Path, ...],
     doi: str | None,
@@ -390,6 +406,7 @@ def scan(
     paper_year: int | None,
     llm_review: bool,
     perplexity_check: bool,
+    detectgpt_check: bool,
 ) -> None:
     """扫描本地数据文件 + 可选 DOI 元数据。"""
     import os as _os
@@ -400,9 +417,11 @@ def scan(
     audit_dir = settings.cache_dir / "audits" / run_id
     audit = AuditLog(run_id=run_id, output_dir=audit_dir)
 
-    # T7 opt-in: flip the env var the detector checks during applicability.
+    # T7/T8 opt-in: flip env vars the detectors check during applicability.
     if perplexity_check:
         _os.environ["PAPERGUARD_PERPLEXITY_CHECK"] = "1"
+    if detectgpt_check:
+        _os.environ["PAPERGUARD_DETECTGPT_CHECK"] = "1"
 
     report = AuditReport(
         paper_identifier=doi or (str(files[0]) if files else "local"),
@@ -1013,13 +1032,36 @@ def server_cmd(host: str, port: int, workers: int, api_token: str | None) -> Non
     show_default=True,
     help="批量报告输出目录。每个文件输出一个 .json 和一个 .html。",
 )
+@click.option(
+    "--perplexity-check",
+    is_flag=True,
+    default=False,
+    help="Run T7 LLM-perplexity detector on each file (requires OPENAI_API_KEY).",
+)
+@click.option(
+    "--detectgpt-check",
+    is_flag=True,
+    default=False,
+    help="Run T8 DetectGPT detector on each file (requires OPENAI_API_KEY).",
+)
 @click.option("--seed", type=int, default=42, show_default=True)
-def batch(patterns: tuple[str, ...], out_dir: Path, seed: int) -> None:
+def batch(
+    patterns: tuple[str, ...],
+    out_dir: Path,
+    perplexity_check: bool,
+    detectgpt_check: bool,
+    seed: int,
+) -> None:
     """批量扫描：按 glob 展开所有匹配的文件，逐个 scan。"""
     import glob as glob_mod
+    import os as _os_local
 
     console = Console(legacy_windows=False)
     out_dir.mkdir(parents=True, exist_ok=True)
+    if perplexity_check:
+        _os_local.environ["PAPERGUARD_PERPLEXITY_CHECK"] = "1"
+    if detectgpt_check:
+        _os_local.environ["PAPERGUARD_DETECTGPT_CHECK"] = "1"
 
     all_files: list[Path] = []
     for pattern in patterns:
@@ -1108,12 +1150,22 @@ def _scan_single_file(
         "Requires OPENAI_API_KEY."
     ),
 )
+@click.option(
+    "--detectgpt-check",
+    is_flag=True,
+    default=False,
+    help=(
+        "Run T8 DetectGPT detector on the PMC text. "
+        "Requires OPENAI_API_KEY."
+    ),
+)
 @click.option("--seed", type=int, default=42, show_default=True)
 def scan_pmc(
     doi: str,
     output_json: Path | None,
     llm_review: bool,
     perplexity_check: bool,
+    detectgpt_check: bool,
     seed: int,
 ) -> None:
     """Scan an OA paper by DOI via Europe PMC full text (no PDF needed).
@@ -1162,16 +1214,21 @@ def scan_pmc(
     )
 
     text = article.full_text
-    # T7 opt-in: flip the env var the detector checks during applicability.
-    if perplexity_check:
+    # T7 / T8 opt-in: flip the env vars the detectors check.
+    if perplexity_check or detectgpt_check:
         import os as _os
 
-        _os.environ["PAPERGUARD_PERPLEXITY_CHECK"] = "1"
+        if perplexity_check:
+            _os.environ["PAPERGUARD_PERPLEXITY_CHECK"] = "1"
+        if detectgpt_check:
+            _os.environ["PAPERGUARD_DETECTGPT_CHECK"] = "1"
 
     # Run the same text-detector flow on the PMC body
     text_detector_ids = ["B4", "T4", "T5", "T6"]
     if perplexity_check:
         text_detector_ids.append("T7")
+    if detectgpt_check:
+        text_detector_ids.append("T8")
     for d_id in text_detector_ids:
         detector = registry.get(d_id)
         if detector is None:
@@ -1259,11 +1316,25 @@ def scan_pmc(
     show_default=True,
     help="Only post papers at or above this severity to the webhook.",
 )
+@click.option(
+    "--perplexity-check",
+    is_flag=True,
+    default=False,
+    help="Run T7 LLM-perplexity detector on each file.",
+)
+@click.option(
+    "--detectgpt-check",
+    is_flag=True,
+    default=False,
+    help="Run T8 DetectGPT detector on each file.",
+)
 @click.option("--seed", type=int, default=42, show_default=True)
 def notify(
     patterns: tuple[str, ...],
     webhook: str,
     min_severity: str,
+    perplexity_check: bool,
+    detectgpt_check: bool,
     seed: int,
 ) -> None:
     """Batch-scan a glob, POST a summary of high-severity findings to a webhook.
@@ -1279,6 +1350,12 @@ def notify(
     `--min-severity`.
     """
     import glob as glob_mod
+    import os as _os_local
+
+    if perplexity_check:
+        _os_local.environ["PAPERGUARD_PERPLEXITY_CHECK"] = "1"
+    if detectgpt_check:
+        _os_local.environ["PAPERGUARD_DETECTGPT_CHECK"] = "1"
 
     import httpx
 
@@ -1665,6 +1742,12 @@ def fetch_ori_cmd(out: Path | None) -> None:
     )
 
 
+DEFAULT_AI_DICT_URL = (
+    "https://raw.githubusercontent.com/exergyleizhou-ux/PaperGuard/"
+    "main/docs/dictionaries/llm_phrases_v1.json"
+)
+
+
 @main.command("refresh-ai-dict")
 @click.option(
     "--source",
@@ -1674,7 +1757,18 @@ def fetch_ori_cmd(out: Path | None) -> None:
         "URL serving a JSON document shaped "
         "{\"phrases\": {\"gpt\": [...], \"claude\": [...], "
         "\"gemini\": [...], \"other\": [...]}}. "
-        "If omitted, --corpus must be supplied."
+        "If omitted (and no --corpus), defaults to the PaperGuard "
+        f"official dictionary at {DEFAULT_AI_DICT_URL}."
+    ),
+)
+@click.option(
+    "--official",
+    "use_official",
+    is_flag=True,
+    default=False,
+    help=(
+        "Shortcut: pull from the official PaperGuard dictionary URL "
+        "(same as --source <default>)."
     ),
 )
 @click.option(
@@ -1722,6 +1816,7 @@ def fetch_ori_cmd(out: Path | None) -> None:
 )
 def refresh_ai_dict_cmd(
     source_url: str | None,
+    use_official: bool,
     corpus_path: Path | None,
     provider: str,
     min_count: int,
@@ -1747,11 +1842,16 @@ def refresh_ai_dict_cmd(
 
     console = Console(legacy_windows=False)
 
+    if use_official and not source_url:
+        source_url = DEFAULT_AI_DICT_URL
+
     if not source_url and not corpus_path:
+        # Default to the official URL when nothing else specified.
+        source_url = DEFAULT_AI_DICT_URL
         console.print(
-            "[red]Provide at least one of --source URL or --corpus PATH.[/]"
+            "[dim]No --source / --corpus given; using official "
+            f"PaperGuard dictionary at {source_url}[/]"
         )
-        raise click.Abort()
 
     current = load_user_dictionary(out)
     incoming: list[DictionarySnapshot] = []

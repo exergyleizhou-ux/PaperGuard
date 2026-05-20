@@ -86,6 +86,7 @@ class DetectorRegistry:
             T6AITextHeuristicDetector,
         )
         from paperguard.detectors.t7_perplexity import T7PerplexityDetector
+        from paperguard.detectors.t8_detectgpt import T8DetectGPTDetector
 
         for detector_cls in (
             A1TerminalDigitDetector,
@@ -120,6 +121,7 @@ class DetectorRegistry:
             T5StylometryDetector,
             T6AITextHeuristicDetector,
             T7PerplexityDetector,
+            T8DetectGPTDetector,
         ):
             self.register(detector_cls())
 

@@ -4,6 +4,69 @@ All notable changes to PaperGuard are documented in this file. Format follows
 [Keep a Changelog](https://keepachangelog.com/) and the project adheres to
 [Semantic Versioning](https://semver.org/).
 
+## [2.0.16] — 2026-05-20 — Phase-1 batch: T8 DetectGPT, public dictionary, batch/notify flags, N=50 LR+ study
+
+Phase 1 of the 3-phase LLM-detection deepening plan. Adds the T8
+DetectGPT-style detector, the official phrase dictionary, opt-in flags
+on batch/notify/scan-pmc, and the first empirical LR+ study against
+real OpenAlex retraction data.
+
+### Added — T8 DetectGPT detector
+- New detector `T8` at `src/paperguard/detectors/t8_detectgpt.py`,
+  registered in the default registry (33 built-ins now).
+- Probability-curvature signal adapted to chat-completion APIs (no
+  token logprobs required). Asks the LM to paraphrase the passage K
+  times and to score original vs paraphrase naturalness on a 1-10
+  scale; computes a z-style detection score from the gap.
+- Opt-in via `--detectgpt-check` flag on `scan`, `scan-pmc`, `batch`,
+  `notify`. Sets `PAPERGUARD_DETECTGPT_CHECK=1`.
+- Severity tiers (defaults): score ≥ 0 → no finding;
+  0 > score ≥ -0.5 → NOTE; -0.5 > score ≥ -1.5 → SUSPICIOUS;
+  score < -1.5 → CRITICAL. ≥ 4 innocent explanations per finding.
+- 12 new tests in `tests/test_t8_detectgpt.py`.
+
+### Added — Official phrase dictionary
+- `docs/dictionaries/llm_phrases_v1.json` — 103 phrases (GPT 40,
+  Claude 24, Gemini 24, generic 15).
+- New `paperguard refresh-ai-dict --official` shortcut and default
+  `--source` URL pointing at the GitHub-hosted JSON. Running
+  `paperguard refresh-ai-dict` with no flags now pulls the official
+  dictionary.
+
+### Added — `--perplexity-check` / `--detectgpt-check` on batch + notify
+- The opt-in LLM-detector flags are now available on every command
+  that runs the text-detector flow (scan, scan-pmc, batch, notify).
+- T7 / T8 still default OFF; they require explicit opt-in to avoid
+  surprising API costs.
+
+### Added — recall_test_v8 empirical study
+- `scripts/recall_test_v8.py` and `scripts/recall_analyze_v8.py`
+  produce `docs/recall_test_v8.md`.
+- N = 50 OpenAlex-retracted + N = 50 subfield-matched controls;
+  Europe PMC full text where available (35 retracted, 9 controls
+  resolved — Nature-tier subfields underrepresented in PMC).
+- **Headline finding (T6 alone):** at the default 0.003 CONCERN
+  density threshold, T6 fires on 0% of post-publication retracted
+  Nature-tier papers and 0% of controls. T6 is therefore a
+  **pre-submission / preprint-screening signal**, not a post-
+  publication forensics signal — by the time a paper reaches a
+  copy-edited Nature-tier journal, lexical LLM markers have largely
+  been removed by editors.
+- T7 / T8 live LR+ deferred to a future GPT-4o-class endpoint that
+  exposes token logprobs and provides a paraphraser that drifts off
+  the LLM-likelihood manifold (cliproxy gpt-5.4-mini does neither).
+
+### Changed — T7 perplexity simplification
+- Removed the generation-divergence fallback added in development —
+  empirical probing showed the directional signal was inverted on
+  weak-model proxies. T7 now returns only the logprobs perplexity or
+  a NOTE-level "inconclusive" finding. T8 is the proper alternative
+  for endpoints without logprobs.
+
+### Tests
+- 362 passed (+14 since 2.0.15) / 0 failed.
+- Ruff + mypy --strict both clean.
+
 ## [2.0.15] — 2026-05-20 — LLM detection v2: dynamic T6 dictionary + T7 perplexity proxy
 
 Two complementary additions deepen the LLM-text detection layer. Both
