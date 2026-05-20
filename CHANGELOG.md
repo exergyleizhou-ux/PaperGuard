@@ -4,6 +4,18 @@ All notable changes to PaperGuard are documented in this file. Format follows
 [Keep a Changelog](https://keepachangelog.com/) and the project adheres to
 [Semantic Versioning](https://semver.org/).
 
+## [2.1.1] — 2026-05-20 — Technical report (Phase-4 docs)
+
+Pure docs release.
+
+### Added
+- `docs/paperguard_technical_report.md` — 7-section technical
+  report documenting methods, LLM-text family (T6/T7/T8), N=85
+  empirical study, T6 calibration, and reproducibility.
+- README links to the technical report and the LLM-detection guide.
+
+No code changes. Tests: 362 / ruff clean / mypy --strict clean.
+
 ## [2.1.0] — 2026-05-20 — Phase-3: N=100 LR+ retest, T6/T7/T8 transparent dataset
 
 Phase 3 (and final phase) of the LLM-detection deepening plan.

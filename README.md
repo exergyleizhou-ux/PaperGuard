@@ -329,7 +329,11 @@ tests/
 
 | Document | What it covers |
 |---|---|
+| [docs/paperguard_technical_report.md](docs/paperguard_technical_report.md) | **Technical report** — methods, the LLM-text family (T6 / T7 / T8), N=85 empirical study, calibration of T6's role |
 | [docs/quickstart.md](docs/quickstart.md) | **5-minute walk-through** — install, scan a fabricated CSV, scan a real retracted PDF (Wansink 2015), read the report |
+| [docs/llm_detection_v2.md](docs/llm_detection_v2.md) | **LLM-text detection guide** — T6 lexical + T7 perplexity + T8 DetectGPT, with the calibrated empirical position |
+| [docs/recall_test_v8.md](docs/recall_test_v8.md) | **2.0.16 — N=50 LR+ study (T6 only)** — first focused LR+ measurement against post-publication retraction data |
+| [docs/recall_test_v9.md](docs/recall_test_v9.md) | **2.1.0 — N=30 retest + transparent T7/T8 dataset** — extends v8 with T7/T8 columns annotated for cliproxy endpoint limitations |
 | [docs/recall_test_v2.md](docs/recall_test_v2.md) | **N=100+100 recall/precision study** — quantifies that PDF-only scanning is *not* a reliable retraction detector; explains why and what to do instead |
 | [docs/recall_test_v3.md](docs/recall_test_v3.md) | **2.0.4 follow-up** — single-rule recalibration takes LR+ from 0.77 (worse than coin flip) to ∞ (zero false positives) at the cost of dropping recall from a fake 68% to an honest 13% |
 | [docs/recall_test_v4.md](docs/recall_test_v4.md) | **2.0.5 follow-up** — T5 stylometry tightening removes near-universal NOTE noise from reports while preserving recall/FP at the v3 level (T5 was only ever NOTE-level so it didn't drive overall severity anyway) |
