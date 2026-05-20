@@ -9,6 +9,19 @@
 应近似服从 P(d) = log10(1 + 1/d)。
 人为编造的数据通常首位分布偏均匀。
 
+2.0.13 数学升级 — 分段稳定性检验:
+原 A2 只对整列做一次 Benford 检验。本版加 N=3 段稳定性:
+把列等分 3 段,各自跑 Benford χ²,看跨段 χ² 方差。
+
+- 真自然数据各段 χ² 应**抖动**(每段 N 较小,采样误差大)
+- 大批量造假数据各段 χ² **过度稳定**(同一模板生成多段,
+  抽样误差被人为消除)
+
+数学:Var(χ²) 在 N=20-30 段下应大致 ~2*(df-1)/N ≈ 2*8/3 ≈ 5.3。
+观测 Var < 1 → 过度稳定信号。
+
+详见 docs/math_upgrades_v2.md。
+
 不适用范围（很重要，本检测器内部会跳过）：
 - 数据动态范围跨 < 2 个数量级（log10(max/min) < 2）
 - 数据由分布偏置严格约束（如人的身高 cm、收缩压 mmHg）
@@ -46,6 +59,29 @@ def _benford_expected(n: int) -> np.ndarray:
     """N 个独立样本的期望计数（d=1..9）。"""
     probs = np.array([math.log10(1 + 1 / d) for d in range(1, 10)])
     return probs * n
+
+
+def _segment_benford_chi2(digits: list[int], n_segments: int = 3) -> list[float]:
+    """Split the digit list into N equal segments, return per-segment χ²."""
+    if n_segments < 2 or len(digits) < n_segments * 15:
+        return []
+    seg_size = len(digits) // n_segments
+    chi2s: list[float] = []
+    for i in range(n_segments):
+        start = i * seg_size
+        end = (i + 1) * seg_size if i < n_segments - 1 else len(digits)
+        seg = digits[start:end]
+        n = len(seg)
+        if n < 15:
+            continue
+        counts = Counter(seg)
+        observed = np.array(
+            [counts.get(d, 0) for d in range(1, 10)], dtype=float
+        )
+        expected = _benford_expected(n)
+        chi2 = float(np.sum((observed - expected) ** 2 / expected))
+        chi2s.append(chi2)
+    return chi2s
 
 
 class A2BenfordDetector(BaseDetector):
@@ -171,5 +207,64 @@ class A2BenfordDetector(BaseDetector):
                     ),
                 )
             )
+
+            # --- NEW (2.0.13): segment stability check ---
+            # Even when the per-column χ² doesn't flag (or after it
+            # does), check sub-segment stability: real natural data
+            # should show segment-to-segment χ² variation. Batch-
+            # fabricated data tends to show identical χ² across
+            # segments.
+            seg_chi2s = _segment_benford_chi2(digits_clean, n_segments=3)
+            if len(seg_chi2s) >= 3:
+                seg_var = float(np.var(seg_chi2s, ddof=1))
+                seg_mean = float(np.mean(seg_chi2s))
+                # Expected variance under sampling: roughly 2*df for
+                # χ²(8) is 16; per-segment N is ~n/3 so the sample
+                # variance of the per-segment statistic should be
+                # bounded below by ~1-2 in practice. We flag when the
+                # observed variance is implausibly small (< 0.5) AND
+                # the mean is non-trivial (> 5) so we don't fire on
+                # genuinely null-distributed segments.
+                if seg_var < 0.5 and seg_mean > 5.0:
+                    findings.append(
+                        Finding(
+                            detector_id=self.id,
+                            detector_name=self.name + " — segment stability",
+                            severity=Severity.CONCERN,
+                            summary=(
+                                f"列 '{col}' Benford χ² 跨段过度稳定 "
+                                f"(Var={seg_var:.3f}, 段均值 {seg_mean:.2f})"
+                            ),
+                            detail=(
+                                f"把 {col} 列按顺序分 3 段,各跑 Benford "
+                                f"χ²(8) 得到 {seg_chi2s}。段间方差 "
+                                f"{seg_var:.3f}。真自然数据各段 χ² 应"
+                                "有显著抖动(每段 N 较小,采样误差大)。"
+                                "观测方差过低提示同一模板生成多段—"
+                                "大批量造假签名。2.0.13 新加。"
+                            ),
+                            test_statistic=seg_var,
+                            test_name="segment χ² variance",
+                            evidence={
+                                "column": str(col),
+                                "n_segments": 3,
+                                "segment_chi2s": seg_chi2s,
+                                "segment_variance": seg_var,
+                                "segment_mean": seg_mean,
+                            },
+                            innocent_explanations=[
+                                "数据顺序是按某个排序后存的,各段同质",
+                                "整列样本量太小,各段都接近 0 抽样误差",
+                                "数据已经是高质量批次,模式天然稳定",
+                                "N=3 段过少,Var 估计本身有抖动",
+                            ],
+                            academic_reference=(
+                                "Pareto stability check on Benford "
+                                "fit. Variance across segments should "
+                                "reflect natural sampling error in "
+                                "real-world data."
+                            ),
+                        )
+                    )
 
         return findings

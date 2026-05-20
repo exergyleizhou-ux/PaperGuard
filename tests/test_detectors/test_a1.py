@@ -17,8 +17,18 @@ def test_a1_flags_fabricated(fabricated_data: pd.DataFrame) -> None:
     severities = [f.severity for f in result.findings]
     assert max(severities) >= Severity.CONCERN
 
-    for f in result.findings:
-        assert "frequency_table" in f.evidence
+    # 2.0.13 加了 Lag-1 autocorr + joint-column findings,这些用不同
+    # 的 evidence 键。原 χ² findings 仍然要有 frequency_table。
+    chi2_findings = [
+        f
+        for f in result.findings
+        if "frequency_table" in f.evidence
+    ]
+    assert len(chi2_findings) >= 1, (
+        f"expected ≥1 χ² finding with frequency_table; got "
+        f"{[f.detector_name for f in result.findings]}"
+    )
+    for f in chi2_findings:
         assert "n" in f.evidence
         assert f.p_value is not None
         assert f.p_value < 0.01

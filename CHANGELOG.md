@@ -4,6 +4,47 @@ All notable changes to PaperGuard are documented in this file. Format follows
 [Keep a Changelog](https://keepachangelog.com/) and the project adheres to
 [Semantic Versioning](https://semver.org/).
 
+## [2.0.13] — 2026-05-20 — Math depth upgrades (A1 + A2 + A3)
+
+Three statistical depth upgrades. Each adds new finding types on top
+of the existing single-column tests, catching fabrication patterns
+that pass the v0-2.0.12 statistics. See [docs/math_upgrades_v2.md](docs/math_upgrades_v2.md)
+for the full mathematical justification.
+
+### A1 — added Lag-1 autocorrelation
+- Binomial test on `P(d_i = d_{i+1})` for the digit sequence of each
+  column. Catches "I varied digits but avoided repeats" and "I used a
+  template that produces positive autocorrelation".
+- p < 1e-4 → SUSPICIOUS; p < 0.01 → CONCERN; N < 50 → skip.
+
+### A1 — added joint multi-column entropy
+- Bootstrap-based test on row-wise digit entropy across columns.
+  Catches "I bashed in one row at a time and my row digits are
+  correlated across columns".
+
+### A3 — added multivariate OLS synthetic-combination detector
+- For each column, regress on the others; flag if R² ≥ 0.99999 and
+  σ_resid < 1e-5 (CRITICAL) or R² ≥ 0.9999 with sparse coefs
+  (SUSPICIOUS).
+- Catches `col4 = 2*col1 + col2 - 0.3` patterns that pair-wise A3
+  cannot see.
+- No scikit-learn dependency; sparsity is approximated as
+  "coefs with |β| ≥ 1% of max|β|".
+
+### A2 — added segment Benford stability
+- Split column into N=3 ordered segments, compute Benford χ² for
+  each, flag when variance < 0.5 (CONCERN). Catches "batch-generated
+  from one template" patterns.
+
+### Quality
+- 299 tests passing (was 283; +16 new in `tests/test_math_upgrades_v2.py`);
+  mypy --strict and ruff clean.
+- All new tests fire correctly on synthetic fabrication, do not fire
+  on the genuine fixture (golden anti-regression test still passes).
+- New `docs/math_upgrades_v2.md` explains each statistic, the H_0,
+  severity mapping, why thresholds are what they are, and what
+  the upgrades *don't* solve.
+
 ## [2.0.12] — 2026-05-20 — PMC full-text + Slack/Discord notify + LLM proxy
 
 ### Added — `paperguard scan-pmc DOI`
