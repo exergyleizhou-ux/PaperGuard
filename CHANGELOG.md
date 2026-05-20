@@ -4,6 +4,25 @@ All notable changes to PaperGuard are documented in this file. Format follows
 [Keep a Changelog](https://keepachangelog.com/) and the project adheres to
 [Semantic Versioning](https://semver.org/).
 
+## [2.0.17] — 2026-05-20 — Phase-2: HF Space demo app + deploy guide
+
+Phase 2 of the 3-phase LLM-detection deepening plan. Pure devex /
+docs release — no detector changes.
+
+### Added — HuggingFace Space demo
+- `examples/hf_space_app.py` — Gradio app with three opt-in detector
+  toggles (T7 perplexity, T8 DetectGPT, LLM content review), DOI
+  fetch via Europe PMC, raw-text paste mode, instant-demo example
+  carousel of 3 public retracted DOIs.
+- `examples/hf_space_requirements.txt` — pinned deps for the Space.
+- Surfaces the empirical v8 recall finding to demo visitors so they
+  understand T6 alone is a pre-submission screening signal, not a
+  post-publication forensics signal.
+
+### Deploy
+Copy `examples/hf_space_app.py` → Space's `app.py`, copy
+`examples/hf_space_requirements.txt` → `requirements.txt`, push.
+
 ## [2.0.16] — 2026-05-20 — Phase-1 batch: T8 DetectGPT, public dictionary, batch/notify flags, N=50 LR+ study
 
 Phase 1 of the 3-phase LLM-detection deepening plan. Adds the T8
