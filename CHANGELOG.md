@@ -4,6 +4,45 @@ All notable changes to PaperGuard are documented in this file. Format follows
 [Keep a Changelog](https://keepachangelog.com/) and the project adheres to
 [Semantic Versioning](https://semver.org/).
 
+## [2.0.10] — 2026-05-19 — PubPeer commentary as a finding + F4 auto-corpus
+
+Two enhancements that move PaperGuard beyond "PDF-content-only" into
+the **external-signal layer**. v7 recall study confirmed PDF-internal
+features cannot distinguish retracted from non-retracted; external
+signals (PubPeer, cross-paper image reuse) are where the real
+discriminative power lives.
+
+### Added — PubPeer commentary as a Finding
+- When `paperguard scan --doi X` already calls PubPeer (since 0.2.0).
+  2.0.10 now **emits a Finding** so PubPeer commentary counts toward
+  `overall_severity`.
+- Tier mapping informed by post-publication-review patterns:
+  - 1-2 comments → `CONCERN` (routine discussion)
+  - 3-9 comments → `SUSPICIOUS` (sustained concern thread)
+  - 10+ comments → `CRITICAL` (typical Bik-flagged pre-retraction)
+- Lists 4 innocent explanations including "anonymous commentary may
+  be from competitors with non-integrity motives" and "high comment
+  count can reflect topical importance".
+
+### Added — F4 auto-corpus
+- `paperguard scan` on a PDF/docx now automatically feeds extracted
+  images into a persistent SQLite pHash corpus at
+  `~/.paperguard/image_corpus.db`, and at the same time queries the
+  corpus for cross-paper matches.
+- No flag required. Corpus is **per-user**, never shared.
+- The signal accumulates over time: scan paper A then paper B; if
+  paper B reuses a figure from paper A (different DOIs), F4 fires
+  SUSPICIOUS or CRITICAL depending on hamming distance.
+- Previously F4 only ran when callers explicitly constructed the
+  ``CrossPaperImageInput``. The auto-corpus path now exposes the
+  Masliah-style cross-publication image-duplication signal that the
+  v2-v7 studies could not catch (because each scan was isolated).
+
+### Quality
+- 267 tests still passing; mypy --strict and ruff clean.
+- No breaking changes; auto-corpus is opt-in by virtue of running
+  scan multiple times (single-scan users see no F4 findings).
+
 ## [2.0.9] — 2026-05-19 — Raster cap default 40 → 5 pages
 
 ### Changed

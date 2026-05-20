@@ -48,9 +48,18 @@ def scan_one(pdf: Path, paper_year: int | None) -> dict[str, Any]:
         ]
         if paper_year is not None:
             cmd.extend(["--paper-year", str(paper_year)])
-        res = subprocess.run(cmd, env=env, capture_output=True, timeout=300, text=True)
+        # text=False + manual decode: stderr from paperguard CLI is mixed
+        # English/Chinese; default GBK on Windows crashes the reader thread.
+        res = subprocess.run(
+            cmd, env=env, capture_output=True, timeout=600, text=False
+        )
         if res.returncode != 0:
-            return {"error": f"exit={res.returncode}", "stderr": res.stderr[-1500:]}
+            stderr_str = (
+                res.stderr.decode("utf-8", errors="replace")[-1500:]
+                if res.stderr
+                else ""
+            )
+            return {"error": f"exit={res.returncode}", "stderr": stderr_str}
         with out_json.open(encoding="utf-8") as f:
             return json.load(f)
     finally:

@@ -179,13 +179,17 @@ def _run_detectors_on_file(
         report.detector_results.append(result)
         report.all_findings.extend(result.findings)
 
-    # --- 4) Image forensics (F1 pHash on docx/pdf embedded images) --------
+    # --- 4) Image forensics (F1 intra-paper + F4 cross-paper) -------------
     f1 = registry.get("F1")
-    if f1 is not None and suffix in {".docx", ".pdf"}:
+    f4 = registry.get("F4")
+    if (f1 is not None or f4 is not None) and suffix in {".docx", ".pdf"}:
         from tempfile import TemporaryDirectory
 
         from paperguard.detectors.f1_image_duplication import (
             ImageDuplicationInput,
+        )
+        from paperguard.detectors.f4_cross_paper_image import (
+            CrossPaperImageInput,
         )
         from paperguard.extractor.images import (
             extract_docx_images,
@@ -199,17 +203,56 @@ def _run_detectors_on_file(
                 if suffix == ".docx"
                 else extract_pdf_images(file_path, tdir_path)
             )
-            if len(imgs) >= 2:
+            if audit is not None and imgs:
+                audit.log_event(
+                    "images_extracted",
+                    {"file": str(file_path), "n_images": len(imgs)},
+                )
+
+            # F1: intra-paper duplication (needs ≥ 2 images)
+            if f1 is not None and len(imgs) >= 2:
                 result = f1.detect(
                     ImageDuplicationInput(image_paths=imgs), seed=seed
                 )
                 report.detector_results.append(result)
                 report.all_findings.extend(result.findings)
-                if audit is not None:
-                    audit.log_event(
-                        "images_extracted",
-                        {"file": str(file_path), "n_images": len(imgs)},
-                    )
+
+            # F4: cross-paper duplication via persistent corpus.
+            # Auto-builds at ~/.paperguard/image_corpus.db. Every scan
+            # both reads and writes the corpus, so over time hits
+            # accumulate signal across papers without manual setup.
+            if f4 is not None and imgs:
+                from paperguard.config import get_settings as _gs
+
+                corpus_path = _gs().cache_dir / "image_corpus.db"
+                paper_id = report.paper_identifier
+                authors = list(report.paper_authors)
+                f4_input = CrossPaperImageInput(
+                    image_paths=imgs,
+                    store_path=corpus_path,
+                    current_paper_id=paper_id,
+                    current_authors=authors or None,
+                )
+                try:
+                    result = f4.detect(f4_input, seed=seed)
+                except Exception as e:  # noqa: BLE001
+                    if audit is not None:
+                        audit.log_event(
+                            "f4_failed",
+                            {"file": str(file_path), "error": str(e)},
+                        )
+                else:
+                    report.detector_results.append(result)
+                    report.all_findings.extend(result.findings)
+                    if audit is not None:
+                        audit.log_event(
+                            "f4_ran",
+                            {
+                                "corpus_path": str(corpus_path),
+                                "n_images_indexed": len(imgs),
+                                "n_findings": len(result.findings),
+                            },
+                        )
 
     # --- 5) PDF-specific: C1 Carlisle on auto-extracted baseline tables ---
     if suffix == ".pdf":
@@ -602,6 +645,71 @@ def _fetch_metadata(
                         f"[yellow]PubPeer has {count} comment(s) on this DOI: "
                         f"{pp_result.get('search_url')}[/]"
                     )
+                    # Emit a finding so PubPeer commentary affects
+                    # overall_severity. The tier mapping is informed by
+                    # empirical observation: most papers have 0; a
+                    # handful of comments is normal scholarly discourse;
+                    # double-digit threads (e.g. Bik-flagged image
+                    # duplication papers) reliably precede or follow
+                    # retraction.
+                    if count >= 10:
+                        pp_sev = Severity.CRITICAL
+                    elif count >= 3:
+                        pp_sev = Severity.SUSPICIOUS
+                    else:
+                        pp_sev = Severity.CONCERN
+                    pp_finding = Finding(
+                        detector_id="PUBPEER",
+                        detector_name="PubPeer Commentary Signal",
+                        severity=pp_sev,
+                        summary=(
+                            f"PubPeer has {count} public comment(s) on "
+                            f"this DOI"
+                        ),
+                        detail=(
+                            f"PubPeer (https://pubpeer.com) hosts public "
+                            f"anonymous and signed commentary on published "
+                            f"papers. This DOI has {count} comment(s) "
+                            "indexed. PubPeer threads frequently precede "
+                            "retractions (Bik et al. 2016 used PubPeer to "
+                            "catalogue image-duplication retractions). The "
+                            "specific comments may concern statistics, "
+                            "image integrity, methodology, or be routine "
+                            "post-publication review. Read the thread "
+                            "before forming a judgement.\n"
+                            f"Tier mapping: 1-2 → CONCERN, 3-9 → "
+                            "SUSPICIOUS, 10+ → CRITICAL."
+                        ),
+                        evidence={
+                            "pubpeer_comment_count": count,
+                            "pubpeer_url": pp_result.get("search_url"),
+                            "doi": doi,
+                        },
+                        innocent_explanations=[
+                            "Routine post-publication discussion (e.g. "
+                            "methods clarification, citation requests)",
+                            "Anonymous commentary may be from competitors "
+                            "or actors with non-integrity motives",
+                            "Authors may have already addressed the "
+                            "comments in a correction or response",
+                            "High comment count can reflect topical "
+                            "importance rather than concerns",
+                        ],
+                        academic_reference=(
+                            "Bik EM et al. (2016) The Prevalence of "
+                            "Inappropriate Image Duplication in "
+                            "Biomedical Research Publications. mBio. "
+                            "PubPeer's commentary is one of the primary "
+                            "sources for that catalogue."
+                        ),
+                    )
+                    pp_result_obj = DetectorResult(
+                        detector_id="PUBPEER",
+                        applicable=True,
+                        findings=[pp_finding],
+                    )
+                    report.detector_results.append(pp_result_obj)
+                    report.all_findings.append(pp_finding)
             pp.close()
         except Exception as e:  # noqa: BLE001
             console.print(f"[yellow]Metadata fetch failed: {e}[/]")
