@@ -145,22 +145,70 @@ _AI_STYLE_PHRASES = (
 )
 
 _LEAK_RE = [re.compile(p, re.IGNORECASE) for p in _LLM_LEAK_PATTERNS]
-_PHRASE_RE = [
-    (re.compile(rf"\b{re.escape(p)}\b", re.IGNORECASE), p)
-    for p in _AI_STYLE_PHRASES
-]
-_PHRASE_RE_GPT = [
-    (re.compile(rf"\b{re.escape(p)}\b", re.IGNORECASE), p)
-    for p in _AI_STYLE_PHRASES_GPT
-]
-_PHRASE_RE_CLAUDE = [
-    (re.compile(rf"\b{re.escape(p)}\b", re.IGNORECASE), p)
-    for p in _AI_STYLE_PHRASES_CLAUDE
-]
-_PHRASE_RE_GEMINI = [
-    (re.compile(rf"\b{re.escape(p)}\b", re.IGNORECASE), p)
-    for p in _AI_STYLE_PHRASES_GEMINI
-]
+
+
+# 2.0.15 — merge built-in + user dynamic dictionary at module load.
+# The detector calls ``_load_phrase_tables()`` lazily so tests can reset
+# state. The result is cached in module-level globals after the first
+# call, mirroring the pre-dynamic-dict behaviour for performance.
+def _load_phrase_tables(
+    *, refresh: bool = False
+) -> tuple[
+    list[tuple[re.Pattern[str], str]],
+    list[tuple[re.Pattern[str], str]],
+    list[tuple[re.Pattern[str], str]],
+    list[tuple[re.Pattern[str], str]],
+]:
+    """Return (combined, gpt, claude, gemini) compiled regex tables.
+
+    Honours ~/.paperguard/ai_dictionary.json via the dynamic_dictionary
+    module. Failures are silent — we fall back to built-in phrases.
+    """
+    try:
+        from paperguard.llm.dynamic_dictionary import get_merged_phrases
+
+        merged = get_merged_phrases(
+            {
+                "gpt": _AI_STYLE_PHRASES_GPT,
+                "claude": _AI_STYLE_PHRASES_CLAUDE,
+                "gemini": _AI_STYLE_PHRASES_GEMINI,
+            }
+        )
+        gpt = merged["gpt"]
+        claude = merged["claude"]
+        gemini = merged["gemini"]
+    except Exception:  # noqa: BLE001 — never break the detector on dict errors
+        gpt = _AI_STYLE_PHRASES_GPT
+        claude = _AI_STYLE_PHRASES_CLAUDE
+        gemini = _AI_STYLE_PHRASES_GEMINI
+
+    combined = tuple(gpt) + tuple(claude) + tuple(gemini)
+    gpt_re = [
+        (re.compile(rf"\b{re.escape(p)}\b", re.IGNORECASE), p) for p in gpt
+    ]
+    claude_re = [
+        (re.compile(rf"\b{re.escape(p)}\b", re.IGNORECASE), p) for p in claude
+    ]
+    gemini_re = [
+        (re.compile(rf"\b{re.escape(p)}\b", re.IGNORECASE), p) for p in gemini
+    ]
+    combined_re = [
+        (re.compile(rf"\b{re.escape(p)}\b", re.IGNORECASE), p) for p in combined
+    ]
+    return combined_re, gpt_re, claude_re, gemini_re
+
+
+_PHRASE_RE, _PHRASE_RE_GPT, _PHRASE_RE_CLAUDE, _PHRASE_RE_GEMINI = (
+    _load_phrase_tables()
+)
+
+
+def _reload_phrase_tables() -> None:
+    """Force-reload phrase tables (used by tests + the CLI refresh command)."""
+    global _PHRASE_RE, _PHRASE_RE_GPT, _PHRASE_RE_CLAUDE, _PHRASE_RE_GEMINI
+    _PHRASE_RE, _PHRASE_RE_GPT, _PHRASE_RE_CLAUDE, _PHRASE_RE_GEMINI = (
+        _load_phrase_tables(refresh=True)
+    )
 
 
 def _provider_attribution(text: str) -> tuple[str, dict[str, int]]:

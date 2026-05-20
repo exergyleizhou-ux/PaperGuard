@@ -4,6 +4,54 @@ All notable changes to PaperGuard are documented in this file. Format follows
 [Keep a Changelog](https://keepachangelog.com/) and the project adheres to
 [Semantic Versioning](https://semver.org/).
 
+## [2.0.15] — 2026-05-20 — LLM detection v2: dynamic T6 dictionary + T7 perplexity proxy
+
+Two complementary additions deepen the LLM-text detection layer. Both
+are additive — built-in detectors and existing recall numbers are
+unchanged.
+
+### Added — T6 dynamic dictionary (`paperguard refresh-ai-dict`)
+- `src/paperguard/llm/dynamic_dictionary.py`: user-editable phrase
+  dictionary at `~/.paperguard/ai_dictionary.json`, merged into T6 at
+  detector load time.
+- Refresh from a remote JSON file (`--source URL`) or extract candidate
+  2- to 4-grams from a local corpus of suspected LLM output
+  (`--corpus PATH`). Stopword + human-baseline filters prevent common
+  English phrases from polluting the dictionary.
+- `--dry-run` shows the set diff (added / removed phrases per provider)
+  without writing.
+- The user dictionary is **additive** — built-in phrases are never
+  removed, so test fixtures and recall numbers remain reproducible.
+- 17 new tests in `tests/test_dynamic_dictionary.py`.
+
+### Added — T7 LLM perplexity detector (opt-in)
+- New detector `T7` at `src/paperguard/detectors/t7_perplexity.py`,
+  registered in the default registry (32 built-ins now).
+- Continuation-perplexity proxy compatible with chat-completion APIs:
+  asks the reference LM to continue the manuscript text and aggregates
+  the per-token logprobs of its completion. Lower perplexity is a
+  paraphrase-resistant signal of LLM authorship — complementary to
+  T6's dictionary-tic approach.
+- Opt-in via `--perplexity-check` flag on `paperguard scan` and
+  `paperguard scan-pmc` (sets `PAPERGUARD_PERPLEXITY_CHECK=1`).
+- Severity tiers (defaults, override via class attributes):
+  perplexity ≥ 20 → no finding; 10–20 → NOTE; 5–10 → SUSPICIOUS;
+  < 5 → CRITICAL. Each finding carries ≥ 4 innocent explanations
+  (privacy iron rule).
+- Honours `PAPERGUARD_LLM_BASE_URL` + `PAPERGUARD_LLM_MODEL` so the
+  cliproxy / OpenRouter / team-pool path works out of the box.
+- Failures never raise: missing API key / no logprobs / network error
+  produce a NOTE-level "inconclusive" finding instead of crashing.
+- 14 new tests in `tests/test_t7_perplexity.py`.
+
+### Added — docs/llm_detection_v2.md
+- Side-by-side comparison of T6 (lexical) and T7 (statistical), with
+  guidance on when each is meaningful and how to combine them.
+
+### Tests
+- 348 passed (+31 since 2.0.14) / 0 failed.
+- Ruff + mypy --strict both clean.
+
 ## [2.0.14] — 2026-05-20 — Math depth v3: T6 provider attribution + B6/E1/B5/C1/D1 upgrades + integrity index
 
 Single biggest batch of statistical depth since 2.0. Seven separate

@@ -143,11 +143,23 @@ def _run_detectors_on_file(
         # T3 wants paper_year for year-stratified severity (since 2.0.7).
         # Build a DataAvailabilityInput so the year is plumbed through;
         # other text detectors take raw text.
+        import os as _os_local
+
         from paperguard.detectors.t3_data_availability import (
             DataAvailabilityInput,
         )
 
-        for d_id in ("B4", "T3", "T4", "T5", "T6"):
+        text_detector_ids: list[str] = ["B4", "T3", "T4", "T5", "T6"]
+        # T7 is opt-in via --perplexity-check; skip it otherwise so we
+        # don't waste an API call per scan even when the env var is set
+        # by a parent shell.
+        if _os_local.environ.get(
+            "PAPERGUARD_PERPLEXITY_CHECK", ""
+        ).lower() in {
+            "1", "true", "yes",
+        }:
+            text_detector_ids.append("T7")
+        for d_id in text_detector_ids:
             detector = registry.get(d_id)
             if detector is None:
                 continue
@@ -356,6 +368,17 @@ def main() -> None:
         "forbidden from making verdicts about authors."
     ),
 )
+@click.option(
+    "--perplexity-check",
+    is_flag=True,
+    default=False,
+    help=(
+        "Opt-in: run T7 LLM-perplexity detector on the manuscript text. "
+        "Requires OPENAI_API_KEY (and optionally PAPERGUARD_LLM_BASE_URL "
+        "+ PAPERGUARD_LLM_MODEL). Low continuation-perplexity is a "
+        "paraphrase-resistant LLM-authorship signal. Not a verdict."
+    ),
+)
 def scan(
     files: tuple[Path, ...],
     doi: str | None,
@@ -366,13 +389,20 @@ def scan(
     check_paper_mill: bool,
     paper_year: int | None,
     llm_review: bool,
+    perplexity_check: bool,
 ) -> None:
     """扫描本地数据文件 + 可选 DOI 元数据。"""
+    import os as _os
+
     console = Console(legacy_windows=False)
     settings = get_settings()
     run_id = uuid.uuid4().hex[:12]
     audit_dir = settings.cache_dir / "audits" / run_id
     audit = AuditLog(run_id=run_id, output_dir=audit_dir)
+
+    # T7 opt-in: flip the env var the detector checks during applicability.
+    if perplexity_check:
+        _os.environ["PAPERGUARD_PERPLEXITY_CHECK"] = "1"
 
     report = AuditReport(
         paper_identifier=doi or (str(files[0]) if files else "local"),
@@ -1069,11 +1099,21 @@ def _scan_single_file(
         "Requires PAPERGUARD_LLM_PROVIDER + API key."
     ),
 )
+@click.option(
+    "--perplexity-check",
+    is_flag=True,
+    default=False,
+    help=(
+        "Run T7 LLM-perplexity detector on the PMC text. "
+        "Requires OPENAI_API_KEY."
+    ),
+)
 @click.option("--seed", type=int, default=42, show_default=True)
 def scan_pmc(
     doi: str,
     output_json: Path | None,
     llm_review: bool,
+    perplexity_check: bool,
     seed: int,
 ) -> None:
     """Scan an OA paper by DOI via Europe PMC full text (no PDF needed).
@@ -1122,8 +1162,17 @@ def scan_pmc(
     )
 
     text = article.full_text
+    # T7 opt-in: flip the env var the detector checks during applicability.
+    if perplexity_check:
+        import os as _os
+
+        _os.environ["PAPERGUARD_PERPLEXITY_CHECK"] = "1"
+
     # Run the same text-detector flow on the PMC body
-    for d_id in ("B4", "T4", "T5", "T6"):
+    text_detector_ids = ["B4", "T4", "T5", "T6"]
+    if perplexity_check:
+        text_detector_ids.append("T7")
+    for d_id in text_detector_ids:
         detector = registry.get(d_id)
         if detector is None:
             continue
@@ -1613,6 +1662,143 @@ def fetch_ori_cmd(out: Path | None) -> None:
         f"[green]Wrote template {dst}.[/]\n"
         "[dim]Now fill in real entries from "
         "https://ori.hhs.gov/case-summaries[/]"
+    )
+
+
+@main.command("refresh-ai-dict")
+@click.option(
+    "--source",
+    "source_url",
+    default=None,
+    help=(
+        "URL serving a JSON document shaped "
+        "{\"phrases\": {\"gpt\": [...], \"claude\": [...], "
+        "\"gemini\": [...], \"other\": [...]}}. "
+        "If omitted, --corpus must be supplied."
+    ),
+)
+@click.option(
+    "--corpus",
+    "corpus_path",
+    type=click.Path(exists=True, path_type=Path),
+    default=None,
+    help=(
+        "Path to a text file of suspected LLM output. "
+        "Candidate 2-4-gram phrases are extracted and merged "
+        "into the user dictionary."
+    ),
+)
+@click.option(
+    "--provider",
+    type=click.Choice(("gpt", "claude", "gemini", "other")),
+    default="other",
+    show_default=True,
+    help="Provider bucket to assign --corpus candidates to.",
+)
+@click.option(
+    "--min-count",
+    type=int,
+    default=3,
+    show_default=True,
+    help="Minimum corpus occurrences for an n-gram to be a candidate.",
+)
+@click.option(
+    "--min-per-million",
+    type=float,
+    default=200.0,
+    show_default=True,
+    help="Minimum per-million-token frequency for an n-gram to be a candidate.",
+)
+@click.option(
+    "--dry-run",
+    is_flag=True,
+    help="Show the diff but do not write to disk.",
+)
+@click.option(
+    "--out",
+    type=click.Path(path_type=Path),
+    default=None,
+    help="Custom output path. Defaults to ~/.paperguard/ai_dictionary.json.",
+)
+def refresh_ai_dict_cmd(
+    source_url: str | None,
+    corpus_path: Path | None,
+    provider: str,
+    min_count: int,
+    min_per_million: float,
+    dry_run: bool,
+    out: Path | None,
+) -> None:
+    """Refresh the T6 user dictionary from a remote JSON URL or local corpus.
+
+    The dictionary is additive — built-in phrases stay in effect; the user
+    dictionary only **adds** more. Run this command periodically (or when a
+    new LLM tic shows up) to keep T6 current.
+    """
+    from paperguard.llm.dynamic_dictionary import (
+        DictionarySnapshot,
+        diff_snapshots,
+        load_user_dictionary,
+        merge_snapshots,
+        refresh_from_corpus,
+        refresh_from_url,
+        save_user_dictionary,
+    )
+
+    console = Console(legacy_windows=False)
+
+    if not source_url and not corpus_path:
+        console.print(
+            "[red]Provide at least one of --source URL or --corpus PATH.[/]"
+        )
+        raise click.Abort()
+
+    current = load_user_dictionary(out)
+    incoming: list[DictionarySnapshot] = []
+
+    if source_url:
+        console.print(f"[cyan]Fetching dictionary from {source_url}...[/]")
+        try:
+            incoming.append(refresh_from_url(source_url))
+        except RuntimeError as e:
+            console.print(f"[red]Source fetch failed: {e}[/]")
+            raise click.Abort() from e
+
+    if corpus_path:
+        console.print(
+            f"[cyan]Extracting candidates from {corpus_path} → "
+            f"provider={provider}...[/]"
+        )
+        text = corpus_path.read_text(encoding="utf-8", errors="ignore")
+        incoming.append(
+            refresh_from_corpus(
+                text,
+                provider=provider,
+                min_count=min_count,
+                min_per_million=min_per_million,
+            )
+        )
+
+    merged = merge_snapshots(current, *incoming)
+    diff = diff_snapshots(current, merged)
+
+    console.print("[bold]Dictionary diff:[/]")
+    for line in diff.summary_lines():
+        console.print(line)
+
+    if dry_run:
+        console.print("[yellow]--dry-run: not writing.[/]")
+        return
+    if diff.is_empty:
+        console.print("[dim]No changes — leaving disk file untouched.[/]")
+        return
+
+    merged.source = source_url or "corpus"
+    path = save_user_dictionary(merged, out)
+    console.print(f"[green]Wrote {path}.[/]")
+    console.print(
+        "[dim]The next paperguard scan will pick up the new phrases "
+        "automatically (T6 detector lazy-loads on import).[/]"
     )
 
 
