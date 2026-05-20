@@ -1,3 +1,3 @@
 """PaperGuard — statistical anomaly screener for tabular research data."""
 
-__version__ = "2.0.17"
+__version__ = "2.1.0"

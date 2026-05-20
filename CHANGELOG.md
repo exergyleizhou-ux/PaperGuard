@@ -4,6 +4,45 @@ All notable changes to PaperGuard are documented in this file. Format follows
 [Keep a Changelog](https://keepachangelog.com/) and the project adheres to
 [Semantic Versioning](https://semver.org/).
 
+## [2.1.0] — 2026-05-20 — Phase-3: N=100 LR+ retest, T6/T7/T8 transparent dataset
+
+Phase 3 (and final phase) of the LLM-detection deepening plan.
+**Minor version bump** because the v9 dataset and the recall_analyze
+machinery are new public artifacts the project commits to maintaining.
+
+### Added — recall_test_v9 N=100 study
+- `scripts/recall_test_v9.py` — N = 100 retracted + 100 controls,
+  year filter 2020+, optional T7 + T8 runs.
+- `scripts/recall_analyze_v9.py` — produces `docs/recall_test_v9.md`
+  with per-detector LR+ tables. When T7/T8 returned no scores
+  (because the configured endpoint is weak), the report annotates
+  that explicitly rather than computing meaningless numbers.
+- `docs/recall_test_v9.md` — first version using cliproxy
+  `gpt-5.4-mini`. T6 LR+ confirms the v8 finding at larger N.
+  T7 / T8 outcomes documented as "no logprobs / no scores" pending
+  GPT-4o-class endpoint access.
+
+### Empirical headline
+With cliproxy `gpt-5.4-mini`:
+- T6 at default 0.003 CONCERN threshold: same direction as v8 —
+  post-publication Nature-tier signal is near-zero. T6 is calibrated
+  as a pre-submission / preprint screening tool.
+- T7 / T8: not measurable on this endpoint. Code remains shipped
+  and unit-tested; live LR+ awaits a logprobs-capable endpoint with
+  a stronger paraphraser.
+
+### Position of the project
+PaperGuard's value proposition for the LLM-text layer is now
+explicit: **detection is a triage signal, not a verdict**. The
+N=100 v9 study is the dataset future detectors can be measured
+against — re-run `scripts/recall_analyze_v9.py` on stronger
+endpoints to extend the LR+ tables.
+
+### Tests
+- 362 passed (unchanged from 2.0.17 — Phase 3 adds dataset
+  scripts, not core detector code).
+- Ruff + mypy --strict clean.
+
 ## [2.0.17] — 2026-05-20 — Phase-2: HF Space demo app + deploy guide
 
 Phase 2 of the 3-phase LLM-detection deepening plan. Pure devex /

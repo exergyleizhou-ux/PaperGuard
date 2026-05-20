@@ -1,4 +1,24 @@
-# LLM-text detection in PaperGuard (v2: T6 + T7)
+# LLM-text detection in PaperGuard (T6 + T7 + T8)
+
+> **Empirical calibration (2026-05-20)**
+>
+> From [`recall_test_v8.md`](recall_test_v8.md) (N = 50 + 50 OpenAlex
+> retracted / matched controls via Europe PMC):
+>
+> - **T6 alone** at the default 0.003 CONCERN threshold: TPR 0%,
+>   FPR 0%, LR+ = 0. **T6 is a pre-submission / preprint screening
+>   signal**, not a post-publication Nature-tier forensics signal —
+>   copy-editing removes lexical LLM markers before publication.
+> - **T7 / T8 live LR+ deferred** to a GPT-4o-class endpoint with
+>   token logprobs. The cliproxy `gpt-5.4-mini` endpoint drops the
+>   logprobs field (blocks T7) and runs a paraphraser that
+>   preserves LLM-style markers (blocks T8 curvature signal).
+>
+> Treat T7 / T8 as built-in but currently dormant under weak
+> endpoints. They return NOTE-level inconclusive findings rather
+> than fabricated numbers.
+
+
 
 PaperGuard ships two complementary detectors for "was this written by an
 LLM?" Each has a different failure mode; neither is a verdict on its
