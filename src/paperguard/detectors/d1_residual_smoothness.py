@@ -28,6 +28,53 @@ from paperguard.core.base_detector import BaseDetector
 from paperguard.core.types import Finding, Severity
 
 
+def _hurst_exponent(series: np.ndarray) -> float:
+    """Rescaled-range Hurst exponent estimator (Mandelbrot R/S).
+
+    H = 0.5 → truly random / Brownian
+    H > 0.5 → long-range positive autocorrelation (persistent)
+    H < 0.5 → mean-reverting / anti-persistent
+
+    For natural measurements H ≈ 0.5 ± 0.1. Fabricated "too smooth"
+    data often shows H > 0.75 because the fabricator unwittingly
+    introduced trend/smoothness.
+
+    Pure numpy implementation; no pywt dependency.
+    """
+    n = len(series)
+    if n < 20:
+        return 0.5
+    series = series - float(np.mean(series))
+    # Use power-of-2 chunk sizes for stable estimation
+    sizes = [16, 32, 64, 128, 256, 512]
+    sizes = [s for s in sizes if s <= n // 2]
+    if not sizes:
+        return 0.5
+    log_s = []
+    log_rs = []
+    for size in sizes:
+        n_chunks = n // size
+        if n_chunks < 2:
+            continue
+        rs_vals: list[float] = []
+        for i in range(n_chunks):
+            chunk = series[i * size : (i + 1) * size]
+            mean_c = float(np.mean(chunk))
+            dev = chunk - mean_c
+            cum = np.cumsum(dev)
+            r = float(np.max(cum) - np.min(cum))
+            s = float(np.std(chunk, ddof=1))
+            if s > 0:
+                rs_vals.append(r / s)
+        if rs_vals:
+            log_s.append(np.log(size))
+            log_rs.append(np.log(float(np.mean(rs_vals))))
+    if len(log_s) < 2:
+        return 0.5
+    slope, _ = np.polyfit(log_s, log_rs, 1)
+    return float(slope)
+
+
 class D1ResidualSmoothnessDetector(BaseDetector):
     """检测列残差异常平滑 + 块方差稳定性异常。"""
 
@@ -117,6 +164,22 @@ class D1ResidualSmoothnessDetector(BaseDetector):
             else:
                 severity = Severity.CONCERN
 
+            # 2.0.14: Hurst exponent as second statistic
+            hurst = _hurst_exponent(values)
+            hurst_note = (
+                f" Hurst exponent = {hurst:.3f} ("
+                + (
+                    "强烈过度平滑 H>0.75"
+                    if hurst > 0.75
+                    else "稍过度平滑 H>0.6"
+                    if hurst > 0.6
+                    else "中性 ≈ 0.5"
+                    if 0.4 <= hurst <= 0.6
+                    else "反持续 (mean-reverting)"
+                )
+                + ")"
+            )
+
             findings.append(
                 Finding(
                     detector_id=self.id,
@@ -124,7 +187,8 @@ class D1ResidualSmoothnessDetector(BaseDetector):
                     severity=severity,
                     summary=(
                         f"列 '{col}' 块方差稳定性异常 (rel σ(σ²) = "
-                        f"{rel_std:.3f}, n_blocks = {len(block_vars)})"
+                        f"{rel_std:.3f}, n_blocks = {len(block_vars)}, "
+                        f"H={hurst:.2f})"
                     ),
                     detail=(
                         f"对 {col} 列的 {n} 个值按 {block_size} 行分块，"
@@ -133,6 +197,9 @@ class D1ResidualSmoothnessDetector(BaseDetector):
                         f"本列块方差均值 {mean_v:.4g}，σ {std_v:.4g}，"
                         f"相对 σ = {rel_std:.4f}。"
                         "过于稳定的块方差是已知造假签名（Stapel 调查报告）。"
+                        + hurst_note
+                        + " 2.0.14 加 R/S Hurst 指数作为二阶证据,真随机数据"
+                        "H≈0.5,过度平滑造假数据 H>0.7。"
                     ),
                     test_statistic=rel_std,
                     test_name="rel σ of block-variance",
@@ -145,6 +212,7 @@ class D1ResidualSmoothnessDetector(BaseDetector):
                         "mean_block_variance": mean_v,
                         "std_block_variance": std_v,
                         "relative_std": rel_std,
+                        "hurst_exponent": hurst,
                     },
                     innocent_explanations=[
                         "实验设计采用了严格的标准化流程，测量噪声本就极小",

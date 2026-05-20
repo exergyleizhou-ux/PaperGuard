@@ -1,5 +1,7 @@
-"""证据组合 — BH-FDR p 值校正 + 严重性升级规则。"""
+"""证据组合 — BH-FDR p 值校正 + 严重性升级规则 + Stouffer 整合指数。"""
 from __future__ import annotations
+
+import math
 
 from paperguard.core.types import AuditReport, Severity
 
@@ -93,5 +95,36 @@ def combine_evidence(report: AuditReport) -> AuditReport:
         f"CONCERN: {n_concern} | "
         f"Independent evidence clusters: {cross_cluster_concerns}"
     )
+
+    # --- 2.0.14: Stouffer cross-detector integrity score ---
+    # Take BH-FDR-adjusted p values across all findings, convert to
+    # z under the upper-tail of standard normal, and combine via
+    # Stouffer's method: Z = sum(z_i) / sqrt(k). One overall integrity
+    # z; smaller p → more concerning.
+    # Score range: 0 (no concerns) to ~5+ (strong cumulative evidence).
+    if findings_with_p:
+        try:
+            from scipy import stats as _stats
+
+            z_scores: list[float] = []
+            for f in findings_with_p:
+                q_raw: float | None = (
+                    f.p_value_adjusted
+                    if f.p_value_adjusted is not None
+                    else f.p_value
+                )
+                if q_raw is None or q_raw <= 0 or q_raw >= 1:
+                    continue
+                q = float(q_raw)
+                # Upper-tail z (so smaller p → larger positive z = more
+                # concerning)
+                z_scores.append(float(_stats.norm.ppf(1.0 - q)))
+            if z_scores:
+                stouffer_z = sum(z_scores) / math.sqrt(len(z_scores))
+                stouffer_p = float(1.0 - _stats.norm.cdf(stouffer_z))
+                report.integrity_z = float(stouffer_z)
+                report.integrity_score = stouffer_p
+        except ImportError:  # pragma: no cover
+            pass
 
     return report

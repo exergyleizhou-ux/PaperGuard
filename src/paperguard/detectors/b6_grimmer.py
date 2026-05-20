@@ -37,6 +37,10 @@ class GRIMMERInput:
     scale_min: int | None = None  # Likert 量表下限（如 1）
     scale_max: int | None = None  # Likert 量表上限（如 7）
     label: str = ""
+    # 2.0.14 新加: 反向重建 + 对比
+    reported_median: float | None = None
+    reported_min: float | None = None
+    reported_max: float | None = None
 
 
 def _grim_passes(mean: float, n: int, decimals: int) -> bool:
@@ -44,6 +48,115 @@ def _grim_passes(mean: float, n: int, decimals: int) -> bool:
     implied = mean * n
     tol = 0.5 * (10**-decimals) * n
     return bool(abs(implied - round(implied)) <= tol)
+
+
+def _enumerate_candidate_samples(
+    mean: float,
+    sd: float,
+    n: int,
+    scale_min: int,
+    scale_max: int,
+    max_samples: int = 200,
+    seed: int = 42,
+) -> list[tuple[int, ...]]:
+    """SPRITE-style reverse reconstruction.
+
+    Enumerate (or sample) candidate integer samples of size N on
+    [scale_min, scale_max] whose mean and SD match the reported values
+    within tolerance. Returns at most `max_samples` candidates.
+
+    Heathers et al. (2018) SPRITE: starts from a uniform distribution
+    sample, hill-climbs by swapping +1/-1 elements to converge to the
+    target (mean, SD).
+    """
+    import random as _random
+
+    if scale_max <= scale_min or n <= 1:
+        return []
+
+    target_sum = round(mean * n)
+    target_var = sd * sd
+    rng = _random.Random(seed)
+    candidates: list[tuple[int, ...]] = []
+    seen: set[tuple[int, ...]] = set()
+
+    # Each restart hill-climbs to a local minimum of (Δmean² + Δsd²)
+    max_restarts = min(max_samples * 5, 1000)
+    for _ in range(max_restarts):
+        if len(candidates) >= max_samples:
+            break
+        # Initial sample: uniform draw
+        sample = [
+            rng.randint(scale_min, scale_max) for _ in range(n)
+        ]
+        # Adjust sum first: shift random elements ±1 until sum matches
+        for _step in range(n * 4):
+            s = sum(sample)
+            if s == target_sum:
+                break
+            if s < target_sum:
+                idx = rng.randint(0, n - 1)
+                if sample[idx] < scale_max:
+                    sample[idx] += 1
+            else:
+                idx = rng.randint(0, n - 1)
+                if sample[idx] > scale_min:
+                    sample[idx] -= 1
+        if sum(sample) != target_sum:
+            continue
+        # Now hill-climb SD via paired swaps that preserve sum
+        for _step in range(n * 10):
+            m = sum(sample) / n
+            var = sum((x - m) ** 2 for x in sample) / (n - 1)
+            err = abs(var - target_var)
+            if err < 0.01:
+                break
+            # Swap one increase + one decrease (preserves sum)
+            i = rng.randint(0, n - 1)
+            j = rng.randint(0, n - 1)
+            if i == j:
+                continue
+            if sample[i] >= scale_max or sample[j] <= scale_min:
+                continue
+            sample[i] += 1
+            sample[j] -= 1
+            m2 = sum(sample) / n
+            var2 = sum((x - m2) ** 2 for x in sample) / (n - 1)
+            err2 = abs(var2 - target_var)
+            if err2 > err:
+                # Reject; revert
+                sample[i] -= 1
+                sample[j] += 1
+        final_m = sum(sample) / n
+        final_var = sum((x - final_m) ** 2 for x in sample) / (n - 1)
+        if abs(final_var - target_var) < 0.05:
+            key = tuple(sorted(sample))
+            if key not in seen:
+                seen.add(key)
+                candidates.append(key)
+    return candidates
+
+
+def _candidate_summary(
+    candidates: list[tuple[int, ...]],
+) -> dict[str, object]:
+    """Compute the (min/max/median) implied by the candidate set."""
+    if not candidates:
+        return {}
+    all_mins = [c[0] for c in candidates]
+    all_maxes = [c[-1] for c in candidates]
+    all_medians = []
+    for c in candidates:
+        n = len(c)
+        all_medians.append(
+            (c[n // 2 - 1] + c[n // 2]) / 2.0 if n % 2 == 0 else float(c[n // 2])
+        )
+    return {
+        "n_candidates": len(candidates),
+        "min_range": [min(all_mins), max(all_mins)],
+        "max_range": [min(all_maxes), max(all_maxes)],
+        "median_range": [min(all_medians), max(all_medians)],
+    }
 
 
 def _grimmer_passes(
@@ -133,6 +246,124 @@ class B6GRIMMERDetector(BaseDetector):
                 item.scale_min,
                 item.scale_max,
             )
+
+            # --- 2.0.14: reverse reconstruction + comparison ---
+            # If user provided reported_median / min / max AND the
+            # scale is bounded, enumerate candidate samples and check
+            # whether ANY candidate matches the reported summary stats.
+            recon_finding: Finding | None = None
+            if (
+                ok
+                and item.scale_min is not None
+                and item.scale_max is not None
+                and (
+                    item.reported_median is not None
+                    or item.reported_min is not None
+                    or item.reported_max is not None
+                )
+            ):
+                candidates = _enumerate_candidate_samples(
+                    item.mean,
+                    item.sd,
+                    item.n,
+                    item.scale_min,
+                    item.scale_max,
+                    max_samples=50,
+                    seed=seed,
+                )
+                if candidates:
+                    summary = _candidate_summary(candidates)
+                    mismatches: list[str] = []
+                    median_range = summary.get("median_range")
+                    if (
+                        item.reported_median is not None
+                        and isinstance(median_range, list)
+                        and len(median_range) == 2
+                    ):
+                        lo_m = float(median_range[0])
+                        hi_m = float(median_range[1])
+                        if item.reported_median < lo_m or item.reported_median > hi_m:
+                            mismatches.append(
+                                f"reported median {item.reported_median} "
+                                f"outside reconstructed [{lo_m}, {hi_m}]"
+                            )
+                    min_range = summary.get("min_range")
+                    if (
+                        item.reported_min is not None
+                        and isinstance(min_range, list)
+                        and len(min_range) == 2
+                    ):
+                        lo_n = float(min_range[0])
+                        hi_n = float(min_range[1])
+                        if item.reported_min < lo_n or item.reported_min > hi_n:
+                            mismatches.append(
+                                f"reported min {item.reported_min} "
+                                f"outside reconstructed [{lo_n}, {hi_n}]"
+                            )
+                    max_range = summary.get("max_range")
+                    if (
+                        item.reported_max is not None
+                        and isinstance(max_range, list)
+                        and len(max_range) == 2
+                    ):
+                        lo_x = float(max_range[0])
+                        hi_x = float(max_range[1])
+                        if item.reported_max < lo_x or item.reported_max > hi_x:
+                            mismatches.append(
+                                f"reported max {item.reported_max} "
+                                f"outside reconstructed [{lo_x}, {hi_x}]"
+                            )
+                    if mismatches:
+                        recon_finding = Finding(
+                            detector_id=self.id,
+                            detector_name=self.name + " — reverse reconstruction",
+                            severity=Severity.CRITICAL,
+                            summary=(
+                                f"{item.label or 'Reported'}: reconstructed "
+                                f"samples (N={item.n} candidates) cannot "
+                                "explain reported summary statistics"
+                            ),
+                            detail=(
+                                "SPRITE-style enumeration produced "
+                                f"{summary['n_candidates']} candidate "
+                                "integer samples matching the reported "
+                                f"mean and SD. However: "
+                                + "; ".join(mismatches)
+                                + ". A consistent dataset would have its "
+                                "reported min/median/max fall inside the "
+                                "ranges spanned by the reconstructed "
+                                "candidates."
+                            ),
+                            evidence={
+                                "label": item.label,
+                                "mean": item.mean,
+                                "sd": item.sd,
+                                "n": item.n,
+                                "reconstruction_summary": summary,
+                                "mismatches": mismatches,
+                            },
+                            innocent_explanations=[
+                                "Reported median/extremes come from a "
+                                "different subset than mean/SD were "
+                                "computed on",
+                                "Outliers excluded before reporting "
+                                "but not described in methods",
+                                "Reconstruction failed to enumerate a "
+                                "rare valid candidate (algorithm is "
+                                "heuristic, not exhaustive)",
+                                "Scale bounds were misspecified by the "
+                                "user (try wider scale_min/scale_max)",
+                            ],
+                            academic_reference=(
+                                "Heathers et al. (2018) SPRITE: "
+                                "sample-recreation-via-iterative-tweaking. "
+                                "Reverse enumeration + reported-stat "
+                                "consistency check."
+                            ),
+                        )
+            if recon_finding is not None:
+                findings.append(recon_finding)
+
             if ok:
                 continue
             # GRIM-only failure vs GRIMMER-only failure

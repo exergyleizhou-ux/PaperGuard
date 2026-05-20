@@ -157,6 +157,25 @@ class C1CarlisleDetector(BaseDetector):
             return []
 
         combined_p = _stouffer_combine(ps)
+
+        # 2.0.14: BIC-based Bayes factor approximation (no PyMC)
+        # Under H_0 (uniform p-values), expected sum of -2*ln(p) is 2*k.
+        # Under H_1 (deviation), observed sum can be much higher or lower.
+        # BIC approximation: log10(BF10) ≈ (k - 2*ln(p_combined)) / (2*ln(10))
+        # Strong evidence: log10(BF) > 2 (Kass & Raftery 1995).
+        import math
+
+        try:
+            log10_bf = max(
+                -10.0,
+                min(
+                    10.0,
+                    (-2.0 * math.log(combined_p) - len(ps))
+                    / (2.0 * math.log(10)),
+                ),
+            )
+        except (ValueError, ZeroDivisionError):
+            log10_bf = 0.0
         # 双侧：极小 p 和极大 p 都异常
         # combined_p 已经是双尾，所以小 → 异常
         if combined_p > 0.05:
@@ -196,7 +215,9 @@ class C1CarlisleDetector(BaseDetector):
                     f"Trial {data.trial_id}：对 {len(ps)} 个 baseline 变量做 Welch t，"
                     f"使用 Stouffer 方法合并得到双尾 p = {combined_p:.4e}。"
                     f"在真正随机分配下 baseline 的 p 值应服从 Uniform(0,1)。"
-                    f"本结果落在 {tail} 尾部。"
+                    f"本结果落在 {tail} 尾部。\n"
+                    f"2.0.14 Bayes factor 补充: log10(BF10) ≈ {log10_bf:.2f} "
+                    "(BIC 近似;>2 = strong evidence per Kass & Raftery 1995)。"
                 ),
                 p_value=combined_p,
                 test_statistic=float(proportion_below_half),
@@ -206,6 +227,7 @@ class C1CarlisleDetector(BaseDetector):
                     "n_variables": len(ps),
                     "per_variable": per_var,
                     "combined_p": combined_p,
+                    "log10_bayes_factor": log10_bf,
                     "proportion_p_below_0.5": proportion_below_half,
                 },
                 innocent_explanations=[

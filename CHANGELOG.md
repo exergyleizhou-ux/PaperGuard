@@ -4,6 +4,68 @@ All notable changes to PaperGuard are documented in this file. Format follows
 [Keep a Changelog](https://keepachangelog.com/) and the project adheres to
 [Semantic Versioning](https://semver.org/).
 
+## [2.0.14] — 2026-05-20 — Math depth v3: T6 provider attribution + B6/E1/B5/C1/D1 upgrades + integrity index
+
+Single biggest batch of statistical depth since 2.0. Seven separate
+upgrades land together. All preserve back-compat; everything new is
+**added** alongside existing detectors.
+
+### Added — T6 provider attribution (GPT / Claude / Gemini)
+- T6's phrase dictionary split into per-provider sub-dictionaries.
+- New `_provider_attribution(text)` returns the most-likely LLM
+  source given the phrase mix. Emits a NOTE-level finding when one
+  provider dominates without crossing the global density threshold.
+- 4 new test patterns covering each provider + neutral text.
+
+### Added — B6 GRIMMER reverse sample reconstruction
+- New `_enumerate_candidate_samples(...)`: SPRITE-style hill-climbing
+  enumeration of integer samples consistent with reported (mean, SD,
+  N, scale).
+- New optional `reported_median / reported_min / reported_max` fields
+  on `GRIMMERInput`. When provided, B6 compares them against the
+  ranges spanned by reconstructed candidates and emits CRITICAL on
+  mismatch. Heathers et al. (2018) SPRITE methodology.
+
+### Added — E1 ICC repeated-measures independence detector (NEW)
+- Brand-new detector covering Heathers (2024) ICRP pattern.
+- Auto-detects subject/cluster column by name heuristic. Computes
+  ICC(1) one-way random-effects. ICC < 0.05 with k≥3 repeats →
+  SUSPICIOUS; ICC < 0.01 → CRITICAL. Targets fabricated-from-scratch
+  repeated-measures data that forgot within-subject correlation.
+
+### Added — B5 TIVA meta-analytic z (Stouffer + R-index + I²)
+- TIVA's variance test now ships with three sibling statistics:
+  Stouffer's combined Z, Schimmack R-index (success rate − median
+  power), and Cochran Q + I² heterogeneity.
+- Meta-signals fire when R-index < -0.35 (k≥6) or I² < 0.02 (k≥10),
+  publication-grade thresholds informed by Schimmack 2016 + Higgins
+  & Thompson 2002.
+
+### Added — C1 Carlisle Bayes factor (BIC approximation)
+- Adds `log10_bayes_factor` to every C1 finding evidence dict.
+- BIC approximation: `log10(BF10) ≈ (k - 2·ln(p_combined)) /
+  (2·ln(10))`. Strong evidence at log10(BF) > 2 (Kass & Raftery 1995).
+- No new dependencies — pure scipy + math.
+
+### Added — D1 Hurst exponent
+- Rescaled-range (R/S) Hurst exponent on each column's value series.
+- Pure numpy; no `pywt` dependency. H ≈ 0.5 = i.i.d. random; H > 0.75
+  = over-smooth, classic Stapel signature.
+
+### Added — Cross-detector Stouffer integrity index
+- `AuditReport.integrity_z` and `integrity_score` populated by
+  `combine_evidence`.
+- Single-number summary across all finding p-values (BH-FDR adjusted)
+  via Stouffer combination. Lower score / higher z = more concerning.
+- Powers a one-glance integrity verdict over the 30+ detector
+  ensemble.
+
+### Quality
+- 317 tests passing (was 299; +18 new in `tests/test_math_upgrades_v3.py`);
+  mypy --strict + ruff clean.
+- 32 built-in detectors now (was 30).
+- New module `paperguard.detectors.e1_icc_independence`.
+
 ## [2.0.13] — 2026-05-20 — Math depth upgrades (A1 + A2 + A3)
 
 Three statistical depth upgrades. Each adds new finding types on top

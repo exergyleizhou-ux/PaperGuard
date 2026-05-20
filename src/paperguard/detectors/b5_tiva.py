@@ -66,25 +66,85 @@ class B5TIVADetector(BaseDetector):
         return True, ""
 
     def _detect(self, data: TIVAInput, seed: int) -> list[Finding]:
+        import math
+
         zs = [_p_to_z(p) for p in data.p_values if 0 < p < 1]
         k = len(zs)
         if k < 4:
             return []
 
-        # 样本方差
+        # 样本方差 (TIVA)
         mean_z = sum(zs) / k
         ov = sum((z - mean_z) ** 2 for z in zs) / (k - 1)
         chi2 = ov * (k - 1)
         p_combined = float(stats.chi2.cdf(chi2, df=k - 1))  # 左尾：方差太小
 
-        if p_combined > 0.10:
+        # --- 2.0.14: meta-analytic z (Stouffer + R-index + I²) ---
+        # Stouffer's Z = sum(z) / sqrt(k); two-sided p
+        stouffer_z = sum(zs) / math.sqrt(k)
+        stouffer_p = 2.0 * (1.0 - stats.norm.cdf(abs(stouffer_z)))
+
+        # Schimmack's R-index = observed success rate - estimated power
+        # (Schimmack 2016). Approximated as:
+        #   success_rate = fraction of p < 0.05
+        #   median_power = average of (z > 1.645) post-hoc power proxy
+        #   R = success_rate - median_power
+        success_rate = sum(1 for p in data.p_values if p < 0.05) / k
+        # Post-hoc power ≈ Φ(|z| - z_α) using one-tailed α=0.05
+        z_alpha = 1.645
+        post_hoc_powers = [
+            float(stats.norm.cdf(abs(z) - z_alpha)) for z in zs
+        ]
+        median_power = (
+            sorted(post_hoc_powers)[len(post_hoc_powers) // 2]
+            if post_hoc_powers
+            else 0.0
+        )
+        r_index = success_rate - median_power
+
+        # Cochran Q + I²: cross-study heterogeneity
+        # Q = sum((z_i - mean_z)^2). Under H_0 of homogeneity, Q ~ χ²(k-1).
+        # I² = max(0, (Q - df) / Q) gives % of variance due to heterogeneity.
+        q_stat = sum((z - mean_z) ** 2 for z in zs)
+        df = k - 1
+        if q_stat > 0:
+            i_sq = max(0.0, (q_stat - df) / q_stat)
+        else:
+            i_sq = 0.0
+        q_p = float(1.0 - stats.chi2.cdf(q_stat, df=df))
+
+        # --- decide if any of the three meta-signals fires ---
+        # Thresholds tightened so the meta layer does not fire on small
+        # noisy samples — these are diagnostic-grade signals, not
+        # screening signals.
+        meta_signals: list[str] = []
+        if r_index < -0.35 and k >= 6:
+            meta_signals.append(
+                f"R-index = {r_index:.3f} (< -0.35 with k≥6: success "
+                "rate much higher than median power, classic p-hacking "
+                "signature)"
+            )
+        if i_sq < 0.02 and k >= 10:
+            meta_signals.append(
+                f"I² = {i_sq:.3f} (< 0.02 with k≥10: essentially no "
+                "heterogeneity, all studies suspiciously consistent; "
+                f"Cochran Q p = {q_p:.3e})"
+            )
+        if p_combined > 0.10 and not meta_signals:
             return []
+
+        # Original TIVA finding (preserved)
         if p_combined < 0.001:
             severity = Severity.SUSPICIOUS
         elif p_combined < 0.01:
             severity = Severity.CONCERN
+        elif p_combined < 0.10:
+            severity = Severity.NOTE
         else:
             severity = Severity.NOTE
+        # Elevate if both TIVA AND a meta signal fire
+        if p_combined < 0.01 and meta_signals:
+            severity = Severity.SUSPICIOUS
 
         return [
             Finding(
@@ -92,31 +152,61 @@ class B5TIVADetector(BaseDetector):
                 detector_name=self.name,
                 severity=severity,
                 summary=(
-                    f"{data.label or 'A set of'} {k} studies have"
-                    f" z-score variance = {ov:.3f}（期望 ≥ 1, p={p_combined:.2e}）"
+                    f"{data.label or 'A set of'} {k} studies: "
+                    f"z-var={ov:.3f}, Stouffer p={stouffer_p:.2e}, "
+                    f"R-index={r_index:.3f}, I²={i_sq:.3f}"
                 ),
                 detail=(
-                    f"对 {k} 个 p 值转 z 计算方差 = {ov:.4f}。"
-                    f"χ²({k - 1}) = {chi2:.3f}, 左尾 p = {p_combined:.4e}。"
-                    "z 方差远低于 1 意味着所有研究的 z 值过于聚集，"
-                    "提示 p-hacking、selective reporting 或 outright fabrication。"
+                    f"Meta-analytic check on {k} p-values:\n"
+                    f"  TIVA (Schimmack 2014): variance = {ov:.4f}, "
+                    f"χ²({df}) = {chi2:.3f}, left-tail p = {p_combined:.4e}\n"
+                    f"  Stouffer's combined Z = {stouffer_z:.3f}, "
+                    f"two-sided p = {stouffer_p:.4e}\n"
+                    f"  R-index (Schimmack 2016) = success rate "
+                    f"{success_rate:.2f} - median power "
+                    f"{median_power:.2f} = {r_index:.3f}\n"
+                    f"  Cochran Q = {q_stat:.3f}, p = {q_p:.4e}; "
+                    f"I² (heterogeneity) = {i_sq:.3f}\n"
+                    + (
+                        f"  Triggered meta-signals: {'; '.join(meta_signals)}\n"
+                        if meta_signals
+                        else ""
+                    )
+                    + "TIVA + Stouffer + R-index + I² together form the "
+                    "publication-grade meta-analytic integrity check."
                 ),
                 p_value=p_combined,
                 test_statistic=chi2,
-                test_name=f"TIVA χ²({k - 1})",
+                test_name=f"TIVA χ²({df}) + Stouffer + R-index + I²",
                 evidence={
                     "label": data.label,
                     "n_studies": k,
                     "z_values": zs,
-                    "observed_variance": ov,
-                    "chi2": chi2,
+                    "tiva_observed_variance": ov,
+                    "tiva_chi2": chi2,
+                    "tiva_p": p_combined,
+                    "stouffer_z": stouffer_z,
+                    "stouffer_p": stouffer_p,
+                    "success_rate": success_rate,
+                    "median_post_hoc_power": median_power,
+                    "r_index": r_index,
+                    "cochran_q": q_stat,
+                    "cochran_q_p": q_p,
+                    "i_squared": i_sq,
+                    "meta_signals_triggered": meta_signals,
                 },
                 innocent_explanations=[
                     "所有研究共享同一稳定真实效应（罕见且应有强先验）",
                     "Meta-analytic 漏报：本工具假设所有研究都独立同分布",
                     "数据来自高度相关的子样本（不应作为独立 z 喂入 TIVA）",
                     "样本量极大，效应量极稳定，z 值自然集中（说明会反驳）",
+                    "R-index 假设 power 计算用 normal approximation,小样本不准",
                 ],
-                academic_reference=self.academic_basis,
+                academic_reference=(
+                    "Schimmack (2014) TIVA; Stouffer et al. (1949) "
+                    "method of combining test results; Schimmack (2016) "
+                    "Replicability-Index; Higgins & Thompson (2002) "
+                    "Quantifying heterogeneity (I²)."
+                ),
             )
         ]

@@ -90,6 +90,12 @@ class AuditReport(BaseModel):
     overall_severity: Severity = Severity.PASS
     combined_evidence_strength: str = ""
 
+    # 2.0.14: single-number integrity score via Stouffer's method
+    # across all finding p-values (BH-FDR adjusted). Lower = more
+    # concerning. None when no p-valued findings exist.
+    integrity_score: float | None = None
+    integrity_z: float | None = None
+
     file_hashes: dict[str, str] = Field(default_factory=dict)
     run_timestamp: datetime = Field(default_factory=lambda: datetime.now(UTC))
     paperguard_version: str = "0.1.0"

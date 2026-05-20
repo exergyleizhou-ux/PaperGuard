@@ -77,5 +77,5 @@ def test_plugin_handles_load_exception(monkeypatch: pytest.MonkeyPatch) -> None:
 
 def test_register_default_with_plugins_disabled() -> None:
     reg = DetectorRegistry().register_default(load_plugins=False)
-    # 30 built-ins: 29 from 1.0 + M1 paper-mill graph (2.0)
-    assert len(reg.all()) == 30
+    # 31 built-ins: 30 through 2.0.13 + E1 ICC (2.0.14)
+    assert len(reg.all()) == 31

@@ -55,6 +55,9 @@ class DetectorRegistry:
             D1ResidualSmoothnessDetector,
         )
         from paperguard.detectors.d2_missing_pattern import D2MissingPatternDetector
+        from paperguard.detectors.e1_icc_independence import (
+            E1ICCIndependenceDetector,
+        )
         from paperguard.detectors.f1_image_duplication import F1ImageDuplicationDetector
         from paperguard.detectors.f2_internal_duplication import (
             F2InternalDuplicationDetector,
@@ -99,6 +102,7 @@ class DetectorRegistry:
             C1CarlisleDetector,
             D1ResidualSmoothnessDetector,
             D2MissingPatternDetector,
+            E1ICCIndependenceDetector,
             F1ImageDuplicationDetector,
             F2InternalDuplicationDetector,
             F3SpliceForensicsDetector,
