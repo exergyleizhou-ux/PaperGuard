@@ -1053,6 +1053,279 @@ def _scan_single_file(
     return report
 
 
+@main.command("scan-pmc")
+@click.argument("doi")
+@click.option(
+    "--output-json",
+    type=click.Path(path_type=Path),
+    default=None,
+)
+@click.option(
+    "--llm-review",
+    is_flag=True,
+    default=False,
+    help=(
+        "Also run LLM-assisted content review over the PMC full text. "
+        "Requires PAPERGUARD_LLM_PROVIDER + API key."
+    ),
+)
+@click.option("--seed", type=int, default=42, show_default=True)
+def scan_pmc(
+    doi: str,
+    output_json: Path | None,
+    llm_review: bool,
+    seed: int,
+) -> None:
+    """Scan an OA paper by DOI via Europe PMC full text (no PDF needed).
+
+    Faster + cleaner than ``scan -f <pdf>`` when the paper is in PMC,
+    because there's no PDF parsing layer. Useful for batch scanning
+    biomedical OA literature.
+    """
+    from paperguard.fetcher.europepmc import fetch_article
+
+    console = Console(legacy_windows=False)
+    settings = get_settings()
+    run_id = uuid.uuid4().hex[:12]
+    audit_dir = settings.cache_dir / "audits" / run_id
+    audit = AuditLog(run_id=run_id, output_dir=audit_dir)
+
+    console.print(f"[cyan]Looking up {doi} in Europe PMC...[/]")
+    article = fetch_article(doi)
+    if not article:
+        console.print(
+            f"[yellow]{doi} not found in Europe PMC, or has no OA full text. "
+            "Use `paperguard scan -f <pdf>` instead.[/]"
+        )
+        return
+
+    console.print(
+        f"[green]  ✓ PMC ID {article.pmcid}, "
+        f"{len(article.full_text):,} chars, "
+        f"{len(article.sections)} sections[/]"
+    )
+    audit.log_event(
+        "pmc_fetched",
+        {
+            "doi": doi,
+            "pmcid": article.pmcid,
+            "n_chars": len(article.full_text),
+            "n_sections": len(article.sections),
+        },
+    )
+
+    registry = DetectorRegistry().register_default()
+    report = AuditReport(
+        paper_identifier=doi,
+        paper_title=article.title,
+        seed=seed,
+    )
+
+    text = article.full_text
+    # Run the same text-detector flow on the PMC body
+    for d_id in ("B4", "T4", "T5", "T6"):
+        detector = registry.get(d_id)
+        if detector is None:
+            continue
+        result = detector.detect(text, seed=seed)
+        report.detector_results.append(result)
+        report.all_findings.extend(result.findings)
+
+    # T3 still wants DataAvailabilityInput (year unknown here unless we
+    # also fetch OpenAlex)
+    from paperguard.detectors.t3_data_availability import (
+        DataAvailabilityInput,
+    )
+
+    t3 = registry.get("T3")
+    if t3 is not None:
+        t3_result = t3.detect(
+            DataAvailabilityInput(text=text), seed=seed
+        )
+        report.detector_results.append(t3_result)
+        report.all_findings.extend(t3_result.findings)
+
+    if llm_review:
+        from paperguard.llm.content_review import (
+            LLMContentReviewer,
+            issues_to_findings,
+        )
+
+        reviewer = LLMContentReviewer()
+        if not reviewer.enabled:
+            console.print(
+                "[yellow]--llm-review requested but "
+                "PAPERGUARD_LLM_PROVIDER is not set; skipping.[/]"
+            )
+        else:
+            with console.status(
+                f"[cyan]LLM review ({reviewer.provider}) over "
+                f"{len(text):,} chars..."
+            ):
+                issues = reviewer.review(text)
+            if issues:
+                llm_findings = issues_to_findings(issues)
+                llm_result = DetectorResult(
+                    detector_id="LLM_REVIEW",
+                    applicable=True,
+                    findings=llm_findings,
+                )
+                report.detector_results.append(llm_result)
+                report.all_findings.extend(llm_findings)
+                console.print(
+                    f"[yellow]  LLM flagged {len(llm_findings)} "
+                    f"issue(s) in the manuscript text[/]"
+                )
+
+    combine_evidence(report)
+    audit.log_event(
+        "evidence_combined",
+        {
+            "overall_severity": report.overall_severity.label,
+            "total_findings": len(report.all_findings),
+        },
+    )
+    audit.save()
+    print_report(report, console, lang="en")
+
+    if output_json:
+        export_json(report, output_json)
+        console.print(f"[green]JSON report saved to {output_json}[/]")
+
+
+@main.command("notify")
+@click.argument("patterns", nargs=-1, required=True)
+@click.option(
+    "--webhook",
+    required=True,
+    help=(
+        "Slack incoming-webhook or Discord webhook URL. Auto-detected "
+        "from URL host (hooks.slack.com vs discord.com/api/webhooks)."
+    ),
+)
+@click.option(
+    "--min-severity",
+    type=click.Choice(["NOTE", "CONCERN", "SUSPICIOUS", "CRITICAL"]),
+    default="SUSPICIOUS",
+    show_default=True,
+    help="Only post papers at or above this severity to the webhook.",
+)
+@click.option("--seed", type=int, default=42, show_default=True)
+def notify(
+    patterns: tuple[str, ...],
+    webhook: str,
+    min_severity: str,
+    seed: int,
+) -> None:
+    """Batch-scan a glob, POST a summary of high-severity findings to a webhook.
+
+    Designed for daily team automation. Example:
+
+      paperguard notify "papers/*.pdf" \\
+          --webhook "https://hooks.slack.com/services/T0/B0/XYZ" \\
+          --min-severity SUSPICIOUS
+
+    Pings the webhook once per `paperguard notify` run with a digest
+    of all flagged papers. No HTTP call is made if no paper meets
+    `--min-severity`.
+    """
+    import glob as glob_mod
+
+    import httpx
+
+    console = Console(legacy_windows=False)
+    sev_threshold = {
+        "NOTE": 1,
+        "CONCERN": 2,
+        "SUSPICIOUS": 3,
+        "CRITICAL": 4,
+    }[min_severity]
+
+    paths: list[Path] = []
+    for pat in patterns:
+        paths.extend(Path(p) for p in glob_mod.glob(pat))
+    if not paths:
+        console.print(f"[yellow]No files matched: {' '.join(patterns)}[/]")
+        return
+
+    console.print(
+        f"[cyan]Scanning {len(paths)} file(s); threshold = {min_severity}[/]"
+    )
+
+    flagged: list[dict[str, object]] = []
+    for p in paths:
+        try:
+            report = _scan_single_file(p, seed=seed)
+        except Exception as e:  # noqa: BLE001
+            console.print(f"[red]  ✗ {p.name}: {e}[/]")
+            continue
+        sev = int(report.overall_severity)
+        sev_label = report.overall_severity.label
+        console.print(
+            f"  [{report.overall_severity.color}]{sev_label}[/] "
+            f"{p.name}  ({len(report.all_findings)} findings)"
+        )
+        if sev >= sev_threshold:
+            flagged.append(
+                {
+                    "file": p.name,
+                    "severity": sev_label,
+                    "n_findings": len(report.all_findings),
+                    "top_detectors": sorted(
+                        {f.detector_id for f in report.all_findings}
+                    )[:6],
+                }
+            )
+
+    if not flagged:
+        console.print(
+            f"[green]No paper at or above {min_severity}. "
+            "Skipping webhook.[/]"
+        )
+        return
+
+    # Build a message; auto-detect Slack vs Discord by hostname.
+    host = httpx.URL(webhook).host or ""
+    summary_lines = [
+        f"*PaperGuard daily digest*  ·  {len(flagged)} paper(s) "
+        f"≥ {min_severity}",
+        "",
+    ]
+    for f in flagged[:30]:
+        summary_lines.append(
+            f"• `{f['file']}` — {f['severity']} · "
+            f"{f['n_findings']} findings · "
+            f"{', '.join(f['top_detectors'])}"  # type: ignore[arg-type]
+        )
+    if len(flagged) > 30:
+        summary_lines.append(f"… and {len(flagged) - 30} more")
+    summary_lines.append("")
+    summary_lines.append(
+        "_Disclaimer: PaperGuard flags anomalies, not fraud. "
+        "Every finding includes innocent explanations. Investigate "
+        "before acting._"
+    )
+    msg = "\n".join(summary_lines)
+
+    if "slack.com" in host:
+        payload = {"text": msg}
+    elif "discord.com" in host or "discordapp.com" in host:
+        payload = {"content": msg[:1900]}
+    else:
+        # Generic webhook: send both keys for portability
+        payload = {"text": msg, "content": msg[:1900]}
+
+    try:
+        r = httpx.post(webhook, json=payload, timeout=30)
+        r.raise_for_status()
+        console.print(
+            f"[green]✓ Webhook delivered "
+            f"({len(flagged)} paper(s) reported)[/]"
+        )
+    except httpx.HTTPError as e:
+        console.print(f"[red]Webhook POST failed: {e}[/]")
+
+
 @main.command("selfcheck")
 @click.option(
     "--detector",

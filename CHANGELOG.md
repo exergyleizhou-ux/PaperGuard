@@ -4,6 +4,41 @@ All notable changes to PaperGuard are documented in this file. Format follows
 [Keep a Changelog](https://keepachangelog.com/) and the project adheres to
 [Semantic Versioning](https://semver.org/).
 
+## [2.0.12] — 2026-05-20 — PMC full-text + Slack/Discord notify + LLM proxy
+
+### Added — `paperguard scan-pmc DOI`
+- New CLI command that fetches the full JATS XML from Europe PMC
+  (`paperguard.fetcher.europepmc`) and runs B4 / T3 / T4 / T5 / T6
+  detectors over the *clean* text, no PDF parsing needed.
+- Optional `--llm-review` flag wraps the LLM content reviewer
+  around the PMC body, useful for scanning OA biomedical literature
+  in bulk without managing PDF downloads.
+- 7 new tests covering DOI→PMCID lookup, fullTextXML fetching, JATS
+  parsing, network errors, and end-to-end pipeline.
+
+### Added — `paperguard notify` for team daily digests
+- New CLI command: `paperguard notify "papers/*.pdf"
+  --webhook URL --min-severity SUSPICIOUS`. Scans every matched file
+  and POSTs a single digest message to Slack or Discord (auto-
+  detected by URL host) listing only papers meeting the severity
+  threshold.
+- No HTTP call when nothing crosses the threshold (silent days =
+  silent webhook).
+- Generic webhooks supported (sends both `{"text"}` and
+  `{"content"}` keys).
+
+### Added — Custom LLM base_url support
+- `PAPERGUARD_LLM_BASE_URL` overrides the OpenAI endpoint, enabling
+  team proxy pools (OpenRouter, CLI-proxy, self-hosted gateways).
+- `PAPERGUARD_LLM_NO_JSON_MODE=1` for proxies that 400 on
+  `response_format={"type": "json_object"}`.
+- Verified live with a user-supplied team pool serving
+  `gpt-5.4-mini`; LLM correctly flagged arithmetic / implausible-
+  precision / stat-misuse issues end-to-end.
+
+### Quality
+- 283 tests passing (was 276; +7 new); mypy --strict and ruff clean.
+
 ## [2.0.11] — 2026-05-19 — Author retraction history + LLM content review
 
 Two external-signal additions. v7 confirmed PDF-internal features

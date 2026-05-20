@@ -162,19 +162,34 @@ class LLMContentReviewer:
         api_key = os.environ.get("OPENAI_API_KEY")
         if not api_key:
             raise RuntimeError("OPENAI_API_KEY not set")
+        # Custom base URL for proxy / team pool support. Defaults to
+        # api.openai.com. Override with PAPERGUARD_LLM_BASE_URL.
+        base_url = os.environ.get(
+            "PAPERGUARD_LLM_BASE_URL", "https://api.openai.com/v1"
+        ).rstrip("/")
         model = self.model or "gpt-4o-mini"
+        payload: dict[str, object] = {
+            "model": model,
+            "messages": [
+                {"role": "system", "content": _SYSTEM_PROMPT},
+                {"role": "user", "content": text},
+            ],
+            "temperature": 0,
+        }
+        # Many proxies (CLI pools, OpenRouter, etc.) accept the
+        # response_format field but the official API requires the
+        # model to support it. Keep it on by default; drop it via
+        # PAPERGUARD_LLM_NO_JSON_MODE for proxies that 400 on it.
+        if os.environ.get("PAPERGUARD_LLM_NO_JSON_MODE", "").lower() not in {
+            "1",
+            "true",
+            "yes",
+        }:
+            payload["response_format"] = {"type": "json_object"}
         r = httpx.post(
-            "https://api.openai.com/v1/chat/completions",
+            f"{base_url}/chat/completions",
             headers={"Authorization": f"Bearer {api_key}"},
-            json={
-                "model": model,
-                "messages": [
-                    {"role": "system", "content": _SYSTEM_PROMPT},
-                    {"role": "user", "content": text},
-                ],
-                "response_format": {"type": "json_object"},
-                "temperature": 0,
-            },
+            json=payload,
             timeout=self.timeout,
         )
         r.raise_for_status()
