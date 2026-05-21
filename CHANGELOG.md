@@ -4,6 +4,36 @@ All notable changes to PaperGuard are documented in this file. Format follows
 [Keep a Changelog](https://keepachangelog.com/) and the project adheres to
 [Semantic Versioning](https://semver.org/).
 
+## [2.1.18] — 2026-05-22 — statcheck-R Cohen's κ = 0.79 (decision-flip)
+
+### Added
+- `scripts/crossval_statcheck_r.R` — R driver loading the N=41
+  corpus via `statcheck::statcheck()`, exports per-claim JSON.
+- `scripts/crossval_statcheck_kappa.py` — Python analyser running
+  PaperGuard B4 on the same text, computing Cohen's κ on the
+  any-flag and decision-flip classifications.
+- `scripts/crossval_statcheck_r_results.json` + `scripts/crossval_statcheck_kappa_results.json` — public raw outputs.
+- `docs/crossval_statcheck_kappa.md` — interpretation + κ-paradox
+  discussion + reproducibility instructions.
+
+### Headline
+- **Cohen's κ = 0.79 on decision-flip class** (Landis & Koch
+  "substantial agreement" band, 0.61-0.80). PaperGuard B4 matches
+  the canonical statcheck-R implementation on the consequential
+  reporting-error class.
+- Cohen's κ = 0.03 on any-flag class is a κ-paradox artifact —
+  both detectors flag most claims so the marginals collapse the
+  score. Raw observed agreement on any-flag is 58 %.
+
+### Comparison with 2.1.3 scipy benchmark
+Together, PaperGuard B4 is validated against both:
+- **scipy-reference** (2.1.3): 100 % recall, 94 % decision-flip
+  recall
+- **statcheck-R canonical** (2.1.18): κ = 0.79 on decision-flip
+
+### Quality
+No code changes. Tests: 440 / ruff clean / mypy --strict clean.
+
 ## [2.1.17] — 2026-05-22 — Legacy `.doc` / `.docb` format support
 
 ### Added

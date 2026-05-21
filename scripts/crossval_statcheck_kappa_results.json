@@ -1,0 +1,114 @@
+{
+  "n_claims": 41,
+  "pg_flagged_any": 25,
+  "statcheck_r_flagged_any": 34,
+  "pg_flagged_decision_flip": 16,
+  "statcheck_r_flagged_decision_flip": 12,
+  "cohen_kappa_any": 0.0306,
+  "cohen_kappa_decision_flip": 0.7853,
+  "n_disagreements_any": 17,
+  "disagreements": [
+    {
+      "text": "t(98) = 2.45, p = 0.016",
+      "test_type": "t",
+      "pg_fired": false,
+      "statcheck_r_fired": true
+    },
+    {
+      "text": "t(120) = 3.10, p = 0.002",
+      "test_type": "t",
+      "pg_fired": false,
+      "statcheck_r_fired": true
+    },
+    {
+      "text": "t(50) = 1.21, p = 0.232",
+      "test_type": "t",
+      "pg_fired": false,
+      "statcheck_r_fired": true
+    },
+    {
+      "text": "t(200) = 0.42, p = 0.675",
+      "test_type": "t",
+      "pg_fired": false,
+      "statcheck_r_fired": true
+    },
+    {
+      "text": "t(30) = 4.55, p < 0.001",
+      "test_type": "t",
+      "pg_fired": false,
+      "statcheck_r_fired": true
+    },
+    {
+      "text": "F(3, 96) = 4.20, p = 0.008",
+      "test_type": "F",
+      "pg_fired": false,
+      "statcheck_r_fired": true
+    },
+    {
+      "text": "F(1, 28) = 15.40, p < 0.001",
+      "test_type": "F",
+      "pg_fired": false,
+      "statcheck_r_fired": true
+    },
+    {
+      "text": "chi2(4) = 9.49, p = 0.050",
+      "test_type": "chi2",
+      "pg_fired": true,
+      "statcheck_r_fired": false
+    },
+    {
+      "text": "chi2(2) = 5.99, p = 0.20",
+      "test_type": "chi2",
+      "pg_fired": true,
+      "statcheck_r_fired": false
+    },
+    {
+      "text": "chi2(4) = 9.49, p = 0.005",
+      "test_type": "chi2",
+      "pg_fired": true,
+      "statcheck_r_fired": false
+    },
+    {
+      "text": "r(98) = 0.20, p = 0.046",
+      "test_type": "r",
+      "pg_fired": false,
+      "statcheck_r_fired": true
+    },
+    {
+      "text": "z = 2.58, p = 0.010",
+      "test_type": "z",
+      "pg_fired": false,
+      "statcheck_r_fired": true
+    },
+    {
+      "text": "z = 1.00, p = 0.317",
+      "test_type": "z",
+      "pg_fired": false,
+      "statcheck_r_fired": true
+    },
+    {
+      "text": "t(98) = 2.45, p < .05",
+      "test_type": "t",
+      "pg_fired": false,
+      "statcheck_r_fired": true
+    },
+    {
+      "text": "chi2(3) = 7.815, p = .050",
+      "test_type": "chi2",
+      "pg_fired": true,
+      "statcheck_r_fired": false
+    },
+    {
+      "text": "z = 0.50, p = 0.617",
+      "test_type": "z",
+      "pg_fired": false,
+      "statcheck_r_fired": true
+    },
+    {
+      "text": "F(4, 100) = 2.46, p = 0.05",
+      "test_type": "F",
+      "pg_fired": false,
+      "statcheck_r_fired": true
+    }
+  ]
+}
