@@ -4,6 +4,49 @@ All notable changes to PaperGuard are documented in this file. Format follows
 [Keep a Changelog](https://keepachangelog.com/) and the project adheres to
 [Semantic Versioning](https://semver.org/).
 
+## [2.1.12] — 2026-05-21 — Text-layer recall study v10 (N=200) — first true positive
+
+### Added
+- `scripts/recall_test_v10.py` — N=100+100 OpenAlex retracted /
+  matched-control text-layer recall study. Resumable, 4× larger
+  than v8.
+- `scripts/recall_test_v10_results.json` — 159-record dataset
+  (100 retracted + 59 matched controls).
+- `docs/recall_test_v10.md` — 7-section analysis with the headline
+  finding.
+
+### Headline finding
+At the default 0.003 threshold T6 remains 0 / 0 (consistent with
+v8 / v9). But at a 0.001 threshold:
+
+- **TPR = 1.37 %** (1 / 73 analysable retracted)
+- **FPR = 0.00 %** (0 / 22 analysable controls)
+- **LR+ = ∞** (no false positive observed in 22 controls)
+
+The single true positive is `10.1371/journal.pone.0295951` — a 2024
+"Improved SVM based on CNN-SVD for diabetic retinopathy" PLOS ONE
+retraction with textbook paper-mill profile (post-ChatGPT, generic
+ML on medical imaging, high-volume journal, subsequently retracted).
+T6 density 0.00126 (4× the next-highest retracted, ∞× any control).
+
+### Updated calibration position
+The "T6 is a pre-submission tool" position from 2.0.16 holds for the
+**default** threshold. At lower thresholds T6 is a **rare-event
+high-precision** signal usable for editorial triage. Three threshold
+profiles documented in `docs/recall_test_v10.md` § "Calibrated
+interpretation".
+
+### What's open
+- Control PMC coverage was 37 % (22 / 59) due to OpenAlex subfield
+  matching pulling non-PMC-indexed papers. A v11 should pre-filter.
+- N=22 controls is small; "no FP" is honest but the 95 % Wilson
+  upper bound is ≈ 15 %.
+- T7 / T8 columns remain empty (cliproxy endpoint limitation; see
+  `docs/t8_endpoint_limitation.md`).
+
+### Quality
+No code changes. Tests: 394 / ruff clean / mypy --strict clean.
+
 ## [2.1.11] — 2026-05-21 — JOSS-ready paper
 
 ### Changed
