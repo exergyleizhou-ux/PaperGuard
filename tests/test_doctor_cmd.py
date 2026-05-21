@@ -141,6 +141,44 @@ def test_doctor_no_verdict_words(
         assert word not in lower, f"Forbidden word {word!r} in doctor output"
 
 
+def test_doctor_webui_redis_yellow_without_env(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    _strip_yellow_red_for_clean_env(monkeypatch)
+    monkeypatch.delenv("PAPERGUARD_REDIS_URL", raising=False)
+    runner = CliRunner()
+    result = runner.invoke(doctor_cmd, ["--json"])
+    data = json.loads(result.output)
+    redis_check = next(c for c in data["checks"] if c["name"] == "webui_redis")
+    assert redis_check["status"] == "YELLOW"
+    assert "PAPERGUARD_REDIS_URL" in redis_check["detail"]
+
+
+def test_doctor_webui_redis_green_with_fakeredis(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    """When PAPERGUARD_REDIS_URL is set and reachable, the check goes GREEN."""
+    fakeredis = pytest.importorskip("fakeredis")
+    _strip_yellow_red_for_clean_env(monkeypatch)
+    monkeypatch.setenv("PAPERGUARD_REDIS_URL", "redis://fake")
+
+    # Patch RedisBackend.from_url to return a fakeredis-backed instance.
+    import paperguard.webui.ratelimit as rl
+
+    def fake_from_url(cls: type, url: str) -> rl.RedisBackend:
+        return rl.RedisBackend(fakeredis.FakeRedis(decode_responses=False))
+
+    monkeypatch.setattr(
+        rl.RedisBackend, "from_url", classmethod(fake_from_url)
+    )
+    runner = CliRunner()
+    result = runner.invoke(doctor_cmd, ["--json"])
+    data = json.loads(result.output)
+    redis_check = next(c for c in data["checks"] if c["name"] == "webui_redis")
+    assert redis_check["status"] == "GREEN"
+    assert "Redis backend reachable" in redis_check["detail"]
+
+
 def test_doctor_exit_code_yellow_is_2(
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:

@@ -25,6 +25,7 @@ from paperguard.webui.models import (
     UserRole,
     Visibility,
 )
+from paperguard.webui.ratelimit import get_rate_limiter
 from paperguard.webui.security import generate_invite_code
 from paperguard.webui.templates import (
     dashboard,
@@ -126,6 +127,21 @@ async def scan_into_project(
     file: UploadFile = _FILE_DEFAULT,
     visibility: str = _VISIBILITY_DEFAULT,
 ) -> Response:
+    # Per-user rate limit on the scan endpoint (most expensive call).
+    # Default: 30 scans per 60 s per user. Backend auto-selects Redis if
+    # PAPERGUARD_REDIS_URL is set, otherwise InMemory (single-process).
+    limiter = get_rate_limiter()
+    decision = limiter.hit(f"scan:user:{user.id}")
+    if not decision.allowed:
+        raise HTTPException(
+            status_code=429,
+            detail=(
+                f"Rate limit exceeded. Try again in "
+                f"{decision.retry_after_seconds:.1f} s."
+            ),
+            headers={"Retry-After": str(int(decision.retry_after_seconds) + 1)},
+        )
+
     project = await _owned_project(session, user, project_id)
     if not file.filename:
         raise HTTPException(status_code=400, detail="No filename")

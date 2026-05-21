@@ -2139,7 +2139,38 @@ def doctor_cmd(ping_llm: bool, as_json: bool) -> None:
     except Exception:  # noqa: BLE001
         add("f4_image_corpus", "YELLOW", "could not stat corpus path")
 
-    # 10) LLM endpoint config (no API call by default)
+    # 10) Redis backend for multi-tenant Web UI rate-limiting
+    redis_url = _os.environ.get("PAPERGUARD_REDIS_URL", "")
+    if not redis_url:
+        add(
+            "webui_redis",
+            "YELLOW",
+            "PAPERGUARD_REDIS_URL unset; webui uses InMemoryBackend "
+            "for rate-limiting (NOT safe for multi-worker deployments)",
+        )
+    else:
+        try:
+            from paperguard.webui.ratelimit import RedisBackend
+
+            backend = RedisBackend.from_url(redis_url)
+            decision = backend.hit(
+                "doctor-probe", max_requests=100, window_seconds=60
+            )
+            assert decision.allowed
+            add(
+                "webui_redis",
+                "GREEN",
+                f"Redis backend reachable at {redis_url}",
+            )
+        except Exception as e:  # noqa: BLE001
+            add(
+                "webui_redis",
+                "RED",
+                f"PAPERGUARD_REDIS_URL set but unreachable: "
+                f"{type(e).__name__}: {e}",
+            )
+
+    # 11) LLM endpoint config (no API call by default)
     provider = _os.environ.get("PAPERGUARD_LLM_PROVIDER", "")
     base_url = _os.environ.get("PAPERGUARD_LLM_BASE_URL", "(default)")
     model = _os.environ.get("PAPERGUARD_LLM_MODEL", "(default)")

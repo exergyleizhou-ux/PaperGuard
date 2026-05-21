@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "paperguard"
-version = "2.1.14"
+version = "2.1.15"
 description = "Statistical anomaly screener for tabular research data"
 readme = "README.md"
 requires-python = ">=3.11"
@@ -58,6 +58,9 @@ webui = [
     # transitive dep on most platforms but is "optional" on macOS arm64
     # in some versions, so declare it explicitly.
     "greenlet>=3.0",
+    # Rate-limit Redis backend (2.1.15). InMemoryBackend works without
+    # it; install only when running multi-worker production.
+    "redis>=4.0",
 ]
 dev = [
     "pytest>=8.0",
@@ -78,6 +81,9 @@ dev = [
     "pandas-stubs>=2.2",
     "scipy-stubs>=1.12",
     "types-pyyaml>=6.0",
+    # Rate-limit testing
+    "redis>=4.0",
+    "fakeredis>=2.0",
 ]
 
 [project.scripts]

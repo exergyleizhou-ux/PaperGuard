@@ -4,6 +4,42 @@ All notable changes to PaperGuard are documented in this file. Format follows
 [Keep a Changelog](https://keepachangelog.com/) and the project adheres to
 [Semantic Versioning](https://semver.org/).
 
+## [2.1.15] — 2026-05-22 — WebUI rate-limit + optional Redis backend (production-hardening)
+
+### Added
+- **`src/paperguard/webui/ratelimit.py`** — `RateLimiter` facade over
+  two backends:
+  - `InMemoryBackend` — process-local sliding-window counter using a
+    timestamp-list per key + threading.Lock. Suitable for dev /
+    single-process. Not safe across workers.
+  - `RedisBackend` — Redis-sorted-set sliding-window counter that is
+    safe across processes/workers/hosts. Selected automatically when
+    `PAPERGUARD_REDIS_URL` env var is set; falls back to in-memory
+    otherwise (with a warning at app start).
+- `RateLimiter` defaults: **30 requests per 60 s per key**. The
+  `/projects/{project_id}/scan` endpoint is now gated by
+  `scan:user:{user.id}`. Over-cap requests get HTTP 429 with a
+  proper `Retry-After` header.
+- **Fail-open semantics**: any backend exception logs a warning and
+  allows the request. We never block legitimate traffic because
+  Redis is flaky.
+- `paperguard doctor` gains a `webui_redis` check — `--ping-llm`-
+  style live probe that hits the configured Redis URL once with
+  `RedisBackend.hit("doctor-probe", ...)`. Reports GREEN /
+  YELLOW (unset) / RED (unreachable).
+- 15 new tests in `tests/test_ratelimit.py` (via `fakeredis`) plus 2
+  new doctor tests covering the YELLOW (env unset) and GREEN
+  (fakeredis-backed) cases.
+
+### Dependency
+- Added `redis>=4.0` and `fakeredis>=2.0` as optional `webui`-related
+  install extras. The base install still works without them; the
+  webui simply uses `InMemoryBackend` only.
+
+### Quality
+- Tests: 411 passed (+17). Ruff clean. Mypy --strict clean.
+  92 source files (was 91).
+
 ## [2.1.14] — 2026-05-21 — Detector deep-dive pages for the 4 new detectors
 
 ### Added
