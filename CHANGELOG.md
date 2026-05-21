@@ -4,6 +4,33 @@ All notable changes to PaperGuard are documented in this file. Format follows
 [Keep a Changelog](https://keepachangelog.com/) and the project adheres to
 [Semantic Versioning](https://semver.org/).
 
+## [2.1.8] — 2026-05-21 — F6 empirical calibration (recall_image_v2)
+
+### Added
+- `scripts/recall_image_v2.py` — extends recall_image_v1 to run F6
+  alongside F1 + F4 on N=10+8 OpenAlex post-2020 retracted/control
+  papers. Per-paper outputs include `f6_max_z`, `f6_largest_cluster`,
+  `f6_severity`, `f6_images_flagged`.
+- `scripts/recall_analyze_image_v2.py` — analyser that computes
+  single-detector LR+ at NOTE-and-CONCERN thresholds, joint LR+ for
+  every F1/F4/F6 combination, and a per-paper table.
+- `scripts/recall_image_v2_results.json` — raw run output.
+- `docs/recall_image_v2.md` — interpretation with honest calibration:
+  **F6 at default `z ≥ 4` is too sensitive for general use** (TPR 70 %,
+  FPR 75 %). Recommendation: tune to `z ≥ 6` and `cluster ≥ 8` for
+  triage use; defaults preserved for research / experimentation.
+
+### Honest finding
+F6's mechanism — per-channel histogram discontinuity — fires on any
+image with strong content edges (well-plate borders, fluorescent
+panel composition, micrograph tissue interfaces). At the default
+threshold this overwhelms specificity. The doc adds a per-use-case
+calibration table so users can pick the threshold matching their
+precision / recall preference.
+
+No code changes (F6 itself is unchanged from 2.1.7). Tests: 394 /
+ruff clean / mypy --strict clean.
+
 ## [2.1.7] — 2026-05-21 — F6 patch-splice detector (Bik 2016 style)
 
 ### Added — F6 detector (built-in count: 33 → 34)
