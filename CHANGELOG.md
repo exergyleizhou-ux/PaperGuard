@@ -4,6 +4,31 @@ All notable changes to PaperGuard are documented in this file. Format follows
 [Keep a Changelog](https://keepachangelog.com/) and the project adheres to
 [Semantic Versioning](https://semver.org/).
 
+## [2.1.9] — 2026-05-21 — F6 default threshold calibration applied
+
+The 2.1.8 release published the empirical finding that F6 at
+`z=4, cluster=4` had FPR ≈ 75%. This release applies that finding.
+
+### Changed
+- `PatchSpliceInput` defaults: `z_threshold` 4.0 → **6.0**;
+  `min_cluster_size` 4 → **8**. These are the "triage tier" from
+  `docs/recall_image_v2.md`. Empirical effect on the same N=18
+  corpus: LR+ 0.93 → 1.12; FPR 75 % → 62.5 %; TPR unchanged at 70 %.
+- `docs/recall_image_v2.md` gains a calibration-grid table showing
+  the full threshold sweep, including a grid-optimal cell
+  (`z=6, cluster=20`, LR+ 1.20) that we deliberately do **not**
+  make default because N=18 is too small to justify it.
+- `scripts/recall_image_v2_calibrated.json` — annotated v2 results
+  with the new-threshold severity recomputed deterministically.
+
+### Compatibility
+Users who want the prior (research-mode) behaviour pass
+`PatchSpliceInput(z_threshold=4.0, min_cluster_size=4)` explicitly.
+Existing F6 unit tests passed unchanged at the new defaults.
+
+### Quality
+394 tests / ruff clean / mypy --strict clean / 91 source files.
+
 ## [2.1.8] — 2026-05-21 — F6 empirical calibration (recall_image_v2)
 
 ### Added

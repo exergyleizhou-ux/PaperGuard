@@ -94,6 +94,30 @@ F4 fired once (CRITICAL on a control paper). F4 is most useful in
 images, its discriminating power grows. A cold corpus on N=18 papers
 produces near-zero signal by design.
 
+### 2.1.9 calibration applied
+
+Based on this study, **PaperGuard 2.1.9 changed F6's default
+thresholds** from `z=4 / cluster=4` to `z=6 / cluster=8`. The new
+defaults are the "triage tier" from the recommendation table above.
+
+Before/after on the same N=18 corpus (recomputed deterministically
+from the saved `f6_max_z` and `f6_largest_cluster` columns —
+re-running the script would produce identical numbers):
+
+| F6 thresholds | TP | FP | FN | TN | TPR | FPR | LR+ |
+|---|---|---|---|---|---|---|---|
+| **old default** (z=4, cluster=4) | 7 | 6 | 3 | 2 | 70% | 75% | 0.93 |
+| **new default** (z=6, cluster=8) — 2.1.9 | 7 | 5 | 3 | 3 | 70% | 62.5% | 1.12 |
+| grid-best (z=6, cluster=20) | 6 | 4 | 4 | 4 | 60% | 50% | 1.20 |
+| ultra-strict (z=10, cluster=30) | 4 | 3 | 6 | 5 | 40% | 37.5% | 1.07 |
+
+The **grid-best `cluster=20` cell** narrowly beats the new default
+but we are not making it default because N=18 is too small to
+justify a hard threshold of 20 patches without overfitting. Users
+who want max LR+ on this dataset can pass
+`PatchSpliceInput(z_threshold=6.0, min_cluster_size=20)`
+explicitly.
+
 ### Bottom line
 
 - F6 contributes a *structurally different* signal from F1+F4.

@@ -57,14 +57,26 @@ class PatchSpliceInput:
 
     ``image_paths`` may include any mix of PNG / JPG / TIFF / BMP. The
     detector scans each image independently and aggregates findings.
+
+    Threshold history
+    -----------------
+    Defaults were tightened in 2.1.9 based on empirical results from
+    ``docs/recall_image_v2.md``. The old defaults (z=4, cluster=4)
+    overproduced false positives on legitimate content edges
+    (well-plate borders, fluorescent panel composition). The new
+    defaults (z=6, cluster=8) match the **triage tier** from that
+    document. For research / experimentation, pass ``z_threshold=4.0``
+    and ``min_cluster_size=4`` explicitly.
     """
 
     image_paths: list[Path]
     patch_size: int = 32
     stride: int = 32      # non-overlapping by default
     n_bins: int = 16      # per channel
-    z_threshold: float = 4.0
-    min_cluster_size: int = 4
+    # 2.1.9 calibration: tightened from 4.0 / 4 (which had FPR ≈ 75% on
+    # N=18) to the triage-tier 6.0 / 8 recommended in recall_image_v2.md.
+    z_threshold: float = 6.0
+    min_cluster_size: int = 8
 
 
 def _jsd(p: Any, q: Any) -> float:
