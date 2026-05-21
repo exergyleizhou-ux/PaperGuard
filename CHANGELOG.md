@@ -4,6 +4,23 @@ All notable changes to PaperGuard are documented in this file. Format follows
 [Keep a Changelog](https://keepachangelog.com/) and the project adheres to
 [Semantic Versioning](https://semver.org/).
 
+## [2.1.4] — 2026-05-20 — Docs polish
+
+Pure docs refresh — closes out the 2.0 → 2.1 ship cycle.
+
+### Changed
+- `README.md` documentation table: added rows for the image-layer
+  recall study, the B4 statcheck cross-validation, the JOSS paper
+  draft, and the live HuggingFace Space demo URL. Corrected the
+  CHANGELOG range from `0.1 → 2.0.2` to `0.1 → 2.1.3`.
+- `ROADMAP.md`: marked all the 2.0 / 2.1-cycle items as shipped,
+  added a new "2.2 — Next horizon" section listing real-GPT-4o
+  T7/T8 measurement, Bik splice/wash extension, statcheck-R Cohen's
+  κ comparison, F1/F4 expansion to N=100, Redis cache, and old
+  `.doc`/`.docb` image extraction as the actual remaining work.
+
+No code changes. Tests: 372 / ruff clean / mypy --strict clean.
+
 ## [2.1.3] — 2026-05-20 — Phase-8: B4 statcheck cross-validation + HF Space deployed
 
 Two independent additions.

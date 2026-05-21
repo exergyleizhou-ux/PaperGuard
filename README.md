@@ -334,13 +334,17 @@ tests/
 | [docs/llm_detection_v2.md](docs/llm_detection_v2.md) | **LLM-text detection guide** — T6 lexical + T7 perplexity + T8 DetectGPT, with the calibrated empirical position |
 | [docs/recall_test_v8.md](docs/recall_test_v8.md) | **2.0.16 — N=50 LR+ study (T6 only)** — first focused LR+ measurement against post-publication retraction data |
 | [docs/recall_test_v9.md](docs/recall_test_v9.md) | **2.1.0 — N=30 retest + transparent T7/T8 dataset** — extends v8 with T7/T8 columns annotated for cliproxy endpoint limitations |
+| [docs/recall_image_v1.md](docs/recall_image_v1.md) | **2.1.2 — image-layer LR+ study** — first F1/F4 empirical numbers on a curated retracted-image-reuse corpus |
+| [docs/crossval_statcheck.md](docs/crossval_statcheck.md) | **2.1.3 — B4 statcheck cross-validation** — N=41 ground-truth corpus, B4 recall 100% / decision-flip recall 94% |
+| [paper/paper.md](paper/paper.md) | **JOSS-formatted paper draft** with bibliography (`paper/paper.bib`) — ready for submission to the Journal of Open Source Software |
 | [docs/recall_test_v2.md](docs/recall_test_v2.md) | **N=100+100 recall/precision study** — quantifies that PDF-only scanning is *not* a reliable retraction detector; explains why and what to do instead |
 | [docs/recall_test_v3.md](docs/recall_test_v3.md) | **2.0.4 follow-up** — single-rule recalibration takes LR+ from 0.77 (worse than coin flip) to ∞ (zero false positives) at the cost of dropping recall from a fake 68% to an honest 13% |
 | [docs/recall_test_v4.md](docs/recall_test_v4.md) | **2.0.5 follow-up** — T5 stylometry tightening removes near-universal NOTE noise from reports while preserving recall/FP at the v3 level (T5 was only ever NOTE-level so it didn't drive overall severity anyway) |
 | [docs/recall_test_v5.md](docs/recall_test_v5.md) | **2.0.6 follow-up (in progress)** — PMC-first OA fetcher lifts download success rate from ~28% (v2) to ~60% in the partial sample, by routing through Europe PMC before Unpaywall and OpenAlex |
 | [README.md](README.md) | This file — overview, usage, install |
 | [README.zh.md](README.zh.md) | 中文版 |
-| [CHANGELOG.md](CHANGELOG.md) | Full release history 0.1 → 2.0.2 |
+| [CHANGELOG.md](CHANGELOG.md) | Full release history 0.1 → 2.1.3 |
+| **[HuggingFace Space demo](https://huggingface.co/spaces/exergyleizhou/paperguard-demo)** | **Live browser demo** — paste DOI / upload PDF / paste text, get a full PaperGuard report |
 | [docs/detectors/](docs/detectors/) | Auto-generated per-detector deep-dive (30 pages + index) |
 | [docs/fraud_case_studies.md](docs/fraud_case_studies.md) | 9 real-world cases (Stapel, Fujii, Hwang, Schön, Macchiarini, Wansink, Masliah, Geng-style, Bik 2016) mapped to detectors |
 | [docs/webui_multitenant.md](docs/webui_multitenant.md) | Multi-tenant Web UI architecture, env vars, invite flow, production checklist |

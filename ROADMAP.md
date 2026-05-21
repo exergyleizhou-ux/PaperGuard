@@ -74,13 +74,33 @@ The roadmap below shifts coverage toward (1) and (2).
 | WCAG 2.1 AA HTML report | ✅ shipped | Focus, ARIA, contrast, motion |
 | LLM explainer (opt-in) | ✅ shipped | OpenAI / Anthropic / Ollama |
 
-## Beyond 0.5.0
+## Beyond 0.5.0 ✅ delivered across 2.0 / 2.1 cycle
 
-- Paper-mill detection (author/journal/citation graph + community detection)
-- Bik splice / wash detection (per-channel histogram analysis at patch level)
-- Multi-tenant Web UI with auth and shared scan history
-- Pluggable cache backend (Redis)
-- Image-extraction for old `.doc` / `.docb` formats
+| Item | Status | Where it shipped |
+|---|---|---|
+| Paper-mill detection (author/journal/citation graph) | ✅ shipped | 2.0 — M1 detector |
+| Multi-tenant Web UI with auth | ✅ shipped | 2.0 — `paperguard.webui` |
+| LLM-text detection (T6 lexical) | ✅ shipped | 2.0 — T6 detector |
+| LLM-text detection (T7 perplexity) | ✅ shipped | 2.0.15 |
+| LLM-text detection (T8 DetectGPT-curvature) | ✅ shipped | 2.0.16 |
+| Dynamic T6 dictionary + `refresh-ai-dict` CLI | ✅ shipped | 2.0.15 / 2.0.16 |
+| Empirical LR+ studies (v8/v9/image-v1) | ✅ shipped | 2.0.16 / 2.1.0 / 2.1.2 |
+| Technical report (manuscript) | ✅ shipped | 2.1.1 |
+| JOSS paper draft (`paper/paper.md` + `paper.bib`) | ✅ shipped | 2.1.2 |
+| T6 abstract-only mode | ✅ shipped | 2.1.2 |
+| HuggingFace Space live demo | ✅ deployed | 2.1.3 — [huggingface.co/spaces/exergyleizhou/paperguard-demo](https://huggingface.co/spaces/exergyleizhou/paperguard-demo) |
+| B4 statcheck cross-validation (N=41 ground-truth) | ✅ shipped | 2.1.3 |
+
+## 2.2 — Next horizon
+
+| Item | Why |
+|---|---|
+| Real GPT-4o-class T7 / T8 LR+ measurement | Currently blocked on logprobs-capable endpoint access. Datasets ready (`recall_test_v9_results.json` has T7/T8 slots wired). |
+| Bik splice / wash detection (per-channel histogram analysis at patch level) | Higher resolution image forensics than F3 currently offers. |
+| statcheck-R direct comparison (Cohen's κ) | When R is available in CI; cross-validation against the original implementation rather than scipy reference only. |
+| F1 / F4 expansion to N=100 | image-v1 used N=15+15; expanding to N=50+50 would give CI-tight LR+ estimates. |
+| Pluggable cache backend (Redis) | For multi-tenant Web UI at scale. |
+| Image-extraction for old `.doc` / `.docb` formats | Long-tail format coverage. |
 
 ## What This Tool Will Never Do
 
