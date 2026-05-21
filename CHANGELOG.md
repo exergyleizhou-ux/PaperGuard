@@ -4,6 +4,39 @@ All notable changes to PaperGuard are documented in this file. Format follows
 [Keep a Changelog](https://keepachangelog.com/) and the project adheres to
 [Semantic Versioning](https://semver.org/).
 
+## [2.1.7] — 2026-05-21 — F6 patch-splice detector (Bik 2016 style)
+
+### Added — F6 detector (built-in count: 33 → 34)
+- `src/paperguard/detectors/f6_patch_splice.py` — **per-channel
+  colour-histogram patch discontinuity** detector. Implements the
+  signal Elisabeth Bik et al. (2016, *mBio*) used as their primary
+  visual cue for splicing in their 20,000-paper screen.
+- Algorithm: divide image into ``patch_size × patch_size`` patches
+  (default 32 × 32, non-overlapping); per patch, compute three 16-bin
+  per-channel histograms; for each patch compute Jensen-Shannon
+  divergence to its 4-neighbours, summed across channels; robust
+  z-score using median + MAD; flag patches with z ≥ 4; report
+  largest 8-connected component of outliers.
+- Severity tiers: z < 4 → no finding; 4 ≤ z < 6 (no cluster) → NOTE;
+  z ≥ 6 OR cluster ≥ 4 → CONCERN; both → SUSPICIOUS.
+- 12 new tests in `tests/test_f6_patch_splice.py`: synthetic clean
+  vs spliced images, tiny-image skip, JSD properties, connected-
+  component edge cases, ≥ 4 innocent_explanations per finding,
+  privacy iron rule (no verdict words).
+- Registered as 34th built-in. Plugin entry-point system unchanged.
+
+### Differs from F3
+F3 already detects splicing via luminance mean/var/Laplacian
+similarity. F6 captures a complementary signal — *colour-channel
+discontinuity* — that catches grafts where the inserted region's
+colour balance differs from the recipient even when luminance has
+been corrected. F3 + F6 together catch a wider range of inserts
+than either alone.
+
+### Tests
+- 394 passed (+12) / 0 failed / ruff clean / mypy --strict clean
+- 91 source files (was 90, F6 module added)
+
 ## [2.1.6] — 2026-05-21 — `paperguard doctor` diagnostic command
 
 ### Added
