@@ -4,6 +4,37 @@ All notable changes to PaperGuard are documented in this file. Format follows
 [Keep a Changelog](https://keepachangelog.com/) and the project adheres to
 [Semantic Versioning](https://semver.org/).
 
+## [2.1.3] — 2026-05-20 — Phase-8: B4 statcheck cross-validation + HF Space deployed
+
+Two independent additions.
+
+### Added — B4 statcheck cross-validation (option d)
+- `scripts/crossval_statcheck.py` — N=41 ground-truth statistical-claim
+  corpus with analytical scipy reference. Runs B4 against the corpus
+  and measures TP / FP / FN / TN, recall, precision, decision-flip
+  recall.
+- `scripts/crossval_statcheck_results.json` — raw results.
+- `docs/crossval_statcheck.md` — interpretation.
+- **Headline**: recall 100 %, precision 64 %, decision-flip recall
+  94.12 %. PaperGuard's B4 misses **no** materially inconsistent
+  claims and catches the most consequential decision-flip class at
+  near-perfect rate. The 9 "false positives" are all
+  small-magnitude rounding inconsistencies that the original
+  statcheck protocol also flags (consistent with Nuijten et al.
+  2016 §2.3).
+
+### Deployed — HuggingFace Space (option f)
+- `examples/hf_space_app.py` synced to
+  https://huggingface.co/spaces/exergyleizhou/paperguard-demo as
+  `app.py`.
+- `examples/hf_space_requirements.txt` synced as `requirements.txt`
+  with `paperguard>=2.1.2` pin.
+- Live demo lets visitors paste a DOI / upload a PDF / paste text
+  and run the full T6 + T7 + T8 + LLM-review stack from a browser.
+
+No detector-code changes. Tests: 372 / ruff clean / mypy --strict
+clean.
+
 ## [2.1.2] — 2026-05-20 — Phase-5+: image-layer recall + T6 abstract-only + JOSS paper
 
 Bundles three independent improvements:
