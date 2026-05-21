@@ -4,6 +4,45 @@ All notable changes to PaperGuard are documented in this file. Format follows
 [Keep a Changelog](https://keepachangelog.com/) and the project adheres to
 [Semantic Versioning](https://semver.org/).
 
+## [2.1.10] — 2026-05-21 — T8 endpoint limitation, formally demonstrated
+
+The technical report (2.1.1) and the LLM-detection guide
+(`llm_detection_v2.md`) both stated, on the basis of small-N probes,
+that T7 + T8 cannot be meaningfully measured on the cliproxy
+endpoint. This release provides the **formal empirical demonstration**.
+
+### Added
+- `scripts/t8_controlled_benchmark.py` — controlled 10 + 10 corpus
+  (pre-2020 human academic methods prose vs LLM-marker-heavy AI
+  prose), bypassing the PMC fetch overhead so the T8 signal itself
+  can be isolated. Public, reproducible.
+- `scripts/t8_controlled_benchmark_results.json` — raw run results
+  on cliproxy `gpt-5.4-mini`.
+- `docs/t8_endpoint_limitation.md` — 7-section report with the
+  measurement protocol, per-sample scores, two-failure-mode
+  diagnosis (paraphraser preserves LLM markers + naturalness rater
+  is miscalibrated on technical prose), and the per-endpoint
+  detector-compatibility matrix.
+
+### Headline measurement
+On cliproxy `gpt-5.4-mini`:
+
+- **AI samples**: 9 / 10 hit SSL EOF mid-run; the 1 surviving sample
+  scored 0.0 (all paraphrases rated 10/10, zero variance).
+- **Human samples**: 10 / 10 completed but scores span [-6.0, +1.22]
+  — pure noise. At the default SUSPICIOUS tier (`score < -0.5`),
+  **50 % of human samples false-fire**.
+- LR+ at SUSPICIOUS tier: **0** (worse than coin flip).
+
+### Implication
+The cliproxy endpoint can only meaningfully drive T6. T7 + T8
+correctly return NOTE-level inconclusive findings rather than wrong
+numbers, in line with the privacy iron rule. A GPT-4-class endpoint
+with token logprobs is required to unlock live T7 + T8 LR+
+measurement; the v9 dataset is pre-wired for that re-analysis.
+
+No code changes. Tests: 394 / ruff clean / mypy --strict clean.
+
 ## [2.1.9] — 2026-05-21 — F6 default threshold calibration applied
 
 The 2.1.8 release published the empirical finding that F6 at

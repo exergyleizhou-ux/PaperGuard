@@ -1,0 +1,347 @@
+{
+  "model": "gpt-5.4-mini",
+  "base_url": "https://cliproxy.eqing.tech/v1",
+  "results": [
+    {
+      "arm": "human",
+      "idx": 0,
+      "score": -2.0,
+      "n_segments": 1,
+      "segments": [
+        {
+          "n_perturbations_requested": 3,
+          "n_perturbations_returned": 3,
+          "n_scores_parsed": 3,
+          "score_original": 4.0,
+          "scores_perturbed": [
+            3.0,
+            3.0,
+            3.0
+          ]
+        }
+      ]
+    },
+    {
+      "arm": "human",
+      "idx": 1,
+      "score": 1.224744871391589,
+      "n_segments": 1,
+      "segments": [
+        {
+          "n_perturbations_requested": 3,
+          "n_perturbations_returned": 3,
+          "n_scores_parsed": 3,
+          "score_original": 2.0,
+          "scores_perturbed": [
+            4.0,
+            2.0,
+            3.0
+          ]
+        }
+      ]
+    },
+    {
+      "arm": "human",
+      "idx": 2,
+      "score": 0.7071067811865478,
+      "n_segments": 1,
+      "segments": [
+        {
+          "n_perturbations_requested": 3,
+          "n_perturbations_returned": 3,
+          "n_scores_parsed": 3,
+          "score_original": 3.0,
+          "scores_perturbed": [
+            3.0,
+            4.0,
+            3.0
+          ]
+        }
+      ]
+    },
+    {
+      "arm": "human",
+      "idx": 3,
+      "score": -0.3333333333333333,
+      "n_segments": 1,
+      "segments": [
+        {
+          "n_perturbations_requested": 3,
+          "n_perturbations_returned": 2,
+          "n_scores_parsed": 2,
+          "score_original": 5.0,
+          "scores_perturbed": [
+            6.0,
+            3.0
+          ]
+        }
+      ]
+    },
+    {
+      "arm": "human",
+      "idx": 4,
+      "score": -0.7071067811865478,
+      "n_segments": 1,
+      "segments": [
+        {
+          "n_perturbations_requested": 3,
+          "n_perturbations_returned": 3,
+          "n_scores_parsed": 3,
+          "score_original": 3.0,
+          "scores_perturbed": [
+            3.0,
+            3.0,
+            2.0
+          ]
+        }
+      ]
+    },
+    {
+      "arm": "human",
+      "idx": 5,
+      "score": 1.0,
+      "n_segments": 1,
+      "segments": [
+        {
+          "n_perturbations_requested": 3,
+          "n_perturbations_returned": 2,
+          "n_scores_parsed": 2,
+          "score_original": 2.0,
+          "scores_perturbed": [
+            3.0,
+            2.0
+          ]
+        }
+      ]
+    },
+    {
+      "arm": "human",
+      "idx": 6,
+      "score": -0.7071067811865478,
+      "n_segments": 1,
+      "segments": [
+        {
+          "n_perturbations_requested": 3,
+          "n_perturbations_returned": 3,
+          "n_scores_parsed": 3,
+          "score_original": 3.0,
+          "scores_perturbed": [
+            3.0,
+            2.0,
+            3.0
+          ]
+        }
+      ]
+    },
+    {
+      "arm": "human",
+      "idx": 7,
+      "score": -0.7071067811865478,
+      "n_segments": 1,
+      "segments": [
+        {
+          "n_perturbations_requested": 3,
+          "n_perturbations_returned": 3,
+          "n_scores_parsed": 3,
+          "score_original": 6.0,
+          "scores_perturbed": [
+            4.0,
+            6.0,
+            6.0
+          ]
+        }
+      ]
+    },
+    {
+      "arm": "human",
+      "idx": 8,
+      "score": -0.2672612419124242,
+      "n_segments": 1,
+      "segments": [
+        {
+          "n_perturbations_requested": 3,
+          "n_perturbations_returned": 3,
+          "n_scores_parsed": 3,
+          "score_original": 5.0,
+          "scores_perturbed": [
+            5.0,
+            3.0,
+            6.0
+          ]
+        }
+      ]
+    },
+    {
+      "arm": "human",
+      "idx": 9,
+      "score": -6.0,
+      "n_segments": 1,
+      "segments": [
+        {
+          "n_perturbations_requested": 3,
+          "n_perturbations_returned": 2,
+          "n_scores_parsed": 2,
+          "score_original": 6.0,
+          "scores_perturbed": [
+            3.0,
+            3.0
+          ]
+        }
+      ]
+    },
+    {
+      "arm": "ai",
+      "idx": 0,
+      "score": 0.0,
+      "n_segments": 1,
+      "segments": [
+        {
+          "n_perturbations_requested": 3,
+          "n_perturbations_returned": 3,
+          "n_scores_parsed": 3,
+          "score_original": 10.0,
+          "scores_perturbed": [
+            10.0,
+            10.0,
+            10.0
+          ]
+        }
+      ]
+    },
+    {
+      "arm": "ai",
+      "idx": 1,
+      "score": null,
+      "n_segments": 1,
+      "segments": [
+        {
+          "n_perturbations_requested": 3,
+          "n_perturbations_returned": 0,
+          "n_scores_parsed": 0,
+          "score_original": null,
+          "scores_perturbed": []
+        }
+      ]
+    },
+    {
+      "arm": "ai",
+      "idx": 2,
+      "score": null,
+      "n_segments": 1,
+      "segments": [
+        {
+          "n_perturbations_requested": 3,
+          "n_perturbations_returned": 0,
+          "n_scores_parsed": 0,
+          "score_original": null,
+          "scores_perturbed": []
+        }
+      ]
+    },
+    {
+      "arm": "ai",
+      "idx": 3,
+      "score": null,
+      "n_segments": 1,
+      "segments": [
+        {
+          "n_perturbations_requested": 3,
+          "n_perturbations_returned": 0,
+          "n_scores_parsed": 0,
+          "score_original": null,
+          "scores_perturbed": []
+        }
+      ]
+    },
+    {
+      "arm": "ai",
+      "idx": 4,
+      "score": null,
+      "n_segments": 1,
+      "segments": [
+        {
+          "n_perturbations_requested": 3,
+          "n_perturbations_returned": 0,
+          "n_scores_parsed": 0,
+          "score_original": null,
+          "scores_perturbed": []
+        }
+      ]
+    },
+    {
+      "arm": "ai",
+      "idx": 5,
+      "score": null,
+      "n_segments": 1,
+      "segments": [
+        {
+          "n_perturbations_requested": 3,
+          "n_perturbations_returned": 0,
+          "n_scores_parsed": 0,
+          "score_original": null,
+          "scores_perturbed": []
+        }
+      ]
+    },
+    {
+      "arm": "ai",
+      "idx": 6,
+      "score": null,
+      "n_segments": 1,
+      "segments": [
+        {
+          "n_perturbations_requested": 3,
+          "n_perturbations_returned": 0,
+          "n_scores_parsed": 0,
+          "score_original": null,
+          "scores_perturbed": []
+        }
+      ]
+    },
+    {
+      "arm": "ai",
+      "idx": 7,
+      "score": null,
+      "n_segments": 1,
+      "segments": [
+        {
+          "n_perturbations_requested": 3,
+          "n_perturbations_returned": 0,
+          "n_scores_parsed": 0,
+          "score_original": null,
+          "scores_perturbed": []
+        }
+      ]
+    },
+    {
+      "arm": "ai",
+      "idx": 8,
+      "score": null,
+      "n_segments": 1,
+      "segments": [
+        {
+          "n_perturbations_requested": 3,
+          "n_perturbations_returned": 0,
+          "n_scores_parsed": 0,
+          "score_original": null,
+          "scores_perturbed": []
+        }
+      ]
+    },
+    {
+      "arm": "ai",
+      "idx": 9,
+      "score": null,
+      "n_segments": 1,
+      "segments": [
+        {
+          "n_perturbations_requested": 3,
+          "n_perturbations_returned": 0,
+          "n_scores_parsed": 0,
+          "score_original": null,
+          "scores_perturbed": []
+        }
+      ]
+    }
+  ]
+}
