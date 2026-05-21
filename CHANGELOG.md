@@ -4,6 +4,25 @@ All notable changes to PaperGuard are documented in this file. Format follows
 [Keep a Changelog](https://keepachangelog.com/) and the project adheres to
 [Semantic Versioning](https://semver.org/).
 
+## [2.1.5] — 2026-05-20 — Continuity polish
+
+Pure docs / continuity refresh.
+
+### Changed
+- `README.zh.md` synced to 2.1.5: badges (was 2.0.0 / 30 detectors /
+  223 tests → 2.1.5 / 33 detectors / 372 tests), detector list (added
+  E1 / M1 / T6 dynamic / T7 / T8), HF Space link in header, new
+  "实证标定" section with the honest LR+ numbers.
+
+### Added
+- `HANDOFF.md` — successor to the 2.0.14 handoff document. Captures
+  2.1.5 state, credentials, cliproxy quirks, the 14 tripwires, ship
+  workflow, and the 6 priority directions (8.A–8.F) for the next
+  session. Pasting it whole brings the next agent up to speed without
+  context loss.
+
+No code changes. Tests: 372 / ruff clean / mypy --strict clean.
+
 ## [2.1.4] — 2026-05-20 — Docs polish
 
 Pure docs refresh — closes out the 2.0 → 2.1 ship cycle.

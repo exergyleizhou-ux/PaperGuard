@@ -3,13 +3,13 @@
 > 学术论文数据/图像/统计异常筛查工具。
 > **只标记异常，不指控造假。** 每条 Finding 都附带可能的合法解释。
 
-![status](https://img.shields.io/badge/status-2.0.0-blue)
+![status](https://img.shields.io/badge/status-2.1.5-blue)
 ![python](https://img.shields.io/badge/python-3.11%2B-blue)
-![tests](https://img.shields.io/badge/tests-223%20passing-brightgreen)
-![detectors](https://img.shields.io/badge/detectors-30-blue)
+![tests](https://img.shields.io/badge/tests-372%20passing-brightgreen)
+![detectors](https://img.shields.io/badge/detectors-33-blue)
 ![license](https://img.shields.io/badge/license-MIT-green)
 
-[English README](README.md) · 中文 README
+[English README](README.md) · 中文 README · **[🤗 在线 Demo](https://huggingface.co/spaces/exergyleizhou/paperguard-demo)**
 
 ## 重要立场
 
@@ -21,17 +21,28 @@
 
 每条 Finding 都包含至少 3 条 `innocent_explanations`（可能的合法解释）。
 
-## 29 个内置检测器
+## 33 个内置检测器
 
 | 类别 | IDs |
 |---|---|
 | 数字取证 | A1（末位）、A2（Benford）、A3（列间算术）、A5（小数）、A6（不可能值）、A7（末位 0/5 专项） |
 | 摘要统计一致性 | B1（GRIM）、B4（statcheck）、B5（TIVA）、B6（GRIMMER）、B7（p-curve）、B8（SPRITE） |
 | 临床试验 | C1（Carlisle 基线平衡） |
-| 方差结构 | D1（残差平滑）、D2（缺失值模式） |
+| 方差结构 | D1（残差平滑）、D2（缺失值模式）、E1（ICC 独立性,2.0.14 新增） |
 | 图像取证 | F1（pHash 跨图）、F2（ORB 图内复制）、F3（块统计 splice）、F4（跨论文 pHash 库）、F5（EXIF 跨图聚类） |
 | 元数据 | G1（图像 EXIF 时序）、G3（docx rsid）、G4（文件元数据） |
-| 文本与试验 | T1（n-gram 剽窃）、T2（NCT outcome 漂移）、T3（数据/伦理审计）、T4（论文工厂扭曲短语）、T5（Stapel 语言指纹）、T6（AI 生成文本启发） |
+| 论文工厂 | M1（合作者图谱） |
+| 文本与试验 | T1（n-gram 剽窃）、T2（NCT outcome 漂移）、T3（数据/伦理审计）、T4（论文工厂扭曲短语）、T5（Stapel 语言指纹） |
+| **LLM 文本(新)** | **T6（词面字典 + 动态字典）、T7（续写困惑度 proxy)、T8（DetectGPT-curvature)** |
+
+### 实证标定(诚实)
+
+| 检测器层 | 数据集 | LR+ | 解读 |
+|---|---|---|---|
+| T6 lexical(默认阈值) | v8/v9 N=85,Nature-tier 已发表撤稿 | ~0 | T6 是**投稿前/预印本**筛查信号,不是 post-publication 取证;copy-editing 抹除了字典命中。 |
+| B4 statcheck(N=41 ground-truth) | crossval_statcheck | recall 100%, 决策翻转 recall 94% | 与 Nuijten 2016 原版 statcheck 协议一致。 |
+| F1/F4 image | recall_image_v1 N=15+15 | LR+ 表见 `docs/recall_image_v1.md` | 图像 pHash 复用层。 |
+| T7 / T8 | (待 GPT-4o-class endpoint 配置) | — | 单元测试覆盖;实测延后到 logprobs-capable endpoint 可用时。 |
 
 详见 `docs/fraud_case_studies.md`：每个真实造假案例（Stapel / Fujii /
 Hwang / Schön / Macchiarini / Wansink / Masliah / 耿同学打假对象 /
