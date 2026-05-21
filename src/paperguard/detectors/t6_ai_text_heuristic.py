@@ -36,11 +36,55 @@
 """
 from __future__ import annotations
 
+import os
 import re
 from typing import Any, ClassVar
 
 from paperguard.core.base_detector import BaseDetector
 from paperguard.core.types import Finding, Severity
+
+
+# Empirically motivated by recall_test_v8: full-text T6 has LR+ ≈ 0 on
+# post-publication Nature-tier retracted papers because copy-editing
+# removes lexical LLM markers from Methods / Results / Discussion. The
+# *abstract* and the first part of the *introduction* are the
+# author-written zones least touched by copy-editing, so they retain
+# the signal longer.
+def _extract_unedited_zone(text: str, max_chars: int = 6000) -> str:
+    """Return abstract + introduction-equivalent (≤ max_chars).
+
+    Heuristic: find an 'Abstract' header (case-insensitive); slice
+    from there until a 'Methods' / 'Materials and Methods' /
+    'Methodology' header or until max_chars, whichever first.
+    Falls back to the first ``max_chars`` chars if neither header
+    is found.
+    """
+    if not text:
+        return text
+    # Find abstract header
+    abstract_match = re.search(
+        r"\bAbstract\b\s*[:\n]?\s*", text, re.IGNORECASE
+    )
+    start = abstract_match.start() if abstract_match else 0
+    # End: methods-style header or max_chars
+    method_match = re.search(
+        r"\b(Materials\s+and\s+Methods|Methodology|Methods)\b",
+        text[start:],
+        re.IGNORECASE,
+    )
+    end = (
+        start + method_match.start()
+        if method_match
+        else start + max_chars
+    )
+    end = min(end, start + max_chars, len(text))
+    return text[start:end]
+
+
+def _abstract_only_enabled() -> bool:
+    return os.environ.get(
+        "PAPERGUARD_T6_ABSTRACT_ONLY", ""
+    ).lower() in {"1", "true", "yes"}
 
 # 极强信号：未清理 LLM 残留（直接 CRITICAL）
 _LLM_LEAK_PATTERNS = (
@@ -253,15 +297,32 @@ class T6AITextHeuristicDetector(BaseDetector):
     PHRASE_DENSITY_CONCERN: ClassVar[float] = 0.003   # 0.3% (vs typical < 0.05%)
     PHRASE_DENSITY_SUSPICIOUS: ClassVar[float] = 0.006
 
+    # When abstract-only mode is on we relax MIN_WORDS — abstracts are
+    # typically 250-300 words.
+    MIN_WORDS_ABSTRACT_MODE: ClassVar[int] = 150
+
     def check_applicability(self, data: Any) -> tuple[bool, str]:
         if not isinstance(data, str):
             return False, "Expected text string"
         words = re.findall(r"\b[a-zA-Z]+\b", data)
-        if len(words) < self.MIN_WORDS:
+        min_required = (
+            self.MIN_WORDS_ABSTRACT_MODE
+            if _abstract_only_enabled()
+            else self.MIN_WORDS
+        )
+        if len(words) < min_required:
             return False, "Text too short"
         return True, ""
 
     def _detect(self, data: str, seed: int) -> list[Finding]:
+        # Empirically motivated narrowing: in abstract-only mode we
+        # restrict the scan to the unedited zone (abstract + intro)
+        # because copy-editing removes lexical LLM markers from
+        # Methods / Results / Discussion on Nature-tier papers (see
+        # recall_test_v8.md). T7/T8 are not affected — they sit on a
+        # statistical signal that survives copy-editing.
+        if _abstract_only_enabled():
+            data = _extract_unedited_zone(data)
         findings: list[Finding] = []
         # 1) Hard signal: LLM leakage
         leaks: list[tuple[str, str]] = []

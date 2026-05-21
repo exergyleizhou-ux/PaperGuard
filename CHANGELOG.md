@@ -4,6 +4,54 @@ All notable changes to PaperGuard are documented in this file. Format follows
 [Keep a Changelog](https://keepachangelog.com/) and the project adheres to
 [Semantic Versioning](https://semver.org/).
 
+## [2.1.2] — 2026-05-20 — Phase-5+: image-layer recall + T6 abstract-only + JOSS paper
+
+Bundles three independent improvements:
+
+### Added — F1 / F4 image-layer recall study (Phase 5)
+First published LR+ measurement for the **image-content** detector
+family — F1 (intra-paper pHash duplication) and F4 (cross-paper image
+re-use). Closes one of the three "future work" items in the
+technical report.
+- `scripts/recall_image_v1.py` — N=30+30 image-layer study via
+  OpenAlex retracted + subfield-matched controls, PMC/Unpaywall PDF
+  fetch, F1+F4 over each paper. Resumable.
+- `scripts/recall_analyze_image.py` — Markdown report generator with
+  LR+ tables at CRITICAL / SUSPICIOUS / CONCERN, hamming-distance
+  distribution per arm, joint F1 ∨ F4 row.
+- `scripts/recall_image_v1_results.json` — raw study output.
+- `docs/recall_image_v1.md` — human-readable report including
+  discussion of why population-LR+ under-counts F1/F4's value on
+  targeted forensic use cases.
+
+### Added — T6 abstract-only mode (Phase 7)
+Empirically motivated by recall_test_v8: full-text T6 has LR+ ≈ 0
+on Nature-tier retracted papers because copy-editing removes lexical
+LLM markers from Methods / Results / Discussion. The abstract +
+introduction is the author-written zone least touched by copy-editing.
+- New env var `PAPERGUARD_T6_ABSTRACT_ONLY=1` and CLI flag
+  `--t6-abstract-only` on `scan` and `scan-pmc`.
+- New helper `paperguard.detectors.t6_ai_text_heuristic._extract_unedited_zone`
+  slicing the input from "Abstract" to "Methods" header (or 6000 chars).
+- Drops `MIN_WORDS` to 150 in abstract-only mode (abstracts are short).
+- 10 new tests demonstrating abstract-only density > full-text density
+  when LLM markers are concentrated in the abstract.
+
+### Added — JOSS paper manuscript (Phase 6)
+- `paper/paper.md` — JOSS-format manuscript (summary, statement of
+  need, design, empirical calibration), citing the technical report
+  for full methodology.
+- `paper/paper.bib` — 10 references (Nuijten, Brown, Carlisle, Bik,
+  Benjamini-Hochberg, Kobak, Cabanac, Mitchell, Gehrmann, Heathers).
+- `.github/workflows/draft-pdf.yml` — GitHub Action using the
+  `openjournals/openjournals-draft-action` to build paper.pdf on
+  every push to `paper/**`.
+- `CITATION.cff` updated to 2.1.2 with the LLM-detection keyword set.
+
+### Tests
+- 372 passed (+10 since 2.1.1) / 3 deselected.
+- ruff + mypy --strict clean across 90 source files.
+
 ## [2.1.1] — 2026-05-20 — Technical report (Phase-4 docs)
 
 Pure docs release.

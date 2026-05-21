@@ -395,6 +395,20 @@ def main() -> None:
         "Not a verdict."
     ),
 )
+@click.option(
+    "--t6-abstract-only",
+    is_flag=True,
+    default=False,
+    help=(
+        "Restrict T6 lexical scan to the abstract + introduction "
+        "(the author-written zone least touched by copy-editing). "
+        "Empirically motivated by recall_test_v8: full-text T6 on "
+        "Nature-tier published papers has LR+ ≈ 0 because "
+        "copy-editing removes LLM phrase markers from Methods / "
+        "Results / Discussion. Use this for post-publication "
+        "screening; full-text T6 is the default for pre-submission."
+    ),
+)
 def scan(
     files: tuple[Path, ...],
     doi: str | None,
@@ -407,6 +421,7 @@ def scan(
     llm_review: bool,
     perplexity_check: bool,
     detectgpt_check: bool,
+    t6_abstract_only: bool,
 ) -> None:
     """扫描本地数据文件 + 可选 DOI 元数据。"""
     import os as _os
@@ -422,6 +437,8 @@ def scan(
         _os.environ["PAPERGUARD_PERPLEXITY_CHECK"] = "1"
     if detectgpt_check:
         _os.environ["PAPERGUARD_DETECTGPT_CHECK"] = "1"
+    if t6_abstract_only:
+        _os.environ["PAPERGUARD_T6_ABSTRACT_ONLY"] = "1"
 
     report = AuditReport(
         paper_identifier=doi or (str(files[0]) if files else "local"),
@@ -1159,6 +1176,16 @@ def _scan_single_file(
         "Requires OPENAI_API_KEY."
     ),
 )
+@click.option(
+    "--t6-abstract-only",
+    is_flag=True,
+    default=False,
+    help=(
+        "Restrict T6 lexical scan to abstract + intro (recommended "
+        "for published / post-publication scans; see "
+        "docs/recall_test_v8.md)."
+    ),
+)
 @click.option("--seed", type=int, default=42, show_default=True)
 def scan_pmc(
     doi: str,
@@ -1166,6 +1193,7 @@ def scan_pmc(
     llm_review: bool,
     perplexity_check: bool,
     detectgpt_check: bool,
+    t6_abstract_only: bool,
     seed: int,
 ) -> None:
     """Scan an OA paper by DOI via Europe PMC full text (no PDF needed).
@@ -1214,14 +1242,16 @@ def scan_pmc(
     )
 
     text = article.full_text
-    # T7 / T8 opt-in: flip the env vars the detectors check.
-    if perplexity_check or detectgpt_check:
+    # T7 / T8 / T6-abstract opt-in: flip the env vars the detectors check.
+    if perplexity_check or detectgpt_check or t6_abstract_only:
         import os as _os
 
         if perplexity_check:
             _os.environ["PAPERGUARD_PERPLEXITY_CHECK"] = "1"
         if detectgpt_check:
             _os.environ["PAPERGUARD_DETECTGPT_CHECK"] = "1"
+        if t6_abstract_only:
+            _os.environ["PAPERGUARD_T6_ABSTRACT_ONLY"] = "1"
 
     # Run the same text-detector flow on the PMC body
     text_detector_ids = ["B4", "T4", "T5", "T6"]

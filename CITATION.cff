@@ -9,8 +9,8 @@ abstract: >
   forensics, and file metadata forensics.
 authors:
   - name: PaperGuard Contributors
-version: 2.0.0.dev1
-date-released: 2026-05-18
+version: 2.1.2
+date-released: 2026-05-20
 license: MIT
 keywords:
   - research-integrity
@@ -18,7 +18,13 @@ keywords:
   - statistical-forensics
   - data-fabrication
   - peer-review
-repository-code: https://example.com/paperguard
+  - llm-detection
+  - sprite
+  - grim
+  - carlisle
+  - detectgpt
+repository-code: https://github.com/exergyleizhou-ux/PaperGuard
+url: https://github.com/exergyleizhou-ux/PaperGuard
 references:
   - type: article
     authors:
