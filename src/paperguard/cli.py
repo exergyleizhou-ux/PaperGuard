@@ -120,6 +120,23 @@ def _run_detectors_on_file(
     text = ""
     if suffix == ".docx":
         text = extract_text_from_docx(file_path)
+    elif suffix in {".doc", ".docb"}:
+        # Legacy Word binary format — best-effort via olefile (2.1.17).
+        from paperguard.extractor.legacy_doc import extract_legacy_doc_text
+
+        try:
+            text = extract_legacy_doc_text(file_path)
+        except Exception as e:  # noqa: BLE001
+            if console is not None:
+                console.print(
+                    f"[yellow]  Legacy .doc text extraction failed for "
+                    f"{file_path.name}: {type(e).__name__}: {e}[/]"
+                )
+            if audit is not None:
+                audit.log_event(
+                    "legacy_doc_text_failed",
+                    {"file": str(file_path), "error": str(e)},
+                )
     elif suffix == ".pdf":
         text, pdf_text_err = _safe_pdf_text(file_path)
         if pdf_text_err is not None:
@@ -199,7 +216,9 @@ def _run_detectors_on_file(
     # --- 4) Image forensics (F1 intra-paper + F4 cross-paper) -------------
     f1 = registry.get("F1")
     f4 = registry.get("F4")
-    if (f1 is not None or f4 is not None) and suffix in {".docx", ".pdf"}:
+    if (f1 is not None or f4 is not None) and suffix in {
+        ".docx", ".pdf", ".doc", ".docb"
+    }:
         from tempfile import TemporaryDirectory
 
         from paperguard.detectors.f1_image_duplication import (
@@ -215,11 +234,16 @@ def _run_detectors_on_file(
 
         with TemporaryDirectory() as tdir:
             tdir_path = Path(tdir)
-            imgs = (
-                extract_docx_images(file_path, tdir_path)
-                if suffix == ".docx"
-                else extract_pdf_images(file_path, tdir_path)
-            )
+            if suffix == ".docx":
+                imgs = extract_docx_images(file_path, tdir_path)
+            elif suffix == ".pdf":
+                imgs = extract_pdf_images(file_path, tdir_path)
+            else:  # .doc / .docb — legacy binary
+                from paperguard.extractor.legacy_doc import (
+                    extract_legacy_doc_images,
+                )
+
+                imgs = extract_legacy_doc_images(file_path, tdir_path)
             if audit is not None and imgs:
                 audit.log_event(
                     "images_extracted",

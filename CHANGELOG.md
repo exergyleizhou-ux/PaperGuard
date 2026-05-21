@@ -4,6 +4,40 @@ All notable changes to PaperGuard are documented in this file. Format follows
 [Keep a Changelog](https://keepachangelog.com/) and the project adheres to
 [Semantic Versioning](https://semver.org/).
 
+## [2.1.17] — 2026-05-22 — Legacy `.doc` / `.docb` format support
+
+### Added
+- `src/paperguard/extractor/legacy_doc.py` — best-effort
+  text + image extraction from pre-2007 binary Word OLE files via
+  `olefile`. Two public helpers:
+  - `extract_legacy_doc_text(path)` — pulls plaintext from the
+    `WordDocument` stream; UTF-16-LE + ASCII-filter fallback chooses
+    whichever decode gives higher English-letter density.
+  - `extract_legacy_doc_images(path, out_dir)` — scans every OLE
+    stream for known image magic bytes (PNG / JPEG / GIF / BMP /
+    TIFF / ICO), strips up to 256 B of OLE picture-descriptor
+    preamble, writes each as `img_NNNN_<stream-slug>.<ext>`.
+- CLI scan flow (`_run_detectors_on_file`) gains `.doc` / `.docb`
+  branches alongside the existing `.docx` and `.pdf` paths. Text
+  feeds T3/T4/T5/T6 + (opt-in) T7/T8; images feed F1/F4/F6.
+- 13 new tests in `tests/test_legacy_doc.py` covering image-format
+  detection (PNG/JPG/GIF/BMP, with-offset), graceful no-OLE return,
+  missing-file safety, and olefile-not-installed graceful path.
+
+### Why
+Pre-2007 Word documents and the encrypted/binary `.docb` format are
+still common in archived manuscripts and editorial workflows. T6
+LLM-text detection in particular wants every word it can get; this
+unblocks scanning a class of files PaperGuard previously refused.
+
+### Install
+- `pip install paperguard[legacy-doc]` adds the `olefile>=0.47`
+  dependency. Without it, `.doc` / `.docb` scans silently return
+  empty text and zero images (no crash).
+
+### Quality
+- Tests: 440 (+13). Ruff clean. Mypy --strict clean. 94 source files.
+
 ## [2.1.16] — 2026-05-22 — WebUI scan-result cache (SHA-keyed Redis)
 
 ### Added

@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "paperguard"
-version = "2.1.16"
+version = "2.1.17"
 description = "Statistical anomaly screener for tabular research data"
 readme = "README.md"
 requires-python = ">=3.11"
@@ -61,6 +61,10 @@ webui = [
     # Rate-limit Redis backend (2.1.15). InMemoryBackend works without
     # it; install only when running multi-worker production.
     "redis>=4.0",
+]
+# 2.1.17 — legacy Word format support.
+legacy-doc = [
+    "olefile>=0.47",
 ]
 dev = [
     "pytest>=8.0",
