@@ -4,6 +4,35 @@ All notable changes to PaperGuard are documented in this file. Format follows
 [Keep a Changelog](https://keepachangelog.com/) and the project adheres to
 [Semantic Versioning](https://semver.org/).
 
+## [2.1.11] — 2026-05-21 — JOSS-ready paper
+
+### Changed
+- `paper/paper.md` refreshed to current JOSS 2024 template format,
+  reflecting 2.1.10 state: 34 detectors (was 33), F6 patch-splice
+  documented in the families table, image-layer v2 N=18 study
+  added to empirical-calibration section, T8 endpoint-limitation
+  N=20 study added, B4 statcheck cross-validation N=41 study
+  added, software-quality section with 394 test count and the
+  `paperguard doctor` command, HF Space demo URL.
+- Tags expanded with `image forensics` and `statcheck`.
+
+### Added
+- `paper/JOSS_SUBMISSION.md` — private submission walkthrough
+  with pre-flight checklist, step-by-step instructions for
+  https://joss.theoj.org/papers/new, anticipated reviewer
+  checklist items, and what to do on rejection.
+
+### What the user has to do
+1. Register / look up ORCID at https://orcid.org/register and
+   replace the `0000-0000-0000-0000` placeholder in `paper.md`.
+2. Open https://joss.theoj.org/papers/new, paste the repo URL,
+   choose branch `main` and version `v2.1.11`. Submit.
+3. JOSS will auto-build the PDF from `paper/paper.md`.
+
+### Quality
+394 tests / ruff clean / mypy --strict clean / 91 source files.
+No code changes from 2.1.10.
+
 ## [2.1.10] — 2026-05-21 — T8 endpoint limitation, formally demonstrated
 
 The technical report (2.1.1) and the LLM-detection guide
