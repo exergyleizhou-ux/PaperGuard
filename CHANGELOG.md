@@ -4,6 +4,36 @@ All notable changes to PaperGuard are documented in this file. Format follows
 [Keep a Changelog](https://keepachangelog.com/) and the project adheres to
 [Semantic Versioning](https://semver.org/).
 
+## [2.1.14] — 2026-05-21 — Detector deep-dive pages for the 4 new detectors
+
+### Added
+- `docs/detectors/E1.md` — ICC Independence detector (Heathers 2024
+  ICRP) — auto-generated, then enriched with calibration section.
+- `docs/detectors/F6.md` — patch-splice detector (Bik 2016 mechanised)
+  — auto-generated, then enriched with calibration history
+  (2.1.7 default `z=4`/`cluster=4` → 2.1.9 calibrated `z=6`/`cluster=8`).
+- `docs/detectors/T7.md` — perplexity proxy — auto-generated, then
+  enriched with endpoint-limitation note and cross-link to the v9
+  pre-wired re-analysis path.
+- `docs/detectors/T8.md` — DetectGPT-style curvature — auto-generated,
+  then enriched with the formal empirical N=20 finding (LR+ = 0 on
+  cliproxy, two failure modes diagnosed).
+- `docs/detectors/M1.md` — paper-mill graph (was missing).
+
+### Changed
+- `docs/detectors/README.md` — re-organised to **8 clusters**
+  (added "Paper-mill graph"), lists all 34 detectors, marks the 4
+  new ones with ⭐, embeds direct links to empirical-evidence docs
+  (statcheck cross-validation, T6 recall_test_v10 first true
+  positive, F6 recall_image_v2 calibration, T8 endpoint-limitation).
+- Each new-detector page now has a "Calibration & empirical evidence"
+  table summarising shipped-in version, default thresholds,
+  opt-in flag, cost, and empirical LR+ where measured.
+
+### Quality
+No code changes. Tests: 394 / ruff clean / mypy --strict clean / 91
+source files.
+
 ## [2.1.13] — 2026-05-21 — Continuity refresh (HANDOFF + docs/INDEX + README badges)
 
 Pure docs / continuity release closing the 2.0.15 → 2.1.13 cycle.
