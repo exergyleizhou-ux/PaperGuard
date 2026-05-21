@@ -26,6 +26,7 @@ from paperguard.webui.models import (
     Visibility,
 )
 from paperguard.webui.ratelimit import get_rate_limiter
+from paperguard.webui.scan_cache import CacheEntry, get_scan_cache
 from paperguard.webui.security import generate_invite_code
 from paperguard.webui.templates import (
     dashboard,
@@ -165,20 +166,43 @@ async def scan_into_project(
     from paperguard.cli import _scan_single_file
 
     sha = hashlib.sha256(data).hexdigest()
-    with tempfile.NamedTemporaryFile(suffix=suffix, delete=False) as tmp:
-        tmp.write(data)
-        tmp_path = Path(tmp.name)
-    try:
-        audit = _scan_single_file(tmp_path)
-    finally:
-        try:
-            tmp_path.unlink()
-        except OSError:
-            pass
 
-    payload = audit.model_dump(mode="json")
-    findings = payload.get("findings") or []
-    severity_max = _max_severity([f.get("severity", "PASS") for f in findings])
+    # Scan-result cache: if another user uploaded the same exact file
+    # within the TTL window, reuse the cached audit payload. Saves
+    # CPU on duplicate uploads (common in editorial workflows where
+    # the same PDF gets re-submitted).
+    cache = get_scan_cache()
+    cached = cache.get(sha)
+    if cached is not None:
+        payload = cached.payload
+        findings = payload.get("findings") or []
+        severity_max = cached.severity_max
+    else:
+        with tempfile.NamedTemporaryFile(suffix=suffix, delete=False) as tmp:
+            tmp.write(data)
+            tmp_path = Path(tmp.name)
+        try:
+            audit = _scan_single_file(tmp_path)
+        finally:
+            try:
+                tmp_path.unlink()
+            except OSError:
+                pass
+
+        payload = audit.model_dump(mode="json")
+        findings = payload.get("findings") or []
+        severity_max = _max_severity(
+            [f.get("severity", "PASS") for f in findings]
+        )
+        # Best-effort cache write; failure logged + swallowed in scan_cache.py
+        cache.set(
+            sha,
+            CacheEntry(
+                payload=payload,
+                severity_max=severity_max,
+                n_findings=len(findings),
+            ),
+        )
 
     report = ScanReport(
         project_id=project.id,

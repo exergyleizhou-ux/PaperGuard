@@ -4,6 +4,33 @@ All notable changes to PaperGuard are documented in this file. Format follows
 [Keep a Changelog](https://keepachangelog.com/) and the project adheres to
 [Semantic Versioning](https://semver.org/).
 
+## [2.1.16] — 2026-05-22 — WebUI scan-result cache (SHA-keyed Redis)
+
+### Added
+- **`src/paperguard/webui/scan_cache.py`** — `ScanResultCache` facade
+  with `InMemoryCache` + `RedisCache` backends. SHA-256-keyed; default
+  5-minute TTL. Same auto-detection pattern as `ratelimit.py`
+  (`PAPERGUARD_REDIS_URL` → Redis, otherwise in-memory).
+- `/projects/{project_id}/scan` now consults the cache before running
+  detectors. Duplicate upload of the same exact file (same sha256)
+  within TTL returns the cached audit payload instead of re-running
+  the full 34-detector pipeline.
+- Fail-open semantics: cache backend errors log warnings and return
+  `None` (re-scan path). Never serve stale wrong data because Redis
+  is flaky.
+- 16 new tests in `tests/test_scan_cache.py` covering InMemory TTL,
+  Redis hit/miss, backend failures, malformed entries, autodetect.
+
+### Why this matters
+Editorial workflows re-submit the same PDF multiple times (author
+revision → second editorial pass → reviewer download → re-upload).
+Each duplicate save previously cost a full 34-detector run. The
+cache amortizes that to near-zero CPU on cache hit.
+
+### Quality
+- Tests: 427 (+16 from 411). Ruff clean. Mypy --strict clean. 93
+  source files (was 92).
+
 ## [2.1.15] — 2026-05-22 — WebUI rate-limit + optional Redis backend (production-hardening)
 
 ### Added
