@@ -4,6 +4,27 @@ All notable changes to PaperGuard are documented in this file. Format follows
 [Keep a Changelog](https://keepachangelog.com/) and the project adheres to
 [Semantic Versioning](https://semver.org/).
 
+## [2.1.6] — 2026-05-21 — `paperguard doctor` diagnostic command
+
+### Added
+- **`paperguard doctor`** — new CLI subcommand that runs an environment
+  health check covering 19+ items: Python version, required + optional
+  dependencies, detector registry (≥ 33 expected), entry-point plugin
+  discovery, cache directory writability, dynamic T6 dictionary state,
+  F4 image-corpus presence, and LLM endpoint configuration.
+- `--ping-llm` flag adds a live 1-token API probe (off by default).
+  Reports back the endpoint's `logprobs_supported` field so a user can
+  tell at a glance whether T7 will work on that endpoint.
+- `--json` flag for CI use; shape `{summary: {green, yellow, red},
+  checks: [{name, status, detail}]}`.
+- Exit codes: 0 = all green, 2 = at least one yellow (non-fatal), 1 =
+  at least one red. Use in CI as a pre-flight check.
+- 10 new tests in `tests/test_doctor_cmd.py` including a privacy-rule
+  assertion that the doctor never uses verdict words.
+
+### Tests
+- 382 passed (+10) / 0 failed / ruff clean / mypy --strict clean
+
 ## [2.1.5] — 2026-05-20 — Continuity polish
 
 Pure docs / continuity refresh.

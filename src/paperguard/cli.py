@@ -1979,5 +1979,260 @@ def search(
         oa.close()
 
 
+@main.command("doctor")
+@click.option(
+    "--ping-llm",
+    is_flag=True,
+    default=False,
+    help=(
+        "Also probe the configured LLM endpoint with a 1-token call to verify "
+        "connectivity. Off by default to avoid spending API quota."
+    ),
+)
+@click.option(
+    "--json",
+    "as_json",
+    is_flag=True,
+    default=False,
+    help="Output machine-readable JSON instead of human-readable lines.",
+)
+def doctor_cmd(ping_llm: bool, as_json: bool) -> None:
+    """Diagnose your PaperGuard install: deps, config, connectivity, paths.
+
+    Exits with code 0 when everything checked passes, 1 if any check is RED,
+    and 2 if any check is YELLOW (non-fatal warning). Useful in CI as a
+    pre-flight before batch scanning.
+    """
+    import json as _json
+    import os as _os
+    import platform
+    import sys as _sys
+
+    from paperguard import __version__ as pg_version
+
+    console = Console(legacy_windows=False)
+    checks: list[dict[str, str]] = []
+
+    def add(name: str, status: str, detail: str) -> None:
+        checks.append({"name": name, "status": status, "detail": detail})
+
+    # 1) Python version
+    py = _sys.version_info
+    py_ok = (py.major, py.minor) >= (3, 11)
+    add(
+        "python_version",
+        "GREEN" if py_ok else "RED",
+        f"{py.major}.{py.minor}.{py.micro} (need ≥ 3.11)",
+    )
+
+    # 2) PaperGuard version
+    add("paperguard_version", "GREEN", pg_version)
+
+    # 3) Platform
+    add("platform", "GREEN", f"{platform.system()} {platform.machine()}")
+
+    # 4) Optional dependencies
+    deps_required = ["click", "rich", "pydantic", "pandas", "scipy", "httpx"]
+    deps_optional = [
+        "pymupdf", "pdfplumber", "openpyxl", "cv2", "imagehash",
+        "networkx", "Bio",
+    ]
+    for mod in deps_required:
+        try:
+            __import__(mod)
+            add(f"dep:{mod}", "GREEN", "installed")
+        except ImportError:
+            add(f"dep:{mod}", "RED", "MISSING — pip install paperguard[dev]")
+    for mod in deps_optional:
+        try:
+            __import__(mod)
+            add(f"opt:{mod}", "GREEN", "installed")
+        except ImportError:
+            add(
+                f"opt:{mod}",
+                "YELLOW",
+                "optional — some detectors will skip",
+            )
+
+    # 5) Detector registry
+    try:
+        registry = DetectorRegistry().register_default(load_plugins=False)
+        n = len(registry.all())
+        add(
+            "registry",
+            "GREEN" if n >= 33 else "YELLOW",
+            f"{n} built-in detector(s) registered (expected ≥ 33)",
+        )
+    except Exception as e:  # noqa: BLE001
+        add("registry", "RED", f"registry init failed: {type(e).__name__}: {e}")
+
+    # 6) Plugin entry points
+    try:
+        plugin_ids = DetectorRegistry().load_plugins()
+        add(
+            "plugins",
+            "GREEN",
+            f"{len(plugin_ids)} third-party detector(s) loaded via entry points",
+        )
+    except Exception as e:  # noqa: BLE001
+        add("plugins", "YELLOW", f"plugin discovery failed: {type(e).__name__}")
+
+    # 7) Cache dir writability
+    try:
+        settings = get_settings()
+        cache = settings.cache_dir
+        cache.mkdir(parents=True, exist_ok=True)
+        probe = cache / ".doctor_probe"
+        probe.write_text("ok", encoding="utf-8")
+        probe.unlink()
+        add("cache_dir", "GREEN", f"writable: {cache}")
+    except Exception as e:  # noqa: BLE001
+        add("cache_dir", "RED", f"NOT writable: {type(e).__name__}: {e}")
+
+    # 8) Dynamic T6 dictionary
+    try:
+        from paperguard.llm.dynamic_dictionary import (
+            _default_dictionary_path,
+            load_user_dictionary,
+        )
+
+        dict_path = _default_dictionary_path()
+        if dict_path.exists():
+            snap = load_user_dictionary()
+            n_phrases = sum(len(v) for v in snap.phrases.values())
+            add(
+                "t6_dictionary",
+                "GREEN",
+                f"{dict_path} ({n_phrases} user phrases, "
+                f"generated {snap.generated_at or 'unknown'})",
+            )
+        else:
+            add(
+                "t6_dictionary",
+                "YELLOW",
+                f"no user dictionary at {dict_path}; "
+                "T6 uses built-in phrases only. Run "
+                "`paperguard refresh-ai-dict --official` to fetch one.",
+            )
+    except Exception as e:  # noqa: BLE001
+        add("t6_dictionary", "YELLOW", f"check failed: {type(e).__name__}")
+
+    # 9) F4 image corpus DB (optional)
+    try:
+        corpus_path = (
+            Path(_os.environ.get("PAPERGUARD_HOME", str(Path.home() / ".paperguard")))
+            / "image_corpus.db"
+        )
+        if corpus_path.exists():
+            size_kb = corpus_path.stat().st_size / 1024
+            add(
+                "f4_image_corpus",
+                "GREEN",
+                f"{corpus_path} ({size_kb:,.0f} KB)",
+            )
+        else:
+            add(
+                "f4_image_corpus",
+                "YELLOW",
+                f"no corpus at {corpus_path}; F4 will auto-build on first scan",
+            )
+    except Exception:  # noqa: BLE001
+        add("f4_image_corpus", "YELLOW", "could not stat corpus path")
+
+    # 10) LLM endpoint config (no API call by default)
+    provider = _os.environ.get("PAPERGUARD_LLM_PROVIDER", "")
+    base_url = _os.environ.get("PAPERGUARD_LLM_BASE_URL", "(default)")
+    model = _os.environ.get("PAPERGUARD_LLM_MODEL", "(default)")
+    api_key_present = bool(_os.environ.get("OPENAI_API_KEY"))
+    if provider:
+        add(
+            "llm_config",
+            "GREEN" if api_key_present else "YELLOW",
+            f"provider={provider} base_url={base_url} model={model} "
+            f"OPENAI_API_KEY={'set' if api_key_present else 'unset'}",
+        )
+    else:
+        add(
+            "llm_config",
+            "YELLOW",
+            "no PAPERGUARD_LLM_PROVIDER set; T7 / T8 / --llm-review "
+            "will skip silently. Set provider + OPENAI_API_KEY to enable.",
+        )
+
+    # 11) Optional: LLM connectivity ping
+    if ping_llm:
+        if not api_key_present:
+            add(
+                "llm_ping",
+                "YELLOW",
+                "skipped — no OPENAI_API_KEY",
+            )
+        else:
+            try:
+                import httpx as _httpx
+
+                base = base_url if base_url != "(default)" else "https://api.openai.com/v1"
+                r = _httpx.post(
+                    f"{base.rstrip('/')}/chat/completions",
+                    headers={"Authorization": f"Bearer {_os.environ['OPENAI_API_KEY']}"},
+                    json={
+                        "model": model if model != "(default)" else "gpt-4o-mini",
+                        "messages": [{"role": "user", "content": "Reply OK."}],
+                        "max_tokens": 5,
+                        "temperature": 0,
+                    },
+                    timeout=20.0,
+                )
+                r.raise_for_status()
+                data = r.json()
+                content = (data.get("choices") or [{}])[0].get(
+                    "message", {}
+                ).get("content", "")
+                logprobs_field = (
+                    (data.get("choices") or [{}])[0].get("logprobs") is not None
+                )
+                add(
+                    "llm_ping",
+                    "GREEN",
+                    f"endpoint reachable, content={content!r}, "
+                    f"logprobs_supported={logprobs_field}",
+                )
+            except Exception as e:  # noqa: BLE001
+                add("llm_ping", "RED", f"{type(e).__name__}: {e}")
+
+    # 12) Summary
+    red = sum(1 for c in checks if c["status"] == "RED")
+    yellow = sum(1 for c in checks if c["status"] == "YELLOW")
+    green = sum(1 for c in checks if c["status"] == "GREEN")
+
+    if as_json:
+        click.echo(_json.dumps(
+            {
+                "summary": {"green": green, "yellow": yellow, "red": red},
+                "checks": checks,
+            },
+            indent=2,
+        ))
+    else:
+        color_map = {"GREEN": "green", "YELLOW": "yellow", "RED": "red bold"}
+        mark_map = {"GREEN": "✓", "YELLOW": "~", "RED": "✗"}
+        console.print("[bold]PaperGuard doctor[/]")
+        for c in checks:
+            mark = mark_map[c["status"]]
+            color = color_map[c["status"]]
+            console.print(f"  [{color}]{mark}[/] {c['name']:24} {c['detail']}")
+        console.print(
+            f"\n[bold]Summary:[/] "
+            f"[green]{green} green[/] / "
+            f"[yellow]{yellow} yellow[/] / "
+            f"[red]{red} red[/]"
+        )
+
+    if red > 0:
+        raise click.exceptions.Exit(1)
+    if yellow > 0:
+        raise click.exceptions.Exit(2)
+
+
 if __name__ == "__main__":
     main()
