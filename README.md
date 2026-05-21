@@ -4,18 +4,37 @@
 > **Flags anomalies, not fraud.** Every finding includes possible innocent explanations.
 
 [![CI](https://github.com/exergyleizhou-ux/PaperGuard/actions/workflows/ci.yml/badge.svg)](https://github.com/exergyleizhou-ux/PaperGuard/actions/workflows/ci.yml)
-![status](https://img.shields.io/badge/status-2.0.1-blue)
+[![PyPI](https://img.shields.io/pypi/v/paperguard?label=PyPI)](https://pypi.org/project/paperguard/)
 ![python](https://img.shields.io/badge/python-3.11%2B-blue)
-![tests](https://img.shields.io/badge/tests-223%20passing-brightgreen)
-![coverage](https://img.shields.io/badge/coverage-74%25-green)
-![detectors](https://img.shields.io/badge/detectors-30-blue)
+![tests](https://img.shields.io/badge/tests-394%20passing-brightgreen)
+![detectors](https://img.shields.io/badge/detectors-34-blue)
 ![license](https://img.shields.io/badge/license-MIT-green)
 ![i18n](https://img.shields.io/badge/i18n-en%20%7C%20zh%20%7C%20es%20%7C%20ja%20%7C%20de-blue)
 ![wcag](https://img.shields.io/badge/WCAG-2.1%20AA-success)
+[![🤗 Live demo](https://img.shields.io/badge/%F0%9F%A4%97-Live%20demo-yellow)](https://huggingface.co/spaces/exergyleizhou/paperguard-demo)
+
+[**📚 docs/INDEX.md**](docs/INDEX.md) · [**Technical report**](docs/paperguard_technical_report.md) · [**JOSS paper**](paper/paper.md) · [**HuggingFace Space**](https://huggingface.co/spaces/exergyleizhou/paperguard-demo) · [**中文 README**](README.zh.md)
+
+## What's new — 2.1.12
+
+> **First true post-publication positive at N=200.** Text-layer study v10
+> identified a 2024 PLOS ONE retraction (`10.1371/journal.pone.0295951`) at
+> the T6 0.001-density threshold — **LR+ = ∞** (1 TP / 0 FP across N=200).
+> See [`docs/recall_test_v10.md`](docs/recall_test_v10.md) for the full
+> calibrated interpretation (T6 default 0.003 remains a pre-submission
+> tool; 0.001 is the editorial high-precision triage threshold).
+>
+> **F6 patch-splice detector** (Bik 2016 per-channel histogram) shipped in
+> 2.1.7 (34th built-in); empirically tightened defaults to `z=6 / cluster=8`
+> in 2.1.9 based on the N=18 false-positive analysis in
+> [`docs/recall_image_v2.md`](docs/recall_image_v2.md).
+>
+> **JOSS paper ready** at [`paper/paper.md`](paper/paper.md);
+> submission walkthrough in [`paper/JOSS_SUBMISSION.md`](paper/JOSS_SUBMISSION.md).
 
 ## Status
 
-**Stable (2.0.0)**. 30 built-in detectors + plugin system + opt-in
+**Stable (2.1.12)**. 34 built-in detectors + plugin system + opt-in
 multi-tenant Web UI. Covers numeric forensics, statistical recomputation
 (statcheck one- and two-tailed; GRIM/GRIMMER/SPRITE/TIVA/P-curve), Carlisle
 baseline imbalance with multi-arm RCT support, image duplication (both

@@ -4,6 +4,36 @@ All notable changes to PaperGuard are documented in this file. Format follows
 [Keep a Changelog](https://keepachangelog.com/) and the project adheres to
 [Semantic Versioning](https://semver.org/).
 
+## [2.1.13] — 2026-05-21 — Continuity refresh (HANDOFF + docs/INDEX + README badges)
+
+Pure docs / continuity release closing the 2.0.15 → 2.1.13 cycle.
+
+### Changed
+- **`HANDOFF.md`** rewritten from 2.1.5 to 2.1.13: ship history for
+  all 17 versions (2.0.15 → 2.1.13), updated test count (372 → 394)
+  and detector count (33 → 34), updated empirical-datasets table
+  (added v10 / image_v2 / t8_controlled_benchmark with their
+  headline numbers), open-work section reflecting that F6 is done
+  and JOSS paper is ready, 15 tripwires (added GitHub secret-
+  scanning trap from 2.1.5 push rejection), section 14 "headline
+  numbers a fresh agent should not forget".
+- **`README.md`** badges refreshed: status 2.0.1 → 2.1.12 (now
+  reads from PyPI shield), tests 223 → 394, detectors 30 → 34,
+  added "🤗 Live demo" badge, added doc-navigation header bar.
+  New "What's new — 2.1.12" callout highlighting the v10 first
+  true positive, F6 calibration, and JOSS-ready paper.
+
+### Added
+- **`docs/INDEX.md`** — central documentation directory listing all
+  30+ docs by category (Start here / Detector reference / LLM-text
+  family / Empirical studies / Methodology references /
+  Operations / External). Single file users can land on to find
+  any other doc.
+
+### Quality
+No code changes. Tests: 394 / ruff clean / mypy --strict clean / 91
+source files.
+
 ## [2.1.12] — 2026-05-21 — Text-layer recall study v10 (N=200) — first true positive
 
 ### Added
