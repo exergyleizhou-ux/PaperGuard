@@ -43,3 +43,7 @@ Thumbs.db
 
 # Notebook checkpoints
 .ipynb_checkpoints/
+
+# Recall benchmark scratch (resume-state for long-running studies;
+# the final non-.partial.json result file is what gets committed)
+scripts/*.partial.json
