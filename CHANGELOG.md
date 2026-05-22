@@ -4,6 +4,41 @@ All notable changes to PaperGuard are documented in this file. Format follows
 [Keep a Changelog](https://keepachangelog.com/) and the project adheres to
 [Semantic Versioning](https://semver.org/).
 
+## [2.1.19] — 2026-05-22 — Image recall v3 (N=50+50): F6 LR+ = 1.91
+
+### Added
+- `scripts/recall_image_v3.py` — N=50+50 OpenAlex retracted + matched
+  controls, F1 + F4 + F6 (with the 2.1.9 calibrated F6 defaults of
+  `z=6 / cluster=8`).
+- `scripts/recall_image_v3_results.json` — 85-record dataset.
+- `docs/recall_image_v3.md` — analysis.
+
+### Headline (N=85 analysable, was N=18 in v2)
+| Detector | TPR | FPR | LR+ |
+|---|---|---|---|
+| F1 | 18.0 % | 14.3 % | 1.26 |
+| F4 | 4.0 % | 2.9 % | 1.40 |
+| **F6 (z=6/cluster=8)** | **82.0 %** | **42.9 %** | **1.91** |
+| F1 ∪ F4 ∪ F6 | 82.0 % | 45.7 % | 1.79 |
+
+### Confirmation of the 2.1.9 calibration
+The 2.1.9 release tightened F6 defaults based on N=18 data; this
+N=85 study **confirms** that tightening was correct: F6 LR+ at the
+production default went from 0.93 (N=18 v2 with old z=4) to 1.91
+(N=85 v3 with new z=6). The 2.1.9 grid-optimal cell (z=6,
+cluster=20) gives LR+ 1.20 on v2; at N=85 the default cell
+out-performs it because the cluster=8 cut captures real splice
+regions that cluster=20 misses.
+
+### What F6 still can't do
+At 42.9 % FPR, F6 fires on roughly half the controls — review-article
+panels and microscopy with strong content edges. The recall (82 %) is
+the bigger story: F6 catches 41/50 retracted papers that F1+F4 mostly
+miss. Use F6 in triage, not as verdict.
+
+### Quality
+No code changes. Tests: 440 / ruff clean / mypy --strict clean.
+
 ## [2.1.18] — 2026-05-22 — statcheck-R Cohen's κ = 0.79 (decision-flip)
 
 ### Added
