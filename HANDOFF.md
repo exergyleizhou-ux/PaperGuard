@@ -259,9 +259,14 @@ After JOSS DOI lands:
 such question burns a tool call. Strategy: 1-2 Bash calls max, then
 **explicitly tell user to step away for X minutes**.
 
-**User is in China**: GitHub / OpenAlex / Europe PMC / Unpaywall /
-PyPI all work, occasional TLS jitter (`fetch()` has 3 retries).
-HuggingFace works. cliproxy works.
+**User is a Chinese-American based in the US**: bilingual interaction
+(speaks Chinese to the agent but operates US infrastructure). All
+endpoints work directly — GitHub, OpenAI, Anthropic, OpenAlex,
+Europe PMC, Unpaywall, PyPI, HuggingFace, Groq, DeepSeek, cliproxy.
+**No GFW workarounds needed.** OpenAI billing accepts US credit
+cards directly. The Chinese-locale earlier guesses (cliproxy
+necessity, TLS-jitter retries) were wrong; keep the retries for
+robustness but don't assume the user can't reach api.openai.com.
 
 **User occasionally pastes sensitive info**: Gmail passwords / tokens
 have appeared. Warn but don't leak. The PYPI_TOKEN above has full
