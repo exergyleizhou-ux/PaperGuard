@@ -1,13 +1,18 @@
 """Gradio app for the PaperGuard HuggingFace Space.
 
-Deploy:
+Deploy (as of 2.2.7):
     1. Create a new Space at https://huggingface.co/new-space
        SDK = Gradio. Hardware = CPU basic is sufficient.
     2. Copy this file to the Space repo as `app.py`.
-    3. Add a `requirements.txt` containing:
-         gradio>=4.0
-         paperguard>=2.0.16
-    4. `git push` to deploy.
+    3. Copy `examples/hf_space_requirements.txt` as `requirements.txt`
+       (gradio>=5.0,<6.0 + paperguard>=2.2.7).
+    4. Copy `examples/hf_space_readme.md` as `README.md` — the
+       frontmatter pins sdk_version: 5.34.0 and python_version: "3.11"
+       which are both required (HF default container moved to Py 3.13
+       which broke gradio 4.44 via removed `audioop` stdlib, and
+       gradio 4.44 also imports `HfFolder` which `huggingface_hub` 1.x
+       removed).
+    5. `git push` to deploy.
 
 Features
 --------
