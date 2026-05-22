@@ -4,6 +4,49 @@ All notable changes to PaperGuard are documented in this file. Format follows
 [Keep a Changelog](https://keepachangelog.com/) and the project adheres to
 [Semantic Versioning](https://semver.org/).
 
+## [2.2.7] — 2026-05-22 — Honest scope statement for T7/T8 (docs-only)
+
+### Changed
+- `src/paperguard/detectors/t7_perplexity.py` — docstring now opens
+  with an **empirical scope** paragraph: T7 is validated on
+  non-reasoning LMs that return real per-token logprobs (OpenAI
+  `gpt-4o-mini`, vLLM Llama-3.x); the Groq Qwen3-32B free path
+  returns real logprobs but yields a weak LR+ of 1.69 (p=0.11,
+  N=17); cliproxy and several team pools drop logprobs and the
+  detector silently no-ops there.
+- `src/paperguard/detectors/t8_detectgpt.py` — docstring now opens
+  with an **empirical scope** paragraph: T8 requires a non-reasoning
+  paraphraser whose rewrites drift *off* the LLM-likelihood
+  manifold (Mitchell et al.'s core assumption). Reasoning models
+  (OpenAI o-series, DeepSeek-v4, Qwen3-thinking, GPT-5-class) are
+  **structurally incompatible** — measured LR+ = 0.25 on
+  DeepSeek-v4-flash. Recommended endpoint: OpenAI `gpt-4o` or
+  self-hosted Llama-3.3-70B.
+- `docs/llm_detection_real_endpoints.md` — TL;DR was already strong;
+  promoted the compatibility matrix into an authoritative
+  **Scope statement (2.2.7)** section directly under the TL;DR, with
+  validated vs forbidden examples per detector.
+- `docs/llm_detection_v2.md` — added a 2.2.7 update block pointing
+  readers to the real-endpoint study and the scope matrix before
+  configuring T7/T8.
+- `README.md` — added the real-endpoint guide to the documentation
+  table so the scope statement surfaces from the front page.
+
+### Not changed
+- No detector code paths, no thresholds, no test changes. T7 and T8
+  remain in the codebase with the same opt-in env vars
+  (`PAPERGUARD_PERPLEXITY_CHECK`, `PAPERGUARD_DETECTGPT_CHECK`).
+  This release scopes them honestly; it does not retract them.
+
+### Why this exists
+2.2.6 shipped the raw benchmark numbers but buried them in a single
+doc. Users reading only the README or detector docstrings could
+still wire T7/T8 onto a reasoning endpoint and get actively
+misleading output (LR+ < 1). 2.2.7 fixes that surface area without
+touching code — every entry point to T7/T8 now names the endpoint
+class it was validated against and the class it is structurally
+incompatible with.
+
 ## [2.2.6] — 2026-05-22 — T7+T8 real-endpoint benchmarks (Groq + DeepSeek)
 
 ### Added

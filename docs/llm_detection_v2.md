@@ -17,6 +17,17 @@
 > Treat T7 / T8 as built-in but currently dormant under weak
 > endpoints. They return NOTE-level inconclusive findings rather
 > than fabricated numbers.
+>
+> **Update (2.2.7).** Real-endpoint follow-up published in
+> [`llm_detection_real_endpoints.md`](llm_detection_real_endpoints.md).
+> Headline: T7 needs a non-reasoning LM with real per-token logprobs
+> (Groq Qwen3-32B gave LR+ 1.69, p=0.11 at N=17 — weak; OpenAI
+> `gpt-4o-mini` is the recommended production endpoint). T8 needs a
+> non-reasoning paraphraser whose rewrites drift off the LLM
+> likelihood manifold — **reasoning models (o-series, DeepSeek-v4,
+> Qwen3-thinking) are structurally incompatible** and produced
+> LR+ 0.25 on DeepSeek-v4. See that doc for the full compatibility
+> matrix before configuring T7/T8 in production.
 
 
 

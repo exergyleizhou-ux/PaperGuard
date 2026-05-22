@@ -7,6 +7,24 @@
 > Both findings are consistent with the structural limitations
 > documented in `docs/t8_endpoint_limitation.md`.
 
+## Scope statement (authoritative, 2.2.7)
+
+T7 and T8 are **bounded** detectors with hard endpoint requirements.
+Run them only on endpoints that meet the criteria below; otherwise
+they will silently produce uninformative or actively misleading
+output. This is not a bug — it is the scope under which the
+underlying methods (perplexity / DetectGPT) are mathematically valid.
+
+| Detector | Required endpoint property | Validated example | Forbidden example |
+|---|---|---|---|
+| **T7 perplexity** | Real per-token logprobs from a **non-reasoning** LM | OpenAI `gpt-4o-mini` (expected ✅), Groq `qwen/qwen3-32b` (LR+ 1.69 ⚠️ weak) | cliproxy (no logprobs), DeepSeek-v4 (fake all-zero logprobs), Groq llama/gpt-oss (logprobs not supported) |
+| **T8 DetectGPT** | Non-reasoning paraphraser whose rewrites drift **off** the LLM-likelihood manifold | OpenAI `gpt-4o` (expected ✅), self-hosted Llama-3.3-70B | DeepSeek-v4 (LR+ 0.25 ❌ reversed), GPT-5/o-series/Qwen3-thinking (manifold-preserving) |
+
+**If your endpoint does not match a validated row, treat T7/T8 output
+as exploratory and rely on T6 lexical for the production LLM-text
+signal** (T6 LR+ = ∞ at 0.001 threshold, N=200 — see
+`docs/recall_test_v10.md`).
+
 ## Setup
 
 The user provided two API keys after the original cliproxy / DeepSeek

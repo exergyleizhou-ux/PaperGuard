@@ -1,5 +1,17 @@
 """T7 — perplexity-based LLM-text signal (opt-in, costs an API call).
 
+**Empirical scope (2.2.7).** T7 is validated on **non-reasoning** LMs
+that return real per-token logprobs (e.g. OpenAI `gpt-4o-mini`,
+self-hosted vLLM Llama-3.x). On reasoning models the perplexity
+contrast collapses (the LM rates everything as low-surprisal because
+it has already "thought through" the continuation) and on chat-only
+proxies that drop logprobs (cliproxy, several team pools) the
+detector silently no-ops. The free-tier Groq path
+`qwen/qwen3-32b` returns real logprobs but the signal is weak
+(LR+ = 1.69, p = 0.11 at N=17 — directionally correct but underpowered).
+See `docs/llm_detection_real_endpoints.md` for the per-endpoint
+compatibility matrix.
+
 Where T6 looks for *dictionary tics* — phrases over-represented in LLM
 output — T7 measures the **information-theoretic surprisal** of the
 manuscript prose under a reference language model. Human academic

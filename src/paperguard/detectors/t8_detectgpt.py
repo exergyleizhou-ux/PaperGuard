@@ -1,5 +1,17 @@
 """T8 — DetectGPT-style perturbation detector (opt-in, costs API calls).
 
+**Empirical scope (2.2.7).** T8 requires a **non-reasoning** paraphraser
+whose rewrites drift *off* the LLM-likelihood manifold — this is the
+core assumption of Mitchell et al.'s probability-curvature method.
+**Reasoning models (OpenAI o-series, DeepSeek-v4, Qwen3-thinking,
+GPT-5-class) are structurally incompatible**: their paraphrases stay
+on-manifold and the detection score collapses or reverses. Measured
+LR+ on DeepSeek-v4-flash was 0.25 (N=20) — worse than coin flip — for
+exactly this reason. Recommended endpoints: OpenAI `gpt-4o`
+(non-reasoning), or self-hosted Llama-3.3-70B. See
+`docs/llm_detection_real_endpoints.md` for the full matrix and
+`docs/t8_endpoint_limitation.md` for the original cliproxy diagnosis.
+
 T7 needs token logprobs, which many chat-completion proxies (cliproxy,
 some team pools) silently drop. T8 is the **alternative statistical
 signal that needs only plain-text completions**.

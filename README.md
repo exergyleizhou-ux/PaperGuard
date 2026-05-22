@@ -351,6 +351,7 @@ tests/
 | [docs/paperguard_technical_report.md](docs/paperguard_technical_report.md) | **Technical report** — methods, the LLM-text family (T6 / T7 / T8), N=85 empirical study, calibration of T6's role |
 | [docs/quickstart.md](docs/quickstart.md) | **5-minute walk-through** — install, scan a fabricated CSV, scan a real retracted PDF (Wansink 2015), read the report |
 | [docs/llm_detection_v2.md](docs/llm_detection_v2.md) | **LLM-text detection guide** — T6 lexical + T7 perplexity + T8 DetectGPT, with the calibrated empirical position |
+| [docs/llm_detection_real_endpoints.md](docs/llm_detection_real_endpoints.md) | **2.2.7 — T7/T8 endpoint scope (authoritative)** — per-endpoint compatibility matrix. T7 needs non-reasoning LM with real logprobs; T8 needs non-reasoning paraphraser that drifts off-manifold. Reasoning models (o-series, DeepSeek-v4, Qwen3-thinking) are structurally incompatible |
 | [docs/recall_test_v8.md](docs/recall_test_v8.md) | **2.0.16 — N=50 LR+ study (T6 only)** — first focused LR+ measurement against post-publication retraction data |
 | [docs/recall_test_v9.md](docs/recall_test_v9.md) | **2.1.0 — N=30 retest + transparent T7/T8 dataset** — extends v8 with T7/T8 columns annotated for cliproxy endpoint limitations |
 | [docs/recall_image_v1.md](docs/recall_image_v1.md) | **2.1.2 — image-layer LR+ study** — first F1/F4 empirical numbers on a curated retracted-image-reuse corpus |
