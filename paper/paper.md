@@ -139,8 +139,8 @@ are in the
 [`scripts/`](https://github.com/exergyleizhou-ux/PaperGuard/tree/main/scripts) directory of the repository; per-study writeups
 are in [`docs/`](https://github.com/exergyleizhou-ux/PaperGuard/tree/main/docs).
 
-- **Text-layer recall (v10, N=200 OpenAlex retracted + matched
-  controls via Europe PMC).** At the default 0.003 lexical-density
+- **Text-layer recall (v10, 100 OpenAlex retracted + 100 matched
+  controls via Europe PMC; 95 with parsable full text).** At the default 0.003 lexical-density
   threshold T6 has positive likelihood ratio LR+ ≈ 0 against
   Nature-tier post-publication retractions — copy-editing largely
   removes lexical LLM markers before publication. At a stricter
@@ -155,12 +155,19 @@ are in [`docs/`](https://github.com/exergyleizhou-ux/PaperGuard/tree/main/docs).
   "triage tier" yields LR+ = 1.63 — modest but structurally
   independent of F1 (intra-paper pHash) and F4 (cross-paper pHash),
   consistent with v2/v3 findings on smaller samples.
-- **Industrial-layer recall (v1, N=200 wastewater process data).**
-  I5 (batch-repetition detection) achieves **LR+ = ∞** (60% TPR,
-  0% FPR) on a synthetic wastewater corpus; I1, I2, and I6 also
-  contribute non-zero signal at their default thresholds. The
-  industrial layer is the most recent addition and has no direct
-  prior art in the academic-integrity literature.
+- **Industrial-layer recall (v1, 2 domains × N=50 clean + 50
+  tampered = 200 synthetic datasets total).** On the wastewater
+  domain at template-default thresholds, I5 (batch-repetition
+  detection) achieves **LR+ = ∞** (60 % TPR, 0 % FPR); I1
+  (mass-balance) and I2 (timestamp integrity) fire on 100 %
+  TPR / 100 % FPR at the same defaults, indicating their
+  out-of-the-box tolerances need calibration to the local plant's
+  noise floor before they discriminate. On the pharma domain all
+  three detectors fire at 100 % / 100 %. The industrial layer is
+  the most recent addition and has no direct prior art in the
+  academic-integrity literature; this study sets a **lower bound**
+  on detector capability against synthetic ground truth, not an
+  upper bound against real EPA / FDA enforcement actions.
 - **B4 statcheck cross-validation (N=41 ground-truth corpus).**
   Against an independent scipy-based p-value reference, B4 achieves
   recall = 100 % and decision-flip recall = 94.12 %. A separate

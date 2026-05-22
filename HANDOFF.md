@@ -179,7 +179,7 @@ Expected empty.
 **Industrial family (I1/I2/I5/I6, new in 2.2.0-2.2.3):**
 - I1: closure of mass-balance equations across SCADA log columns.
 - I2: SCADA timestamp integrity (monotonic / no large gaps / consistent cadence).
-- I5: batch-repetition detection — identifies suspicious copy-paste of historical batches into current logs. **Wastewater recall study: LR+ = ∞ at N=200** (`docs/recall_industrial_v1.md`).
+- I5: batch-repetition detection — identifies suspicious copy-paste of historical batches into current logs. **Wastewater recall study: LR+ = ∞ at N=50+50 (per-domain)**; same study runs pharma at N=50+50 for a 200-dataset total (`docs/recall_industrial_v1.md`). I1/I2 fire 100%/100% at the same defaults — out-of-the-box tolerances need plant-specific calibration.
 - I6: process-trend over-smoothness — flags suspiciously low-variance trend windows that are inconsistent with measurement noise floor.
 
 ## 7. Empirical datasets in the repo (2.1.13)
@@ -391,8 +391,10 @@ Then wait for user direction.
 - **B4 statcheck κ = 0.79 vs statcheck-R** on N=41 (Landis-Koch
   "substantial agreement")
 - **F6 image cluster LR+ = 1.63** at N=159 across 3 image studies
-- **I5 batch repetition LR+ = ∞** on wastewater N=200 (60% TPR /
-  0% FPR) — the headline industrial-layer result
+- **I5 batch repetition LR+ = ∞** on wastewater **N=50+50**
+  (60% TPR / 0% FPR; same study covers pharma N=50+50 for an
+  N=200 total across both domains) — the headline industrial-layer
+  result
 - **T7 LR+ = 1.69 weak** on Groq Qwen3-32B (p=0.11, N=17) —
   real signal but underpowered on free endpoint
 - **T8 LR+ = 0.25 reversed** on DeepSeek-v4-flash (N=20) — proves
