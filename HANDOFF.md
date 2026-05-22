@@ -1,6 +1,6 @@
-# PaperGuard 终极交接文档 v2.2.5
+# PaperGuard 终极交接文档 v2.2.7
 
-> **2026-05-21 — third revision of the handoff (after 2.0.14 and 2.1.5).**
+> **2026-05-22 — fourth revision of the handoff (after 2.0.14, 2.1.5, 2.2.5).**
 >
 > Paste this file in a fresh Claude Code session to continue without
 > context loss. Tokens are NOT in this file — the user has them and
@@ -13,7 +13,7 @@
 | | |
 |---|---|
 | Name | **PaperGuard** — research-data integrity triage |
-| Current version | **2.2.5** (local = origin = PyPI = release tag, all in sync) |
+| Current version | **2.2.7** (local = origin = PyPI = release tag, all in sync) |
 | Local root | `C:\Users\USER\Desktop\PROJECT_DIR\PaperGuard` |
 | Python venv | `.venv/Scripts/python.exe` |
 | CLI entry | `.venv/Scripts/paperguard.exe` |
@@ -24,16 +24,22 @@
 | Industrial templates | **12** (wastewater / waste_gas / distillers_grain / chemical / pharma / food / semiconductor / environment / medical / agriculture / biopharma / biocomputation) |
 | Docker | `ghcr.io/exergyleizhou-ux/paperguard:latest` (linux/amd64 + linux/arm64) |
 
-## 2. Quality state (verified 2026-05-21)
+## 2. Quality state (verified 2026-05-22)
 
 ```
 PYTEST    506 passed (+ 3 deselected for network)
 RUFF      All checks passed
 MYPY      Success: 101 source files (--strict)
-COMMITS   ~70 on main
-TAGS      v2.0.1 → v2.2.5 (41 releases, no gap)
-PRIVACY   ✅ no forbidden DOIs / names / institution names in repo
+COMMITS   ~75 on main
+TAGS      v2.0.1 → v2.2.7 (46 releases, no gap)
+PRIVACY   ✅ HEAD is fully sanitized as of 2.2.7 (USER + PROJECT
+          placeholders replacing the local-username and GBK-mangled
+          folder-name tokens in 5 legacy benchmark JSON dumps).
+          Older commit history still has the raw paths — not
+          credentials, just Windows username + folder name — would
+          require git filter-repo + force-push to scrub.
 LOCAL = ORIGIN = PyPI = RELEASE TAG  ✅ fully synced
+HF SPACE  ✅ live on 2.2.7 — RUNNING, gradio 5.34.0, python 3.11
 ```
 
 ## 3. Credentials (held by user, not in this file)
@@ -67,9 +73,9 @@ revoke. New session should use it sparingly. **GitHub
 secret-scanning push protection caught one near-leak in 2.1.5** — the
 HANDOFF.md was redacted before the push succeeded.
 
-## 4. What was shipped in the 2.0.14 → 2.1.13 cycle (this session)
+## 4. What was shipped in the 2.0.14 → 2.2.7 cycle (cumulative)
 
-29 versions over 2 days.
+31 versions over 3 days.
 
 | Ver | What |
 |---|---|
@@ -102,6 +108,32 @@ HANDOFF.md was redacted before the push succeeded.
 | **2.2.3** | **I6 over-smoothness detector (38th) + multi-arch Docker → ghcr.io** |
 | **2.2.4** | **Industrial recall v1 study (N=100/domain) + `refresh-ai-dict --auto`** |
 | **2.2.5** | **Image recall v4 (N=159): F6 LR+ = 1.63, confirms calibration across 3 samples** |
+| **2.2.6** | **T7+T8 real-endpoint benchmarks (Groq Qwen3-32B + DeepSeek-v4-flash) — T7 LR+ = 1.69 weak (p=0.11, N=17), T8 LR+ = 0.25 reversed on reasoning model (N=20). `docs/llm_detection_real_endpoints.md` writeup.** |
+| **2.2.7** | **Honest scope statement for T7/T8 (docs-only). Detector docstrings + real-endpoints doc + llm_detection_v2 + README all now name validated vs structurally-incompatible endpoint classes. HF Space synced (gradio 5.34 + py 3.11 pins fix `audioop` + `HfFolder` regressions). Pre-existing benchmark JSON path leaks sanitized in HEAD.** |
+
+### 4a. HF Space sync (2.2.7) — environment regressions learned
+
+When syncing the live HF Space to 2.2.7, two regressions surfaced
+on the HF default container that the repo had no record of:
+
+1. **HF default Python jumped to 3.13.** Python 3.13 removed the
+   stdlib `audioop` module (PEP 594). gradio 4.44's `pydub`
+   dependency imports `audioop` at startup → `ModuleNotFoundError`
+   → APP_STARTING → RUNTIME_ERROR.
+   - **Fix:** pin `python_version: "3.11"` in Space README
+     frontmatter to keep stdlib `audioop`.
+
+2. **gradio 4.44 imports `HfFolder`** from `huggingface_hub`, which
+   was removed in `huggingface_hub` 1.x (now what the container
+   ships). Pure version-skew failure with no app-code component.
+   - **Fix:** bump `sdk_version: 5.34.0` in Space README frontmatter
+     and `gradio>=5.0,<6.0` in requirements. App code uses only
+     `gr.Blocks` / `gr.Markdown` / `gr.Textbox` / `gr.Button` /
+     `gr.Tab` / `gr.click()` which carry over 4.x → 5.x cleanly.
+
+Working post-fix config is checked into `examples/hf_space_readme.md`
+and `examples/hf_space_requirements.txt`. Don't re-derive from the
+runtime logs next time.
 
 ## 5. Reproducible 3-gate command
 
@@ -189,7 +221,7 @@ must:
 3. Submit at https://joss.theoj.org/papers/new with:
    - Repository URL: `https://github.com/exergyleizhou-ux/PaperGuard`
    - Branch: `main`
-   - Version: latest tag (currently `v2.2.5`)
+   - Version: latest tag (currently `v2.2.7`)
 
 Median time-to-DOI: 6-12 weeks.
 
@@ -231,7 +263,7 @@ After JOSS DOI lands:
 - **F1000Research** — open peer review, software paper companion
 - **Bibliometrics journals** — Scientometrics, Journal of Informetrics
 
-## 9. Tripwire / gotchas (encountered in this session, now 15)
+## 9. Tripwire / gotchas (encountered in this session, now 18)
 
 | # | Trap | Workaround |
 |---|---|---|
@@ -250,6 +282,9 @@ After JOSS DOI lands:
 | 13 | cliproxy doesn't return logprobs (T7 blocked) | Tested all 5 gpt-5.x variants in 2.1.10 — confirmed |
 | 14 | cliproxy paraphraser preserves LLM markers (T8 LR+ = 0) | Formally measured in 2.1.10 N=20 study |
 | 15 | **GitHub secret-scanning push protection** caught PyPI token in HANDOFF.md 2.1.5 | **Always redact tokens before committing; user must `--bypass` is NOT acceptable** |
+| 16 | **DeepSeek-v4 + Groq Qwen3-32B are reasoning models** | T7 needs `max_tokens ≥ 256` for continuation; T8 needs `max_tokens ≥ 500` for score and `≥ 1500` for paraphrase with skip-reasoning retry. logprobs from DeepSeek are fake all-zeros. T8 LR+ collapses on reasoning paraphrasers (manifold preserved). |
+| 17 | **HF Space default container moved to Python 3.13** | Breaks gradio 4.44 via removed `audioop` stdlib (PEP 594). Pin `python_version: "3.11"` in Space README frontmatter. Learned 2.2.7. |
+| 18 | **gradio 4.44 imports `HfFolder`**, removed in `huggingface_hub` 1.x | Bump `sdk_version: 5.34.0` in Space README + `gradio>=5.0,<6.0` in requirements. App code (`gr.Blocks` / `gr.Markdown` / `gr.Textbox` / `gr.Button` / `gr.Tab` / `gr.click()`) carries over 4.x → 5.x cleanly. Learned 2.2.7. |
 
 ## 10. User behaviour pattern
 
@@ -314,16 +349,20 @@ When a feature/fix is ready:
 
 After pasting this file, the agent's first reply should be:
 
-> Read the 2.1.13 handoff doc. Current state: **34 detectors / 394
-> tests / 91 source files / 2.0.15 → 2.1.13 all shipped / 8 empirical
-> datasets including the v10 N=200 first true positive at 0.001
-> threshold / paper ready for JOSS submission / HF Space live**.
+> Read the 2.2.7 handoff doc. Current state: **38 detectors / 506
+> tests / 101 source files / 2.0.15 → 2.2.7 all shipped (31 versions)
+> / 13 empirical datasets including the v10 N=200 true positive at
+> 0.001 threshold, statcheck-R κ=0.79, T7/T8 real-endpoint scope, F6
+> image LR+ 1.63 at N=159, I5 wastewater LR+ ∞ at N=200 / paper ready
+> for JOSS submission / HF Space live on gradio 5.34 + py 3.11 /
+> Docker multi-arch on GHCR**.
 >
-> Highest-value remaining work: **8.A real GPT-4o T7/T8 LR+** — one
-> command if you give me a real OpenAI key. Other directions:
-> 8.B JOSS submission (user action), 8.C F1/F4 expansion to N=50+50,
-> 8.D statcheck-R κ, 8.E multi-tenant Web UI hardening, 8.F
-> additional venue submissions.
+> Highest-value remaining work: **OpenAI $5 credit → unlock T7/T8
+> real-endpoint LR+ on `gpt-4o-mini`** — one user action, 5-minute
+> follow-up run. Other directions: JOSS submission (user action,
+> needs ORCID), F1/F4/F6 expansion to N=200+200, multi-tenant Web UI
+> production hardening (Redis/HTTPS/audit logs), Scientific Data
+> dataset paper.
 >
 > What's next?
 
@@ -331,15 +370,29 @@ Then wait for user direction.
 
 ## 14. Headline numbers a fresh agent should not forget
 
-- **34 detectors** (31 base + E1 + T7 + T8 + F6)
-- **394 tests** / ruff clean / mypy strict clean
-- **6 empirical studies** + 1 cross-validation
-- **T6 LR+ = ∞ at 0.001 threshold** on N=200 (1 TP / 0 FP; v10)
-- **T6 LR+ = 0 at default 0.003** on N=200 (consistent with v8/v9)
-- **B4 statcheck recall = 100 %, decision-flip recall = 94 %** (N=41)
-- **F6 default tightened from z=4/cluster=4 → z=6/cluster=8** (FPR 75 % → 62.5 % on N=18)
-- **T8 LR+ = 0 on cliproxy** (N=20, formal endpoint-limitation proof)
-- **17 PyPI versions shipped** in 2-day cycle (2.0.15 → 2.1.13)
+- **38 detectors** (academic 34 + industrial 4: I1 mass-balance,
+  I2 timestamp, I5 batch-repetition, I6 over-smoothness)
+- **506 tests** (3 deselected for network) / ruff clean /
+  mypy --strict clean on 101 source files
+- **13 empirical studies** (recall_test v1-v10, recall_image v1-v4,
+  recall_industrial v1, crossval_statcheck + statcheck_kappa,
+  t7_controlled_benchmark, t8_controlled_benchmark)
+- **T6 LR+ = ∞ at 0.001 threshold** on N=200 (1 TP / 0 FP; v10) —
+  the headline academic-layer result
+- **T6 LR+ = 0 at default 0.003** on N=200 (consistent with v8/v9) —
+  T6 is preprint-stage screen, not post-pub forensics
+- **B4 statcheck κ = 0.79 vs statcheck-R** on N=41 (Landis-Koch
+  "substantial agreement")
+- **F6 image cluster LR+ = 1.63** at N=159 across 3 image studies
+- **I5 batch repetition LR+ = ∞** on wastewater N=200 (60% TPR /
+  0% FPR) — the headline industrial-layer result
+- **T7 LR+ = 1.69 weak** on Groq Qwen3-32B (p=0.11, N=17) —
+  real signal but underpowered on free endpoint
+- **T8 LR+ = 0.25 reversed** on DeepSeek-v4-flash (N=20) — proves
+  reasoning-model paraphrasers preserve LLM-likelihood manifold
+- **T7/T8 production endpoint**: OpenAI `gpt-4o-mini` (non-reasoning
+  with real logprobs) — pending $5 credit
+- **31 PyPI versions shipped** across 3 days (2.0.15 → 2.2.7)
 
 ---
 
@@ -347,3 +400,16 @@ Then wait for user direction.
 continuity. The first thing the next agent should do is verify the
 3-gate command passes — confirms the state hasn't drifted since this
 handoff was written.
+
+---
+
+## Appendix — git commits since 2.2.5
+
+| Commit | Subject |
+|---|---|
+| `a0373b2` | 2.2.6 — T7+T8 real-endpoint benchmarks (Groq + DeepSeek) |
+| `50e8a92` | HANDOFF: correct user-location section (US-based Chinese-American) |
+| `edd7ef5` | **2.2.7 — Honest scope statement for T7/T8 (docs-only)** |
+| `b077b48` | chore: refresh HF Space app banner for 2.2.7 |
+| `3957e6c` | chore: sync HF Space config files into repo (gradio 5.34 + py 3.11 pins) |
+| _(next)_ | chore: sanitize 5 legacy benchmark files + HANDOFF refresh |
