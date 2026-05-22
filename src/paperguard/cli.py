@@ -2003,6 +2003,232 @@ def search(
         oa.close()
 
 
+@main.command("scan-industrial")
+@click.argument(
+    "file_path",
+    type=click.Path(exists=True, dir_okay=False, path_type=Path),
+)
+@click.option(
+    "--domain",
+    type=click.Choice(
+        [
+            "wastewater", "waste_gas", "distillers_grain", "chemical",
+            "pharma", "food", "semiconductor", "environment",
+            "medical", "agriculture", "biopharma", "biocomputation",
+        ],
+        case_sensitive=False,
+    ),
+    required=True,
+    help="Industrial-sector template name. Determines column-name "
+    "expectations, balance tolerance, SCADA period, and narrative field.",
+)
+@click.option(
+    "--output-json",
+    type=click.Path(path_type=Path),
+    default=None,
+    help="Optional JSON output path for the audit report.",
+)
+@click.option(
+    "--narrative-column",
+    default=None,
+    help="Override the template's narrative column for I5.",
+)
+@click.option(
+    "--id-column",
+    default=None,
+    help="Override the template's batch-id column for I5.",
+)
+@click.option(
+    "--timestamp-column",
+    default=None,
+    help="Override the template's timestamp column for I2.",
+)
+@click.option(
+    "--tolerance-pct",
+    type=float,
+    default=None,
+    help="Override the template's I1 mass-balance tolerance (% units).",
+)
+def scan_industrial_cmd(
+    file_path: Path,
+    domain: str,
+    output_json: Path | None,
+    narrative_column: str | None,
+    id_column: str | None,
+    timestamp_column: str | None,
+    tolerance_pct: float | None,
+) -> None:
+    """Scan an industrial CSV / Excel / HDF5 with I1 + I2 + I5 using a
+    pre-configured domain template.
+
+    Examples:
+
+      paperguard scan-industrial --domain wastewater plant_2026Q1.csv
+      paperguard scan-industrial --domain pharma batch_records.xlsx --tolerance-pct 0.3
+      paperguard scan-industrial --domain semiconductor fab_log.h5 \\
+          --narrative-column recipe_log --id-column lot_id
+    """
+    import pandas as pd
+
+    from paperguard.detectors.i1_mass_balance import I1MassBalanceDetector
+    from paperguard.detectors.i2_timestamp_integrity import (
+        I2TimestampIntegrityDetector,
+    )
+    from paperguard.detectors.i5_batch_repetition import (
+        I5BatchRepetitionDetector,
+    )
+    from paperguard.industrial import get_template
+
+    console = Console(legacy_windows=False)
+    template = get_template(domain.lower())
+
+    # Load DataFrame
+    suffix = file_path.suffix.lower()
+    if suffix in (".csv", ".tsv"):
+        sep = "\t" if suffix == ".tsv" else ","
+        df = pd.read_csv(file_path, sep=sep)
+    elif suffix in (".xlsx", ".xlsm"):
+        df = pd.read_excel(file_path)
+    elif suffix in (".h5", ".hdf5"):
+        from paperguard.extractor.hdf5_io import extract_hdf5_tables
+
+        tables = extract_hdf5_tables(file_path)
+        if not tables:
+            console.print(
+                f"[red]No tabular leaves found in {file_path}[/]"
+            )
+            raise click.Abort()
+        # Use the largest table by row count as the primary one
+        primary_key = max(tables, key=lambda k: len(tables[k]))
+        df = tables[primary_key]
+        console.print(
+            f"[dim]HDF5 has {len(tables)} datasets; using {primary_key!r} "
+            f"({len(df)} rows).[/]"
+        )
+    else:
+        console.print(
+            f"[red]Unsupported file type {suffix}; expected csv/tsv/xlsx/h5[/]"
+        )
+        raise click.Abort()
+
+    console.print(
+        f"[cyan]Loaded {len(df)} rows × {len(df.columns)} cols from "
+        f"{file_path.name}[/]"
+    )
+    console.print(
+        f"[dim]Domain = {template.name}  "
+        f"(tolerance = {template.tolerance_pct}%, "
+        f"expected Δt = {template.expected_dt_seconds}s)[/]"
+    )
+
+    overrides_i1: dict[str, object] = {}
+    if tolerance_pct is not None:
+        overrides_i1["tolerance_pct"] = tolerance_pct
+
+    overrides_i2: dict[str, object] = {}
+    if timestamp_column is not None:
+        overrides_i2["timestamp_column"] = timestamp_column
+
+    overrides_i5: dict[str, object] = {}
+    if narrative_column is not None:
+        overrides_i5["narrative_column"] = narrative_column
+    if id_column is not None:
+        overrides_i5["id_column"] = id_column
+
+    all_findings: list[Finding] = []
+
+    # --- I1 ---
+    console.print("\n[bold]I1 — Mass / Energy Balance[/]")
+    try:
+        i1_input = template.mass_balance(df, **overrides_i1)
+        ok, reason = I1MassBalanceDetector().check_applicability(i1_input)
+        if not ok:
+            console.print(f"  [yellow]Skipped: {reason}[/]")
+        else:
+            r1 = I1MassBalanceDetector().detect(i1_input)
+            for f in r1.findings:
+                _print_finding(console, f)
+            all_findings.extend(r1.findings)
+            if not r1.findings:
+                console.print("  [green]No balance violations.[/]")
+    except Exception as e:  # noqa: BLE001
+        console.print(f"  [red]I1 failed: {type(e).__name__}: {e}[/]")
+
+    # --- I2 ---
+    console.print("\n[bold]I2 — SCADA Timestamp Integrity[/]")
+    try:
+        i2_input = template.timestamp_integrity(df, **overrides_i2)
+        ok, reason = I2TimestampIntegrityDetector().check_applicability(i2_input)
+        if not ok:
+            console.print(f"  [yellow]Skipped: {reason}[/]")
+        else:
+            r2 = I2TimestampIntegrityDetector().detect(i2_input)
+            for f in r2.findings:
+                _print_finding(console, f)
+            all_findings.extend(r2.findings)
+            if not r2.findings:
+                console.print("  [green]No timestamp anomalies.[/]")
+    except Exception as e:  # noqa: BLE001
+        console.print(f"  [red]I2 failed: {type(e).__name__}: {e}[/]")
+
+    # --- I5 ---
+    console.print("\n[bold]I5 — Batch-Log Narrative Repetition[/]")
+    try:
+        i5_input = template.batch_repetition(df, **overrides_i5)
+        ok, reason = I5BatchRepetitionDetector().check_applicability(i5_input)
+        if not ok:
+            console.print(f"  [yellow]Skipped: {reason}[/]")
+        else:
+            r5 = I5BatchRepetitionDetector().detect(i5_input)
+            for f in r5.findings:
+                _print_finding(console, f)
+            all_findings.extend(r5.findings)
+            if not r5.findings:
+                console.print("  [green]No repetition flagged.[/]")
+    except Exception as e:  # noqa: BLE001
+        console.print(f"  [red]I5 failed: {type(e).__name__}: {e}[/]")
+
+    console.print(
+        f"\n[bold]Summary:[/] {len(all_findings)} finding(s) across "
+        f"I1 + I2 + I5. PaperGuard does not use verdict language. "
+        f"Each finding ships with innocent explanations."
+    )
+
+    if output_json:
+        import json as _json
+
+        payload = {
+            "file": str(file_path),
+            "domain": template.name,
+            "n_rows": len(df),
+            "n_columns": len(df.columns),
+            "findings": [
+                {
+                    "detector_id": f.detector_id,
+                    "severity": f.severity.name,
+                    "summary": f.summary,
+                    "detail": f.detail,
+                    "test_statistic": f.test_statistic,
+                    "evidence": f.evidence,
+                    "innocent_explanations": f.innocent_explanations,
+                }
+                for f in all_findings
+            ],
+        }
+        output_json.write_text(
+            _json.dumps(payload, indent=2, ensure_ascii=False, default=str),
+            encoding="utf-8",
+        )
+        console.print(f"[green]JSON report saved to {output_json}[/]")
+
+
+def _print_finding(console: Console, f: Finding) -> None:
+    sev = f.severity
+    console.print(
+        f"  [{sev.color}]{sev.label}[/]  {f.summary}"
+    )
+
+
 @main.command("doctor")
 @click.option(
     "--ping-llm",

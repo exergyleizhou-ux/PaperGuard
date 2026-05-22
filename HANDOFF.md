@@ -1,4 +1,4 @@
-# PaperGuard 终极交接文档 v2.1.13
+# PaperGuard 终极交接文档 v2.2.2
 
 > **2026-05-21 — third revision of the handoff (after 2.0.14 and 2.1.5).**
 >
@@ -13,23 +13,24 @@
 | | |
 |---|---|
 | Name | **PaperGuard** — research-data integrity triage |
-| Current version | **2.1.13** (local = origin = PyPI = release tag, all in sync) |
+| Current version | **2.2.2** (local = origin = PyPI = release tag, all in sync) |
 | Local root | `C:\Users\USER\Desktop\PROJECT_DIR\PaperGuard` |
 | Python venv | `.venv/Scripts/python.exe` |
 | CLI entry | `.venv/Scripts/paperguard.exe` |
 | GitHub | https://github.com/exergyleizhou-ux/PaperGuard |
 | PyPI | https://pypi.org/project/paperguard/ |
 | HF Space (live) | https://huggingface.co/spaces/exergyleizhou/paperguard-demo |
-| Detector count | **34 built-in** + plugin entry-point support |
+| Detector count | **37 built-in** (34 academic + 3 industrial) + plugin entry-point support |
+| Industrial templates | **12** (wastewater / waste_gas / distillers_grain / chemical / pharma / food / semiconductor / environment / medical / agriculture / biopharma / biocomputation) |
 
 ## 2. Quality state (verified 2026-05-21)
 
 ```
-PYTEST    394 passed (+ 3 deselected for network)
+PYTEST    498 passed (+ 3 deselected for network)
 RUFF      All checks passed
-MYPY      Success: 91 source files (--strict)
-COMMITS   ~55 on main
-TAGS      v2.0.1 → v2.1.13 (29 releases, no gap)
+MYPY      Success: 100 source files (--strict)
+COMMITS   ~65 on main
+TAGS      v2.0.1 → v2.2.2 (38 releases, no gap)
 PRIVACY   ✅ no forbidden DOIs / names / institution names in repo
 LOCAL = ORIGIN = PyPI = RELEASE TAG  ✅ fully synced
 ```
@@ -87,7 +88,16 @@ HANDOFF.md was redacted before the push succeeded.
 | 2.1.10 | T8 controlled benchmark (N=20) — formal proof cliproxy can't drive T8, LR+ = 0 |
 | 2.1.11 | `paper/paper.md` JOSS-ready + `paper/JOSS_SUBMISSION.md` walkthrough |
 | 2.1.12 | **recall_test_v10 N=200 — first true positive at 0.001 threshold** |
-| 2.1.13 | Continuity refresh — this HANDOFF + docs/INDEX.md + README badges |
+| 2.1.13 | Continuity refresh — earlier HANDOFF + docs/INDEX.md + README badges |
+| 2.1.14 | Detector deep-dive pages for E1 / T7 / T8 / F6 + M1 |
+| 2.1.15 | WebUI rate-limit + optional Redis backend (production hardening) |
+| 2.1.16 | WebUI SHA-keyed scan-result cache (5-min TTL) |
+| 2.1.17 | Legacy `.doc` / `.docb` text + image extraction via olefile |
+| 2.1.18 | statcheck-R Cohen's κ = 0.79 on decision-flip class (Landis-Koch substantial) |
+| 2.1.19 | Image recall v3 N=85 — F6 LR+ = 1.91 confirms the 2.1.9 calibration |
+| **2.2.0** | **Industrial extension pack — I1 / I2 / I5 detectors + HDF5 ingest** |
+| **2.2.1** | **12 industrial-domain templates** (wastewater, pharma, semiconductor, …) |
+| **2.2.2** | **`paperguard scan-industrial --domain X file.csv` CLI command** |
 
 ## 5. Reproducible 3-gate command
 
@@ -175,7 +185,7 @@ must:
 3. Submit at https://joss.theoj.org/papers/new with:
    - Repository URL: `https://github.com/exergyleizhou-ux/PaperGuard`
    - Branch: `main`
-   - Version: latest tag (currently `v2.1.13`)
+   - Version: latest tag (currently `v2.2.2`)
 
 Median time-to-DOI: 6-12 weeks.
 

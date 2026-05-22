@@ -4,6 +4,38 @@ All notable changes to PaperGuard are documented in this file. Format follows
 [Keep a Changelog](https://keepachangelog.com/) and the project adheres to
 [Semantic Versioning](https://semver.org/).
 
+## [2.2.2] — 2026-05-22 — `paperguard scan-industrial` CLI + HANDOFF refresh
+
+### Added
+- **New CLI command**: `paperguard scan-industrial`. Single-shot
+  industrial scan that loads a CSV / Excel / HDF5 file, picks a
+  pre-configured `DomainTemplate`, and runs I1+I2+I5 with proper
+  domain defaults. No Python needed.
+
+```bash
+paperguard scan-industrial --domain wastewater plant_2026Q1.csv
+paperguard scan-industrial --domain pharma batch.xlsx --tolerance-pct 0.3
+paperguard scan-industrial --domain semiconductor fab_log.h5 \
+    --narrative-column recipe_log --id-column lot_id --output-json out.json
+```
+
+- Per-column overrides via `--narrative-column`, `--id-column`,
+  `--timestamp-column`, `--tolerance-pct`. Useful when your CSV's
+  column names don't match the template defaults.
+- `--output-json` writes machine-readable findings for downstream
+  automation.
+- 7 new tests in `tests/test_scan_industrial_cmd.py` covering all 12
+  domains + invalid input + JSON output + override flow + privacy
+  iron rule.
+
+### Changed
+- `HANDOFF.md` refreshed: detector count 34 → 37 (now lists 12
+  industrial templates), test count 394 → 498, version 2.1.13 →
+  2.2.2, ship history extended through 2.2.0/2.2.1/2.2.2.
+
+### Quality
+- Tests: 498 (+7). Ruff clean. Mypy --strict clean. 100 source files.
+
 ## [2.2.1] — 2026-05-22 — Industrial domain templates (12 sectors)
 
 ### Added — `paperguard.industrial.templates` module
