@@ -9,7 +9,7 @@ abstract: >
   forensics, and file metadata forensics.
 authors:
   - name: PaperGuard Contributors
-version: 2.1.19
+version: 2.2.0
 date-released: 2026-05-20
 license: MIT
 keywords:

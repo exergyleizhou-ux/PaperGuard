@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "paperguard"
-version = "2.1.19"
+version = "2.2.0"
 description = "Statistical anomaly screener for tabular research data"
 readme = "README.md"
 requires-python = ">=3.11"
@@ -65,6 +65,10 @@ webui = [
 # 2.1.17 — legacy Word format support.
 legacy-doc = [
     "olefile>=0.47",
+]
+# 2.2.0 — industrial extension pack (I1 / I2 / I5 + HDF5 ingest).
+industrial = [
+    "h5py>=3.10",
 ]
 dev = [
     "pytest>=8.0",

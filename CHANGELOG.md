@@ -4,6 +4,46 @@ All notable changes to PaperGuard are documented in this file. Format follows
 [Keep a Changelog](https://keepachangelog.com/) and the project adheres to
 [Semantic Versioning](https://semver.org/).
 
+## [2.2.0] — 2026-05-22 — Industrial extension pack (I1 / I2 / I5 + HDF5)
+
+**Minor version bump** — new detector family widens scope from
+academic-paper screening to pilot-scale / industrial / GMP-batch
+data integrity. Base academic detectors are unchanged.
+
+### Added — 3 new "industrial" detectors (built-in count: 34 → 37)
+
+| ID | Name | Detects | Input |
+|---|---|---|---|
+| **I1** | Mass / Energy Balance | per-batch conservation residual, systematic bias, physically negative source/sink rows | `MassBalanceInput(df, sources=[...], sinks=[...], tolerance_pct=1.0)` |
+| **I2** | SCADA Timestamp Integrity | back-filled timestamps, round-minute clustering, monotonicity violations, timezone-shift jumps | `TimestampIntegrityInput(df, timestamp_column, expected_dt_seconds)` |
+| **I5** | Batch-Log Narrative Repetition | copy-pasted batch records (FDA Warning-Letter pattern) via n-gram Jaccard | `BatchRepetitionInput(df, text_column, id_column)` |
+
+Each ships with ≥ 4 innocent explanations, severity tiers consistent
+with the academic detectors, and the privacy iron rule (no verdict
+language).
+
+### Added — HDF5 ingest
+- `src/paperguard/extractor/hdf5_io.py` reads `.h5` / `.hdf5` files
+  (industrial historians, DAQ exports) into `{path: DataFrame}` for
+  the existing A1-A7 / D1 / D2 / I1 / I2 / I5 detector flow.
+
+### Added — `docs/industrial_extension_plan.md`
+Architecture + roadmap doc: 3 shipped detectors, 3 planned (I3/I4/I6),
+data-format coverage, calibration position, use-case catalogue,
+install variants. Notes that I1/I2/I5 are unit-tested on synthetic
+data; an industrial recall study against an FDA-Warning-Letter
+corpus is future work.
+
+### New install extra
+```bash
+pip install "paperguard[industrial]"   # adds h5py for .h5 ingest
+```
+
+### Quality
+17 new tests in `tests/test_industrial.py`. Total **457** passed
+(+17). Ruff clean. Mypy --strict clean. **98** source files
+(+4: i1, i2, i5, hdf5_io).
+
 ## [2.1.19] — 2026-05-22 — Image recall v3 (N=50+50): F6 LR+ = 1.91
 
 ### Added

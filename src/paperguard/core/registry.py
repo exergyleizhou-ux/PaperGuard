@@ -73,6 +73,13 @@ class DetectorRegistry:
         from paperguard.detectors.g4_metadata_forensics import (
             G4MetadataForensicsDetector,
         )
+        from paperguard.detectors.i1_mass_balance import I1MassBalanceDetector
+        from paperguard.detectors.i2_timestamp_integrity import (
+            I2TimestampIntegrityDetector,
+        )
+        from paperguard.detectors.i5_batch_repetition import (
+            I5BatchRepetitionDetector,
+        )
         from paperguard.detectors.m1_paper_mill_graph import (
             M1PaperMillGraphDetector,
         )
@@ -112,6 +119,9 @@ class DetectorRegistry:
             F4CrossPaperImageDetector,
             F5ExifClusteringDetector,
             F6PatchSpliceDetector,
+            I1MassBalanceDetector,
+            I2TimestampIntegrityDetector,
+            I5BatchRepetitionDetector,
             G1ExifTemporalDetector,
             G3RsidForensicsDetector,
             G4MetadataForensicsDetector,
