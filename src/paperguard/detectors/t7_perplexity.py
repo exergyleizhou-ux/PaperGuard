@@ -151,7 +151,10 @@ def _call_openai_logprobs(
             },
             {"role": "user", "content": text},
         ],
-        "max_tokens": 32,
+        # max_tokens=256 covers reasoning-model thinking budgets (Qwen3,
+        # DeepSeek-v4) + the actual continuation. Non-reasoning models
+        # ignore the extra ceiling.
+        "max_tokens": 256,
         "temperature": 0,
         "logprobs": True,
         "top_logprobs": 5,

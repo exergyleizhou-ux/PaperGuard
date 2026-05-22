@@ -4,6 +4,46 @@ All notable changes to PaperGuard are documented in this file. Format follows
 [Keep a Changelog](https://keepachangelog.com/) and the project adheres to
 [Semantic Versioning](https://semver.org/).
 
+## [2.2.6] — 2026-05-22 — T7+T8 real-endpoint benchmarks (Groq + DeepSeek)
+
+### Added
+- `scripts/t7_controlled_benchmark.py` — T7 continuation-perplexity
+  N=10+10 synthetic benchmark, reuses the t8 corpus.
+- `scripts/t7_controlled_benchmark_results.json` — raw run on
+  Groq Qwen3-32B.
+- `scripts/t8_controlled_benchmark_results.json` — final run on
+  DeepSeek-v4-flash (overwrites earlier cliproxy data).
+- `docs/llm_detection_real_endpoints.md` — full honest writeup:
+  per-endpoint compatibility matrix, LR+ numbers, structural
+  diagnosis.
+
+### Patched
+- `t7_perplexity.py`: max_tokens 32 → 256 to accommodate reasoning
+  models like Qwen3 + DeepSeek-v4.
+- `t8_detectgpt.py`:
+  - `_score_naturalness` max_tokens 8 → 500 (reasoning budget).
+  - `_generate_perturbation` max_tokens 800 → 1500 with 2-pass
+    retry at 3000 + "skip reasoning" addition when the first call
+    returns empty.
+
+### Headline empirical findings
+| Detector × Endpoint | N | LR+ | Notes |
+|---|---|---|---|
+| T7 × Groq Qwen3-32B | 17 | **1.69** | Real but weak (p=0.11). Patches needed for reasoning model max_tokens. |
+| T8 × DeepSeek-v4-flash | 20 | **0.25** | Signal reversed — reasoning paraphraser doesn't drift off-manifold. |
+| T6 lexical (2.1.12) | 200 | ∞ @ 0.001 | Baseline confirmed. |
+
+### Honest conclusion
+The cliproxy / DeepSeek / Groq landscape is the wrong place to do
+T7/T8 work — reasoning models structurally break DetectGPT's
+manifold-drift assumption (T8) and either fake or refuse logprobs
+(T7). **Recommended production endpoint:** OpenAI `gpt-4o-mini`
+(non-reasoning, real logprobs). v9 dataset remains pre-wired for
+that re-analysis.
+
+### Quality
+No core code changes. Tests: 506 / ruff clean / mypy --strict clean.
+
 ## [2.2.5] — 2026-05-22 — Image recall v4 (N=100+59) + HANDOFF refresh to 2.2.5
 
 ### Added — Image recall v4 (largest image study to date)

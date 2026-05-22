@@ -163,13 +163,36 @@ def _generate_perturbation(
         "passage, no preamble, no commentary, no quotation marks."
     )
     user = f"Variant seed: {seed_hint}\n\nPassage:\n{text}"
+    # Budget for reasoning models: paraphrasing a 600-char input on
+    # DeepSeek-v4 / Qwen3 / o1-class models burns ~300-600 hidden
+    # reasoning tokens BEFORE emitting the actual paraphrase (~150
+    # tokens). Total ≈ 800-1200. Non-reasoning models ignore the extra
+    # budget. We try at 2× input length first, then retry at 4× with a
+    # less reasoning-heavy prompt if the first attempt returns empty.
+    budget_pass1 = max(1200, min(2500, len(text) * 2 + 800))
     out = _call_chat(
         system, user,
         model=model, base_url=base_url, api_key=api_key,
         timeout=timeout,
-        max_tokens=min(800, len(text) + 200),
+        max_tokens=budget_pass1,
         temperature=0.7,
     )
+    # Retry pass: if reasoning model exhausted budget on hidden thinking
+    # (content="" but call returned 200), try again with a much higher
+    # ceiling. This is the single biggest failure mode in real T8 runs.
+    if out is None:
+        budget_pass2 = max(3000, len(text) * 4 + 1500)
+        retry_system = system + (
+            " Skip all reasoning steps. Output the paraphrase directly "
+            "without any chain-of-thought."
+        )
+        out = _call_chat(
+            retry_system, user,
+            model=model, base_url=base_url, api_key=api_key,
+            timeout=timeout,
+            max_tokens=budget_pass2,
+            temperature=0.7,
+        )
     if out is None:
         return None
     # Sanity: if the LM returns the same string verbatim or something
@@ -217,11 +240,16 @@ def _score_naturalness(
         "or rough edges typical of researcher drafts). Respond with ONLY "
         "the integer score on its own line. No explanation."
     )
+    # max_tokens must be high enough for reasoning models (DeepSeek-v4,
+    # o1/o3, GPT-5) to spend their hidden reasoning budget AND still emit
+    # a final number. Empirically 500 covers DeepSeek-v4-flash's ~150
+    # reasoning tokens per scoring call. Non-reasoning models ignore the
+    # extra budget.
     out = _call_chat(
         system, text,
         model=model, base_url=base_url, api_key=api_key,
         timeout=timeout,
-        max_tokens=8,
+        max_tokens=500,
         temperature=0.0,
     )
     if out is None:
