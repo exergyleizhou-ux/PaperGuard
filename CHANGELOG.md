@@ -4,6 +4,63 @@ All notable changes to PaperGuard are documented in this file. Format follows
 [Keep a Changelog](https://keepachangelog.com/) and the project adheres to
 [Semantic Versioning](https://semver.org/).
 
+## [2.2.1] — 2026-05-22 — Industrial domain templates (12 sectors)
+
+### Added — `paperguard.industrial.templates` module
+12 pre-configured `DomainTemplate` instances covering the industries
+the user named: wastewater treatment plants, waste-gas treatment,
+distillers'-grain processing, chemical, pharma, food, semiconductor,
+environment, medical, agriculture, biopharma, biocomputation.
+
+Each template pre-fills the right column names, tolerance, and
+expected SCADA period for the I1 / I2 / I5 detectors:
+
+```python
+from paperguard.industrial import WASTEWATER, PHARMA, SEMICONDUCTOR
+from paperguard.detectors.i1_mass_balance import I1MassBalanceDetector
+
+# Domain-aware defaults — no need to memorize column names
+result = I1MassBalanceDetector().detect(WASTEWATER.mass_balance(df))
+result = I1MassBalanceDetector().detect(PHARMA.mass_balance(df))      # 0.5% tolerance
+result = I1MassBalanceDetector().detect(SEMICONDUCTOR.mass_balance(df))  # 0.1% tolerance
+```
+
+Each template carries:
+- `sources` / `sinks` / `tolerance_pct` for I1
+- `timestamp_column` / `expected_dt_seconds` for I2
+- `narrative_column` / `id_column` / `narrative_min_words` for I5
+- `regulatory_frame` (FDA / EPA / EU / China citations)
+- `typical_units` documentation
+- `falsification_modes` — actually-observed integrity-failure
+  patterns in that sector
+
+### Added — `examples/industrial_wastewater_demo.py`
+End-to-end runnable demo synthesizing a 30-day wastewater plant log
+with 3 intentional integrity issues, then running I1+I2+I5 with the
+WASTEWATER template. Shows the full multi-detector triage flow.
+
+### Added — `docs/industrial_domain_templates.md`
+12-sector cheatsheet table (tolerance, Δt, regulatory frame) +
+usage examples + per-domain falsification-mode catalogue +
+honesty note that templates are unit-tested but no real-world
+recall study has been run.
+
+### Honesty position (matches academic + industrial layers)
+- Every finding ships with ≥ 4 innocent explanations.
+- No verdict language anywhere — including in template metadata
+  (tested via the `test_no_template_uses_verdict_words` rule).
+- Templates document falsification modes for **detector design**,
+  not as accusations against any organization or person.
+- An industrial recall study against an FDA-Warning-Letter or
+  EPA-violation corpus is future work; until then templates are
+  "hypothesis-class configurations with sound math but unmeasured
+  real-data operating characteristics."
+
+### Quality
+- 34 new tests in `tests/test_industrial_templates.py`.
+- Total: **491 passed** (+34). Ruff clean. Mypy --strict clean.
+- **100** source files (was 98).
+
 ## [2.2.0] — 2026-05-22 — Industrial extension pack (I1 / I2 / I5 + HDF5)
 
 **Minor version bump** — new detector family widens scope from
