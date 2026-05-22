@@ -199,7 +199,7 @@ PaperGuard 2.2.7 ships 101 source files with 506 unit and
 integration tests (3 additional network-dependent tests deselected
 by default). The project enforces `ruff` style checks and
 `mypy --strict` type checks in CI on Linux, macOS, and Windows for
-Python 3.11, 3.12, and 3.13. A `paperguard doctor` command runs a
+Python 3.11 and 3.12. A `paperguard doctor` command runs a
 19-item environment health check (Python version, required and
 optional dependencies, detector registry, plugin entry points, cache
 directory writability, dynamic dictionary state, image-corpus
