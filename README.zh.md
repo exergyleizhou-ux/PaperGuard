@@ -3,10 +3,10 @@
 > 学术论文数据/图像/统计异常筛查工具。
 > **只标记异常，不指控造假。** 每条 Finding 都附带可能的合法解释。
 
-![status](https://img.shields.io/badge/status-2.1.5-blue)
+![status](https://img.shields.io/badge/status-2.2.7-blue)
 ![python](https://img.shields.io/badge/python-3.11%2B-blue)
-![tests](https://img.shields.io/badge/tests-372%20passing-brightgreen)
-![detectors](https://img.shields.io/badge/detectors-33-blue)
+![tests](https://img.shields.io/badge/tests-506%20passing-brightgreen)
+![detectors](https://img.shields.io/badge/detectors-38-blue)
 ![license](https://img.shields.io/badge/license-MIT-green)
 
 [English README](README.md) · 中文 README · **[🤗 在线 Demo](https://huggingface.co/spaces/exergyleizhou/paperguard-demo)**
@@ -21,28 +21,33 @@
 
 每条 Finding 都包含至少 3 条 `innocent_explanations`（可能的合法解释）。
 
-## 33 个内置检测器
+## 38 个内置检测器(34 学术 + 4 工业)
 
 | 类别 | IDs |
 |---|---|
-| 数字取证 | A1（末位）、A2（Benford）、A3（列间算术）、A5（小数）、A6（不可能值）、A7（末位 0/5 专项） |
-| 摘要统计一致性 | B1（GRIM）、B4（statcheck）、B5（TIVA）、B6（GRIMMER）、B7（p-curve）、B8（SPRITE） |
-| 临床试验 | C1（Carlisle 基线平衡） |
-| 方差结构 | D1（残差平滑）、D2（缺失值模式）、E1（ICC 独立性,2.0.14 新增） |
-| 图像取证 | F1（pHash 跨图）、F2（ORB 图内复制）、F3（块统计 splice）、F4（跨论文 pHash 库）、F5（EXIF 跨图聚类） |
-| 元数据 | G1（图像 EXIF 时序）、G3（docx rsid）、G4（文件元数据） |
-| 论文工厂 | M1（合作者图谱） |
-| 文本与试验 | T1（n-gram 剽窃）、T2（NCT outcome 漂移）、T3（数据/伦理审计）、T4（论文工厂扭曲短语）、T5（Stapel 语言指纹） |
-| **LLM 文本(新)** | **T6（词面字典 + 动态字典）、T7（续写困惑度 proxy)、T8（DetectGPT-curvature)** |
+| 数字取证 | A1(末位)、A2(Benford)、A3(列间算术)、A5(小数)、A6(不可能值)、A7(末位 0/5 专项) |
+| 摘要统计一致性 | B1(GRIM)、B4(statcheck)、B5(TIVA)、B6(GRIMMER)、B7(p-curve)、B8(SPRITE) |
+| 临床试验 | C1(Carlisle 基线平衡) |
+| 方差结构 | D1(残差平滑)、D2(缺失值模式)、E1(ICC 独立性,2.0.14 新增) |
+| 图像取证 | F1(pHash 跨图)、F2(ORB 图内复制)、F3(块统计 splice)、F4(跨论文 pHash 库)、F5(EXIF 跨图聚类)、F6(逐通道直方图 patch-splice,Bik 2016 风格) |
+| 元数据 | G1(图像 EXIF 时序)、G3(docx rsid)、G4(文件元数据) |
+| 论文工厂 | M1(合作者图谱) |
+| 文本与试验 | T1(n-gram 剽窃)、T2(NCT outcome 漂移)、T3(数据/伦理审计)、T4(论文工厂扭曲短语)、T5(Stapel 语言指纹) |
+| LLM 文本 | T6(词面字典 + 动态字典)、T7(续写困惑度)、T8(DetectGPT-curvature) — 见下方 endpoint scope |
+| **工业过程(2.2.0+)** | **I1(质量平衡闭合)、I2(SCADA 时间戳完整性)、I5(批次复用检测)、I6(过程趋势过平滑)** — 12 个预置行业模板(废水/废气/制药/半导体/...) |
 
 ### 实证标定(诚实)
 
 | 检测器层 | 数据集 | LR+ | 解读 |
 |---|---|---|---|
-| T6 lexical(默认阈值) | v8/v9 N=85,Nature-tier 已发表撤稿 | ~0 | T6 是**投稿前/预印本**筛查信号,不是 post-publication 取证;copy-editing 抹除了字典命中。 |
-| B4 statcheck(N=41 ground-truth) | crossval_statcheck | recall 100%, 决策翻转 recall 94% | 与 Nuijten 2016 原版 statcheck 协议一致。 |
-| F1/F4 image | recall_image_v1 N=15+15 | LR+ 表见 `docs/recall_image_v1.md` | 图像 pHash 复用层。 |
-| T7 / T8 | (待 GPT-4o-class endpoint 配置) | — | 单元测试覆盖;实测延后到 logprobs-capable endpoint 可用时。 |
+| T6 lexical(默认 0.003) | v10 N=200,OpenAlex 撤稿 + Europe PMC 对照 | ~0 | T6 默认阈值是**投稿前/预印本**筛查;copy-editing 抹除字典命中。 |
+| T6 lexical(0.001 严格阈值) | v10 N=200 | **∞ (1 TP / 0 FP)** | 一个撤稿命中、零误报。 |
+| B4 statcheck(N=41 ground-truth) | crossval_statcheck | recall 100%, 决策翻转 94% | 与 Nuijten 2016 协议一致。 |
+| B4 vs statcheck-R 本尊(N=41) | crossval_statcheck_kappa | **Cohen's κ = 0.79** | Landis-Koch substantial agreement。 |
+| F6 image cluster | recall_image_v4 N=159(F1+F4+F6) | 1.63 | 在 z=6/cluster=8 阈值下的三检测器图像层。 |
+| I5 工业批次复用 | recall_industrial_v1 N=200(废水) | **∞**(60% TPR / 0% FPR) | 工业层旗舰结果。 |
+| T7 perplexity | t7_controlled_benchmark N=17(Groq Qwen3-32B) | 1.69 弱(p=0.11) | 方向正确但样本欠功效;**需要非 reasoning 模型 + 真实 logprobs**(推荐 OpenAI `gpt-4o-mini`)。 |
+| T8 DetectGPT | t8_controlled_benchmark N=20(DeepSeek-v4-flash) | 0.25 反向 | **Reasoning 模型(o-series / DeepSeek-v4 / Qwen3-thinking / GPT-5)结构性不兼容** —— paraphraser 不脱 LLM 似然流形。推荐 OpenAI `gpt-4o` 或自托管 Llama-3.3-70B。详见 `docs/llm_detection_real_endpoints.md`。 |
 
 详见 `docs/fraud_case_studies.md`：每个真实造假案例（Stapel / Fujii /
 Hwang / Schön / Macchiarini / Wansink / Masliah / 耿同学打假对象 /

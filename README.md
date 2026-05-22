@@ -34,15 +34,20 @@
 
 ## Status
 
-**Stable (2.1.12)**. 34 built-in detectors + plugin system + opt-in
-multi-tenant Web UI. Covers numeric forensics, statistical recomputation
+**Stable (2.2.7)**. 38 built-in detectors (34 academic + 4 industrial)
++ 12 industrial-domain templates + plugin system + opt-in multi-tenant
+Web UI. Covers numeric forensics, statistical recomputation
 (statcheck one- and two-tailed; GRIM/GRIMMER/SPRITE/TIVA/P-curve), Carlisle
 baseline imbalance with multi-arm RCT support, image duplication (both
 pHash cross-image, Bik-style intra-image ORB matching, splice/copy-move
 forensics, persistent cross-paper pHash store), EXIF/rsid metadata
 forensics, text similarity vs corpus, tortured phrases (150+ paper-mill
-fingerprints), AI-text heuristics, stylometry, clinical-trial outcome
-consistency, paper-mill citation-graph signatures, plus DOI / PubPeer /
+fingerprints), AI-text heuristics (T6 lexical + T7 perplexity + T8
+DetectGPT — see [docs/llm_detection_real_endpoints.md](docs/llm_detection_real_endpoints.md)
+for the endpoint scope statement), stylometry, clinical-trial outcome
+consistency, paper-mill citation-graph signatures, industrial process
+forensics (mass-balance closure, SCADA timestamp integrity,
+batch-repetition detection, trend over-smoothness), plus DOI / PubPeer /
 Retraction-Watch / ORI cross-checks. WCAG 2.1 AA HTML reports. Optional
 LLM-assisted explanation. See the Roadmap for what's still on deck.
 

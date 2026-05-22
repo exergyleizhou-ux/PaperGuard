@@ -154,7 +154,7 @@ grep -rlnE "[REDACTED-INST]|[REDACTED-CODENAME-1]|[REDACTED-CODENAME-2]|USER|PRO
 ```
 Expected empty.
 
-## 6. The 34 detectors (verified count, 2.1.12)
+## 6. The 38 detectors (verified count, 2.2.7)
 
 | ID | Family | Source |
 |---|---|---|
@@ -164,16 +164,23 @@ Expected empty.
 | D1, D2 | Residual smoothness / Missing pattern | d*.py |
 | E1 | ICC Independence (new in 2.0.14) | e1_icc_independence.py |
 | F1-F5 | Image forensics (pHash / ORB / splice / cross-paper / EXIF cluster) | f*.py |
-| **F6** | **Per-channel histogram patch splice (Bik 2016, new in 2.1.7)** | **f6_patch_splice.py** |
+| F6 | Per-channel histogram patch splice (Bik 2016, new in 2.1.7) | f6_patch_splice.py |
 | G1, G3, G4 | EXIF / docx rsid / file metadata | g*.py |
 | M1 | Paper-mill graph | m1_paper_mill_graph.py |
 | T1-T5 | Plagiarism / NCT outcome / data-availability / tortured / stylometry | t*.py |
 | T6-T8 | LLM-text family (lexical / perplexity / DetectGPT-curvature) | t6/t7/t8 |
+| **I1, I2, I5, I6** | **Industrial: mass-balance / SCADA timestamp / batch-repetition / trend-oversmooth (2.2.0+)** | **i*.py** |
 
 **LLM-text family (T6/T7/T8):**
 - T6: lexical phrase signature + dynamic user dictionary at `~/.paperguard/ai_dictionary.json`. **2.1.12 empirically calibrated**: at 0.001 threshold, LR+ = ∞ on N=200 (1 TP / 0 FP).
-- T7: continuation-perplexity proxy. **Blocked on cliproxy**; works on logprobs-capable endpoints.
-- T8: DetectGPT-style curvature via paraphrase + LM scoring. **Empirically LR+ = 0 on cliproxy** (2.1.10 controlled benchmark); needs GPT-4-class endpoint.
+- T7: continuation-perplexity. **2.2.7 scope:** needs non-reasoning LM with real per-token logprobs. Free path Groq `qwen/qwen3-32b` gives weak LR+ 1.69 at N=17. Production target: OpenAI `gpt-4o-mini`.
+- T8: DetectGPT-style curvature via paraphrase + LM scoring. **2.2.7 scope:** needs non-reasoning paraphraser whose rewrites drift *off* the LLM-likelihood manifold. **Reasoning models (o-series, DeepSeek-v4, Qwen3-thinking) are structurally incompatible** — measured LR+ 0.25 on DeepSeek-v4. Production target: OpenAI `gpt-4o` or self-hosted Llama-3.3-70B.
+
+**Industrial family (I1/I2/I5/I6, new in 2.2.0-2.2.3):**
+- I1: closure of mass-balance equations across SCADA log columns.
+- I2: SCADA timestamp integrity (monotonic / no large gaps / consistent cadence).
+- I5: batch-repetition detection — identifies suspicious copy-paste of historical batches into current logs. **Wastewater recall study: LR+ = ∞ at N=200** (`docs/recall_industrial_v1.md`).
+- I6: process-trend over-smoothness — flags suspiciously low-variance trend windows that are inconsistent with measurement noise floor.
 
 ## 7. Empirical datasets in the repo (2.1.13)
 

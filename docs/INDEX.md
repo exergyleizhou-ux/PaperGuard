@@ -19,9 +19,10 @@ trying to do.
 
 ## 🔬 Detector reference (per-detector deep-dives)
 
-[detectors.md](detectors.md) — overview of all 34 detectors.
+[detectors.md](detectors.md) — overview of all 38 detectors
+(34 academic + 4 industrial).
 [detectors/](detectors/) — auto-generated per-detector pages
-(one .md per A1–T6; F6 / T7 / T8 added separately).
+(one .md per A1–T6; F6 / T7 / T8 / I1 / I2 / I5 / I6 added separately).
 
 Quick map:
 
