@@ -1,4 +1,4 @@
-# PaperGuard 终极交接文档 v2.2.2
+# PaperGuard 终极交接文档 v2.2.5
 
 > **2026-05-21 — third revision of the handoff (after 2.0.14 and 2.1.5).**
 >
@@ -13,24 +13,25 @@
 | | |
 |---|---|
 | Name | **PaperGuard** — research-data integrity triage |
-| Current version | **2.2.2** (local = origin = PyPI = release tag, all in sync) |
+| Current version | **2.2.5** (local = origin = PyPI = release tag, all in sync) |
 | Local root | `C:\Users\USER\Desktop\PROJECT_DIR\PaperGuard` |
 | Python venv | `.venv/Scripts/python.exe` |
 | CLI entry | `.venv/Scripts/paperguard.exe` |
 | GitHub | https://github.com/exergyleizhou-ux/PaperGuard |
 | PyPI | https://pypi.org/project/paperguard/ |
 | HF Space (live) | https://huggingface.co/spaces/exergyleizhou/paperguard-demo |
-| Detector count | **37 built-in** (34 academic + 3 industrial) + plugin entry-point support |
+| Detector count | **38 built-in** (34 academic + 4 industrial including I6 over-smoothness) + plugin entry-point support |
 | Industrial templates | **12** (wastewater / waste_gas / distillers_grain / chemical / pharma / food / semiconductor / environment / medical / agriculture / biopharma / biocomputation) |
+| Docker | `ghcr.io/exergyleizhou-ux/paperguard:latest` (linux/amd64 + linux/arm64) |
 
 ## 2. Quality state (verified 2026-05-21)
 
 ```
-PYTEST    498 passed (+ 3 deselected for network)
+PYTEST    506 passed (+ 3 deselected for network)
 RUFF      All checks passed
-MYPY      Success: 100 source files (--strict)
-COMMITS   ~65 on main
-TAGS      v2.0.1 → v2.2.2 (38 releases, no gap)
+MYPY      Success: 101 source files (--strict)
+COMMITS   ~70 on main
+TAGS      v2.0.1 → v2.2.5 (41 releases, no gap)
 PRIVACY   ✅ no forbidden DOIs / names / institution names in repo
 LOCAL = ORIGIN = PyPI = RELEASE TAG  ✅ fully synced
 ```
@@ -98,6 +99,9 @@ HANDOFF.md was redacted before the push succeeded.
 | **2.2.0** | **Industrial extension pack — I1 / I2 / I5 detectors + HDF5 ingest** |
 | **2.2.1** | **12 industrial-domain templates** (wastewater, pharma, semiconductor, …) |
 | **2.2.2** | **`paperguard scan-industrial --domain X file.csv` CLI command** |
+| **2.2.3** | **I6 over-smoothness detector (38th) + multi-arch Docker → ghcr.io** |
+| **2.2.4** | **Industrial recall v1 study (N=100/domain) + `refresh-ai-dict --auto`** |
+| **2.2.5** | **Image recall v4 (N=159): F6 LR+ = 1.63, confirms calibration across 3 samples** |
 
 ## 5. Reproducible 3-gate command
 
@@ -185,7 +189,7 @@ must:
 3. Submit at https://joss.theoj.org/papers/new with:
    - Repository URL: `https://github.com/exergyleizhou-ux/PaperGuard`
    - Branch: `main`
-   - Version: latest tag (currently `v2.2.2`)
+   - Version: latest tag (currently `v2.2.5`)
 
 Median time-to-DOI: 6-12 weeks.
 

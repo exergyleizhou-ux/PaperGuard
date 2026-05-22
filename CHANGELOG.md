@@ -4,6 +4,43 @@ All notable changes to PaperGuard are documented in this file. Format follows
 [Keep a Changelog](https://keepachangelog.com/) and the project adheres to
 [Semantic Versioning](https://semver.org/).
 
+## [2.2.5] — 2026-05-22 — Image recall v4 (N=100+59) + HANDOFF refresh to 2.2.5
+
+### Added — Image recall v4 (largest image study to date)
+- `scripts/recall_image_v4.py` — N=100 retracted + N=100 matched
+  controls (159 analysable after OpenAlex control-lookup failures).
+  Runs F1 + F4 + F6 with the production 2.1.9 calibrated defaults.
+- `scripts/recall_image_v4_results.json` — 159-record dataset.
+- `docs/recall_image_v4.md` — analysis.
+
+### Headline (N=159 = 100 retracted + 59 control)
+| Detector | TPR | FPR | LR+ |
+|---|---|---|---|
+| F1 | 17.0 % | 11.9 % | **1.43** |
+| F4 |  5.0 % |  5.1 % | 0.98 |
+| **F6** (z=6/cluster=8) | **80.0 %** | **49.2 %** | **1.63** |
+| F1 ∪ F4 ∪ F6 | 81.0 % | 52.5 % | 1.54 |
+
+### Tightening of the F6 estimate
+- v2 (N=18): LR+ = 1.12
+- v3 (N=85): LR+ = 1.91
+- **v4 (N=159): LR+ = 1.63** ← tighter CI, more honest
+
+The F6 default calibration (z=6/cluster=8) is **confirmed across
+three independent OpenAlex samples**.
+
+### Updated — `HANDOFF.md`
+- All version markers refreshed to 2.2.5.
+- 38 detectors / 12 industrial templates / 506 tests.
+- Ship history extended through 2.2.3-2.2.5.
+- Added the I6 over-smoothness detector to the catalogue.
+- Industrial recall v1 + image recall v4 added to the empirical-
+  datasets table.
+- HANDOFF.md cited the Docker image URL for next-session use.
+
+### Quality
+No code changes. Tests: 506 / ruff clean / mypy --strict clean.
+
 ## [2.2.4] — 2026-05-22 — Industrial recall v1 study + T6 --auto refresh
 
 ### Added — Industrial recall v1 (N=50+50 per domain)
