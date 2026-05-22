@@ -38,17 +38,29 @@ from paperguard.reporter.json_export import export_json
 
 # --- Empirical LR+ data from docs/recall_test_v8.md, surfaced in the UI ---
 EMPIRICAL_FINDINGS_MD = f"""
-**PaperGuard v{__version__}** — 33 detectors active.
+**PaperGuard v{__version__}** — 38 detectors active (academic 34 + industrial 4).
 
-**Validated performance (from `docs/recall_test_v8.md`):**
+**Validated performance**
 
-- N = 50 OpenAlex retracted + 50 matched controls
-- Coverage via Europe PMC (Nature-tier subfields underrepresented)
-- T6 lexical signal: pre-submission / preprint screening only.
-  At Nature-tier post-publication, lexical LLM markers are largely
-  copy-edited out before publication.
-- T7 / T8 statistical signals: live LR+ pending GPT-4o-class endpoint
-  access. Unit-test verified, opt-in via the checkboxes below.
+- **T6 lexical** (LLM-text): LR+ = ∞ at 0.001 threshold, N = 200 OpenAlex
+  retracted + matched controls (`docs/recall_test_v10.md`). Best signal
+  for pre-submission / preprint screening.
+- **B4 statcheck**: Cohen's κ = 0.79 vs the original R `statcheck` package
+  on N = 41 ground-truth corpus (`docs/crossval_statcheck.md`).
+- **F6 image cluster** (forensics): LR+ = 1.63 at N = 159
+  (`docs/recall_image_v4.md`).
+- **I5 batch repetition** (industrial): LR+ = ∞ on wastewater corpus,
+  N = 200 (`docs/recall_industrial_v1.md`).
+- **T6 at Nature-tier post-publication**: signal is largely copy-edited
+  out before publication — T6 is a preprint / submission-stage screen,
+  not a post-publication forensics signal.
+
+**T7 / T8 scope (2.2.7).** T7 needs a non-reasoning LM with real per-token
+logprobs (OpenAI `gpt-4o-mini` recommended; Groq Qwen3-32B gave a weak
+LR+ 1.69 at N = 17). T8 needs a non-reasoning paraphraser that drifts
+off-manifold — **reasoning models (o-series, DeepSeek-v4, Qwen3-thinking)
+are structurally incompatible** (LR+ collapsed to 0.25 on DeepSeek-v4).
+See `docs/llm_detection_real_endpoints.md` for the full matrix.
 
 **This is a screening tool, not a verdict tool.** Every finding ships
 with ≥ 3 innocent explanations. Do not treat any signal as evidence
