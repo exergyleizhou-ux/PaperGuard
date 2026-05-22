@@ -80,6 +80,9 @@ class DetectorRegistry:
         from paperguard.detectors.i5_batch_repetition import (
             I5BatchRepetitionDetector,
         )
+        from paperguard.detectors.i6_trend_oversmooth import (
+            I6TrendOversmoothDetector,
+        )
         from paperguard.detectors.m1_paper_mill_graph import (
             M1PaperMillGraphDetector,
         )
@@ -122,6 +125,7 @@ class DetectorRegistry:
             I1MassBalanceDetector,
             I2TimestampIntegrityDetector,
             I5BatchRepetitionDetector,
+            I6TrendOversmoothDetector,
             G1ExifTemporalDetector,
             G3RsidForensicsDetector,
             G4MetadataForensicsDetector,

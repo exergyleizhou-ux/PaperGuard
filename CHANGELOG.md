@@ -4,6 +4,40 @@ All notable changes to PaperGuard are documented in this file. Format follows
 [Keep a Changelog](https://keepachangelog.com/) and the project adheres to
 [Semantic Versioning](https://semver.org/).
 
+## [2.2.3] — 2026-05-22 — I6 over-smoothness detector + multi-arch Docker
+
+### Added — I6 detector (built-in count: 37 → 38)
+- `src/paperguard/detectors/i6_trend_oversmooth.py` — detects the
+  "painted curve" failure mode: DCS / SCADA trend columns with
+  unrealistically low high-frequency content. Algorithm: first-
+  difference noise-floor ratio + lag-1 autocorrelation of Δx +
+  "all-Δx-identical" CRITICAL check.
+- 8 new tests covering realistic noisy trend (no fire), perfectly
+  smooth painted curve (fires), linear ramp (CRITICAL), constant
+  setpoint (skipped), missing column, short trend, ≥4 innocent
+  explanations, no verdict words.
+
+### Added — Multi-arch Docker image
+- `Dockerfile` rewritten: includes opencv runtime deps + tzdata +
+  ca-certificates; installs `[webui,industrial,legacy-doc]` extras
+  so the image is useful out of the box; OCI labels for ghcr.io.
+- `.github/workflows/docker.yml` builds linux/amd64 + linux/arm64
+  via Buildx + QEMU, pushes to `ghcr.io/exergyleizhou-ux/paperguard`
+  on every release tag. Auto-tags `latest` + semver short + semver
+  full.
+
+### Usage
+```bash
+docker pull ghcr.io/exergyleizhou-ux/paperguard:latest
+docker run --rm -v "$PWD:/data" \
+    ghcr.io/exergyleizhou-ux/paperguard:latest \
+    scan -f /data/paper.pdf
+```
+
+### Quality
+- Tests: 506 (+8). Ruff clean. Mypy --strict clean. **101** source
+  files (was 100).
+
 ## [2.2.2] — 2026-05-22 — `paperguard scan-industrial` CLI + HANDOFF refresh
 
 ### Added
