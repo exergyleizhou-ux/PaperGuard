@@ -1,0 +1,2491 @@
+{
+  "n_per_arm": 50,
+  "domains": {
+    "wastewater": [
+      {
+        "arm": "clean",
+        "case_id": "000",
+        "tamper_modes": [],
+        "i1_fired": true,
+        "i1_severity": "SUSPICIOUS",
+        "i2_fired": true,
+        "i2_severity": "CRITICAL",
+        "i5_fired": false,
+        "i5_severity": "none"
+      },
+      {
+        "arm": "clean",
+        "case_id": "001",
+        "tamper_modes": [],
+        "i1_fired": true,
+        "i1_severity": "SUSPICIOUS",
+        "i2_fired": true,
+        "i2_severity": "CRITICAL",
+        "i5_fired": false,
+        "i5_severity": "none"
+      },
+      {
+        "arm": "clean",
+        "case_id": "002",
+        "tamper_modes": [],
+        "i1_fired": true,
+        "i1_severity": "SUSPICIOUS",
+        "i2_fired": true,
+        "i2_severity": "CRITICAL",
+        "i5_fired": false,
+        "i5_severity": "none"
+      },
+      {
+        "arm": "clean",
+        "case_id": "003",
+        "tamper_modes": [],
+        "i1_fired": true,
+        "i1_severity": "SUSPICIOUS",
+        "i2_fired": true,
+        "i2_severity": "CRITICAL",
+        "i5_fired": false,
+        "i5_severity": "none"
+      },
+      {
+        "arm": "clean",
+        "case_id": "004",
+        "tamper_modes": [],
+        "i1_fired": true,
+        "i1_severity": "SUSPICIOUS",
+        "i2_fired": true,
+        "i2_severity": "CRITICAL",
+        "i5_fired": false,
+        "i5_severity": "none"
+      },
+      {
+        "arm": "clean",
+        "case_id": "005",
+        "tamper_modes": [],
+        "i1_fired": true,
+        "i1_severity": "SUSPICIOUS",
+        "i2_fired": true,
+        "i2_severity": "CRITICAL",
+        "i5_fired": false,
+        "i5_severity": "none"
+      },
+      {
+        "arm": "clean",
+        "case_id": "006",
+        "tamper_modes": [],
+        "i1_fired": true,
+        "i1_severity": "SUSPICIOUS",
+        "i2_fired": true,
+        "i2_severity": "CRITICAL",
+        "i5_fired": false,
+        "i5_severity": "none"
+      },
+      {
+        "arm": "clean",
+        "case_id": "007",
+        "tamper_modes": [],
+        "i1_fired": true,
+        "i1_severity": "SUSPICIOUS",
+        "i2_fired": true,
+        "i2_severity": "CRITICAL",
+        "i5_fired": false,
+        "i5_severity": "none"
+      },
+      {
+        "arm": "clean",
+        "case_id": "008",
+        "tamper_modes": [],
+        "i1_fired": true,
+        "i1_severity": "SUSPICIOUS",
+        "i2_fired": true,
+        "i2_severity": "CRITICAL",
+        "i5_fired": false,
+        "i5_severity": "none"
+      },
+      {
+        "arm": "clean",
+        "case_id": "009",
+        "tamper_modes": [],
+        "i1_fired": true,
+        "i1_severity": "SUSPICIOUS",
+        "i2_fired": true,
+        "i2_severity": "CRITICAL",
+        "i5_fired": false,
+        "i5_severity": "none"
+      },
+      {
+        "arm": "clean",
+        "case_id": "010",
+        "tamper_modes": [],
+        "i1_fired": true,
+        "i1_severity": "SUSPICIOUS",
+        "i2_fired": true,
+        "i2_severity": "CRITICAL",
+        "i5_fired": false,
+        "i5_severity": "none"
+      },
+      {
+        "arm": "clean",
+        "case_id": "011",
+        "tamper_modes": [],
+        "i1_fired": true,
+        "i1_severity": "SUSPICIOUS",
+        "i2_fired": true,
+        "i2_severity": "CRITICAL",
+        "i5_fired": false,
+        "i5_severity": "none"
+      },
+      {
+        "arm": "clean",
+        "case_id": "012",
+        "tamper_modes": [],
+        "i1_fired": true,
+        "i1_severity": "SUSPICIOUS",
+        "i2_fired": true,
+        "i2_severity": "CRITICAL",
+        "i5_fired": false,
+        "i5_severity": "none"
+      },
+      {
+        "arm": "clean",
+        "case_id": "013",
+        "tamper_modes": [],
+        "i1_fired": true,
+        "i1_severity": "SUSPICIOUS",
+        "i2_fired": true,
+        "i2_severity": "CRITICAL",
+        "i5_fired": false,
+        "i5_severity": "none"
+      },
+      {
+        "arm": "clean",
+        "case_id": "014",
+        "tamper_modes": [],
+        "i1_fired": true,
+        "i1_severity": "SUSPICIOUS",
+        "i2_fired": true,
+        "i2_severity": "CRITICAL",
+        "i5_fired": false,
+        "i5_severity": "none"
+      },
+      {
+        "arm": "clean",
+        "case_id": "015",
+        "tamper_modes": [],
+        "i1_fired": true,
+        "i1_severity": "SUSPICIOUS",
+        "i2_fired": true,
+        "i2_severity": "CRITICAL",
+        "i5_fired": false,
+        "i5_severity": "none"
+      },
+      {
+        "arm": "clean",
+        "case_id": "016",
+        "tamper_modes": [],
+        "i1_fired": true,
+        "i1_severity": "SUSPICIOUS",
+        "i2_fired": true,
+        "i2_severity": "CRITICAL",
+        "i5_fired": false,
+        "i5_severity": "none"
+      },
+      {
+        "arm": "clean",
+        "case_id": "017",
+        "tamper_modes": [],
+        "i1_fired": true,
+        "i1_severity": "SUSPICIOUS",
+        "i2_fired": true,
+        "i2_severity": "CRITICAL",
+        "i5_fired": false,
+        "i5_severity": "none"
+      },
+      {
+        "arm": "clean",
+        "case_id": "018",
+        "tamper_modes": [],
+        "i1_fired": true,
+        "i1_severity": "SUSPICIOUS",
+        "i2_fired": true,
+        "i2_severity": "CRITICAL",
+        "i5_fired": false,
+        "i5_severity": "none"
+      },
+      {
+        "arm": "clean",
+        "case_id": "019",
+        "tamper_modes": [],
+        "i1_fired": true,
+        "i1_severity": "SUSPICIOUS",
+        "i2_fired": true,
+        "i2_severity": "CRITICAL",
+        "i5_fired": false,
+        "i5_severity": "none"
+      },
+      {
+        "arm": "clean",
+        "case_id": "020",
+        "tamper_modes": [],
+        "i1_fired": true,
+        "i1_severity": "SUSPICIOUS",
+        "i2_fired": true,
+        "i2_severity": "CRITICAL",
+        "i5_fired": false,
+        "i5_severity": "none"
+      },
+      {
+        "arm": "clean",
+        "case_id": "021",
+        "tamper_modes": [],
+        "i1_fired": true,
+        "i1_severity": "SUSPICIOUS",
+        "i2_fired": true,
+        "i2_severity": "CRITICAL",
+        "i5_fired": false,
+        "i5_severity": "none"
+      },
+      {
+        "arm": "clean",
+        "case_id": "022",
+        "tamper_modes": [],
+        "i1_fired": true,
+        "i1_severity": "SUSPICIOUS",
+        "i2_fired": true,
+        "i2_severity": "CRITICAL",
+        "i5_fired": false,
+        "i5_severity": "none"
+      },
+      {
+        "arm": "clean",
+        "case_id": "023",
+        "tamper_modes": [],
+        "i1_fired": true,
+        "i1_severity": "SUSPICIOUS",
+        "i2_fired": true,
+        "i2_severity": "CRITICAL",
+        "i5_fired": false,
+        "i5_severity": "none"
+      },
+      {
+        "arm": "clean",
+        "case_id": "024",
+        "tamper_modes": [],
+        "i1_fired": true,
+        "i1_severity": "SUSPICIOUS",
+        "i2_fired": true,
+        "i2_severity": "CRITICAL",
+        "i5_fired": false,
+        "i5_severity": "none"
+      },
+      {
+        "arm": "clean",
+        "case_id": "025",
+        "tamper_modes": [],
+        "i1_fired": true,
+        "i1_severity": "SUSPICIOUS",
+        "i2_fired": true,
+        "i2_severity": "CRITICAL",
+        "i5_fired": false,
+        "i5_severity": "none"
+      },
+      {
+        "arm": "clean",
+        "case_id": "026",
+        "tamper_modes": [],
+        "i1_fired": true,
+        "i1_severity": "SUSPICIOUS",
+        "i2_fired": true,
+        "i2_severity": "CRITICAL",
+        "i5_fired": false,
+        "i5_severity": "none"
+      },
+      {
+        "arm": "clean",
+        "case_id": "027",
+        "tamper_modes": [],
+        "i1_fired": true,
+        "i1_severity": "SUSPICIOUS",
+        "i2_fired": true,
+        "i2_severity": "CRITICAL",
+        "i5_fired": false,
+        "i5_severity": "none"
+      },
+      {
+        "arm": "clean",
+        "case_id": "028",
+        "tamper_modes": [],
+        "i1_fired": true,
+        "i1_severity": "SUSPICIOUS",
+        "i2_fired": true,
+        "i2_severity": "CRITICAL",
+        "i5_fired": false,
+        "i5_severity": "none"
+      },
+      {
+        "arm": "clean",
+        "case_id": "029",
+        "tamper_modes": [],
+        "i1_fired": true,
+        "i1_severity": "SUSPICIOUS",
+        "i2_fired": true,
+        "i2_severity": "CRITICAL",
+        "i5_fired": false,
+        "i5_severity": "none"
+      },
+      {
+        "arm": "clean",
+        "case_id": "030",
+        "tamper_modes": [],
+        "i1_fired": true,
+        "i1_severity": "SUSPICIOUS",
+        "i2_fired": true,
+        "i2_severity": "CRITICAL",
+        "i5_fired": false,
+        "i5_severity": "none"
+      },
+      {
+        "arm": "clean",
+        "case_id": "031",
+        "tamper_modes": [],
+        "i1_fired": true,
+        "i1_severity": "SUSPICIOUS",
+        "i2_fired": true,
+        "i2_severity": "CRITICAL",
+        "i5_fired": false,
+        "i5_severity": "none"
+      },
+      {
+        "arm": "clean",
+        "case_id": "032",
+        "tamper_modes": [],
+        "i1_fired": true,
+        "i1_severity": "SUSPICIOUS",
+        "i2_fired": true,
+        "i2_severity": "CRITICAL",
+        "i5_fired": false,
+        "i5_severity": "none"
+      },
+      {
+        "arm": "clean",
+        "case_id": "033",
+        "tamper_modes": [],
+        "i1_fired": true,
+        "i1_severity": "SUSPICIOUS",
+        "i2_fired": true,
+        "i2_severity": "CRITICAL",
+        "i5_fired": false,
+        "i5_severity": "none"
+      },
+      {
+        "arm": "clean",
+        "case_id": "034",
+        "tamper_modes": [],
+        "i1_fired": true,
+        "i1_severity": "SUSPICIOUS",
+        "i2_fired": true,
+        "i2_severity": "CRITICAL",
+        "i5_fired": false,
+        "i5_severity": "none"
+      },
+      {
+        "arm": "clean",
+        "case_id": "035",
+        "tamper_modes": [],
+        "i1_fired": true,
+        "i1_severity": "SUSPICIOUS",
+        "i2_fired": true,
+        "i2_severity": "CRITICAL",
+        "i5_fired": false,
+        "i5_severity": "none"
+      },
+      {
+        "arm": "clean",
+        "case_id": "036",
+        "tamper_modes": [],
+        "i1_fired": true,
+        "i1_severity": "SUSPICIOUS",
+        "i2_fired": true,
+        "i2_severity": "CRITICAL",
+        "i5_fired": false,
+        "i5_severity": "none"
+      },
+      {
+        "arm": "clean",
+        "case_id": "037",
+        "tamper_modes": [],
+        "i1_fired": true,
+        "i1_severity": "SUSPICIOUS",
+        "i2_fired": true,
+        "i2_severity": "CRITICAL",
+        "i5_fired": false,
+        "i5_severity": "none"
+      },
+      {
+        "arm": "clean",
+        "case_id": "038",
+        "tamper_modes": [],
+        "i1_fired": true,
+        "i1_severity": "SUSPICIOUS",
+        "i2_fired": true,
+        "i2_severity": "CRITICAL",
+        "i5_fired": false,
+        "i5_severity": "none"
+      },
+      {
+        "arm": "clean",
+        "case_id": "039",
+        "tamper_modes": [],
+        "i1_fired": true,
+        "i1_severity": "SUSPICIOUS",
+        "i2_fired": true,
+        "i2_severity": "CRITICAL",
+        "i5_fired": false,
+        "i5_severity": "none"
+      },
+      {
+        "arm": "clean",
+        "case_id": "040",
+        "tamper_modes": [],
+        "i1_fired": true,
+        "i1_severity": "SUSPICIOUS",
+        "i2_fired": true,
+        "i2_severity": "CRITICAL",
+        "i5_fired": false,
+        "i5_severity": "none"
+      },
+      {
+        "arm": "clean",
+        "case_id": "041",
+        "tamper_modes": [],
+        "i1_fired": true,
+        "i1_severity": "SUSPICIOUS",
+        "i2_fired": true,
+        "i2_severity": "CRITICAL",
+        "i5_fired": false,
+        "i5_severity": "none"
+      },
+      {
+        "arm": "clean",
+        "case_id": "042",
+        "tamper_modes": [],
+        "i1_fired": true,
+        "i1_severity": "SUSPICIOUS",
+        "i2_fired": true,
+        "i2_severity": "CRITICAL",
+        "i5_fired": false,
+        "i5_severity": "none"
+      },
+      {
+        "arm": "clean",
+        "case_id": "043",
+        "tamper_modes": [],
+        "i1_fired": true,
+        "i1_severity": "SUSPICIOUS",
+        "i2_fired": true,
+        "i2_severity": "CRITICAL",
+        "i5_fired": false,
+        "i5_severity": "none"
+      },
+      {
+        "arm": "clean",
+        "case_id": "044",
+        "tamper_modes": [],
+        "i1_fired": true,
+        "i1_severity": "SUSPICIOUS",
+        "i2_fired": true,
+        "i2_severity": "CRITICAL",
+        "i5_fired": false,
+        "i5_severity": "none"
+      },
+      {
+        "arm": "clean",
+        "case_id": "045",
+        "tamper_modes": [],
+        "i1_fired": true,
+        "i1_severity": "SUSPICIOUS",
+        "i2_fired": true,
+        "i2_severity": "CRITICAL",
+        "i5_fired": false,
+        "i5_severity": "none"
+      },
+      {
+        "arm": "clean",
+        "case_id": "046",
+        "tamper_modes": [],
+        "i1_fired": true,
+        "i1_severity": "SUSPICIOUS",
+        "i2_fired": true,
+        "i2_severity": "CRITICAL",
+        "i5_fired": false,
+        "i5_severity": "none"
+      },
+      {
+        "arm": "clean",
+        "case_id": "047",
+        "tamper_modes": [],
+        "i1_fired": true,
+        "i1_severity": "SUSPICIOUS",
+        "i2_fired": true,
+        "i2_severity": "CRITICAL",
+        "i5_fired": false,
+        "i5_severity": "none"
+      },
+      {
+        "arm": "clean",
+        "case_id": "048",
+        "tamper_modes": [],
+        "i1_fired": true,
+        "i1_severity": "SUSPICIOUS",
+        "i2_fired": true,
+        "i2_severity": "CRITICAL",
+        "i5_fired": false,
+        "i5_severity": "none"
+      },
+      {
+        "arm": "clean",
+        "case_id": "049",
+        "tamper_modes": [],
+        "i1_fired": true,
+        "i1_severity": "SUSPICIOUS",
+        "i2_fired": true,
+        "i2_severity": "CRITICAL",
+        "i5_fired": false,
+        "i5_severity": "none"
+      },
+      {
+        "arm": "tampered",
+        "case_id": "000T",
+        "tamper_modes": [
+          "i1_effluent_padded",
+          "i2_round_minute_and_backfill"
+        ],
+        "i1_fired": true,
+        "i1_severity": "SUSPICIOUS",
+        "i2_fired": true,
+        "i2_severity": "CRITICAL",
+        "i5_fired": false,
+        "i5_severity": "none"
+      },
+      {
+        "arm": "tampered",
+        "case_id": "001T",
+        "tamper_modes": [
+          "i2_round_minute_and_backfill"
+        ],
+        "i1_fired": true,
+        "i1_severity": "SUSPICIOUS",
+        "i2_fired": true,
+        "i2_severity": "CRITICAL",
+        "i5_fired": false,
+        "i5_severity": "none"
+      },
+      {
+        "arm": "tampered",
+        "case_id": "002T",
+        "tamper_modes": [
+          "i2_round_minute_and_backfill"
+        ],
+        "i1_fired": true,
+        "i1_severity": "SUSPICIOUS",
+        "i2_fired": true,
+        "i2_severity": "CRITICAL",
+        "i5_fired": false,
+        "i5_severity": "none"
+      },
+      {
+        "arm": "tampered",
+        "case_id": "003T",
+        "tamper_modes": [
+          "i1_effluent_padded",
+          "i2_round_minute_and_backfill",
+          "i5_narrative_repetition"
+        ],
+        "i1_fired": true,
+        "i1_severity": "SUSPICIOUS",
+        "i2_fired": true,
+        "i2_severity": "CRITICAL",
+        "i5_fired": true,
+        "i5_severity": "CRITICAL"
+      },
+      {
+        "arm": "tampered",
+        "case_id": "004T",
+        "tamper_modes": [
+          "i1_effluent_padded"
+        ],
+        "i1_fired": true,
+        "i1_severity": "SUSPICIOUS",
+        "i2_fired": true,
+        "i2_severity": "CRITICAL",
+        "i5_fired": false,
+        "i5_severity": "none"
+      },
+      {
+        "arm": "tampered",
+        "case_id": "005T",
+        "tamper_modes": [
+          "i1_effluent_padded",
+          "i5_narrative_repetition"
+        ],
+        "i1_fired": true,
+        "i1_severity": "SUSPICIOUS",
+        "i2_fired": true,
+        "i2_severity": "CRITICAL",
+        "i5_fired": true,
+        "i5_severity": "CRITICAL"
+      },
+      {
+        "arm": "tampered",
+        "case_id": "006T",
+        "tamper_modes": [
+          "i1_effluent_padded",
+          "i2_round_minute_and_backfill",
+          "i5_narrative_repetition"
+        ],
+        "i1_fired": true,
+        "i1_severity": "SUSPICIOUS",
+        "i2_fired": true,
+        "i2_severity": "CRITICAL",
+        "i5_fired": true,
+        "i5_severity": "CRITICAL"
+      },
+      {
+        "arm": "tampered",
+        "case_id": "007T",
+        "tamper_modes": [
+          "i1_effluent_padded",
+          "i5_narrative_repetition"
+        ],
+        "i1_fired": true,
+        "i1_severity": "SUSPICIOUS",
+        "i2_fired": true,
+        "i2_severity": "CRITICAL",
+        "i5_fired": true,
+        "i5_severity": "CRITICAL"
+      },
+      {
+        "arm": "tampered",
+        "case_id": "008T",
+        "tamper_modes": [
+          "i2_round_minute_and_backfill",
+          "i5_narrative_repetition"
+        ],
+        "i1_fired": true,
+        "i1_severity": "SUSPICIOUS",
+        "i2_fired": true,
+        "i2_severity": "CRITICAL",
+        "i5_fired": true,
+        "i5_severity": "CRITICAL"
+      },
+      {
+        "arm": "tampered",
+        "case_id": "009T",
+        "tamper_modes": [
+          "i2_round_minute_and_backfill"
+        ],
+        "i1_fired": true,
+        "i1_severity": "SUSPICIOUS",
+        "i2_fired": true,
+        "i2_severity": "CRITICAL",
+        "i5_fired": false,
+        "i5_severity": "none"
+      },
+      {
+        "arm": "tampered",
+        "case_id": "010T",
+        "tamper_modes": [
+          "i2_round_minute_and_backfill"
+        ],
+        "i1_fired": true,
+        "i1_severity": "SUSPICIOUS",
+        "i2_fired": true,
+        "i2_severity": "CRITICAL",
+        "i5_fired": false,
+        "i5_severity": "none"
+      },
+      {
+        "arm": "tampered",
+        "case_id": "011T",
+        "tamper_modes": [
+          "i1_effluent_padded",
+          "i2_round_minute_and_backfill",
+          "i5_narrative_repetition"
+        ],
+        "i1_fired": true,
+        "i1_severity": "SUSPICIOUS",
+        "i2_fired": true,
+        "i2_severity": "CRITICAL",
+        "i5_fired": true,
+        "i5_severity": "CRITICAL"
+      },
+      {
+        "arm": "tampered",
+        "case_id": "012T",
+        "tamper_modes": [
+          "i5_narrative_repetition"
+        ],
+        "i1_fired": true,
+        "i1_severity": "SUSPICIOUS",
+        "i2_fired": true,
+        "i2_severity": "CRITICAL",
+        "i5_fired": true,
+        "i5_severity": "CRITICAL"
+      },
+      {
+        "arm": "tampered",
+        "case_id": "013T",
+        "tamper_modes": [
+          "i1_effluent_padded",
+          "i2_round_minute_and_backfill",
+          "i5_narrative_repetition"
+        ],
+        "i1_fired": true,
+        "i1_severity": "SUSPICIOUS",
+        "i2_fired": true,
+        "i2_severity": "CRITICAL",
+        "i5_fired": true,
+        "i5_severity": "CRITICAL"
+      },
+      {
+        "arm": "tampered",
+        "case_id": "014T",
+        "tamper_modes": [
+          "i2_round_minute_and_backfill"
+        ],
+        "i1_fired": true,
+        "i1_severity": "SUSPICIOUS",
+        "i2_fired": true,
+        "i2_severity": "CRITICAL",
+        "i5_fired": false,
+        "i5_severity": "none"
+      },
+      {
+        "arm": "tampered",
+        "case_id": "015T",
+        "tamper_modes": [
+          "i1_effluent_padded",
+          "i5_narrative_repetition"
+        ],
+        "i1_fired": true,
+        "i1_severity": "SUSPICIOUS",
+        "i2_fired": true,
+        "i2_severity": "CRITICAL",
+        "i5_fired": true,
+        "i5_severity": "CRITICAL"
+      },
+      {
+        "arm": "tampered",
+        "case_id": "016T",
+        "tamper_modes": [
+          "i2_round_minute_and_backfill",
+          "i5_narrative_repetition"
+        ],
+        "i1_fired": true,
+        "i1_severity": "SUSPICIOUS",
+        "i2_fired": true,
+        "i2_severity": "CRITICAL",
+        "i5_fired": true,
+        "i5_severity": "CRITICAL"
+      },
+      {
+        "arm": "tampered",
+        "case_id": "017T",
+        "tamper_modes": [
+          "i1_effluent_padded",
+          "i2_round_minute_and_backfill"
+        ],
+        "i1_fired": true,
+        "i1_severity": "SUSPICIOUS",
+        "i2_fired": true,
+        "i2_severity": "CRITICAL",
+        "i5_fired": false,
+        "i5_severity": "none"
+      },
+      {
+        "arm": "tampered",
+        "case_id": "018T",
+        "tamper_modes": [
+          "i1_effluent_padded",
+          "i5_narrative_repetition"
+        ],
+        "i1_fired": true,
+        "i1_severity": "SUSPICIOUS",
+        "i2_fired": true,
+        "i2_severity": "CRITICAL",
+        "i5_fired": true,
+        "i5_severity": "CRITICAL"
+      },
+      {
+        "arm": "tampered",
+        "case_id": "019T",
+        "tamper_modes": [
+          "i2_round_minute_and_backfill"
+        ],
+        "i1_fired": true,
+        "i1_severity": "SUSPICIOUS",
+        "i2_fired": true,
+        "i2_severity": "CRITICAL",
+        "i5_fired": false,
+        "i5_severity": "none"
+      },
+      {
+        "arm": "tampered",
+        "case_id": "020T",
+        "tamper_modes": [
+          "i1_effluent_padded"
+        ],
+        "i1_fired": true,
+        "i1_severity": "SUSPICIOUS",
+        "i2_fired": true,
+        "i2_severity": "CRITICAL",
+        "i5_fired": false,
+        "i5_severity": "none"
+      },
+      {
+        "arm": "tampered",
+        "case_id": "021T",
+        "tamper_modes": [
+          "i5_narrative_repetition"
+        ],
+        "i1_fired": true,
+        "i1_severity": "SUSPICIOUS",
+        "i2_fired": true,
+        "i2_severity": "CRITICAL",
+        "i5_fired": true,
+        "i5_severity": "CRITICAL"
+      },
+      {
+        "arm": "tampered",
+        "case_id": "022T",
+        "tamper_modes": [
+          "i1_effluent_padded",
+          "i5_narrative_repetition"
+        ],
+        "i1_fired": true,
+        "i1_severity": "SUSPICIOUS",
+        "i2_fired": true,
+        "i2_severity": "CRITICAL",
+        "i5_fired": true,
+        "i5_severity": "CRITICAL"
+      },
+      {
+        "arm": "tampered",
+        "case_id": "023T",
+        "tamper_modes": [
+          "i1_effluent_padded",
+          "i5_narrative_repetition"
+        ],
+        "i1_fired": true,
+        "i1_severity": "SUSPICIOUS",
+        "i2_fired": true,
+        "i2_severity": "CRITICAL",
+        "i5_fired": true,
+        "i5_severity": "CRITICAL"
+      },
+      {
+        "arm": "tampered",
+        "case_id": "024T",
+        "tamper_modes": [
+          "i1_effluent_padded",
+          "i5_narrative_repetition"
+        ],
+        "i1_fired": true,
+        "i1_severity": "SUSPICIOUS",
+        "i2_fired": true,
+        "i2_severity": "CRITICAL",
+        "i5_fired": true,
+        "i5_severity": "CRITICAL"
+      },
+      {
+        "arm": "tampered",
+        "case_id": "025T",
+        "tamper_modes": [
+          "i1_effluent_padded"
+        ],
+        "i1_fired": true,
+        "i1_severity": "SUSPICIOUS",
+        "i2_fired": true,
+        "i2_severity": "CRITICAL",
+        "i5_fired": false,
+        "i5_severity": "none"
+      },
+      {
+        "arm": "tampered",
+        "case_id": "026T",
+        "tamper_modes": [
+          "i2_round_minute_and_backfill"
+        ],
+        "i1_fired": true,
+        "i1_severity": "SUSPICIOUS",
+        "i2_fired": true,
+        "i2_severity": "CRITICAL",
+        "i5_fired": false,
+        "i5_severity": "none"
+      },
+      {
+        "arm": "tampered",
+        "case_id": "027T",
+        "tamper_modes": [
+          "i1_effluent_padded",
+          "i5_narrative_repetition"
+        ],
+        "i1_fired": true,
+        "i1_severity": "SUSPICIOUS",
+        "i2_fired": true,
+        "i2_severity": "CRITICAL",
+        "i5_fired": true,
+        "i5_severity": "CRITICAL"
+      },
+      {
+        "arm": "tampered",
+        "case_id": "028T",
+        "tamper_modes": [
+          "i1_effluent_padded",
+          "i2_round_minute_and_backfill"
+        ],
+        "i1_fired": true,
+        "i1_severity": "SUSPICIOUS",
+        "i2_fired": true,
+        "i2_severity": "CRITICAL",
+        "i5_fired": false,
+        "i5_severity": "none"
+      },
+      {
+        "arm": "tampered",
+        "case_id": "029T",
+        "tamper_modes": [
+          "i1_effluent_padded",
+          "i5_narrative_repetition"
+        ],
+        "i1_fired": true,
+        "i1_severity": "SUSPICIOUS",
+        "i2_fired": true,
+        "i2_severity": "CRITICAL",
+        "i5_fired": true,
+        "i5_severity": "CRITICAL"
+      },
+      {
+        "arm": "tampered",
+        "case_id": "030T",
+        "tamper_modes": [
+          "i1_effluent_padded"
+        ],
+        "i1_fired": true,
+        "i1_severity": "SUSPICIOUS",
+        "i2_fired": true,
+        "i2_severity": "CRITICAL",
+        "i5_fired": false,
+        "i5_severity": "none"
+      },
+      {
+        "arm": "tampered",
+        "case_id": "031T",
+        "tamper_modes": [
+          "i1_effluent_padded",
+          "i2_round_minute_and_backfill",
+          "i5_narrative_repetition"
+        ],
+        "i1_fired": true,
+        "i1_severity": "SUSPICIOUS",
+        "i2_fired": true,
+        "i2_severity": "CRITICAL",
+        "i5_fired": true,
+        "i5_severity": "CRITICAL"
+      },
+      {
+        "arm": "tampered",
+        "case_id": "032T",
+        "tamper_modes": [
+          "i1_effluent_padded"
+        ],
+        "i1_fired": true,
+        "i1_severity": "SUSPICIOUS",
+        "i2_fired": true,
+        "i2_severity": "CRITICAL",
+        "i5_fired": false,
+        "i5_severity": "none"
+      },
+      {
+        "arm": "tampered",
+        "case_id": "033T",
+        "tamper_modes": [
+          "i2_round_minute_and_backfill"
+        ],
+        "i1_fired": true,
+        "i1_severity": "SUSPICIOUS",
+        "i2_fired": true,
+        "i2_severity": "CRITICAL",
+        "i5_fired": false,
+        "i5_severity": "none"
+      },
+      {
+        "arm": "tampered",
+        "case_id": "034T",
+        "tamper_modes": [
+          "i1_effluent_padded",
+          "i2_round_minute_and_backfill",
+          "i5_narrative_repetition"
+        ],
+        "i1_fired": true,
+        "i1_severity": "SUSPICIOUS",
+        "i2_fired": true,
+        "i2_severity": "CRITICAL",
+        "i5_fired": true,
+        "i5_severity": "CRITICAL"
+      },
+      {
+        "arm": "tampered",
+        "case_id": "035T",
+        "tamper_modes": [
+          "i1_effluent_padded",
+          "i2_round_minute_and_backfill"
+        ],
+        "i1_fired": true,
+        "i1_severity": "SUSPICIOUS",
+        "i2_fired": true,
+        "i2_severity": "CRITICAL",
+        "i5_fired": false,
+        "i5_severity": "none"
+      },
+      {
+        "arm": "tampered",
+        "case_id": "036T",
+        "tamper_modes": [
+          "i2_round_minute_and_backfill",
+          "i5_narrative_repetition"
+        ],
+        "i1_fired": true,
+        "i1_severity": "SUSPICIOUS",
+        "i2_fired": true,
+        "i2_severity": "CRITICAL",
+        "i5_fired": true,
+        "i5_severity": "CRITICAL"
+      },
+      {
+        "arm": "tampered",
+        "case_id": "037T",
+        "tamper_modes": [
+          "i1_effluent_padded",
+          "i5_narrative_repetition"
+        ],
+        "i1_fired": true,
+        "i1_severity": "SUSPICIOUS",
+        "i2_fired": true,
+        "i2_severity": "CRITICAL",
+        "i5_fired": true,
+        "i5_severity": "CRITICAL"
+      },
+      {
+        "arm": "tampered",
+        "case_id": "038T",
+        "tamper_modes": [
+          "i1_effluent_padded",
+          "i2_round_minute_and_backfill",
+          "i5_narrative_repetition"
+        ],
+        "i1_fired": true,
+        "i1_severity": "SUSPICIOUS",
+        "i2_fired": true,
+        "i2_severity": "CRITICAL",
+        "i5_fired": true,
+        "i5_severity": "CRITICAL"
+      },
+      {
+        "arm": "tampered",
+        "case_id": "039T",
+        "tamper_modes": [
+          "i1_effluent_padded",
+          "i2_round_minute_and_backfill"
+        ],
+        "i1_fired": true,
+        "i1_severity": "SUSPICIOUS",
+        "i2_fired": true,
+        "i2_severity": "CRITICAL",
+        "i5_fired": false,
+        "i5_severity": "none"
+      },
+      {
+        "arm": "tampered",
+        "case_id": "040T",
+        "tamper_modes": [
+          "i1_effluent_padded",
+          "i2_round_minute_and_backfill",
+          "i5_narrative_repetition"
+        ],
+        "i1_fired": true,
+        "i1_severity": "SUSPICIOUS",
+        "i2_fired": true,
+        "i2_severity": "CRITICAL",
+        "i5_fired": true,
+        "i5_severity": "CRITICAL"
+      },
+      {
+        "arm": "tampered",
+        "case_id": "041T",
+        "tamper_modes": [
+          "i1_effluent_padded",
+          "i5_narrative_repetition"
+        ],
+        "i1_fired": true,
+        "i1_severity": "SUSPICIOUS",
+        "i2_fired": true,
+        "i2_severity": "CRITICAL",
+        "i5_fired": true,
+        "i5_severity": "CRITICAL"
+      },
+      {
+        "arm": "tampered",
+        "case_id": "042T",
+        "tamper_modes": [
+          "i2_round_minute_and_backfill"
+        ],
+        "i1_fired": true,
+        "i1_severity": "SUSPICIOUS",
+        "i2_fired": true,
+        "i2_severity": "CRITICAL",
+        "i5_fired": false,
+        "i5_severity": "none"
+      },
+      {
+        "arm": "tampered",
+        "case_id": "043T",
+        "tamper_modes": [
+          "i1_effluent_padded",
+          "i5_narrative_repetition"
+        ],
+        "i1_fired": true,
+        "i1_severity": "SUSPICIOUS",
+        "i2_fired": true,
+        "i2_severity": "CRITICAL",
+        "i5_fired": true,
+        "i5_severity": "CRITICAL"
+      },
+      {
+        "arm": "tampered",
+        "case_id": "044T",
+        "tamper_modes": [
+          "i1_effluent_padded",
+          "i5_narrative_repetition"
+        ],
+        "i1_fired": true,
+        "i1_severity": "SUSPICIOUS",
+        "i2_fired": true,
+        "i2_severity": "CRITICAL",
+        "i5_fired": true,
+        "i5_severity": "CRITICAL"
+      },
+      {
+        "arm": "tampered",
+        "case_id": "045T",
+        "tamper_modes": [
+          "i2_round_minute_and_backfill",
+          "i5_narrative_repetition"
+        ],
+        "i1_fired": true,
+        "i1_severity": "SUSPICIOUS",
+        "i2_fired": true,
+        "i2_severity": "CRITICAL",
+        "i5_fired": true,
+        "i5_severity": "CRITICAL"
+      },
+      {
+        "arm": "tampered",
+        "case_id": "046T",
+        "tamper_modes": [
+          "i5_narrative_repetition"
+        ],
+        "i1_fired": true,
+        "i1_severity": "SUSPICIOUS",
+        "i2_fired": true,
+        "i2_severity": "CRITICAL",
+        "i5_fired": true,
+        "i5_severity": "CRITICAL"
+      },
+      {
+        "arm": "tampered",
+        "case_id": "047T",
+        "tamper_modes": [
+          "i2_round_minute_and_backfill",
+          "i5_narrative_repetition"
+        ],
+        "i1_fired": true,
+        "i1_severity": "SUSPICIOUS",
+        "i2_fired": true,
+        "i2_severity": "CRITICAL",
+        "i5_fired": true,
+        "i5_severity": "CRITICAL"
+      },
+      {
+        "arm": "tampered",
+        "case_id": "048T",
+        "tamper_modes": [
+          "i2_round_minute_and_backfill"
+        ],
+        "i1_fired": true,
+        "i1_severity": "SUSPICIOUS",
+        "i2_fired": true,
+        "i2_severity": "CRITICAL",
+        "i5_fired": false,
+        "i5_severity": "none"
+      },
+      {
+        "arm": "tampered",
+        "case_id": "049T",
+        "tamper_modes": [
+          "i1_effluent_padded",
+          "i5_narrative_repetition"
+        ],
+        "i1_fired": true,
+        "i1_severity": "SUSPICIOUS",
+        "i2_fired": true,
+        "i2_severity": "CRITICAL",
+        "i5_fired": true,
+        "i5_severity": "CRITICAL"
+      }
+    ],
+    "pharma": [
+      {
+        "arm": "clean",
+        "case_id": "000",
+        "tamper_modes": [],
+        "i1_fired": true,
+        "i1_severity": "CRITICAL",
+        "i2_fired": true,
+        "i2_severity": "CRITICAL",
+        "i5_fired": true,
+        "i5_severity": "SUSPICIOUS"
+      },
+      {
+        "arm": "clean",
+        "case_id": "001",
+        "tamper_modes": [],
+        "i1_fired": true,
+        "i1_severity": "CRITICAL",
+        "i2_fired": true,
+        "i2_severity": "CRITICAL",
+        "i5_fired": true,
+        "i5_severity": "SUSPICIOUS"
+      },
+      {
+        "arm": "clean",
+        "case_id": "002",
+        "tamper_modes": [],
+        "i1_fired": true,
+        "i1_severity": "CRITICAL",
+        "i2_fired": true,
+        "i2_severity": "CRITICAL",
+        "i5_fired": true,
+        "i5_severity": "SUSPICIOUS"
+      },
+      {
+        "arm": "clean",
+        "case_id": "003",
+        "tamper_modes": [],
+        "i1_fired": true,
+        "i1_severity": "CRITICAL",
+        "i2_fired": true,
+        "i2_severity": "CRITICAL",
+        "i5_fired": true,
+        "i5_severity": "SUSPICIOUS"
+      },
+      {
+        "arm": "clean",
+        "case_id": "004",
+        "tamper_modes": [],
+        "i1_fired": true,
+        "i1_severity": "CRITICAL",
+        "i2_fired": true,
+        "i2_severity": "CRITICAL",
+        "i5_fired": true,
+        "i5_severity": "SUSPICIOUS"
+      },
+      {
+        "arm": "clean",
+        "case_id": "005",
+        "tamper_modes": [],
+        "i1_fired": true,
+        "i1_severity": "CRITICAL",
+        "i2_fired": true,
+        "i2_severity": "CRITICAL",
+        "i5_fired": true,
+        "i5_severity": "SUSPICIOUS"
+      },
+      {
+        "arm": "clean",
+        "case_id": "006",
+        "tamper_modes": [],
+        "i1_fired": true,
+        "i1_severity": "CRITICAL",
+        "i2_fired": true,
+        "i2_severity": "CRITICAL",
+        "i5_fired": true,
+        "i5_severity": "SUSPICIOUS"
+      },
+      {
+        "arm": "clean",
+        "case_id": "007",
+        "tamper_modes": [],
+        "i1_fired": true,
+        "i1_severity": "CRITICAL",
+        "i2_fired": true,
+        "i2_severity": "CRITICAL",
+        "i5_fired": true,
+        "i5_severity": "SUSPICIOUS"
+      },
+      {
+        "arm": "clean",
+        "case_id": "008",
+        "tamper_modes": [],
+        "i1_fired": true,
+        "i1_severity": "CRITICAL",
+        "i2_fired": true,
+        "i2_severity": "CRITICAL",
+        "i5_fired": true,
+        "i5_severity": "SUSPICIOUS"
+      },
+      {
+        "arm": "clean",
+        "case_id": "009",
+        "tamper_modes": [],
+        "i1_fired": true,
+        "i1_severity": "CRITICAL",
+        "i2_fired": true,
+        "i2_severity": "CRITICAL",
+        "i5_fired": true,
+        "i5_severity": "SUSPICIOUS"
+      },
+      {
+        "arm": "clean",
+        "case_id": "010",
+        "tamper_modes": [],
+        "i1_fired": true,
+        "i1_severity": "CRITICAL",
+        "i2_fired": true,
+        "i2_severity": "CRITICAL",
+        "i5_fired": true,
+        "i5_severity": "SUSPICIOUS"
+      },
+      {
+        "arm": "clean",
+        "case_id": "011",
+        "tamper_modes": [],
+        "i1_fired": true,
+        "i1_severity": "CRITICAL",
+        "i2_fired": true,
+        "i2_severity": "CRITICAL",
+        "i5_fired": true,
+        "i5_severity": "SUSPICIOUS"
+      },
+      {
+        "arm": "clean",
+        "case_id": "012",
+        "tamper_modes": [],
+        "i1_fired": true,
+        "i1_severity": "CRITICAL",
+        "i2_fired": true,
+        "i2_severity": "CRITICAL",
+        "i5_fired": true,
+        "i5_severity": "SUSPICIOUS"
+      },
+      {
+        "arm": "clean",
+        "case_id": "013",
+        "tamper_modes": [],
+        "i1_fired": true,
+        "i1_severity": "CRITICAL",
+        "i2_fired": true,
+        "i2_severity": "CRITICAL",
+        "i5_fired": true,
+        "i5_severity": "SUSPICIOUS"
+      },
+      {
+        "arm": "clean",
+        "case_id": "014",
+        "tamper_modes": [],
+        "i1_fired": true,
+        "i1_severity": "CRITICAL",
+        "i2_fired": true,
+        "i2_severity": "CRITICAL",
+        "i5_fired": true,
+        "i5_severity": "SUSPICIOUS"
+      },
+      {
+        "arm": "clean",
+        "case_id": "015",
+        "tamper_modes": [],
+        "i1_fired": true,
+        "i1_severity": "CRITICAL",
+        "i2_fired": true,
+        "i2_severity": "CRITICAL",
+        "i5_fired": true,
+        "i5_severity": "SUSPICIOUS"
+      },
+      {
+        "arm": "clean",
+        "case_id": "016",
+        "tamper_modes": [],
+        "i1_fired": true,
+        "i1_severity": "CRITICAL",
+        "i2_fired": true,
+        "i2_severity": "CRITICAL",
+        "i5_fired": true,
+        "i5_severity": "SUSPICIOUS"
+      },
+      {
+        "arm": "clean",
+        "case_id": "017",
+        "tamper_modes": [],
+        "i1_fired": true,
+        "i1_severity": "CRITICAL",
+        "i2_fired": true,
+        "i2_severity": "CRITICAL",
+        "i5_fired": true,
+        "i5_severity": "SUSPICIOUS"
+      },
+      {
+        "arm": "clean",
+        "case_id": "018",
+        "tamper_modes": [],
+        "i1_fired": true,
+        "i1_severity": "CRITICAL",
+        "i2_fired": true,
+        "i2_severity": "CRITICAL",
+        "i5_fired": true,
+        "i5_severity": "SUSPICIOUS"
+      },
+      {
+        "arm": "clean",
+        "case_id": "019",
+        "tamper_modes": [],
+        "i1_fired": true,
+        "i1_severity": "CRITICAL",
+        "i2_fired": true,
+        "i2_severity": "CRITICAL",
+        "i5_fired": true,
+        "i5_severity": "SUSPICIOUS"
+      },
+      {
+        "arm": "clean",
+        "case_id": "020",
+        "tamper_modes": [],
+        "i1_fired": true,
+        "i1_severity": "CRITICAL",
+        "i2_fired": true,
+        "i2_severity": "CRITICAL",
+        "i5_fired": true,
+        "i5_severity": "SUSPICIOUS"
+      },
+      {
+        "arm": "clean",
+        "case_id": "021",
+        "tamper_modes": [],
+        "i1_fired": true,
+        "i1_severity": "CRITICAL",
+        "i2_fired": true,
+        "i2_severity": "CRITICAL",
+        "i5_fired": true,
+        "i5_severity": "SUSPICIOUS"
+      },
+      {
+        "arm": "clean",
+        "case_id": "022",
+        "tamper_modes": [],
+        "i1_fired": true,
+        "i1_severity": "CRITICAL",
+        "i2_fired": true,
+        "i2_severity": "CRITICAL",
+        "i5_fired": true,
+        "i5_severity": "SUSPICIOUS"
+      },
+      {
+        "arm": "clean",
+        "case_id": "023",
+        "tamper_modes": [],
+        "i1_fired": true,
+        "i1_severity": "CRITICAL",
+        "i2_fired": true,
+        "i2_severity": "CRITICAL",
+        "i5_fired": true,
+        "i5_severity": "SUSPICIOUS"
+      },
+      {
+        "arm": "clean",
+        "case_id": "024",
+        "tamper_modes": [],
+        "i1_fired": true,
+        "i1_severity": "CRITICAL",
+        "i2_fired": true,
+        "i2_severity": "CRITICAL",
+        "i5_fired": true,
+        "i5_severity": "SUSPICIOUS"
+      },
+      {
+        "arm": "clean",
+        "case_id": "025",
+        "tamper_modes": [],
+        "i1_fired": true,
+        "i1_severity": "CRITICAL",
+        "i2_fired": true,
+        "i2_severity": "CRITICAL",
+        "i5_fired": true,
+        "i5_severity": "SUSPICIOUS"
+      },
+      {
+        "arm": "clean",
+        "case_id": "026",
+        "tamper_modes": [],
+        "i1_fired": true,
+        "i1_severity": "CRITICAL",
+        "i2_fired": true,
+        "i2_severity": "CRITICAL",
+        "i5_fired": true,
+        "i5_severity": "SUSPICIOUS"
+      },
+      {
+        "arm": "clean",
+        "case_id": "027",
+        "tamper_modes": [],
+        "i1_fired": true,
+        "i1_severity": "CRITICAL",
+        "i2_fired": true,
+        "i2_severity": "CRITICAL",
+        "i5_fired": true,
+        "i5_severity": "SUSPICIOUS"
+      },
+      {
+        "arm": "clean",
+        "case_id": "028",
+        "tamper_modes": [],
+        "i1_fired": true,
+        "i1_severity": "CRITICAL",
+        "i2_fired": true,
+        "i2_severity": "CRITICAL",
+        "i5_fired": true,
+        "i5_severity": "SUSPICIOUS"
+      },
+      {
+        "arm": "clean",
+        "case_id": "029",
+        "tamper_modes": [],
+        "i1_fired": true,
+        "i1_severity": "CRITICAL",
+        "i2_fired": true,
+        "i2_severity": "CRITICAL",
+        "i5_fired": true,
+        "i5_severity": "SUSPICIOUS"
+      },
+      {
+        "arm": "clean",
+        "case_id": "030",
+        "tamper_modes": [],
+        "i1_fired": true,
+        "i1_severity": "CRITICAL",
+        "i2_fired": true,
+        "i2_severity": "CRITICAL",
+        "i5_fired": true,
+        "i5_severity": "SUSPICIOUS"
+      },
+      {
+        "arm": "clean",
+        "case_id": "031",
+        "tamper_modes": [],
+        "i1_fired": true,
+        "i1_severity": "CRITICAL",
+        "i2_fired": true,
+        "i2_severity": "CRITICAL",
+        "i5_fired": true,
+        "i5_severity": "SUSPICIOUS"
+      },
+      {
+        "arm": "clean",
+        "case_id": "032",
+        "tamper_modes": [],
+        "i1_fired": true,
+        "i1_severity": "CRITICAL",
+        "i2_fired": true,
+        "i2_severity": "CRITICAL",
+        "i5_fired": true,
+        "i5_severity": "SUSPICIOUS"
+      },
+      {
+        "arm": "clean",
+        "case_id": "033",
+        "tamper_modes": [],
+        "i1_fired": true,
+        "i1_severity": "CRITICAL",
+        "i2_fired": true,
+        "i2_severity": "CRITICAL",
+        "i5_fired": true,
+        "i5_severity": "SUSPICIOUS"
+      },
+      {
+        "arm": "clean",
+        "case_id": "034",
+        "tamper_modes": [],
+        "i1_fired": true,
+        "i1_severity": "CRITICAL",
+        "i2_fired": true,
+        "i2_severity": "CRITICAL",
+        "i5_fired": true,
+        "i5_severity": "SUSPICIOUS"
+      },
+      {
+        "arm": "clean",
+        "case_id": "035",
+        "tamper_modes": [],
+        "i1_fired": true,
+        "i1_severity": "CRITICAL",
+        "i2_fired": true,
+        "i2_severity": "CRITICAL",
+        "i5_fired": true,
+        "i5_severity": "SUSPICIOUS"
+      },
+      {
+        "arm": "clean",
+        "case_id": "036",
+        "tamper_modes": [],
+        "i1_fired": true,
+        "i1_severity": "CRITICAL",
+        "i2_fired": true,
+        "i2_severity": "CRITICAL",
+        "i5_fired": true,
+        "i5_severity": "SUSPICIOUS"
+      },
+      {
+        "arm": "clean",
+        "case_id": "037",
+        "tamper_modes": [],
+        "i1_fired": true,
+        "i1_severity": "CRITICAL",
+        "i2_fired": true,
+        "i2_severity": "CRITICAL",
+        "i5_fired": true,
+        "i5_severity": "SUSPICIOUS"
+      },
+      {
+        "arm": "clean",
+        "case_id": "038",
+        "tamper_modes": [],
+        "i1_fired": true,
+        "i1_severity": "CRITICAL",
+        "i2_fired": true,
+        "i2_severity": "CRITICAL",
+        "i5_fired": true,
+        "i5_severity": "SUSPICIOUS"
+      },
+      {
+        "arm": "clean",
+        "case_id": "039",
+        "tamper_modes": [],
+        "i1_fired": true,
+        "i1_severity": "CRITICAL",
+        "i2_fired": true,
+        "i2_severity": "CRITICAL",
+        "i5_fired": true,
+        "i5_severity": "SUSPICIOUS"
+      },
+      {
+        "arm": "clean",
+        "case_id": "040",
+        "tamper_modes": [],
+        "i1_fired": true,
+        "i1_severity": "CRITICAL",
+        "i2_fired": true,
+        "i2_severity": "CRITICAL",
+        "i5_fired": true,
+        "i5_severity": "SUSPICIOUS"
+      },
+      {
+        "arm": "clean",
+        "case_id": "041",
+        "tamper_modes": [],
+        "i1_fired": true,
+        "i1_severity": "CRITICAL",
+        "i2_fired": true,
+        "i2_severity": "CRITICAL",
+        "i5_fired": true,
+        "i5_severity": "SUSPICIOUS"
+      },
+      {
+        "arm": "clean",
+        "case_id": "042",
+        "tamper_modes": [],
+        "i1_fired": true,
+        "i1_severity": "CRITICAL",
+        "i2_fired": true,
+        "i2_severity": "CRITICAL",
+        "i5_fired": true,
+        "i5_severity": "SUSPICIOUS"
+      },
+      {
+        "arm": "clean",
+        "case_id": "043",
+        "tamper_modes": [],
+        "i1_fired": true,
+        "i1_severity": "CRITICAL",
+        "i2_fired": true,
+        "i2_severity": "CRITICAL",
+        "i5_fired": true,
+        "i5_severity": "SUSPICIOUS"
+      },
+      {
+        "arm": "clean",
+        "case_id": "044",
+        "tamper_modes": [],
+        "i1_fired": true,
+        "i1_severity": "CRITICAL",
+        "i2_fired": true,
+        "i2_severity": "CRITICAL",
+        "i5_fired": true,
+        "i5_severity": "SUSPICIOUS"
+      },
+      {
+        "arm": "clean",
+        "case_id": "045",
+        "tamper_modes": [],
+        "i1_fired": true,
+        "i1_severity": "CRITICAL",
+        "i2_fired": true,
+        "i2_severity": "CRITICAL",
+        "i5_fired": true,
+        "i5_severity": "SUSPICIOUS"
+      },
+      {
+        "arm": "clean",
+        "case_id": "046",
+        "tamper_modes": [],
+        "i1_fired": true,
+        "i1_severity": "CRITICAL",
+        "i2_fired": true,
+        "i2_severity": "CRITICAL",
+        "i5_fired": true,
+        "i5_severity": "SUSPICIOUS"
+      },
+      {
+        "arm": "clean",
+        "case_id": "047",
+        "tamper_modes": [],
+        "i1_fired": true,
+        "i1_severity": "CRITICAL",
+        "i2_fired": true,
+        "i2_severity": "CRITICAL",
+        "i5_fired": true,
+        "i5_severity": "SUSPICIOUS"
+      },
+      {
+        "arm": "clean",
+        "case_id": "048",
+        "tamper_modes": [],
+        "i1_fired": true,
+        "i1_severity": "CRITICAL",
+        "i2_fired": true,
+        "i2_severity": "CRITICAL",
+        "i5_fired": true,
+        "i5_severity": "SUSPICIOUS"
+      },
+      {
+        "arm": "clean",
+        "case_id": "049",
+        "tamper_modes": [],
+        "i1_fired": true,
+        "i1_severity": "CRITICAL",
+        "i2_fired": true,
+        "i2_severity": "CRITICAL",
+        "i5_fired": true,
+        "i5_severity": "SUSPICIOUS"
+      },
+      {
+        "arm": "tampered",
+        "case_id": "000T",
+        "tamper_modes": [
+          "i1_loss_under_reported",
+          "i5_deviation_copied"
+        ],
+        "i1_fired": true,
+        "i1_severity": "CRITICAL",
+        "i2_fired": true,
+        "i2_severity": "CRITICAL",
+        "i5_fired": true,
+        "i5_severity": "CRITICAL"
+      },
+      {
+        "arm": "tampered",
+        "case_id": "001T",
+        "tamper_modes": [
+          "i2_round_timestamps",
+          "i5_deviation_copied"
+        ],
+        "i1_fired": true,
+        "i1_severity": "CRITICAL",
+        "i2_fired": true,
+        "i2_severity": "CRITICAL",
+        "i5_fired": true,
+        "i5_severity": "CRITICAL"
+      },
+      {
+        "arm": "tampered",
+        "case_id": "002T",
+        "tamper_modes": [
+          "i1_loss_under_reported",
+          "i2_round_timestamps",
+          "i5_deviation_copied"
+        ],
+        "i1_fired": true,
+        "i1_severity": "CRITICAL",
+        "i2_fired": true,
+        "i2_severity": "CRITICAL",
+        "i5_fired": true,
+        "i5_severity": "CRITICAL"
+      },
+      {
+        "arm": "tampered",
+        "case_id": "003T",
+        "tamper_modes": [
+          "i1_loss_under_reported",
+          "i5_deviation_copied"
+        ],
+        "i1_fired": true,
+        "i1_severity": "CRITICAL",
+        "i2_fired": true,
+        "i2_severity": "CRITICAL",
+        "i5_fired": true,
+        "i5_severity": "CRITICAL"
+      },
+      {
+        "arm": "tampered",
+        "case_id": "004T",
+        "tamper_modes": [
+          "i1_loss_under_reported",
+          "i2_round_timestamps",
+          "i5_deviation_copied"
+        ],
+        "i1_fired": true,
+        "i1_severity": "CRITICAL",
+        "i2_fired": true,
+        "i2_severity": "CRITICAL",
+        "i5_fired": true,
+        "i5_severity": "CRITICAL"
+      },
+      {
+        "arm": "tampered",
+        "case_id": "005T",
+        "tamper_modes": [
+          "i5_deviation_copied"
+        ],
+        "i1_fired": true,
+        "i1_severity": "CRITICAL",
+        "i2_fired": true,
+        "i2_severity": "CRITICAL",
+        "i5_fired": true,
+        "i5_severity": "CRITICAL"
+      },
+      {
+        "arm": "tampered",
+        "case_id": "006T",
+        "tamper_modes": [
+          "i1_loss_under_reported",
+          "i5_deviation_copied"
+        ],
+        "i1_fired": true,
+        "i1_severity": "CRITICAL",
+        "i2_fired": true,
+        "i2_severity": "CRITICAL",
+        "i5_fired": true,
+        "i5_severity": "CRITICAL"
+      },
+      {
+        "arm": "tampered",
+        "case_id": "007T",
+        "tamper_modes": [
+          "i2_round_timestamps",
+          "i5_deviation_copied"
+        ],
+        "i1_fired": true,
+        "i1_severity": "CRITICAL",
+        "i2_fired": true,
+        "i2_severity": "CRITICAL",
+        "i5_fired": true,
+        "i5_severity": "CRITICAL"
+      },
+      {
+        "arm": "tampered",
+        "case_id": "008T",
+        "tamper_modes": [
+          "i2_round_timestamps",
+          "i5_deviation_copied"
+        ],
+        "i1_fired": true,
+        "i1_severity": "CRITICAL",
+        "i2_fired": true,
+        "i2_severity": "CRITICAL",
+        "i5_fired": true,
+        "i5_severity": "CRITICAL"
+      },
+      {
+        "arm": "tampered",
+        "case_id": "009T",
+        "tamper_modes": [
+          "i1_loss_under_reported",
+          "i2_round_timestamps"
+        ],
+        "i1_fired": true,
+        "i1_severity": "CRITICAL",
+        "i2_fired": true,
+        "i2_severity": "CRITICAL",
+        "i5_fired": true,
+        "i5_severity": "SUSPICIOUS"
+      },
+      {
+        "arm": "tampered",
+        "case_id": "010T",
+        "tamper_modes": [
+          "i2_round_timestamps"
+        ],
+        "i1_fired": true,
+        "i1_severity": "CRITICAL",
+        "i2_fired": true,
+        "i2_severity": "CRITICAL",
+        "i5_fired": true,
+        "i5_severity": "SUSPICIOUS"
+      },
+      {
+        "arm": "tampered",
+        "case_id": "011T",
+        "tamper_modes": [
+          "i5_deviation_copied"
+        ],
+        "i1_fired": true,
+        "i1_severity": "CRITICAL",
+        "i2_fired": true,
+        "i2_severity": "CRITICAL",
+        "i5_fired": true,
+        "i5_severity": "CRITICAL"
+      },
+      {
+        "arm": "tampered",
+        "case_id": "012T",
+        "tamper_modes": [
+          "i1_loss_under_reported",
+          "i2_round_timestamps",
+          "i5_deviation_copied"
+        ],
+        "i1_fired": true,
+        "i1_severity": "CRITICAL",
+        "i2_fired": true,
+        "i2_severity": "CRITICAL",
+        "i5_fired": true,
+        "i5_severity": "CRITICAL"
+      },
+      {
+        "arm": "tampered",
+        "case_id": "013T",
+        "tamper_modes": [
+          "i1_loss_under_reported",
+          "i2_round_timestamps",
+          "i5_deviation_copied"
+        ],
+        "i1_fired": true,
+        "i1_severity": "CRITICAL",
+        "i2_fired": true,
+        "i2_severity": "CRITICAL",
+        "i5_fired": true,
+        "i5_severity": "CRITICAL"
+      },
+      {
+        "arm": "tampered",
+        "case_id": "014T",
+        "tamper_modes": [
+          "i1_loss_under_reported",
+          "i5_deviation_copied"
+        ],
+        "i1_fired": true,
+        "i1_severity": "CRITICAL",
+        "i2_fired": true,
+        "i2_severity": "CRITICAL",
+        "i5_fired": true,
+        "i5_severity": "CRITICAL"
+      },
+      {
+        "arm": "tampered",
+        "case_id": "015T",
+        "tamper_modes": [
+          "i2_round_timestamps"
+        ],
+        "i1_fired": true,
+        "i1_severity": "CRITICAL",
+        "i2_fired": true,
+        "i2_severity": "CRITICAL",
+        "i5_fired": true,
+        "i5_severity": "SUSPICIOUS"
+      },
+      {
+        "arm": "tampered",
+        "case_id": "016T",
+        "tamper_modes": [
+          "i2_round_timestamps",
+          "i5_deviation_copied"
+        ],
+        "i1_fired": true,
+        "i1_severity": "CRITICAL",
+        "i2_fired": true,
+        "i2_severity": "CRITICAL",
+        "i5_fired": true,
+        "i5_severity": "CRITICAL"
+      },
+      {
+        "arm": "tampered",
+        "case_id": "017T",
+        "tamper_modes": [
+          "i2_round_timestamps"
+        ],
+        "i1_fired": true,
+        "i1_severity": "CRITICAL",
+        "i2_fired": true,
+        "i2_severity": "CRITICAL",
+        "i5_fired": true,
+        "i5_severity": "SUSPICIOUS"
+      },
+      {
+        "arm": "tampered",
+        "case_id": "018T",
+        "tamper_modes": [
+          "i1_loss_under_reported",
+          "i5_deviation_copied"
+        ],
+        "i1_fired": true,
+        "i1_severity": "CRITICAL",
+        "i2_fired": true,
+        "i2_severity": "CRITICAL",
+        "i5_fired": true,
+        "i5_severity": "CRITICAL"
+      },
+      {
+        "arm": "tampered",
+        "case_id": "019T",
+        "tamper_modes": [
+          "i1_loss_under_reported"
+        ],
+        "i1_fired": true,
+        "i1_severity": "CRITICAL",
+        "i2_fired": true,
+        "i2_severity": "CRITICAL",
+        "i5_fired": true,
+        "i5_severity": "SUSPICIOUS"
+      },
+      {
+        "arm": "tampered",
+        "case_id": "020T",
+        "tamper_modes": [
+          "i1_loss_under_reported",
+          "i2_round_timestamps",
+          "i5_deviation_copied"
+        ],
+        "i1_fired": true,
+        "i1_severity": "CRITICAL",
+        "i2_fired": true,
+        "i2_severity": "CRITICAL",
+        "i5_fired": true,
+        "i5_severity": "CRITICAL"
+      },
+      {
+        "arm": "tampered",
+        "case_id": "021T",
+        "tamper_modes": [
+          "i2_round_timestamps"
+        ],
+        "i1_fired": true,
+        "i1_severity": "CRITICAL",
+        "i2_fired": true,
+        "i2_severity": "CRITICAL",
+        "i5_fired": true,
+        "i5_severity": "SUSPICIOUS"
+      },
+      {
+        "arm": "tampered",
+        "case_id": "022T",
+        "tamper_modes": [
+          "i1_loss_under_reported",
+          "i2_round_timestamps",
+          "i5_deviation_copied"
+        ],
+        "i1_fired": true,
+        "i1_severity": "CRITICAL",
+        "i2_fired": true,
+        "i2_severity": "CRITICAL",
+        "i5_fired": true,
+        "i5_severity": "CRITICAL"
+      },
+      {
+        "arm": "tampered",
+        "case_id": "023T",
+        "tamper_modes": [
+          "i1_loss_under_reported",
+          "i2_round_timestamps"
+        ],
+        "i1_fired": true,
+        "i1_severity": "CRITICAL",
+        "i2_fired": true,
+        "i2_severity": "CRITICAL",
+        "i5_fired": true,
+        "i5_severity": "SUSPICIOUS"
+      },
+      {
+        "arm": "tampered",
+        "case_id": "024T",
+        "tamper_modes": [
+          "i1_loss_under_reported",
+          "i2_round_timestamps",
+          "i5_deviation_copied"
+        ],
+        "i1_fired": true,
+        "i1_severity": "CRITICAL",
+        "i2_fired": true,
+        "i2_severity": "CRITICAL",
+        "i5_fired": true,
+        "i5_severity": "CRITICAL"
+      },
+      {
+        "arm": "tampered",
+        "case_id": "025T",
+        "tamper_modes": [
+          "i1_loss_under_reported",
+          "i5_deviation_copied"
+        ],
+        "i1_fired": true,
+        "i1_severity": "CRITICAL",
+        "i2_fired": true,
+        "i2_severity": "CRITICAL",
+        "i5_fired": true,
+        "i5_severity": "CRITICAL"
+      },
+      {
+        "arm": "tampered",
+        "case_id": "026T",
+        "tamper_modes": [
+          "i1_loss_under_reported"
+        ],
+        "i1_fired": true,
+        "i1_severity": "CRITICAL",
+        "i2_fired": true,
+        "i2_severity": "CRITICAL",
+        "i5_fired": true,
+        "i5_severity": "SUSPICIOUS"
+      },
+      {
+        "arm": "tampered",
+        "case_id": "027T",
+        "tamper_modes": [
+          "i1_loss_under_reported"
+        ],
+        "i1_fired": true,
+        "i1_severity": "CRITICAL",
+        "i2_fired": true,
+        "i2_severity": "CRITICAL",
+        "i5_fired": true,
+        "i5_severity": "SUSPICIOUS"
+      },
+      {
+        "arm": "tampered",
+        "case_id": "028T",
+        "tamper_modes": [
+          "i5_deviation_copied"
+        ],
+        "i1_fired": true,
+        "i1_severity": "CRITICAL",
+        "i2_fired": true,
+        "i2_severity": "CRITICAL",
+        "i5_fired": true,
+        "i5_severity": "CRITICAL"
+      },
+      {
+        "arm": "tampered",
+        "case_id": "029T",
+        "tamper_modes": [
+          "i1_loss_under_reported"
+        ],
+        "i1_fired": true,
+        "i1_severity": "CRITICAL",
+        "i2_fired": true,
+        "i2_severity": "CRITICAL",
+        "i5_fired": true,
+        "i5_severity": "SUSPICIOUS"
+      },
+      {
+        "arm": "tampered",
+        "case_id": "030T",
+        "tamper_modes": [
+          "i1_loss_under_reported",
+          "i5_deviation_copied"
+        ],
+        "i1_fired": true,
+        "i1_severity": "CRITICAL",
+        "i2_fired": true,
+        "i2_severity": "CRITICAL",
+        "i5_fired": true,
+        "i5_severity": "CRITICAL"
+      },
+      {
+        "arm": "tampered",
+        "case_id": "031T",
+        "tamper_modes": [
+          "i2_round_timestamps"
+        ],
+        "i1_fired": true,
+        "i1_severity": "CRITICAL",
+        "i2_fired": true,
+        "i2_severity": "CRITICAL",
+        "i5_fired": true,
+        "i5_severity": "SUSPICIOUS"
+      },
+      {
+        "arm": "tampered",
+        "case_id": "032T",
+        "tamper_modes": [
+          "i1_loss_under_reported",
+          "i5_deviation_copied"
+        ],
+        "i1_fired": true,
+        "i1_severity": "CRITICAL",
+        "i2_fired": true,
+        "i2_severity": "CRITICAL",
+        "i5_fired": true,
+        "i5_severity": "CRITICAL"
+      },
+      {
+        "arm": "tampered",
+        "case_id": "033T",
+        "tamper_modes": [
+          "i2_round_timestamps",
+          "i5_deviation_copied"
+        ],
+        "i1_fired": true,
+        "i1_severity": "CRITICAL",
+        "i2_fired": true,
+        "i2_severity": "CRITICAL",
+        "i5_fired": true,
+        "i5_severity": "CRITICAL"
+      },
+      {
+        "arm": "tampered",
+        "case_id": "034T",
+        "tamper_modes": [
+          "i1_loss_under_reported",
+          "i2_round_timestamps",
+          "i5_deviation_copied"
+        ],
+        "i1_fired": true,
+        "i1_severity": "CRITICAL",
+        "i2_fired": true,
+        "i2_severity": "CRITICAL",
+        "i5_fired": true,
+        "i5_severity": "CRITICAL"
+      },
+      {
+        "arm": "tampered",
+        "case_id": "035T",
+        "tamper_modes": [
+          "i2_round_timestamps"
+        ],
+        "i1_fired": true,
+        "i1_severity": "CRITICAL",
+        "i2_fired": true,
+        "i2_severity": "CRITICAL",
+        "i5_fired": true,
+        "i5_severity": "SUSPICIOUS"
+      },
+      {
+        "arm": "tampered",
+        "case_id": "036T",
+        "tamper_modes": [
+          "i5_deviation_copied"
+        ],
+        "i1_fired": true,
+        "i1_severity": "CRITICAL",
+        "i2_fired": true,
+        "i2_severity": "CRITICAL",
+        "i5_fired": true,
+        "i5_severity": "CRITICAL"
+      },
+      {
+        "arm": "tampered",
+        "case_id": "037T",
+        "tamper_modes": [
+          "i1_loss_under_reported",
+          "i5_deviation_copied"
+        ],
+        "i1_fired": true,
+        "i1_severity": "CRITICAL",
+        "i2_fired": true,
+        "i2_severity": "CRITICAL",
+        "i5_fired": true,
+        "i5_severity": "CRITICAL"
+      },
+      {
+        "arm": "tampered",
+        "case_id": "038T",
+        "tamper_modes": [
+          "i5_deviation_copied"
+        ],
+        "i1_fired": true,
+        "i1_severity": "CRITICAL",
+        "i2_fired": true,
+        "i2_severity": "CRITICAL",
+        "i5_fired": true,
+        "i5_severity": "CRITICAL"
+      },
+      {
+        "arm": "tampered",
+        "case_id": "039T",
+        "tamper_modes": [
+          "i5_deviation_copied"
+        ],
+        "i1_fired": true,
+        "i1_severity": "CRITICAL",
+        "i2_fired": true,
+        "i2_severity": "CRITICAL",
+        "i5_fired": true,
+        "i5_severity": "CRITICAL"
+      },
+      {
+        "arm": "tampered",
+        "case_id": "040T",
+        "tamper_modes": [
+          "i1_loss_under_reported",
+          "i2_round_timestamps"
+        ],
+        "i1_fired": true,
+        "i1_severity": "CRITICAL",
+        "i2_fired": true,
+        "i2_severity": "CRITICAL",
+        "i5_fired": true,
+        "i5_severity": "SUSPICIOUS"
+      },
+      {
+        "arm": "tampered",
+        "case_id": "041T",
+        "tamper_modes": [
+          "i1_loss_under_reported",
+          "i2_round_timestamps",
+          "i5_deviation_copied"
+        ],
+        "i1_fired": true,
+        "i1_severity": "CRITICAL",
+        "i2_fired": true,
+        "i2_severity": "CRITICAL",
+        "i5_fired": true,
+        "i5_severity": "CRITICAL"
+      },
+      {
+        "arm": "tampered",
+        "case_id": "042T",
+        "tamper_modes": [
+          "i1_loss_under_reported",
+          "i2_round_timestamps",
+          "i5_deviation_copied"
+        ],
+        "i1_fired": true,
+        "i1_severity": "CRITICAL",
+        "i2_fired": true,
+        "i2_severity": "CRITICAL",
+        "i5_fired": true,
+        "i5_severity": "CRITICAL"
+      },
+      {
+        "arm": "tampered",
+        "case_id": "043T",
+        "tamper_modes": [
+          "i5_deviation_copied"
+        ],
+        "i1_fired": true,
+        "i1_severity": "CRITICAL",
+        "i2_fired": true,
+        "i2_severity": "CRITICAL",
+        "i5_fired": true,
+        "i5_severity": "CRITICAL"
+      },
+      {
+        "arm": "tampered",
+        "case_id": "044T",
+        "tamper_modes": [
+          "i1_loss_under_reported",
+          "i2_round_timestamps",
+          "i5_deviation_copied"
+        ],
+        "i1_fired": true,
+        "i1_severity": "CRITICAL",
+        "i2_fired": true,
+        "i2_severity": "CRITICAL",
+        "i5_fired": true,
+        "i5_severity": "CRITICAL"
+      },
+      {
+        "arm": "tampered",
+        "case_id": "045T",
+        "tamper_modes": [
+          "i1_loss_under_reported"
+        ],
+        "i1_fired": true,
+        "i1_severity": "CRITICAL",
+        "i2_fired": true,
+        "i2_severity": "CRITICAL",
+        "i5_fired": true,
+        "i5_severity": "SUSPICIOUS"
+      },
+      {
+        "arm": "tampered",
+        "case_id": "046T",
+        "tamper_modes": [
+          "i1_loss_under_reported",
+          "i5_deviation_copied"
+        ],
+        "i1_fired": true,
+        "i1_severity": "CRITICAL",
+        "i2_fired": true,
+        "i2_severity": "CRITICAL",
+        "i5_fired": true,
+        "i5_severity": "CRITICAL"
+      },
+      {
+        "arm": "tampered",
+        "case_id": "047T",
+        "tamper_modes": [
+          "i1_loss_under_reported",
+          "i2_round_timestamps"
+        ],
+        "i1_fired": true,
+        "i1_severity": "CRITICAL",
+        "i2_fired": true,
+        "i2_severity": "CRITICAL",
+        "i5_fired": true,
+        "i5_severity": "SUSPICIOUS"
+      },
+      {
+        "arm": "tampered",
+        "case_id": "048T",
+        "tamper_modes": [
+          "i5_deviation_copied"
+        ],
+        "i1_fired": true,
+        "i1_severity": "CRITICAL",
+        "i2_fired": true,
+        "i2_severity": "CRITICAL",
+        "i5_fired": true,
+        "i5_severity": "CRITICAL"
+      },
+      {
+        "arm": "tampered",
+        "case_id": "049T",
+        "tamper_modes": [
+          "i2_round_timestamps",
+          "i5_deviation_copied"
+        ],
+        "i1_fired": true,
+        "i1_severity": "CRITICAL",
+        "i2_fired": true,
+        "i2_severity": "CRITICAL",
+        "i5_fired": true,
+        "i5_severity": "CRITICAL"
+      }
+    ]
+  }
+}

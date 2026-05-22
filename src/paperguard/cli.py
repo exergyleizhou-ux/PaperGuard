@@ -1868,6 +1868,24 @@ DEFAULT_AI_DICT_URL = (
     default=None,
     help="Custom output path. Defaults to ~/.paperguard/ai_dictionary.json.",
 )
+@click.option(
+    "--auto",
+    is_flag=True,
+    default=False,
+    help=(
+        "Auto-refresh mode: only pulls from the official URL when "
+        "the local dictionary is missing OR older than --max-age-days. "
+        "Otherwise prints 'still fresh' and exits 0. Useful in cron / "
+        "CI pre-flight checks."
+    ),
+)
+@click.option(
+    "--max-age-days",
+    type=float,
+    default=7.0,
+    show_default=True,
+    help="Used with --auto. Refresh only if local dict is older than this.",
+)
 def refresh_ai_dict_cmd(
     source_url: str | None,
     use_official: bool,
@@ -1877,6 +1895,8 @@ def refresh_ai_dict_cmd(
     min_per_million: float,
     dry_run: bool,
     out: Path | None,
+    auto: bool,
+    max_age_days: float,
 ) -> None:
     """Refresh the T6 user dictionary from a remote JSON URL or local corpus.
 
@@ -1884,6 +1904,8 @@ def refresh_ai_dict_cmd(
     dictionary only **adds** more. Run this command periodically (or when a
     new LLM tic shows up) to keep T6 current.
     """
+    import datetime as _dt
+
     from paperguard.llm.dynamic_dictionary import (
         DictionarySnapshot,
         diff_snapshots,
@@ -1906,6 +1928,41 @@ def refresh_ai_dict_cmd(
             "[dim]No --source / --corpus given; using official "
             f"PaperGuard dictionary at {source_url}[/]"
         )
+
+    # --auto mode: skip the refresh if the local dict is recent.
+    if auto:
+        from paperguard.llm.dynamic_dictionary import (
+            _default_dictionary_path,
+        )
+
+        dict_path = out or _default_dictionary_path()
+        if dict_path.exists():
+            current_snap = load_user_dictionary(dict_path)
+            generated = current_snap.generated_at
+            try:
+                gen_dt = _dt.datetime.fromisoformat(generated)
+                age_days = (
+                    _dt.datetime.now(_dt.UTC) - gen_dt
+                ).total_seconds() / 86400.0
+                if age_days < max_age_days:
+                    console.print(
+                        f"[green]Dictionary at {dict_path} is "
+                        f"{age_days:.2f} days old (< {max_age_days} "
+                        f"threshold); skipping refresh.[/]"
+                    )
+                    return
+                console.print(
+                    f"[yellow]Dictionary is {age_days:.1f} days old "
+                    f"(≥ {max_age_days}); refreshing...[/]"
+                )
+            except (ValueError, TypeError):
+                console.print(
+                    "[yellow]Could not parse generated_at; refreshing.[/]"
+                )
+        else:
+            console.print(
+                f"[yellow]No dictionary at {dict_path}; refreshing.[/]"
+            )
 
     current = load_user_dictionary(out)
     incoming: list[DictionarySnapshot] = []

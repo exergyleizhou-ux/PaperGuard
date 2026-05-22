@@ -4,6 +4,41 @@ All notable changes to PaperGuard are documented in this file. Format follows
 [Keep a Changelog](https://keepachangelog.com/) and the project adheres to
 [Semantic Versioning](https://semver.org/).
 
+## [2.2.4] — 2026-05-22 — Industrial recall v1 study + T6 --auto refresh
+
+### Added — Industrial recall v1 (N=50+50 per domain)
+- `scripts/recall_industrial_v1.py` — synthetic-ground-truth study
+  generating 50 clean + 50 tampered datasets for wastewater +
+  pharma; runs I1+I2+I5 with the matching DomainTemplate; reports
+  per-detector + joint LR+.
+- `scripts/recall_industrial_v1_results.json` — raw 200-case dataset.
+- `docs/recall_industrial_v1.md` — interpretation with the
+  calibration recommendations.
+
+#### Honest headline
+- **I5 wastewater LR+ = ∞** at default thresholds (60 % recall,
+  0 % FPR across N=50 clean). The narrative-repetition signal is
+  the most discriminating industrial check.
+- I1 + I2 fire on too many synthetic-clean datasets → calibration
+  finding, not a defect. The doc adds per-detector recommendations
+  for facility-specific tuning.
+
+### Added — `paperguard refresh-ai-dict --auto`
+- New `--auto` flag enables CI-friendly conditional refresh:
+  fetches from the official URL **only if** the local dictionary
+  is older than `--max-age-days` (default 7) or missing entirely.
+  Otherwise prints "still fresh" and exits 0.
+- Use case: `crontab` entry that pings the official URL once a
+  week without spamming network calls.
+
+```bash
+0 9 * * 1 paperguard refresh-ai-dict --auto --max-age-days 7
+```
+
+### Quality
+- Tests: 506 (unchanged — recall scripts aren't unit-tested).
+- Ruff clean. Mypy --strict clean.
+
 ## [2.2.3] — 2026-05-22 — I6 over-smoothness detector + multi-arch Docker
 
 ### Added — I6 detector (built-in count: 37 → 38)
