@@ -1,5 +1,5 @@
 ---
-title: 'PaperGuard: A 34-detector open-source pipeline for triage-stage statistical-anomaly screening in research-data integrity'
+title: 'PaperGuard: A 38-detector open-source pipeline for triage-stage statistical-anomaly screening in research-data integrity'
 tags:
   - Python
   - research integrity
@@ -18,7 +18,7 @@ authors:
 affiliations:
   - name: Independent
     index: 1
-date: 21 May 2026
+date: 22 May 2026
 bibliography: paper.bib
 ---
 
@@ -26,15 +26,21 @@ bibliography: paper.bib
 
 `PaperGuard` is an open-source Python command-line tool and library for
 **triage-stage** screening of statistical anomalies in scientific
-manuscripts and their accompanying data. It composes 34 independent
-detectors spanning seven methodological families — terminal-digit
-distribution, Benford's law, arithmetic and decimal consistency, GRIM /
-SPRITE / GRIMMER reverse-reconstruction tests, the Carlisle
-baseline-plausibility procedure for randomised trials, perceptual-hash
-and per-channel-histogram image forensics, paper-mill co-authorship
-graph signatures, and a three-detector LLM-text layer (lexical
-dictionary, continuation-perplexity proxy, and a DetectGPT-style
-naturalness-curvature probe) — into a single uniform audit report.
+manuscripts, their accompanying data, and industrial process logs. It
+composes 38 independent detectors spanning eight methodological
+families — terminal-digit distribution, Benford's law, arithmetic and
+decimal consistency, GRIM / SPRITE / GRIMMER reverse-reconstruction
+tests, the Carlisle baseline-plausibility procedure for randomised
+trials, perceptual-hash and per-channel-histogram image forensics,
+paper-mill co-authorship graph signatures, a three-detector LLM-text
+layer (lexical dictionary, continuation-perplexity, and a DetectGPT
+naturalness-curvature probe), and a four-detector **industrial layer**
+(mass-balance closure, SCADA timestamp integrity, batch-repetition
+detection, and process-trend over-smoothness) covering 12
+preconfigured domains (wastewater, waste-gas, pharmaceutical,
+semiconductor, food, environmental, agricultural, biopharma,
+biocomputation, distillation, chemical, and medical) — into a single
+uniform audit report.
 
 Every `Finding` ships with at least three plausible innocent
 explanations and refers the reader back to the underlying statistical
@@ -58,8 +64,10 @@ catch image duplication. Each addresses a real failure mode, but
 each lives in a separate codebase (often in R rather than Python)
 with its own input format, threshold choices, and reporting style.
 
-`PaperGuard` integrates these published procedures and 26 additional
-detectors into a single Python package with:
+`PaperGuard` integrates these published procedures and 30+ additional
+detectors — including a four-detector industrial layer for process-data
+forensics that has no direct prior art in the academic-integrity
+literature — into a single Python package with:
 
 1. A uniform `BaseDetector` interface and a uniform `Finding`
    structure carrying severity, innocent explanations, academic
@@ -88,7 +96,7 @@ disclaimer architecture is the load-bearing trust mechanism.
 
 # Design
 
-Detectors are organised into seven families summarised in Table 1.
+Detectors are organised into eight families summarised in Table 1.
 Each is a `BaseDetector` subclass with declared `data_requirements`,
 an explicit random seed, and a return value structured as
 `DetectorResult(findings: list[Finding])`. A golden-fixture
@@ -104,6 +112,7 @@ causes a regression on a curated set of synthetic genuine inputs.
 | Variance / independence | D1, D2, E1 | Residual smoothness, missing-pattern, intra-class correlation |
 | Image / metadata forensics | F1–F6, G1, G3, G4 | pHash duplication, splice forensics, per-channel histogram, EXIF, docx rsid, file-metadata |
 | Text / authorship / paper-mill | M1, T1–T8 | Co-authorship graph, n-gram plagiarism, trial-outcome drift, data-availability audit, stylometry, three LLM-text detectors |
+| Industrial process data | I1, I2, I5, I6 | Mass-balance closure, SCADA timestamp integrity, batch-repetition detection, process-trend over-smoothness |
 
 The cross-detector combiner produces an `integrity_score` by
 Stouffer-style combination of BH-FDR-adjusted p-values. The score
@@ -122,57 +131,87 @@ chat-completion endpoints that do not expose the legacy
 
 # Empirical calibration
 
-PaperGuard ships five public empirical studies and a sixth
-cross-validation; all raw data and analysers are in the
-[`scripts/`](https://github.com/exergyleizhou-ux/PaperGuard/tree/main/scripts) directory of the repository.
+PaperGuard ships 13 public empirical studies, including a recall
+benchmark series (v1 – v10), four image-recall studies, an
+industrial-process recall study, two cross-validation studies, and
+two controlled LLM-endpoint benchmarks. All raw data and analysers
+are in the
+[`scripts/`](https://github.com/exergyleizhou-ux/PaperGuard/tree/main/scripts) directory of the repository; per-study writeups
+are in [`docs/`](https://github.com/exergyleizhou-ux/PaperGuard/tree/main/docs).
 
-- **Text-layer studies (v8 / v9, N=85 OpenAlex retracted +
-  matched controls via Europe PMC).** T6 lexical density at the
-  default 0.003 threshold has LR+ ≈ 0 against Nature-tier
-  post-publication retractions — copy-editing removes lexical LLM
-  markers before publication. T6's value is therefore at the
-  **pre-submission / preprint** stage, not as a
-  post-publication forensic signal. This finding is documented in
-  the technical report and re-quoted in the LLM-detection guide.
-- **Image-layer study v2 (N=18, F1+F4+F6).** Demonstrates that
-  the new F6 patch-splice detector contributes structurally
-  different signal to F1 (intra-paper pHash) and F4 (cross-paper
-  pHash). The study revealed that the default F6 thresholds had a
-  75 % false-positive rate; PaperGuard 2.1.9 tightened the defaults
-  to `z=6 / cluster=8` (the documented "triage tier"), reducing
-  FPR to 62.5 %.
-- **T8 controlled benchmark (N=20).** A pre-curated 10+10
-  human-vs-LLM corpus confirmed that on weak chat-completion proxies
-  (cliproxy `gpt-5.4-mini`), T8 produces noise (LR+ = 0). The
-  detector correctly returns NOTE-level "inconclusive" findings on
-  such endpoints rather than fabricated numbers; a GPT-4-class
-  endpoint with logprobs is required for live LR+ measurement.
+- **Text-layer recall (v10, N=200 OpenAlex retracted + matched
+  controls via Europe PMC).** At the default 0.003 lexical-density
+  threshold T6 has positive likelihood ratio LR+ ≈ 0 against
+  Nature-tier post-publication retractions — copy-editing largely
+  removes lexical LLM markers before publication. At a stricter
+  0.001 threshold T6 achieves **LR+ = ∞ (1 TP / 0 FP)**: one
+  retracted manuscript exceeds the density bar while every control
+  stays below. T6's operating point is therefore the
+  **pre-submission / preprint** stage, not post-publication
+  forensics. Both numbers are public; the conservative default is
+  the one shipped in the CLI.
+- **Image-layer recall (v4, N=159, F1+F4+F6).** The new F6
+  patch-splice detector at the documented `z=6 / cluster=8`
+  "triage tier" yields LR+ = 1.63 — modest but structurally
+  independent of F1 (intra-paper pHash) and F4 (cross-paper pHash),
+  consistent with v2/v3 findings on smaller samples.
+- **Industrial-layer recall (v1, N=200 wastewater process data).**
+  I5 (batch-repetition detection) achieves **LR+ = ∞** (60% TPR,
+  0% FPR) on a synthetic wastewater corpus; I1, I2, and I6 also
+  contribute non-zero signal at their default thresholds. The
+  industrial layer is the most recent addition and has no direct
+  prior art in the academic-integrity literature.
 - **B4 statcheck cross-validation (N=41 ground-truth corpus).**
   Against an independent scipy-based p-value reference, B4 achieves
-  recall = 100 %, decision-flip recall = 94.12 %, in line with
-  the published statcheck protocol [@nuijten2016statcheck].
+  recall = 100 % and decision-flip recall = 94.12 %. A separate
+  cross-validation directly against the R `statcheck` package on the
+  same corpus yields Cohen's κ = 0.79 (Landis-Koch substantial
+  agreement) on the decision-flip class
+  [@landis1977measurement; @nuijten2016statcheck].
+- **T7 controlled endpoint benchmark (N=17, Groq `qwen/qwen3-32b`).**
+  A real-logprobs endpoint on a 10+10 human-vs-LLM corpus produces a
+  weak but directionally correct signal: LR+ = 1.69, two-sample
+  Welch's *t* = 1.69, *p* = 0.11. The contrast is real but
+  underpowered at this sample size on a reasoning-model endpoint;
+  on a non-reasoning GPT-4-class endpoint with real logprobs the
+  expected production target is `gpt-4o-mini`.
+- **T8 controlled endpoint benchmark (N=20, DeepSeek-v4-flash).**
+  Demonstrates a structural endpoint constraint of the DetectGPT
+  method [@mitchell2023detectgpt]: on a reasoning-model paraphraser
+  the rewrites stay on the LLM-likelihood manifold, the
+  Mitchell-style probability-curvature signal inverts, and measured
+  LR+ collapses to 0.25 — worse than coin flip. The detector
+  ships an authoritative compatibility matrix documenting which
+  endpoint classes the underlying method is mathematically valid on
+  (non-reasoning OpenAI `gpt-4o`, self-hosted Llama-3.3-70B) and
+  which it is structurally incompatible with (OpenAI o-series,
+  DeepSeek-v4, Qwen3-thinking, GPT-5).
 
-These transparent recall numbers — including the negative
-findings — are an explicit design choice. PaperGuard publishes its
-own false-negative rate and weak-endpoint failure modes alongside
-its detection methodology so users can calibrate trust.
+These transparent recall numbers — including the negative findings
+and structural-incompatibility notes — are an explicit design choice.
+PaperGuard publishes its own false-negative rate and per-endpoint
+failure modes alongside its detection methodology so users can
+calibrate trust.
 
 # Software quality
 
-PaperGuard 2.1.10 ships 91 source files with 394 unit and
+PaperGuard 2.2.7 ships 101 source files with 506 unit and
 integration tests (3 additional network-dependent tests deselected
 by default). The project enforces `ruff` style checks and
 `mypy --strict` type checks in CI on Linux, macOS, and Windows for
-Python 3.11 and 3.12. A `paperguard doctor` command runs a 19-item
-environment health check (Python version, required and optional
-dependencies, detector registry, plugin entry points, cache
+Python 3.11, 3.12, and 3.13. A `paperguard doctor` command runs a
+19-item environment health check (Python version, required and
+optional dependencies, detector registry, plugin entry points, cache
 directory writability, dynamic dictionary state, image-corpus
-presence, and LLM endpoint configuration) and reports machine-
-readable JSON suitable for CI pre-flight use.
+presence, and LLM endpoint configuration) and reports
+machine-readable JSON suitable for CI pre-flight use.
 
-The package is on PyPI as `paperguard` (current 2.1.10), with a
-live browser demo at
-[huggingface.co/spaces/exergyleizhou/paperguard-demo](https://huggingface.co/spaces/exergyleizhou/paperguard-demo).
+The package is on PyPI as `paperguard` (current 2.2.7), with a live
+browser demo at
+[huggingface.co/spaces/exergyleizhou/paperguard-demo](https://huggingface.co/spaces/exergyleizhou/paperguard-demo)
+and multi-architecture Docker images
+(`linux/amd64` + `linux/arm64`) on the GitHub Container Registry at
+`ghcr.io/exergyleizhou-ux/paperguard:latest`.
 
 # Acknowledgements
 

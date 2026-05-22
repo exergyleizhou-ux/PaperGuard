@@ -8,7 +8,7 @@ Not part of the published software, not part of the paper.
 
 - [x] **`paper/paper.md`** exists with correct YAML metadata
       (title, tags, authors, affiliations, date, bibliography).
-- [x] **`paper/paper.bib`** contains every cited reference (10 entries).
+- [x] **`paper/paper.bib`** contains every cited reference (11 entries — Landis 1977 added in 2.2.7).
 - [x] **GitHub Action `draft-pdf.yml`** builds the PDF on every push
       to `paper/**`. After the next push, the `paper` artifact will
       be downloadable from the workflow run page.
@@ -17,7 +17,7 @@ Not part of the published software, not part of the paper.
 - [x] **Tests** exist and pass in CI (`ci.yml`).
 - [x] **README** has install + quickstart instructions.
 - [x] **Tag a release** for the version being submitted — for JOSS
-      reviewers to download a specific snapshot. Currently `v2.1.10`
+      reviewers to download a specific snapshot. Currently `v2.2.7`
       is the latest tag.
 
 ## ORCID
@@ -36,7 +36,7 @@ and replace the placeholder.**
 |---|---|
 | Repository URL | `https://github.com/exergyleizhou-ux/PaperGuard` |
 | Branch | `main` |
-| Version | `v2.1.10` |
+| Version | `v2.2.7` |
 | Title | (copy from paper.md `title:`) |
 | Abstract (≤ 250 words) | Use the "Summary" section from paper.md, lightly trimmed |
 | Software paper PDF | Will be auto-generated from `paper/paper.md` — no upload needed |
@@ -74,8 +74,8 @@ and replace the placeholder.**
 5. **Examples exist.** `examples/01_scan_fabricated.py` through
    `04_full_pipeline_demo.py` are runnable.
 6. **The software is a substantial scholarly contribution.**
-   34 detectors + 6 empirical studies + 2.1.10 worth of iteration
-   demonstrates this.
+   38 detectors + 13 empirical studies + 31 PyPI versions of
+   iteration through 2.2.7 demonstrates this.
 7. **The paper acknowledges related work.** Statement of need cites
    statcheck, GRIM, Carlisle, SPRITE, Bik, Kobak, Cabanac.
 
@@ -85,7 +85,7 @@ and replace the placeholder.**
 |---|---|
 | "Add a comparison vs existing tool X" | Add a table to `paper.md` or a short note; if X exists in Python, run X on the same v8/v9 corpus |
 | "Test on macOS / Windows" | Already in CI |
-| "Increase test coverage" | Already at 394 tests; reply with the number |
+| "Increase test coverage" | Already at 506 tests; reply with the number |
 | "Add a tutorial" | `docs/quickstart.md` already exists; link it |
 | "Add benchmarks" | 5 published empirical studies; link `docs/recall_test_v8.md` etc. |
 | "Add type hints" | Already mypy --strict clean |
@@ -102,7 +102,8 @@ and replace the placeholder.**
 
 JOSS rejects roughly 10-15 % of submissions, most often for:
 - "Not a substantial scholarly contribution" — PaperGuard easily
-  passes this (34 detectors, 5 empirical studies).
+  passes this (38 detectors across 8 families, 13 empirical studies,
+  31 PyPI versions).
 - "Documentation insufficient" — fix the specific item and re-submit.
 - "Out of scope" — JOSS scope is broad; PaperGuard is squarely
   in scope (open-source research-software for the research community).
