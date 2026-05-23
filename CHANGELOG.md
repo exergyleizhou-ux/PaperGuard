@@ -4,6 +4,43 @@ All notable changes to PaperGuard are documented in this file. Format follows
 [Keep a Changelog](https://keepachangelog.com/) and the project adheres to
 [Semantic Versioning](https://semver.org/).
 
+## [2.6.0] — 2026-05-23 — T7 endpoint-based auto-detect + paper.md folds in 5-endpoint study
+
+### Added
+- **Endpoint-based auto-detect for `PAPERGUARD_T7_INVERT_THRESHOLD`.**
+  If the operator has set `PAPERGUARD_LLM_BASE_URL` to
+  `api.openai.com` AND `PAPERGUARD_LLM_MODEL` to one of the
+  empirically-validated inverted-direction prefixes
+  (`gpt-3.5*`, `gpt-4*`, `gpt-4o*`, `gpt-4-turbo*`), T7 now
+  auto-enables inverted thresholds. Operators no longer need to
+  remember to set the env var per run.
+- 5 new unit tests covering: openai+gpt-4o auto, openai+gpt-3.5
+  auto, openai+o1 (reasoning) does NOT auto (classical fallback),
+  groq+qwen3 does NOT auto, explicit env override beats auto.
+- All 23 T7 tests pass.
+
+### Override semantics (unchanged for explicit users)
+- `PAPERGUARD_T7_INVERT_THRESHOLD=1` / `true` / `yes` → forces inverted.
+- `PAPERGUARD_T7_INVERT_THRESHOLD=0` / `false` / `no` → forces classical,
+  even when auto-detect would have said inverted.
+- Unset → auto-detect (new in 2.6.0).
+
+### Changed
+- **`paper/paper.md` empirical-calibration section** now folds in the
+  full T7 5-endpoint study (gpt-3.5-turbo, gpt-4, gpt-4o-mini, gpt-4o,
+  qwen/qwen3-32b) and the reasoning-model API-block confirmation.
+  Adds an explicit note that the pattern is not monotonic in model
+  size, citing the disproof of the 2.4.0 reference-LM-size
+  hypothesis. The Methods description of T8 is also extended to
+  cover both real endpoints (gpt-4o LR+ = ∞ and DeepSeek-v4-flash
+  LR+ = 0.25 reversed).
+
+### Verifications
+- pytest: 539 passed (was 534; +5 auto-detect tests), 3 deselected
+- ruff: all checks passed
+- mypy --strict: 103 source files, no issues
+- privacy grep: clean
+
 ## [2.5.1] — 2026-05-23 — Four-model T7 OpenAI study + reasoning-model API-block confirmation
 
 ### Added

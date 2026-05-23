@@ -108,25 +108,50 @@ def _opt_in_enabled() -> bool:
     }
 
 
+_OPENAI_INVERT_MODEL_PREFIXES: tuple[str, ...] = (
+    # Empirically validated in 2.5.1 — all four show inverted direction.
+    "gpt-3.5", "gpt-4",  # matches gpt-4, gpt-4o, gpt-4o-mini, gpt-4-turbo
+    # gpt-5.x via cliproxy / responses API: not validated; left out of
+    # auto-detect. Operator can still force-set the env var.
+)
+
+
 def _invert_enabled() -> bool:
-    """Whether to use the inverted threshold direction (2.4.2+).
+    """Whether to use the inverted threshold direction.
 
-    Set ``PAPERGUARD_T7_INVERT_THRESHOLD=1`` to flip T7 into "HIGH
-    perplexity = signal" mode. Use this when the reference LM is a
-    heavily RLHF-tuned model (OpenAI gpt-4o family, Anthropic Claude
-    via a compatible logprobs endpoint, etc.) that has been trained
-    to avoid LLM-style markers and therefore finds them surprising on
-    input.
+    Three modes:
 
-    Defaults to ``False`` (classical direction, matches the
-    pre-2.4.2 behaviour). See module docstring for the empirical
-    justification and the per-endpoint compatibility matrix.
+    1. **Explicit user override** (highest priority): set
+       ``PAPERGUARD_T7_INVERT_THRESHOLD=1`` to force inverted,
+       or ``=0``/``=false``/``=no`` to force classical. Use ``=0``
+       to disable auto-detect when running against an OpenAI
+       endpoint where you suspect direction has flipped back (e.g.
+       a future model release).
+    2. **Endpoint-based auto-detect (new in 2.6.0)**: if
+       ``PAPERGUARD_LLM_BASE_URL`` contains ``api.openai.com`` AND
+       ``PAPERGUARD_LLM_MODEL`` starts with one of the empirically-
+       validated inverted-direction prefixes (gpt-3.5 / gpt-4), use
+       inverted thresholds. This matches the 2.5.1 four-model study
+       result without requiring the operator to remember to set the
+       env var.
+    3. **Default**: classical "low ppl = signal" direction.
+
+    Decision history per endpoint is in
+    `docs/llm_detection_real_endpoints.md`.
     """
-    return os.environ.get("PAPERGUARD_T7_INVERT_THRESHOLD", "").lower() in {
-        "1",
-        "true",
-        "yes",
-    }
+    forced = os.environ.get("PAPERGUARD_T7_INVERT_THRESHOLD", "").strip().lower()
+    if forced in {"1", "true", "yes"}:
+        return True
+    if forced in {"0", "false", "no"}:
+        return False
+    # Auto-detect.
+    base_url = os.environ.get("PAPERGUARD_LLM_BASE_URL", "").lower()
+    model = os.environ.get("PAPERGUARD_LLM_MODEL", "").lower()
+    if "api.openai.com" in base_url and any(
+        model.startswith(p) for p in _OPENAI_INVERT_MODEL_PREFIXES
+    ):
+        return True
+    return False
 
 
 def _segment_text(text: str, max_chars_per_segment: int = 2400) -> list[str]:

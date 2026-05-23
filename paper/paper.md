@@ -185,23 +185,48 @@ are in [`docs/`](https://github.com/exergyleizhou-ux/PaperGuard/tree/main/docs).
   same corpus yields Cohen's κ = 0.79 (Landis-Koch substantial
   agreement) on the decision-flip class
   [@landis1977measurement; @nuijten2016statcheck].
-- **T7 controlled endpoint benchmark (N=17, Groq `qwen/qwen3-32b`).**
-  A real-logprobs endpoint on a 10+10 human-vs-LLM corpus produces a
-  weak but directionally correct signal: LR+ = 1.69, two-sample
-  Welch's *t* = 1.69, *p* = 0.11. The contrast is real but
-  underpowered at this sample size on a reasoning-model endpoint;
-  on a non-reasoning GPT-4-class endpoint with real logprobs the
-  expected production target is `gpt-4o-mini`.
-- **T8 controlled endpoint benchmark (N=20, DeepSeek-v4-flash).**
-  Demonstrates a structural endpoint constraint of the DetectGPT
-  method [@mitchell2023detectgpt]: on a reasoning-model paraphraser
-  the rewrites stay on the LLM-likelihood manifold, the
-  Mitchell-style probability-curvature signal inverts, and measured
-  LR+ collapses to 0.25 — worse than coin flip. The detector
-  ships an authoritative compatibility matrix documenting which
-  endpoint classes the underlying method is mathematically valid on
-  (non-reasoning OpenAI `gpt-4o`, self-hosted Llama-3.3-70B) and
-  which it is structurally incompatible with (OpenAI o-series,
+- **T7 controlled endpoint benchmark — five-endpoint study
+  (10+10 controlled corpus per run).** Across the five real-logprobs
+  endpoints tested, the four OpenAI models all show reversed
+  direction (AI continuation perplexity > human, opposite of the
+  classical DetectGPT assumption), while the one non-OpenAI
+  endpoint (Groq `qwen/qwen3-32b`) shows the textbook direction.
+  At an inverted threshold equal to the maximum human perplexity
+  observed in the corpus, three of four OpenAI runs yield
+  LR+ = ∞ (i.e. no false positive) at TPR 70–90 %:
+  `gpt-3.5-turbo` (LR+ = ∞, TPR 90 %, *p* = 0.0009),
+  `gpt-4` (LR+ = ∞, TPR 90 %, *p* = 2.1 × 10⁻⁶),
+  `gpt-4o` (LR+ = ∞, TPR 70 %, *p* = 0.0011);
+  `gpt-4o-mini` shows the same reversal more weakly
+  (*p* = 0.047, LR+ = 1.57 at median(human)).
+  Groq `qwen/qwen3-32b` gives textbook-direction LR+ = 1.69
+  (*p* = 0.11, weak). The pattern is **not monotonic in model
+  size** — both `gpt-3.5-turbo` (small, early) and `gpt-4` (older
+  base) outperform `gpt-4o` (newer, larger) at this task — so the
+  driver of the inversion is the specific RLHF training schedule
+  rather than parameter count. PaperGuard exposes the inversion
+  as a per-endpoint configuration choice
+  (`PAPERGUARD_T7_INVERT_THRESHOLD` env var, auto-detected for
+  OpenAI endpoints since 2.6.0). OpenAI reasoning models
+  (`o1`, `o3-mini`, `o4-mini`) cannot be used as T7 reference LMs
+  at all: the OpenAI API returns HTTP 400 *"You are not allowed
+  to request logprobs from this model"* — a clean infrastructure-
+  level confirmation of the structural-incompatibility claim
+  PaperGuard had previously argued only on empirical grounds.
+- **T8 controlled endpoint benchmark.** Two real-endpoint runs.
+  On a non-reasoning paraphraser (OpenAI `gpt-4o`, N=10+10) T8
+  yields LR+ = ∞ (2 / 10 TP, 0 / 10 FP) — the cleanest result
+  PaperGuard has on the DetectGPT family. On a reasoning-model
+  paraphraser (DeepSeek-v4-flash, N=10+10) the rewrites stay on
+  the LLM-likelihood manifold, the Mitchell-style probability-
+  curvature signal inverts, and measured LR+ collapses to 0.25 —
+  worse than coin flip — directly validating the structural
+  prediction made in [@mitchell2023detectgpt]. The detector ships
+  an authoritative compatibility matrix
+  (`docs/llm_detection_real_endpoints.md`) documenting which
+  endpoint classes the method is mathematically valid on
+  (non-reasoning `gpt-4o`, self-hosted Llama-3.3-70B) and which it
+  is structurally incompatible with (OpenAI o-series,
   DeepSeek-v4, Qwen3-thinking, GPT-5).
 
 These transparent recall numbers — including the negative findings

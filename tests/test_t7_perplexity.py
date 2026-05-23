@@ -304,6 +304,8 @@ def test_classical_mode_unaffected_by_invert_unset(
     """Sanity: classical-mode behaviour unchanged when env var unset."""
     monkeypatch.setenv("PAPERGUARD_PERPLEXITY_CHECK", "1")
     monkeypatch.delenv("PAPERGUARD_T7_INVERT_THRESHOLD", raising=False)
+    monkeypatch.delenv("PAPERGUARD_LLM_BASE_URL", raising=False)
+    monkeypatch.delenv("PAPERGUARD_LLM_MODEL", raising=False)
     monkeypatch.setenv("OPENAI_API_KEY", "sk-test")
 
     # logprob -0.55 / token → ppl 1.73 → classical CRITICAL (< 5)
@@ -317,3 +319,77 @@ def test_classical_mode_unaffected_by_invert_unset(
     f = result.findings[0]
     assert f.severity.name == "CRITICAL"
     assert f.evidence["inverted_threshold_mode"] is False
+
+
+# ---------------------------------------------------------------------------
+# 2.6.0 — endpoint-based auto-detect (PAPERGUARD_LLM_BASE_URL + MODEL)
+# ---------------------------------------------------------------------------
+
+
+def test_auto_detect_openai_gpt4o_enables_inverted(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    """OpenAI + gpt-4o → auto-detect picks inverted mode."""
+    from paperguard.detectors.t7_perplexity import _invert_enabled
+
+    monkeypatch.delenv("PAPERGUARD_T7_INVERT_THRESHOLD", raising=False)
+    monkeypatch.setenv("PAPERGUARD_LLM_BASE_URL", "https://api.openai.com/v1")
+    monkeypatch.setenv("PAPERGUARD_LLM_MODEL", "gpt-4o")
+    assert _invert_enabled() is True
+
+
+def test_auto_detect_openai_gpt35_enables_inverted(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    from paperguard.detectors.t7_perplexity import _invert_enabled
+
+    monkeypatch.delenv("PAPERGUARD_T7_INVERT_THRESHOLD", raising=False)
+    monkeypatch.setenv("PAPERGUARD_LLM_BASE_URL", "https://api.openai.com/v1")
+    monkeypatch.setenv("PAPERGUARD_LLM_MODEL", "gpt-3.5-turbo")
+    assert _invert_enabled() is True
+
+
+def test_auto_detect_openai_o1_does_not_invert(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    """o1 / o3-mini / o4-mini are reasoning models that API-block logprobs.
+
+    Auto-detect should NOT enable inverted mode for them — they cannot
+    actually run T7 at all, but if someone tries, classical mode is the
+    safer fallback (returns no finding rather than a misleading inverted
+    one). The detector itself will then no-op on the API 400.
+    """
+    from paperguard.detectors.t7_perplexity import _invert_enabled
+
+    monkeypatch.delenv("PAPERGUARD_T7_INVERT_THRESHOLD", raising=False)
+    monkeypatch.setenv("PAPERGUARD_LLM_BASE_URL", "https://api.openai.com/v1")
+    monkeypatch.setenv("PAPERGUARD_LLM_MODEL", "o1")
+    assert _invert_enabled() is False
+
+
+def test_auto_detect_groq_qwen_does_not_invert(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    """Groq's qwen3-32b is the lone textbook-direction data point (2.5.1)."""
+    from paperguard.detectors.t7_perplexity import _invert_enabled
+
+    monkeypatch.delenv("PAPERGUARD_T7_INVERT_THRESHOLD", raising=False)
+    monkeypatch.setenv("PAPERGUARD_LLM_BASE_URL", "https://api.groq.com/openai/v1")
+    monkeypatch.setenv("PAPERGUARD_LLM_MODEL", "qwen/qwen3-32b")
+    assert _invert_enabled() is False
+
+
+def test_explicit_override_beats_auto_detect(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    """PAPERGUARD_T7_INVERT_THRESHOLD=0 overrides auto-detect even on OpenAI."""
+    from paperguard.detectors.t7_perplexity import _invert_enabled
+
+    monkeypatch.setenv("PAPERGUARD_LLM_BASE_URL", "https://api.openai.com/v1")
+    monkeypatch.setenv("PAPERGUARD_LLM_MODEL", "gpt-4o")
+    # Force off — auto-detect would have said True.
+    monkeypatch.setenv("PAPERGUARD_T7_INVERT_THRESHOLD", "0")
+    assert _invert_enabled() is False
+    # Force on — auto-detect would also say True; check explicit still wins.
+    monkeypatch.setenv("PAPERGUARD_T7_INVERT_THRESHOLD", "1")
+    assert _invert_enabled() is True
