@@ -22,10 +22,11 @@ Not part of the published software, not part of the paper.
 
 ## ORCID
 
-JOSS requires authors to have an ORCID. The current `paper.md` uses
-the placeholder `0000-0000-0000-0000`. **Before opening the form,
-register or look up your real ORCID at https://orcid.org/register
-and replace the placeholder.**
+JOSS requires authors to have an ORCID. The author block in
+`paper/paper.md` is resolved as of 2.6.1 — Lei Zhou, ORCID
+`0009-0000-9073-1349`. If submitting as a different person or
+adding co-authors, update the `authors:` and `affiliations:`
+YAML blocks in `paper/paper.md` accordingly.
 
 ## Step-by-step submission
 

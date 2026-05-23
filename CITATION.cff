@@ -8,7 +8,9 @@ abstract: >
   balance, image duplication (pHash), EXIF temporal forensics, docx rsid
   forensics, and file metadata forensics.
 authors:
-  - name: PaperGuard Contributors
+  - given-names: Lei
+    family-names: Zhou
+    orcid: "https://orcid.org/0009-0000-9073-1349"
 version: 2.6.1
 # 2.6.1 = image-recall v6 (PMID-indexed both arms, N=163+49 usable)
 # confirms v5's hard truth — F1/F4/F6 at defaults give LR+ ≈ 1 on

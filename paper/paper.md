@@ -12,8 +12,8 @@ tags:
   - statcheck
   - DetectGPT
 authors:
-  - name: PaperGuard Contributors
-    orcid: 0000-0000-0000-0000
+  - name: Lei Zhou
+    orcid: 0009-0000-9073-1349
     affiliation: 1
 affiliations:
   - name: Independent
