@@ -360,6 +360,7 @@ tests/
 | [docs/recall_test_v8.md](docs/recall_test_v8.md) | **2.0.16 — N=50 LR+ study (T6 only)** — first focused LR+ measurement against post-publication retraction data |
 | [docs/recall_test_v9.md](docs/recall_test_v9.md) | **2.1.0 — N=30 retest + transparent T7/T8 dataset** — extends v8 with T7/T8 columns annotated for cliproxy endpoint limitations |
 | [docs/recall_image_v1.md](docs/recall_image_v1.md) | **2.1.2 — image-layer LR+ study** — first F1/F4 empirical numbers on a curated retracted-image-reuse corpus |
+| [docs/recall_image_v5.md](docs/recall_image_v5.md) | **2.3.1 — image-layer LR+ at N=200 (honest revision)** — Wilson 95 % CI on F1/F4/F6 at the default `z=6 / cluster=8` thresholds. F6 LR+ ≈ 0.92 [0.75, 1.20] — revises v4's 1.63 (N=159) downward, the larger v5 sample reveals the earlier number as small-sample upward noise. F4 ≈ 4.36 [0.48, 41.28], directionally encouraging but underpowered |
 | [docs/crossval_statcheck.md](docs/crossval_statcheck.md) | **2.1.3 — B4 statcheck cross-validation** — N=41 ground-truth corpus, B4 recall 100% / decision-flip recall 94% |
 | [paper/paper.md](paper/paper.md) | **JOSS-formatted paper draft** with bibliography (`paper/paper.bib`) — ready for submission to the Journal of Open Source Software |
 | [docs/recall_test_v2.md](docs/recall_test_v2.md) | **N=100+100 recall/precision study** — quantifies that PDF-only scanning is *not* a reliable retraction detector; explains why and what to do instead |

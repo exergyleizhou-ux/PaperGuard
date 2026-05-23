@@ -44,7 +44,7 @@
 | T6 lexical(0.001 严格阈值) | v10 N=200 | **∞ (1 TP / 0 FP)** | 一个撤稿命中、零误报。 |
 | B4 statcheck(N=41 ground-truth) | crossval_statcheck | recall 100%, 决策翻转 94% | 与 Nuijten 2016 协议一致。 |
 | B4 vs statcheck-R 本尊(N=41) | crossval_statcheck_kappa | **Cohen's κ = 0.79** | Landis-Koch substantial agreement。 |
-| F6 image cluster | recall_image_v4 N=159(F1+F4+F6) | 1.63 | 在 z=6/cluster=8 阈值下的三检测器图像层。 |
+| F6 image cluster | recall_image_v5 N=132+48(F1+F4+F6,默认阈值) | **0.92** 95% CI [0.75, 1.20] | v4 的 LR+ 1.63(N=159)在 v5 N=180 下回落到接近 1,**v4 的高估是小样本噪声**。诚实结论:F6 默认阈值在该 biomedical OA 撤稿语料上不区分,需对 Bik patch-splice corpus 重新标定。F4 同 corpus LR+ ≈ 4.36 [0.48, 41.28](方向对但欠功效);F1 ≈ 1.39 [0.48, 4.23] 弱。详见 `docs/recall_image_v5.md`。 |
 | I5 工业批次复用 | recall_industrial_v1(废水 N=100 = 50 干净 + 50 篡改;同源 pharma N=100 总计 N=200 跨域) | **∞**(废水 60% TPR / 0% FPR) | 工业层旗舰结果(仅废水域)。同 study 内 I1/I2 在默认阈值下 100%/100% 触发,**默认 tolerance 需按本地工厂噪声底校准**;pharma 域各检测器均 100%/100%。 |
 | T7 perplexity | t7_controlled_benchmark N=17(Groq Qwen3-32B) | 1.69 弱(p=0.11) | 方向正确但样本欠功效;**需要非 reasoning 模型 + 真实 logprobs**(推荐 OpenAI `gpt-4o-mini`)。 |
 | T8 DetectGPT | t8_controlled_benchmark N=20(DeepSeek-v4-flash) | 0.25 反向 | **Reasoning 模型(o-series / DeepSeek-v4 / Qwen3-thinking / GPT-5)结构性不兼容** —— paraphraser 不脱 LLM 似然流形。推荐 OpenAI `gpt-4o` 或自托管 Llama-3.3-70B。详见 `docs/llm_detection_real_endpoints.md`。 |

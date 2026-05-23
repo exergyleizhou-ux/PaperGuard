@@ -60,6 +60,7 @@ driver + `scripts/recall_test_*_results.json` raw dataset.
 | **[recall_test_v10.md](recall_test_v10.md)** | **2.1.12 — N=200 expansion** | **First true positive at 0.001 threshold: LR+ = ∞ (1 TP / 0 FP). PLOS ONE 2024 ML/medical-imaging paper-mill retraction.** |
 | [recall_image_v1.md](recall_image_v1.md) | 2.1.2 — N=15+15 F1/F4 image | First F1/F4 empirical numbers |
 | **[recall_image_v2.md](recall_image_v2.md)** | **2.1.8/2.1.9 — N=10+8 F1+F4+F6** | **F6 default tightened from z=4/cluster=4 to z=6/cluster=8 (FPR 75 % → 62.5 %)** |
+| **[recall_image_v5.md](recall_image_v5.md)** | **2.3.1 — N=132+48 usable from 200+200 fetch, F1+F4+F6 with Wilson 95 % CI** | **F6 LR+ ≈ 0.92 [0.75, 1.20] revises v4's 1.63 (N=159) downward; F4 ≈ 4.36 [0.48, 41.28] directionally encouraging but underpowered** |
 | [crossval_statcheck.md](crossval_statcheck.md) | 2.1.3 — B4 vs scipy reference | recall = 100 %, decision-flip recall = 94.12 % |
 
 ---

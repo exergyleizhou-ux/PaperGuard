@@ -4,6 +4,65 @@ All notable changes to PaperGuard are documented in this file. Format follows
 [Keep a Changelog](https://keepachangelog.com/) and the project adheres to
 [Semantic Versioning](https://semver.org/).
 
+## [2.3.1] — 2026-05-23 — Image-recall v5 (N=200+200) + honest F6 revision
+
+### Added
+- `scripts/recall_image_v5_results.json` — raw results from the
+  `recall_image_v4.py --n 200 --out scripts/recall_image_v5_results.json
+  --resume` run. 200 retracted fetched + 95 unique controls (control
+  dedup by the script). 132 retracted + 48 control are
+  analysable after PDF-fetch / image-extract attrition.
+- `scripts/recall_analyze_image_v5.py` — new analyser. Differs from
+  v2/v3/v4 analysers in two ways: restricts the denominator to
+  *usable* papers (`pdf_ok` AND `n_images >= 1`) so TPR isn't
+  artificially deflated by un-scanned papers, and reports Wilson
+  95 % CIs on LR+ instead of point estimates only.
+- `docs/recall_image_v5.md` — full study writeup with the
+  per-detector table, joint-signal table, and the honest
+  interpretation.
+
+### Empirical revision (the headline)
+At the documented `z=6 / cluster=8` "triage tier" defaults:
+
+| Detector | TP / n+ | FP / n− | TPR | FPR | LR+ | 95 % CI |
+|---|---|---|---|---|---|---|
+| F1 | 23/132 | 6/48 | 17.4 % | 12.5 % | 1.39 | [0.48, 4.23] |
+| F4 | 12/132 | 1/48 | 9.1 % | 2.1 % | 4.36 | [0.48, 41.28] |
+| F6 | 99/132 | 39/48 | 75.0 % | 81.2 % | **0.92** | **[0.75, 1.20]** |
+
+The v4 study (N=159) reported **F6 LR+ = 1.63**. v5 with the larger
+sample reveals that figure was a small-sample upward fluctuation:
+F6 at default thresholds is consistent with no signal on this
+biomedical OA corpus (95 % CI brackets 1). F4's point estimate
+rises to 4.36 but the CI is broad enough that the signal is
+directionally encouraging only. F1 is weak.
+
+### Changed
+- `paper/paper.md` — image-layer paragraph rewritten to lead with
+  the v5 numbers and explicitly revise the v4 point estimate
+  downward.
+- `README.md` — documentation table gains a `recall_image_v5.md` row.
+- `README.zh.md` — empirical-calibration table updated with the
+  v5 numbers + the F6 small-sample-noise explanation.
+- `docs/INDEX.md` — recall study list refreshed with v5.
+
+### Operational note for users
+The image-forensics layer (F1 + F4 + F6) should be used as a
+**ranking input**, not a binary decision, on default thresholds.
+The v5 study makes the case that F6's intended failure mode
+(per-channel histogram patch-splice à la Bik 2016) is
+under-represented in OpenAlex's retraction corpus; calibration
+against a Bik-curated patch-splice corpus is the right next step,
+not threshold-tweaking on biomedical OA samples.
+
+### Honest scope note (continued from 2.3.0)
+2.3.0's hardening release said "v4 LR+ 1.63 confirms calibration
+across 3 samples". With v5 in hand that claim no longer holds and
+the JOSS paper and Chinese README have been updated to match.
+This is the explicit design principle from the technical report:
+PaperGuard publishes its own false-negative rate alongside its
+detection methodology.
+
 ## [2.3.0] — 2026-05-23 — Web UI production hardening (secure-cookie + per-IP rate-limit)
 
 ### Added
