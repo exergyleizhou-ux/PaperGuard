@@ -9,8 +9,9 @@ abstract: >
   forensics, and file metadata forensics.
 authors:
   - name: PaperGuard Contributors
-version: 2.4.0
-# 2.4.0 = 39th detector (G5 reagent-temporal) + first real-OpenAI T7/T8 LR+
+version: 2.4.1
+# 2.4.1 = T7 on gpt-4o (LR+ = 8.0 at calibrated inverted threshold) +
+# disproof of the 2.4.0 reference-LM-size hypothesis
 date-released: 2026-05-23
 license: MIT
 keywords:
