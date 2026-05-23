@@ -49,6 +49,15 @@ def admin_env(mt_env: Path, monkeypatch: pytest.MonkeyPatch) -> Path:
 
 @pytest.fixture
 def client(admin_env: Path) -> Iterator[TestClient]:
+    # Reset the per-process rate limiter to a fresh in-memory backend
+    # for each test. The 2.3.0 release added per-IP rate-limits on
+    # /login, /redeem, and /scan which all key on `testclient` in
+    # FastAPI's TestClient; without this reset, later tests in the
+    # same module accumulate hits across earlier tests and start
+    # hitting 429 instead of the expected status code.
+    from paperguard.webui.ratelimit import reset_rate_limiter_for_tests
+
+    reset_rate_limiter_for_tests()
     with TestClient(create_app()) as c:
         yield c
 
@@ -474,3 +483,100 @@ def test_session_rejects_tampered_token(monkeypatch: pytest.MonkeyPatch) -> None
     head, _, _sig = tok.rpartition(".")
     bad = f"{head}.AAAAAAAAAAAAAAAAAAAAAAAAA"
     assert decode_session(bad) is None
+
+
+# ---------------------------------------------------------------------------
+# 2.3.0 — production hardening: PAPERGUARD_BEHIND_PROXY + per-IP rate-limit
+# ---------------------------------------------------------------------------
+
+
+def test_login_cookie_not_secure_without_proxy(client: TestClient) -> None:
+    """Without PAPERGUARD_BEHIND_PROXY the session cookie must not be Secure."""
+    r = client.post(
+        "/app/login",
+        data={"email": "admin@example.test", "password": "adminpassword-123!"},
+        follow_redirects=False,
+    )
+    assert r.status_code in (303, 302)
+    set_cookie = r.headers.get("set-cookie", "")
+    assert "paperguard_session" in set_cookie
+    # `Secure` attribute is case-insensitive in the Set-Cookie spec; check both.
+    assert "Secure" not in set_cookie and "secure" not in set_cookie
+
+
+def test_login_cookie_secure_when_behind_proxy(
+    monkeypatch: pytest.MonkeyPatch, admin_env: Path,
+) -> None:
+    """With PAPERGUARD_BEHIND_PROXY=1 the session cookie must carry Secure."""
+    from paperguard.webui.ratelimit import reset_rate_limiter_for_tests
+
+    monkeypatch.setenv("PAPERGUARD_BEHIND_PROXY", "1")
+    reset_rate_limiter_for_tests()
+    with TestClient(create_app()) as c:
+        r = c.post(
+            "/app/login",
+            data={"email": "admin@example.test", "password": "adminpassword-123!"},
+            follow_redirects=False,
+        )
+    assert r.status_code in (303, 302)
+    set_cookie = r.headers.get("set-cookie", "")
+    assert "paperguard_session" in set_cookie
+    assert "Secure" in set_cookie or "secure" in set_cookie
+
+
+def test_login_per_ip_rate_limit_returns_429(client: TestClient) -> None:
+    """11th login attempt from the same IP in 5 min must be 429.
+
+    The limit is 10 attempts per 5 min per IP. We send 10 wrong-password
+    attempts (all expected 401), then the 11th must return 429 before
+    the password is even checked.
+    """
+    for i in range(10):
+        r = client.post(
+            "/app/login",
+            data={"email": "admin@example.test", "password": f"wrong-{i}"},
+            follow_redirects=False,
+        )
+        assert r.status_code == 401, f"attempt {i + 1}: {r.status_code}"
+    r = client.post(
+        "/app/login",
+        data={"email": "admin@example.test", "password": "still-wrong"},
+        follow_redirects=False,
+    )
+    assert r.status_code == 429
+    assert "Retry-After" in r.headers
+
+
+def test_client_ip_helper_handles_x_forwarded_for(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    """client_ip() returns the first X-Forwarded-For hop only behind proxy."""
+    from paperguard.webui.security import client_ip
+
+    class _FakeClient:
+        host = "10.0.0.1"
+
+    class _FakeRequest:
+        def __init__(self, xff: str | None) -> None:
+            self.headers: dict[str, str] = {}
+            if xff is not None:
+                self.headers["x-forwarded-for"] = xff
+            self.client = _FakeClient()
+
+    # Without proxy: ignore the header, use request.client.host.
+    monkeypatch.delenv("PAPERGUARD_BEHIND_PROXY", raising=False)
+    assert client_ip(_FakeRequest("203.0.113.5, 70.41.3.18")) == "10.0.0.1"
+
+    # Behind proxy: trust the first hop of XFF.
+    monkeypatch.setenv("PAPERGUARD_BEHIND_PROXY", "1")
+    assert client_ip(_FakeRequest("203.0.113.5, 70.41.3.18")) == "203.0.113.5"
+
+    # Behind proxy without XFF: fall back to request.client.host.
+    assert client_ip(_FakeRequest(None)) == "10.0.0.1"
+
+    # No client at all: 'unknown'.
+    class _ReqNoClient:
+        headers: dict[str, str] = {}
+        client = None
+
+    assert client_ip(_ReqNoClient()) == "unknown"

@@ -118,3 +118,60 @@ def reset_secret_cache_for_tests() -> None:
 def generate_invite_code() -> str:
     """Cryptographically random URL-safe invite code (~32 chars)."""
     return secrets.token_urlsafe(24)
+
+
+# ---------------------------------------------------------------------------
+# Proxy / IP helpers (new in 2.3.0)
+# ---------------------------------------------------------------------------
+
+
+def behind_proxy() -> bool:
+    """Whether the app trusts upstream proxy headers + emits secure cookies.
+
+    Controlled by the ``PAPERGUARD_BEHIND_PROXY`` env var. Set to ``1`` /
+    ``true`` / ``yes`` when terminating TLS at an external reverse proxy
+    (Caddy / nginx / Traefik / Cloudflare). Effects:
+
+    1. Session cookies are minted with ``secure=True`` (HTTPS only).
+    2. ``client_ip()`` trusts the first hop of ``X-Forwarded-For``.
+
+    **Only enable this when the app actually sits behind a trusted
+    proxy.** Enabling it on a directly-exposed app lets clients forge
+    their own IP via ``X-Forwarded-For``, which silently breaks IP-based
+    rate-limiting.
+    """
+    return os.environ.get("PAPERGUARD_BEHIND_PROXY", "").strip().lower() in {
+        "1", "true", "yes"
+    }
+
+
+def client_ip(request: object) -> str:
+    """Return the originating client IP.
+
+    - Behind proxy (``PAPERGUARD_BEHIND_PROXY=1``): first hop of
+      ``X-Forwarded-For`` if present, else ``request.client.host``.
+    - Otherwise: ``request.client.host`` directly.
+
+    Falls back to ``"unknown"`` if the request has no client tuple
+    (e.g. unit tests that hand-build a ``Request``).
+    """
+    if behind_proxy():
+        # Starlette's Request exposes headers as case-insensitive dict.
+        headers_obj = getattr(request, "headers", None)
+        xff_raw: object | None = (
+            headers_obj.get("x-forwarded-for")
+            if headers_obj is not None and hasattr(headers_obj, "get")
+            else None
+        )
+        if isinstance(xff_raw, str) and xff_raw:
+            # Comma-separated; first entry is the originating client.
+            first = xff_raw.split(",", 1)[0].strip()
+            if first:
+                return first
+    client = getattr(request, "client", None)
+    if client is None:
+        return "unknown"
+    host = getattr(client, "host", None)
+    if isinstance(host, str) and host:
+        return host
+    return "unknown"

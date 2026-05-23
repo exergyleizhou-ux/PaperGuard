@@ -190,14 +190,41 @@ underlying ORM supports it — that's a 2.1 follow-up.
 
 - [ ] `PAPERGUARD_SECRET_KEY` set to a 48+ byte random string.
 - [ ] `PAPERGUARD_DB_URL` points at PostgreSQL with daily backups.
-- [ ] Terminate HTTPS at a reverse proxy. Set `secure=True` on session
-      cookies by editing `routes_auth.py` (a 2.1 task: surface this via
-      an env var).
+- [ ] Terminate HTTPS at a reverse proxy (Caddy / nginx / Traefik /
+      Cloudflare) — and **set `PAPERGUARD_BEHIND_PROXY=1`** so the app
+      mints session cookies with `Secure` and trusts `X-Forwarded-For`
+      for rate-limit IP attribution. (Shipped 2.3.0; previously a
+      manual code edit.)
 - [ ] Rotate the admin bootstrap password after first login.
 - [ ] `PAPERGUARD_API_TOKEN` set if you keep the anonymous `/scan`
       endpoints exposed; otherwise consider running with multi-tenant
       only behind a private LAN.
 - [ ] Persistent volume for the SQLite path if you stay on SQLite.
+- [ ] **For multi-worker / multi-host deployments**, set
+      `PAPERGUARD_REDIS_URL=redis://host:port/db`. The scan-result
+      cache (2.1.16) and rate-limit counters (2.1.15) both auto-pick
+      Redis when this is set; otherwise each worker keeps its own
+      in-memory state and rate-limits / cache hits become per-worker
+      best-effort.
+
+## 2.3.0 hardening env vars (new)
+
+| Env var | Effect | When to set |
+|---|---|---|
+| `PAPERGUARD_BEHIND_PROXY=1` | Session cookie `Secure=True` + trust first hop of `X-Forwarded-For` for IP attribution | Any deployment terminating HTTPS at an external proxy |
+| `PAPERGUARD_REDIS_URL=redis://...` | Cache + rate-limit backend → Redis instead of in-memory dicts | Multi-worker (`--workers N`) or multi-host deployments |
+
+**Default rate-limit policy (2.3.0):**
+
+| Endpoint | Per-user | Per-IP |
+|---|---|---|
+| `POST /app/login` | n/a (no user yet) | **10 / 5 min** |
+| `POST /app/redeem/{code}` | n/a | **5 / 10 min** |
+| `POST /app/projects/{id}/scan` | 30 / 60 s | **60 / 60 s** |
+
+`POST /app/login` and `/app/redeem/{code}` rate-limits return HTTP 429
+with a `Retry-After` header on overflow. `/scan` returns 429 if
+**either** the per-user **or** per-IP bucket is over its limit.
 
 ---
 
@@ -208,8 +235,10 @@ The 2.0 cut intentionally stays minimal. Open items for 2.x:
 - Password reset flow (currently admin must delete + reinvite).
 - Project-level membership (more than one owner / read-share).
 - Visibility editing on existing reports.
-- Audit log endpoint surfaced in the UI.
-- HTTPS-only cookie toggle via env.
+- Audit log endpoint surfaced in the UI (no audit log exists yet —
+  this is "build it then surface it", not just plumbing).
+- ~~HTTPS-only cookie toggle via env.~~ Shipped 2.3.0 as
+  `PAPERGUARD_BEHIND_PROXY=1`.
 - OAuth/SAML SSO integration.
 
 PRs welcome.

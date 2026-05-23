@@ -4,6 +4,62 @@ All notable changes to PaperGuard are documented in this file. Format follows
 [Keep a Changelog](https://keepachangelog.com/) and the project adheres to
 [Semantic Versioning](https://semver.org/).
 
+## [2.3.0] — 2026-05-23 — Web UI production hardening (secure-cookie + per-IP rate-limit)
+
+### Added
+- `src/paperguard/webui/security.py`: two new helpers.
+  - `behind_proxy()` — reads `PAPERGUARD_BEHIND_PROXY` env var and
+    returns `True` for `1` / `true` / `yes`. Controls whether
+    session cookies are minted with `Secure` and whether
+    `X-Forwarded-For` is trusted.
+  - `client_ip(request)` — returns the originating client IP.
+    Behind a trusted proxy it reads the first hop of
+    `X-Forwarded-For`; otherwise it returns `request.client.host`.
+    Hardened against missing/malformed inputs.
+- Per-IP rate-limit on `/app/login` — 10 attempts per 5 min per
+  source IP, returns HTTP 429 with `Retry-After` header.
+  Defends against credential stuffing.
+- Per-IP rate-limit on `/app/redeem/{code}` — 5 attempts per 10 min
+  per source IP. Slows invite-code brute-force.
+- Per-IP rate-limit on `/app/projects/{id}/scan` — 60 scans per
+  60 s per IP, on top of the existing 30 scans per 60 s per user.
+  Defends against a single host running multiple authenticated
+  accounts.
+
+### Changed
+- Session cookie `secure=` attribute on `/app/login` and
+  `/app/redeem/{code}` is now driven by `behind_proxy()`. Default
+  remains `False` (dev unchanged). Operators terminating HTTPS at
+  a reverse proxy must set `PAPERGUARD_BEHIND_PROXY=1` to enable
+  `Secure` cookies.
+- `docs/webui_multitenant.md` Production checklist refreshed: the
+  HTTPS-only-cookie todo is now done, the new env var is
+  documented, and the existing Redis cache backend (already
+  shipping since 2.1.16) is called out explicitly so operators
+  know to set `PAPERGUARD_REDIS_URL` for multi-worker production.
+
+### Test infrastructure
+- New `tests/test_webui_multitenant.py::client` fixture resets the
+  per-process rate limiter at the start of every test. Without
+  this the 2.3.0 per-IP limits would accumulate across the test
+  module under FastAPI `TestClient` (which keys every request on
+  the `testclient` IP).
+- 4 new tests: cookie not-`Secure` without proxy; cookie `Secure`
+  with proxy; `/login` 11th attempt → 429; `client_ip()` helper
+  semantics including XFF parsing and missing-client fallback.
+
+### Honest scope note
+The 2.2.7 hardening-plan doc (`docs/webui_hardening_plan.md`)
+proposed four decisions. After surveying the codebase during
+implementation, Decision 1 turned out to be already shipping
+(`RedisCache` since 2.1.16) and Decision 3 (audit-log shipping)
+turned out to require building the audit log itself, which is
+out of scope for a hardening release. 2.3.0 ships Decisions 2
+(HTTPS proxy headers) and 4 (per-IP rate-limit) only, plus the
+per-IP `/login` limit which wasn't in the original plan but was
+the obvious missing defense. The hardening-plan doc has been
+amended to reflect this in-flight rescope.
+
 ## [2.2.7] — 2026-05-22 — Honest scope statement for T7/T8 (docs-only)
 
 ### Changed

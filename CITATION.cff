@@ -9,8 +9,8 @@ abstract: >
   forensics, and file metadata forensics.
 authors:
   - name: PaperGuard Contributors
-version: 2.2.7
-date-released: 2026-05-22
+version: 2.3.0
+date-released: 2026-05-23
 license: MIT
 keywords:
   - research-integrity

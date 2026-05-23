@@ -1,8 +1,10 @@
 # Web UI production hardening — decision document
 
-> **Status:** awaiting decisions, no implementation yet.
+> **Status:** 2.3.0 shipped Decisions 2 + 4 (plus a `/login` per-IP
+> limit not in the original plan). See "Post-implementation notes"
+> at the bottom for what changed during the survey + why.
 > **Companion to:** [`webui_multitenant.md`](webui_multitenant.md) — the
-> existing Web UI documentation. This doc proposes the 4 production
+> existing Web UI documentation. This doc proposed the 4 production
 > hardening decisions that document leaves open ended.
 
 The current PaperGuard multi-tenant Web UI (in
@@ -186,3 +188,44 @@ Reply with the four picks in order, e.g.:
 
 …and I'll implement. If you want to change any recommendation,
 just say which option letter instead.
+
+---
+
+## Post-implementation notes (2.3.0)
+
+User picked the recommendations (1=B, 2=A, 3=A+B, 4=B). During
+implementation a closer survey of `src/paperguard/webui/` surfaced
+two facts that contradicted the original plan:
+
+1. **Decision 1 was already shipping.** `scan_cache.py` and
+   `ratelimit.py` already had Redis backends with auto-detection
+   via `PAPERGUARD_REDIS_URL` (added in 2.1.15 / 2.1.16). The
+   "in-memory only" framing in this doc's Decision 1 was wrong —
+   in-memory is just the default, Redis is opt-in. **No SQLite
+   middle backend was added.** Operators who need cross-worker
+   correctness set `PAPERGUARD_REDIS_URL`; everyone else keeps
+   the in-memory default.
+2. **Decision 3 (audit log shipping) had no audit log to ship.**
+   The hardening plan claimed "every login, scan submission,
+   report viewed, settings change" was logged to a SQLite
+   `audit_log` table; in fact no such table exists and no audit
+   events are written. Building the audit pipeline itself is
+   real work (~half a day) and out of scope for a hardening
+   release. Deferred to a future "audit log v1" cut. The
+   `webui_multitenant.md` Roadmap was updated to reflect this.
+
+2.3.0 therefore shipped:
+- **Decision 2 (HTTPS termination strategy)** as planned —
+  `PAPERGUARD_BEHIND_PROXY=1` env var → `Secure` session cookies
+  + trust `X-Forwarded-For` for IP attribution.
+- **Decision 4 (per-IP rate-limit)** as planned —
+  `/app/projects/{id}/scan` now rate-limits per-user (existing)
+  AND per-IP (new, 60 req/60 s).
+- **Bonus: per-IP `/login` and `/redeem` rate-limit.** Not in the
+  original plan but the obvious missing defense once we had the
+  `client_ip()` helper. Login: 10/5 min/IP. Redeem: 5/10 min/IP.
+  Both return HTTP 429 with `Retry-After`.
+
+Migration: existing dev workflows unchanged — no new env vars
+required, defaults match prior behavior. Production deployments
+behind HTTPS proxies should add `PAPERGUARD_BEHIND_PROXY=1`.
