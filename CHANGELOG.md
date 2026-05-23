@@ -4,6 +4,70 @@ All notable changes to PaperGuard are documented in this file. Format follows
 [Keep a Changelog](https://keepachangelog.com/) and the project adheres to
 [Semantic Versioning](https://semver.org/).
 
+## [2.5.1] — 2026-05-23 — Four-model T7 OpenAI study + reasoning-model API-block confirmation
+
+### Added
+- `scripts/t7_controlled_benchmark_results_openai_gpt35.json` — T7 on
+  OpenAI `gpt-3.5-turbo`, N=10+10.
+- `scripts/t7_controlled_benchmark_results_openai_gpt4.json` — T7 on
+  OpenAI `gpt-4` (legacy base, not `gpt-4o`), N=10+10.
+
+### Empirical
+- **All four OpenAI models with logprobs show inverted T7 direction**
+  (AI mean ppl > human mean ppl). Pattern is **not monotonic in
+  model size**:
+
+  | Model | p-value | inv-LR+ at max(human) | TPR / FPR |
+  |---|---|---|---|
+  | gpt-3.5-turbo | 0.0009 | **∞** | 90 % / 0 % |
+  | gpt-4 (legacy) | 2.1e-6 | **∞** | 90 % / 0 % |
+  | gpt-4o-mini | 0.047 | 1.57 at median(h) | weakest |
+  | gpt-4o | 0.0011 | **∞** | 70 % / 0 % |
+
+  gpt-3.5-turbo and gpt-4 (early-RLHF era when "delve into" was a
+  known ChatGPT tell) give cleaner separations than gpt-4o.
+  Recommendation: keep gpt-4o as the production default for T7
+  inverted-mode, but operators on a budget can use gpt-3.5-turbo —
+  it gives an equally strong signal at lower cost.
+
+### Confirmed
+- **OpenAI reasoning models API-block logprobs.** Tested `o1`,
+  `o3-mini`, `o4-mini` — all return HTTP 400 "You are not allowed
+  to request logprobs from this model". The 2.2.7 scope claim
+  ("reasoning models structurally incompatible") is therefore
+  enforced at the API layer, not just an empirical pattern.
+- **OpenAI does not host Llama; Groq does not expose logprobs on
+  Llama.** The Llama-3.x reference-LM T7 hypothesis test remains
+  blocked on the only two providers tested. Self-hosted vLLM
+  remains the only validation path.
+
+### Changed (docs)
+- `docs/llm_detection_real_endpoints.md`: TL;DR table now lists all
+  five endpoints. New "Implications" subsection summarizes the
+  four-model OpenAI pattern + non-monotonicity in size + reasoning
+  API block + remaining vLLM-Llama gap. "Decision rule" subsection
+  refined with explicit OpenAI-models-list and Groq-`qwen3-32b`
+  textbook-direction confirmation.
+
+### T6 dictionary refresh — experiment not shipped
+We also ran `paperguard refresh-ai-dict --corpus <gpt-4o-mini-
+generated 3.2k-word corpus>` to test the auto-extraction pathway.
+It produced 110 candidate n-grams, but inspection showed them to
+be generic academic phrases ("additionally the", "advancements in",
+"application of") that humans use about as often as LLMs. Auto-
+committing would inflate T6 FPR. Decision: do NOT extend the
+dictionary without manual curation. The pathway works; the heuristic
+needs human judgment.
+
+### Verifications
+- pytest: 534 passed (no code changed), 3 deselected
+- ruff: all checks passed
+- mypy --strict: 103 source files, no issues
+- privacy grep: clean
+- OpenAI API cost for this release's three runs (gpt-3.5-turbo,
+  gpt-4, gpt-4o-mini corpus generation) + earlier 2.4.x runs:
+  ≈ $0.10 total across the project's full T7/T8 history
+
 ## [2.5.0] — 2026-05-23 — Audit log v1 (Web UI)
 
 The audit-log IOU opened in 2.2.7 (Decision 3 of the hardening plan)

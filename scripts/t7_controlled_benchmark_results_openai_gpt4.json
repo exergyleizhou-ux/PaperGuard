@@ -1,106 +1,106 @@
 {
-  "model": "gpt-3.5-turbo",
+  "model": "gpt-4",
   "base_url": "https://api.openai.com/v1",
   "results": [
     {
       "arm": "human",
       "idx": 0,
-      "perplexity": 1.2180028217061887
+      "perplexity": 1.3794575066128614
     },
     {
       "arm": "human",
       "idx": 1,
-      "perplexity": 1.2168022632971796
+      "perplexity": 1.234414334562529
     },
     {
       "arm": "human",
       "idx": 2,
-      "perplexity": 1.2004431587579882
+      "perplexity": 1.4302834156855186
     },
     {
       "arm": "human",
       "idx": 3,
-      "perplexity": 1.1816795906097048
+      "perplexity": 1.4834967799727063
     },
     {
       "arm": "human",
       "idx": 4,
-      "perplexity": 1.2163465115149756
+      "perplexity": 1.2867774562990049
     },
     {
       "arm": "human",
       "idx": 5,
-      "perplexity": 1.2302265268056551
+      "perplexity": 1.3268784207284423
     },
     {
       "arm": "human",
       "idx": 6,
-      "perplexity": 1.2417603645374937
+      "perplexity": 1.4610737681823103
     },
     {
       "arm": "human",
       "idx": 7,
-      "perplexity": 1.2379515654581317
+      "perplexity": 1.6870367032377414
     },
     {
       "arm": "human",
       "idx": 8,
-      "perplexity": 1.1663334328225239
+      "perplexity": 1.3257871214269277
     },
     {
       "arm": "human",
       "idx": 9,
-      "perplexity": 1.2171410866021075
+      "perplexity": 1.696595988657626
     },
     {
       "arm": "ai",
       "idx": 0,
-      "perplexity": 1.3379515333447167
+      "perplexity": 2.2011928725451098
     },
     {
       "arm": "ai",
       "idx": 1,
-      "perplexity": 1.4188751659644319
+      "perplexity": 1.893286193721367
     },
     {
       "arm": "ai",
       "idx": 2,
-      "perplexity": 1.4377093005054227
+      "perplexity": 2.0393377094482967
     },
     {
       "arm": "ai",
       "idx": 3,
-      "perplexity": 1.3683109405922158
+      "perplexity": 2.0029545127571717
     },
     {
       "arm": "ai",
       "idx": 4,
-      "perplexity": 1.1092669965237223
+      "perplexity": 1.5307026331473563
     },
     {
       "arm": "ai",
       "idx": 5,
-      "perplexity": 1.4694341373376576
+      "perplexity": 1.833407586010246
     },
     {
       "arm": "ai",
       "idx": 6,
-      "perplexity": 1.4943747120954674
+      "perplexity": 2.1742051147415755
     },
     {
       "arm": "ai",
       "idx": 7,
-      "perplexity": 1.3949912065924852
+      "perplexity": 2.1196866494018303
     },
     {
       "arm": "ai",
       "idx": 8,
-      "perplexity": 1.3256567343261896
+      "perplexity": 2.0409368141717144
     },
     {
       "arm": "ai",
       "idx": 9,
-      "perplexity": 1.3894289447666497
+      "perplexity": 2.1253090693207097
     }
   ]
 }

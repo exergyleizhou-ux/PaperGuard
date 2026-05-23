@@ -9,9 +9,10 @@ abstract: >
   forensics, and file metadata forensics.
 authors:
   - name: PaperGuard Contributors
-version: 2.5.0
-# 2.5.0 = audit log v1 (AuditEvent model + audit_event() helper +
-# 11 hook sites + JSON-lines mirror + admin /app/admin/audit endpoint)
+version: 2.5.1
+# 2.5.1 = 4-model T7 OpenAI study (gpt-3.5-turbo, gpt-4, gpt-4o-mini,
+# gpt-4o all show inverted direction) + reasoning-model logprobs
+# API-block confirmation (o1/o3-mini/o4-mini)
 date-released: 2026-05-23
 license: MIT
 keywords:
