@@ -1,7 +1,7 @@
 # Detector Reference
 
-PaperGuard 2.2.x ships **38 built-in detectors** (34 academic + 4
-industrial) organized into 8 clusters. Each has its own deep-dive
+PaperGuard 2.5.x ships **39 built-in detectors** (35 academic + 4
+industrial; G5 reagent-temporal added in 2.4.0) organized into 8 clusters. Each has its own deep-dive
 page below. The dedicated LLM-text guide
 [`../llm_detection_v2.md`](../llm_detection_v2.md) covers T6 + T7 +
 T8 together with empirical calibration; the endpoint scope statement

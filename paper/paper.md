@@ -1,5 +1,5 @@
 ---
-title: 'PaperGuard: A 38-detector open-source pipeline for triage-stage statistical-anomaly screening in research-data integrity'
+title: 'PaperGuard: A 39-detector open-source pipeline for triage-stage statistical-anomaly screening in research-data integrity'
 tags:
   - Python
   - research integrity
@@ -27,7 +27,7 @@ bibliography: paper.bib
 `PaperGuard` is an open-source Python command-line tool and library for
 **triage-stage** screening of statistical anomalies in scientific
 manuscripts, their accompanying data, and industrial process logs. It
-composes 38 independent detectors spanning eight methodological
+composes 39 independent detectors spanning eight methodological
 families — terminal-digit distribution, Benford's law, arithmetic and
 decimal consistency, GRIM / SPRITE / GRIMMER reverse-reconstruction
 tests, the Carlisle baseline-plausibility procedure for randomised
@@ -110,7 +110,7 @@ causes a regression on a curated set of synthetic genuine inputs.
 | Summary-statistic consistency | B1, B4, B5, B6, B7, B8 | GRIM, statcheck, TIVA, GRIMMER, p-curve, SPRITE |
 | Clinical-trial plausibility | C1 | Carlisle baseline-imbalance |
 | Variance / independence | D1, D2, E1 | Residual smoothness, missing-pattern, intra-class correlation |
-| Image / metadata forensics | F1–F6, G1, G3, G4 | pHash duplication, splice forensics, per-channel histogram, EXIF, docx rsid, file-metadata |
+| Image / metadata forensics | F1–F6, G1, G3, G4, G5 | pHash duplication, splice forensics, per-channel histogram, EXIF, docx rsid, file-metadata, reagent / equipment year-of-citation temporal consistency |
 | Text / authorship / paper-mill | M1, T1–T8 | Co-authorship graph, n-gram plagiarism, trial-outcome drift, data-availability audit, stylometry, three LLM-text detectors |
 | Industrial process data | I1, I2, I5, I6 | Mass-balance closure, SCADA timestamp integrity, batch-repetition detection, process-trend over-smoothness |
 
@@ -212,7 +212,7 @@ calibrate trust.
 
 # Software quality
 
-PaperGuard 2.2.7 ships 101 source files with 506 unit and
+PaperGuard 2.5.0 ships 103 source files with 534 unit and
 integration tests (3 additional network-dependent tests deselected
 by default). The project enforces `ruff` style checks and
 `mypy --strict` type checks in CI on Linux, macOS, and Windows for
@@ -223,7 +223,7 @@ directory writability, dynamic dictionary state, image-corpus
 presence, and LLM endpoint configuration) and reports
 machine-readable JSON suitable for CI pre-flight use.
 
-The package is on PyPI as `paperguard` (current 2.2.7), with a live
+The package is on PyPI as `paperguard` (current 2.5.0), with a live
 browser demo at
 [huggingface.co/spaces/exergyleizhou/paperguard-demo](https://huggingface.co/spaces/exergyleizhou/paperguard-demo)
 and multi-architecture Docker images

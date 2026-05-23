@@ -19,10 +19,10 @@ trying to do.
 
 ## 🔬 Detector reference (per-detector deep-dives)
 
-[detectors.md](detectors.md) — overview of all 38 detectors
-(34 academic + 4 industrial).
+[detectors.md](detectors.md) — overview of all 39 detectors
+(35 academic + 4 industrial).
 [detectors/](detectors/) — auto-generated per-detector pages
-(one .md per A1–T6; F6 / T7 / T8 / I1 / I2 / I5 / I6 added separately).
+(one .md per A1–T6; F6 / T7 / T8 / G5 / I1 / I2 / I5 / I6 added separately).
 
 Quick map:
 
@@ -32,7 +32,7 @@ Quick map:
 | Summary-statistic consistency | B1, B4-B8 | `detectors/B*.md` |
 | Clinical-trial plausibility | C1 | `detectors/C1.md` |
 | Variance / independence | D1, D2, E1 | `detectors/D*.md` |
-| Image / metadata forensics | F1-F6, G1, G3, G4 | `detectors/F*.md` + `detectors/G*.md` |
+| Image / metadata forensics | F1-F6, G1, G3, G4, **G5** (reagent-temporal, 2.4.0) | `detectors/F*.md` + `detectors/G*.md` |
 | Paper-mill / text / LLM | M1, T1-T8 | `detectors/T*.md` (+ LLM-text dedicated guide below) |
 
 ---

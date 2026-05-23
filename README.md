@@ -34,7 +34,7 @@
 
 ## Status
 
-**Stable (2.2.7)**. 38 built-in detectors (34 academic + 4 industrial)
+**Stable (2.5.0)**. 39 built-in detectors (35 academic + 4 industrial)
 + 12 industrial-domain templates + plugin system + opt-in multi-tenant
 Web UI. Covers numeric forensics, statistical recomputation
 (statcheck one- and two-tailed; GRIM/GRIMMER/SPRITE/TIVA/P-curve), Carlisle

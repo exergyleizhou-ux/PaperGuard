@@ -3,10 +3,10 @@
 > 学术论文数据/图像/统计异常筛查工具。
 > **只标记异常，不指控造假。** 每条 Finding 都附带可能的合法解释。
 
-![status](https://img.shields.io/badge/status-2.2.7-blue)
+![status](https://img.shields.io/badge/status-2.5.0-blue)
 ![python](https://img.shields.io/badge/python-3.11%2B-blue)
-![tests](https://img.shields.io/badge/tests-506%20passing-brightgreen)
-![detectors](https://img.shields.io/badge/detectors-38-blue)
+![tests](https://img.shields.io/badge/tests-534%20passing-brightgreen)
+![detectors](https://img.shields.io/badge/detectors-39-blue)
 ![license](https://img.shields.io/badge/license-MIT-green)
 
 [English README](README.md) · 中文 README · **[🤗 在线 Demo](https://huggingface.co/spaces/exergyleizhou/paperguard-demo)**
@@ -21,7 +21,7 @@
 
 每条 Finding 都包含至少 3 条 `innocent_explanations`（可能的合法解释）。
 
-## 38 个内置检测器(34 学术 + 4 工业)
+## 39 个内置检测器(35 学术 + 4 工业)
 
 | 类别 | IDs |
 |---|---|
@@ -30,7 +30,7 @@
 | 临床试验 | C1(Carlisle 基线平衡) |
 | 方差结构 | D1(残差平滑)、D2(缺失值模式)、E1(ICC 独立性,2.0.14 新增) |
 | 图像取证 | F1(pHash 跨图)、F2(ORB 图内复制)、F3(块统计 splice)、F4(跨论文 pHash 库)、F5(EXIF 跨图聚类)、F6(逐通道直方图 patch-splice,Bik 2016 风格) |
-| 元数据 | G1(图像 EXIF 时序)、G3(docx rsid)、G4(文件元数据) |
+| 元数据 | G1(图像 EXIF 时序)、G3(docx rsid)、G4(文件元数据)、**G5(试剂/设备年份时序一致性,2.4.0 新增,致敬 geng-fraud 第六式)** |
 | 论文工厂 | M1(合作者图谱) |
 | 文本与试验 | T1(n-gram 剽窃)、T2(NCT outcome 漂移)、T3(数据/伦理审计)、T4(论文工厂扭曲短语)、T5(Stapel 语言指纹) |
 | LLM 文本 | T6(词面字典 + 动态字典)、T7(续写困惑度)、T8(DetectGPT-curvature) — 见下方 endpoint scope |
