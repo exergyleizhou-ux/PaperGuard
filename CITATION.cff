@@ -9,9 +9,9 @@ abstract: >
   forensics, and file metadata forensics.
 authors:
   - name: PaperGuard Contributors
-version: 2.4.2
-# 2.4.2 = PAPERGUARD_T7_INVERT_THRESHOLD env var (T7 inverted-mode
-# code path + partial validation of RLHF-suppression hypothesis)
+version: 2.5.0
+# 2.5.0 = audit log v1 (AuditEvent model + audit_event() helper +
+# 11 hook sites + JSON-lines mirror + admin /app/admin/audit endpoint)
 date-released: 2026-05-23
 license: MIT
 keywords:

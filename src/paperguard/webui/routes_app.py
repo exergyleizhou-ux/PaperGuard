@@ -11,6 +11,7 @@ from fastapi.responses import HTMLResponse, JSONResponse, RedirectResponse, Resp
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from paperguard.webui.audit import audit_event
 from paperguard.webui.deps import (
     CurrentAdmin,
     CurrentUser,
@@ -18,6 +19,7 @@ from paperguard.webui.deps import (
     DBSession,
 )
 from paperguard.webui.models import (
+    AuditEvent,
     InviteCode,
     Project,
     ScanReport,
@@ -27,7 +29,7 @@ from paperguard.webui.models import (
 )
 from paperguard.webui.ratelimit import get_rate_limiter
 from paperguard.webui.scan_cache import CacheEntry, get_scan_cache
-from paperguard.webui.security import generate_invite_code
+from paperguard.webui.security import client_ip, generate_invite_code
 from paperguard.webui.templates import (
     dashboard,
     invites_page,
@@ -73,6 +75,7 @@ async def projects_redirect() -> Response:
 
 @router.post("/projects")
 async def create_project(
+    request: Request,
     user: CurrentUser,
     session: DBSession,
     name: str = Form(...),
@@ -89,6 +92,15 @@ async def create_project(
     session.add(project)
     await session.commit()
     await session.refresh(project)
+    await audit_event(
+        session,
+        kind="project.create",
+        user_id=user.id,
+        subject_id=project.id,
+        subject_type="project",
+        ip=client_ip(request),
+        meta={"name": trimmed},
+    )
     return RedirectResponse(
         f"/app/projects/{project.id}", status_code=status.HTTP_303_SEE_OTHER
     )
@@ -139,12 +151,23 @@ async def scan_into_project(
     #
     # Either limit triggers a 429. Backend auto-selects Redis if
     # PAPERGUARD_REDIS_URL is set, otherwise InMemory (single-process).
-    from paperguard.webui.security import client_ip
-
+    ip = client_ip(request)
     limiter = get_rate_limiter()
 
     user_decision = limiter.hit(f"scan:user:{user.id}")
     if not user_decision.allowed:
+        await audit_event(
+            session,
+            kind="report.scan.rate_limited",
+            user_id=user.id,
+            subject_id=project_id,
+            subject_type="project",
+            ip=ip,
+            meta={
+                "bucket": "user",
+                "retry_after_seconds": user_decision.retry_after_seconds,
+            },
+        )
         raise HTTPException(
             status_code=429,
             detail=(
@@ -154,13 +177,24 @@ async def scan_into_project(
             headers={"Retry-After": str(int(user_decision.retry_after_seconds) + 1)},
         )
 
-    ip = client_ip(request)
     ip_decision = limiter.hit(
         f"scan:ip:{ip}",
         max_requests=60,
         window_seconds=60,
     )
     if not ip_decision.allowed:
+        await audit_event(
+            session,
+            kind="report.scan.rate_limited",
+            user_id=user.id,
+            subject_id=project_id,
+            subject_type="project",
+            ip=ip,
+            meta={
+                "bucket": "ip",
+                "retry_after_seconds": ip_decision.retry_after_seconds,
+            },
+        )
         raise HTTPException(
             status_code=429,
             detail=(
@@ -194,6 +228,20 @@ async def scan_into_project(
 
     sha = hashlib.sha256(data).hexdigest()
 
+    await audit_event(
+        session,
+        kind="report.scan.start",
+        user_id=user.id,
+        subject_id=project.id,
+        subject_type="project",
+        ip=ip,
+        meta={
+            "sha256": sha,
+            "filename": Path(file.filename).name[:255],
+            "size_bytes": len(data),
+        },
+    )
+
     # Scan-result cache: if another user uploaded the same exact file
     # within the TTL window, reuse the cached audit payload. Saves
     # CPU on duplicate uploads (common in editorial workflows where
@@ -204,7 +252,9 @@ async def scan_into_project(
         payload = cached.payload
         findings = payload.get("findings") or []
         severity_max = cached.severity_max
+        cache_hit = True
     else:
+        cache_hit = False
         with tempfile.NamedTemporaryFile(suffix=suffix, delete=False) as tmp:
             tmp.write(data)
             tmp_path = Path(tmp.name)
@@ -243,6 +293,23 @@ async def scan_into_project(
     session.add(report)
     await session.commit()
     await session.refresh(report)
+    await audit_event(
+        session,
+        kind="report.scan.complete",
+        user_id=user.id,
+        subject_id=report.id,
+        subject_type="report",
+        ip=ip,
+        meta={
+            "sha256": sha,
+            "project_id": project.id,
+            "filename": Path(file.filename).name[:255],
+            "max_severity": severity_max,
+            "n_findings": len(findings),
+            "cache_hit": cache_hit,
+            "visibility": vis.value if hasattr(vis, "value") else str(vis),
+        },
+    )
     return RedirectResponse(
         f"/app/reports/{report.id}", status_code=status.HTTP_303_SEE_OTHER
     )
@@ -353,6 +420,93 @@ async def create_invite(
     )
     session.add(invite)
     await session.commit()
+    await session.refresh(invite)
+    await audit_event(
+        session,
+        kind="admin.invite.create",
+        user_id=admin.id,
+        subject_id=invite.id,
+        subject_type="invite",
+        ip=client_ip(request),
+        meta={
+            "email": normalised,
+            "role": role_value.value if hasattr(role_value, "value") else str(role_value),
+        },
+    )
     return RedirectResponse(
         "/app/admin/invites", status_code=status.HTTP_303_SEE_OTHER
+    )
+
+
+@router.get("/admin/audit")
+async def admin_audit_list(
+    request: Request,
+    admin: CurrentAdmin,
+    session: DBSession,
+    since: str | None = None,
+    until: str | None = None,
+    user: str | None = None,
+    kind: str | None = None,
+    limit: int = 200,
+) -> JSONResponse:
+    """Admin-only audit-log read endpoint (2.5.0+).
+
+    Query parameters:
+      since  ISO-8601 timestamp, default = 24h ago
+      until  ISO-8601 timestamp, default = now
+      user   numeric user id filter (matches user_id)
+      kind   exact kind string or prefix (e.g. "auth.login")
+      limit  default 200, capped at 1000
+    """
+    from datetime import UTC, datetime, timedelta
+
+    now = datetime.now(UTC)
+    try:
+        since_dt = (
+            datetime.fromisoformat(since)
+            if since else now - timedelta(hours=24)
+        )
+        until_dt = datetime.fromisoformat(until) if until else now
+    except ValueError as e:
+        raise HTTPException(
+            status_code=400, detail=f"Invalid timestamp: {e}"
+        ) from e
+    limit = max(1, min(int(limit), 1000))
+
+    stmt = select(AuditEvent).where(
+        AuditEvent.created_at >= since_dt,
+        AuditEvent.created_at <= until_dt,
+    )
+    if user is not None:
+        try:
+            stmt = stmt.where(AuditEvent.user_id == int(user))
+        except ValueError as e:
+            raise HTTPException(
+                status_code=400, detail="user must be an integer id"
+            ) from e
+    if kind:
+        # Prefix match: "auth.login" catches both .success and .failure.
+        stmt = stmt.where(AuditEvent.kind.startswith(kind))
+    stmt = stmt.order_by(AuditEvent.created_at.desc()).limit(limit)
+
+    rows = list((await session.scalars(stmt)).all())
+    return JSONResponse(
+        {
+            "since": since_dt.isoformat(timespec="seconds"),
+            "until": until_dt.isoformat(timespec="seconds"),
+            "count": len(rows),
+            "events": [
+                {
+                    "id": r.id,
+                    "created_at": r.created_at.isoformat(timespec="seconds"),
+                    "kind": r.kind,
+                    "user_id": r.user_id,
+                    "subject_id": r.subject_id,
+                    "subject_type": r.subject_type,
+                    "ip": r.ip,
+                    "meta": json.loads(r.meta_json or "{}"),
+                }
+                for r in rows
+            ],
+        }
     )

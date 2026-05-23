@@ -7,6 +7,7 @@ from fastapi import APIRouter, Form, HTTPException, Request, Response, status
 from fastapi.responses import HTMLResponse, RedirectResponse
 from sqlalchemy import select
 
+from paperguard.webui.audit import audit_event
 from paperguard.webui.deps import CurrentUser, CurrentUserOptional, DBSession
 from paperguard.webui.models import InviteCode, User, UserRole
 from paperguard.webui.ratelimit import get_rate_limiter
@@ -62,6 +63,15 @@ async def login_submit(
         window_seconds=_LOGIN_WINDOW_SECONDS,
     )
     if not decision.allowed:
+        await audit_event(
+            session,
+            kind="auth.login.rate_limited",
+            ip=ip,
+            meta={
+                "endpoint": "login",
+                "retry_after_seconds": decision.retry_after_seconds,
+            },
+        )
         raise HTTPException(
             status_code=status.HTTP_429_TOO_MANY_REQUESTS,
             detail=(
@@ -73,15 +83,48 @@ async def login_submit(
 
     normalised = email.strip().lower()
     user = await session.scalar(select(User).where(User.email == normalised))
-    if (
-        user is None
-        or not user.is_active
-        or not verify_password(password, user.password_hash)
-    ):
+    if user is None:
+        await audit_event(
+            session,
+            kind="auth.login.failure",
+            ip=ip,
+            meta={"email": normalised, "reason": "no_user"},
+        )
         return HTMLResponse(
             login_page(error="Invalid email or password.", email_prefill=normalised),
             status_code=status.HTTP_401_UNAUTHORIZED,
         )
+    if not user.is_active:
+        await audit_event(
+            session,
+            kind="auth.login.failure",
+            user_id=user.id,
+            ip=ip,
+            meta={"email": normalised, "reason": "inactive"},
+        )
+        return HTMLResponse(
+            login_page(error="Invalid email or password.", email_prefill=normalised),
+            status_code=status.HTTP_401_UNAUTHORIZED,
+        )
+    if not verify_password(password, user.password_hash):
+        await audit_event(
+            session,
+            kind="auth.login.failure",
+            user_id=user.id,
+            ip=ip,
+            meta={"email": normalised, "reason": "bad_password"},
+        )
+        return HTMLResponse(
+            login_page(error="Invalid email or password.", email_prefill=normalised),
+            status_code=status.HTTP_401_UNAUTHORIZED,
+        )
+    await audit_event(
+        session,
+        kind="auth.login.success",
+        user_id=user.id,
+        ip=ip,
+        meta={"email": normalised},
+    )
     token = encode_session(user.id)
     resp = RedirectResponse("/app", status_code=status.HTTP_303_SEE_OTHER)
     resp.set_cookie(
@@ -96,7 +139,18 @@ async def login_submit(
 
 
 @router.post("/logout")
-async def logout(_user: CurrentUser) -> Response:
+async def logout(
+    request: Request,
+    user: CurrentUser,
+    session: DBSession,
+) -> Response:
+    await audit_event(
+        session,
+        kind="auth.logout",
+        user_id=user.id,
+        ip=client_ip(request),
+        meta={},
+    )
     resp = RedirectResponse("/app/login", status_code=status.HTTP_303_SEE_OTHER)
     resp.delete_cookie(SESSION_COOKIE_NAME)
     return resp
@@ -130,6 +184,16 @@ async def redeem_submit(
         window_seconds=_REDEEM_WINDOW_SECONDS,
     )
     if not decision.allowed:
+        await audit_event(
+            session,
+            kind="auth.redeem.rate_limited",
+            ip=ip,
+            meta={
+                "endpoint": "redeem",
+                "code_prefix": code[:8],
+                "retry_after_seconds": decision.retry_after_seconds,
+            },
+        )
         raise HTTPException(
             status_code=status.HTTP_429_TOO_MANY_REQUESTS,
             detail=(
@@ -143,8 +207,27 @@ async def redeem_submit(
         select(InviteCode).where(InviteCode.code == code)
     )
     if invite is None or invite.is_redeemed:
+        await audit_event(
+            session,
+            kind="auth.redeem.failure",
+            ip=ip,
+            meta={
+                "code_prefix": code[:8],
+                "reason": "no_invite" if invite is None else "already_redeemed",
+            },
+        )
         return HTMLResponse(redeem_page(code, invite))
     if len(password) < 10:
+        await audit_event(
+            session,
+            kind="auth.redeem.failure",
+            ip=ip,
+            meta={
+                "code_prefix": code[:8],
+                "email": invite.email,
+                "reason": "weak_password",
+            },
+        )
         return HTMLResponse(
             redeem_page(
                 code, invite, error="Password must be at least 10 characters."
@@ -154,6 +237,16 @@ async def redeem_submit(
     # Ensure the invited email is still unused.
     existing = await session.scalar(select(User).where(User.email == invite.email))
     if existing is not None:
+        await audit_event(
+            session,
+            kind="auth.redeem.failure",
+            ip=ip,
+            meta={
+                "code_prefix": code[:8],
+                "email": invite.email,
+                "reason": "email_taken",
+            },
+        )
         return HTMLResponse(
             redeem_page(
                 code,
@@ -175,6 +268,17 @@ async def redeem_submit(
     invite.redeemed_user_id = new_user.id
     await session.commit()
     await session.refresh(new_user)
+    await audit_event(
+        session,
+        kind="auth.redeem.success",
+        user_id=new_user.id,
+        ip=ip,
+        meta={
+            "email": invite.email,
+            "code_prefix": code[:8],
+            "role": invite.role.value if hasattr(invite.role, "value") else str(invite.role),
+        },
+    )
     token = encode_session(new_user.id)
     resp = RedirectResponse("/app", status_code=status.HTTP_303_SEE_OTHER)
     resp.set_cookie(

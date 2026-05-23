@@ -173,3 +173,43 @@ class ScanReport(Base):
         Index("ix_scan_reports_project_id", "project_id"),
         Index("ix_scan_reports_visibility_created", "visibility", "created_at"),
     )
+
+
+class AuditEvent(Base):
+    """Append-only audit trail for the multi-tenant Web UI (2.5.0+).
+
+    One row per security-relevant event. Best-effort write semantics:
+    ``audit.audit_event()`` never raises into the caller, so a failed
+    audit write never blocks the user-facing operation.
+
+    Schema is intentionally flat:
+
+    - ``kind`` is a string (not enum) so adding new event kinds in
+      future minors is additive and doesn't require schema migrations.
+    - ``meta_json`` holds event-specific payload up to ~4 KB.
+    - ``ip`` is stored raw (not hashed) — operators worried about
+      GDPR right-to-erasure can prune old rows with a future
+      ``paperguard webui prune-audit`` command. v1 has no automatic
+      pruning.
+    """
+
+    __tablename__ = "audit_events"
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), nullable=False, default=utcnow
+    )
+    kind: Mapped[str] = mapped_column(String(64), nullable=False)
+    user_id: Mapped[int | None] = mapped_column(
+        ForeignKey("users.id", ondelete="SET NULL"), nullable=True
+    )
+    subject_id: Mapped[int | None] = mapped_column(Integer, nullable=True)
+    subject_type: Mapped[str | None] = mapped_column(String(32), nullable=True)
+    ip: Mapped[str | None] = mapped_column(String(64), nullable=True)
+    meta_json: Mapped[str] = mapped_column(Text, nullable=False, default="{}")
+
+    __table_args__ = (
+        Index("ix_audit_events_kind_created", "kind", "created_at"),
+        Index("ix_audit_events_user", "user_id"),
+        Index("ix_audit_events_created", "created_at"),
+    )

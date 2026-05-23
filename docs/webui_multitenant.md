@@ -207,12 +207,13 @@ underlying ORM supports it — that's a 2.1 follow-up.
       in-memory state and rate-limits / cache hits become per-worker
       best-effort.
 
-## 2.3.0 hardening env vars (new)
+## Hardening + audit env vars
 
 | Env var | Effect | When to set |
 |---|---|---|
-| `PAPERGUARD_BEHIND_PROXY=1` | Session cookie `Secure=True` + trust first hop of `X-Forwarded-For` for IP attribution | Any deployment terminating HTTPS at an external proxy |
-| `PAPERGUARD_REDIS_URL=redis://...` | Cache + rate-limit backend → Redis instead of in-memory dicts | Multi-worker (`--workers N`) or multi-host deployments |
+| `PAPERGUARD_BEHIND_PROXY=1` | Session cookie `Secure=True` + trust first hop of `X-Forwarded-For` for IP attribution | Any deployment terminating HTTPS at an external proxy (2.3.0+) |
+| `PAPERGUARD_REDIS_URL=redis://...` | Cache + rate-limit backend → Redis instead of in-memory dicts | Multi-worker (`--workers N`) or multi-host deployments (2.1.15+) |
+| `PAPERGUARD_AUDIT_FILE=/var/log/paperguard/audit.jsonl` | Mirror every audit-DB write as a JSON line to this file | When you want to ship audit events to syslog / vector / fluent-bit / promtail. 2.5.0+ |
 
 **Default rate-limit policy (2.3.0):**
 
@@ -235,8 +236,9 @@ The 2.0 cut intentionally stays minimal. Open items for 2.x:
 - Password reset flow (currently admin must delete + reinvite).
 - Project-level membership (more than one owner / read-share).
 - Visibility editing on existing reports.
-- Audit log endpoint surfaced in the UI (no audit log exists yet —
-  this is "build it then surface it", not just plumbing).
+- ~~Audit log endpoint surfaced in the UI~~ — partially done in 2.5.0:
+  `GET /app/admin/audit` returns events as JSON. Admin HTML UI
+  for browsing is the remaining piece.
 - ~~HTTPS-only cookie toggle via env.~~ Shipped 2.3.0 as
   `PAPERGUARD_BEHIND_PROXY=1`.
 - OAuth/SAML SSO integration.

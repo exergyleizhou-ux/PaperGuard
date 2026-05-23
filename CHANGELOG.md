@@ -4,6 +4,78 @@ All notable changes to PaperGuard are documented in this file. Format follows
 [Keep a Changelog](https://keepachangelog.com/) and the project adheres to
 [Semantic Versioning](https://semver.org/).
 
+## [2.5.0] — 2026-05-23 — Audit log v1 (Web UI)
+
+The audit-log IOU opened in 2.2.7 (Decision 3 of the hardening plan)
+and re-flagged in 2.3.0 as "no audit log to ship yet" is now closed.
+
+### Added
+- **`AuditEvent` SQLAlchemy model** (`src/paperguard/webui/models.py`).
+  Append-only. Flat schema: `id`, `created_at`, `kind` (string,
+  not enum — additive-friendly), `user_id`, `subject_id`,
+  `subject_type`, `ip`, `meta_json`. Three indexes: kind+created,
+  user, created.
+- **`audit_event()` helper coroutine** (`src/paperguard/webui/audit.py`).
+  Best-effort write semantics — never raises into the caller.
+  Commits its own write so audit rows persist even on routes
+  (login, logout, redeem) that don't otherwise commit. On DB
+  failure: log warning, attempt rollback, continue.
+- **Optional JSON-lines mirror** via `PAPERGUARD_AUDIT_FILE=/path`.
+  If set, every audit-DB write also appends one JSON line to the
+  file. Wire your logshipper (vector / fluent-bit / promtail /
+  rsyslog imfile) here.
+- **11 hook sites across `routes_auth.py` and `routes_app.py`**:
+    - `auth.login.success` / `.failure` (reason ∈ {no_user, inactive,
+      bad_password}) / `.rate_limited`
+    - `auth.logout`
+    - `auth.redeem.success` / `.failure` (reason ∈ {no_invite,
+      already_redeemed, weak_password, email_taken}) / `.rate_limited`
+    - `project.create`
+    - `report.scan.start` / `.complete` (with sha256, max_severity,
+      n_findings, cache_hit) / `.rate_limited` (with bucket = user|ip)
+    - `admin.invite.create`
+- **Admin read endpoint `GET /app/admin/audit`** with query params
+  `since` (ISO-8601, default -24 h), `until` (default now), `user`
+  (numeric id filter), `kind` (prefix match), `limit` (default 200,
+  capped 1000). Returns JSON `{since, until, count, events: [...]}`
+  newest-first. Existing `CurrentAdmin` dependency enforces
+  admin-only access.
+
+### Test infrastructure
+- **`tests/test_webui_audit.py`** — 12 new tests:
+    - All 5 documented login outcomes emit the expected event.
+    - Logout, project create, admin invite, login rate-limit each emit.
+    - `/app/admin/audit` is admin-only (anon → redirect/403).
+    - `/app/admin/audit` filter by `kind` prefix works.
+    - JSON-lines mirror writes valid JSON when env var set.
+    - `audit_event()` swallows DB failures and the user-facing
+      operation continues (direct unit-test against the helper).
+
+### Schema migration
+- `init_models()` already runs `Base.metadata.create_all` on startup
+  — fresh installs and existing SQLite/PostgreSQL deployments with
+  CREATE-TABLE permission get the new table on next launch. No
+  data migration needed; `audit_events` is a new empty table.
+
+### Docs
+- `docs/webui_multitenant.md` — production checklist gets new
+  `PAPERGUARD_AUDIT_FILE` row; roadmap "audit log endpoint
+  surfaced in the UI" is now "GET /app/admin/audit returns
+  JSON; UI surface still TODO".
+
+### Out of scope (deferred to a future minor)
+- Hash-chained tamper-evidence on the JSON-lines log.
+- Automatic retention / pruning (currently grows indefinitely;
+  operators can run a SQL `DELETE FROM audit_events WHERE
+  created_at < ...` by hand).
+- HTML admin UI for browsing events.
+
+### Verifications
+- pytest: **534 passed** (was 522; +12 audit cases), 3 deselected.
+- ruff: all checks passed.
+- mypy --strict: 103 source files (was 102; +audit module), no issues.
+- privacy grep: clean.
+
 ## [2.4.2] — 2026-05-23 — T7 inverted-threshold env var + Groq Llama hypothesis check
 
 ### Added
