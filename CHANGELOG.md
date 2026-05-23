@@ -4,6 +4,59 @@ All notable changes to PaperGuard are documented in this file. Format follows
 [Keep a Changelog](https://keepachangelog.com/) and the project adheres to
 [Semantic Versioning](https://semver.org/).
 
+## [2.6.1] — 2026-05-23 — Image-recall v6: F4 LR+ collapses, v5 hard truth confirmed
+
+### Added
+- `scripts/recall_image_v6.py` — v4/v5 script variant with
+  `has_pmid:true` on both OpenAlex queries to address v5's
+  arm-attrition asymmetry. (Originally landed in 2.5.0 as a
+  side-dish; 2.6.1 is the first release with actual v6 results.)
+- `scripts/recall_image_v6_results.json` — raw run (200 retracted
+  + 83 unique controls fetched, 163 + 49 = 212 analysable after
+  pdf_ok + n_images ≥ 1 filter).
+- `scripts/recall_analyze_image_v6.py` — analyser with Wilson 95 %
+  CI math + v6-specific interpretation framing.
+- `docs/recall_image_v6.md` — published study writeup.
+
+### Empirical
+| Detector | v4 LR+ (N=159) | v5 LR+ (N=180) | **v6 LR+ (N=212)** |
+|---|---|---|---|
+| F1 (intra-paper pHash) | n/a | 1.39 [0.48, 4.23] | **1.09 [0.44, 2.86]** |
+| F4 (cross-paper pHash) | n/a | 4.36 [0.48, 41.28] | **0.96 [0.28, 3.46]** |
+| F6 (patch-splice) | 1.63 | 0.92 [0.75, 1.20] | **0.89 [0.74, 1.12]** |
+
+The `has_pmid:true` filter helped retracted-arm pdf_ok rate jump
+from 66 % (v5) to **82 %** (v6), but control-arm only rose from
+51 % to 59 %. Asymmetry partially fixed; per-arm n now 163 + 49.
+
+**The big story**: v5's apparent F4 LR+ = 4.36 was a 1-false-
+positive artifact in n=48; v6 with 5 FPs in n=49 collapses it to
+0.96. All three image detectors at the documented `z=6 /
+cluster=8` defaults give LR+ ≈ 1 on this OpenAlex / Europe-PMC
+OA biomedical corpus.
+
+### Honest revision
+PaperGuard's image-forensics layer at published defaults is
+**structurally tuned to the Bik-style patch-splice failure mode**,
+which is rare in randomly-sampled retracted papers. On the
+biomedical OA corpus dominated by statistical-fabrication, paper-
+mill, and image-reuse failures, the layer's single-detector LR+ is
+indistinguishable from chance. The image layer retains value only
+as a *contributor* to the cross-detector combiner; future
+calibration against a Bik-curated patch-splice corpus (not publicly
+redistributable today) is the right next step.
+
+### Changed
+- `paper/paper.md` empirical-calibration: image-layer paragraph
+  rewritten with v6 numbers and the honest "all three ≈ 1, layer
+  is tuned for a different failure mode" framing.
+
+### Verifications
+- pytest: 539 passed (no code change), 3 deselected
+- ruff: all checks passed
+- mypy --strict: 103 source files, no issues
+- privacy grep: clean
+
 ## [2.6.0] — 2026-05-23 — T7 endpoint-based auto-detect + paper.md folds in 5-endpoint study
 
 ### Added

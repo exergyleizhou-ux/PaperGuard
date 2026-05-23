@@ -150,21 +150,32 @@ are in [`docs/`](https://github.com/exergyleizhou-ux/PaperGuard/tree/main/docs).
   **pre-submission / preprint** stage, not post-publication
   forensics. Both numbers are public; the conservative default is
   the one shipped in the CLI.
-- **Image-layer recall (v5, 132 retracted + 48 control = 180
-  analysable; raw arm sizes 200 + 95 before OA-fetch attrition).**
-  At the documented `z=6 / cluster=8` "triage tier", F6
-  (patch-splice) LR+ ≈ 0.92, 95 % Wilson CI [0.75, 1.20] —
-  consistent with no signal at default thresholds on this
-  biomedical OA corpus, **revising downward** the v4 point estimate
-  of 1.63 at N=159 which the larger v5 sample reveals to have been
-  an upward sampling fluctuation. F4 (cross-paper pHash) LR+ ≈
-  4.36 [0.48, 41.28] — directionally encouraging but underpowered
-  at 48 controls. F1 (intra-paper pHash) LR+ ≈ 1.39 [0.48, 4.23] —
-  weak. The image-forensics layer should be read as a **ranking
-  input** rather than a binary decision on this corpus; future work
-  needs F6 calibration against a Bik-curated patch-splice corpus
-  (the failure mode F6 was tuned for, which is under-represented in
-  OpenAlex's retraction sample).
+- **Image-layer recall (v6, 163 retracted + 49 control = 212
+  analysable; raw arm sizes 200 + 83 before OA-fetch attrition,
+  with `has_pmid:true` filter on both arms to reduce v5's
+  attrition asymmetry).** At the documented `z=6 / cluster=8`
+  defaults all three image detectors converge to **LR+ ≈ 1**:
+  F6 (patch-splice) 0.89, 95 % Wilson CI [0.74, 1.12]; F4
+  (cross-paper pHash) 0.96 [0.28, 3.46]; F1 (intra-paper pHash)
+  1.09 [0.44, 2.86]. v5's apparent F4 LR+ = 4.36 (1 false
+  positive in 48 controls) collapses to 0.96 with 5 false
+  positives in 49 controls — that earlier figure was the
+  small-sample artifact v5 had already flagged but could not
+  yet quantify. The image layer at PaperGuard's published
+  defaults is **structurally tuned to the Bik-style
+  patch-splice / Western-blot-duplication failure mode**, which
+  is rare in randomly-sampled retracted papers; on the
+  biomedical OA corpus dominated by statistical-fabrication,
+  paper-mill, and image-reuse failures, the layer's single-
+  detector LR+ is indistinguishable from chance. PaperGuard
+  publishes this study at face value precisely because the
+  alternative — quoting v4's small-N LR+ of 1.63 as if it were
+  a calibrated operating point — would be the kind of
+  mis-calibration the tool exists to flag. The image layer
+  retains value as a contributor to the cross-detector
+  combiner; future work needs F6 calibration against a
+  Bik-curated patch-splice corpus that is not publicly
+  redistributable today.
 - **Industrial-layer recall (v1, 2 domains × N=50 clean + 50
   tampered = 200 synthetic datasets total).** On the wastewater
   domain at template-default thresholds, I5 (batch-repetition

@@ -9,11 +9,11 @@ abstract: >
   forensics, and file metadata forensics.
 authors:
   - name: PaperGuard Contributors
-version: 2.6.0
-# 2.6.0 = T7 endpoint-based auto-detect (OpenAI gpt-3.5/4/4o family
-# auto-enables inverted threshold; explicit env var still overrides)
-# + paper.md folds in the 5-endpoint T7 study + reasoning-model
-# API-block confirmation
+version: 2.6.1
+# 2.6.1 = image-recall v6 (PMID-indexed both arms, N=163+49 usable)
+# confirms v5's hard truth — F1/F4/F6 at defaults give LR+ ≈ 1 on
+# un-curated OpenAlex retracted-paper corpus. v5's F4 LR+ 4.36
+# was a 1-FP small-N artifact, v6 collapses it to 0.96.
 date-released: 2026-05-23
 license: MIT
 keywords:
