@@ -18,7 +18,7 @@ authors:
 affiliations:
   - name: Independent
     index: 1
-date: 22 May 2026
+date: 23 May 2026
 bibliography: paper.bib
 ---
 
@@ -248,7 +248,7 @@ calibrate trust.
 
 # Software quality
 
-PaperGuard 2.5.0 ships 103 source files with 534 unit and
+PaperGuard 2.6.1 ships 103 source files with 539 unit and
 integration tests (3 additional network-dependent tests deselected
 by default). The project enforces `ruff` style checks and
 `mypy --strict` type checks in CI on Linux, macOS, and Windows for
@@ -259,7 +259,7 @@ directory writability, dynamic dictionary state, image-corpus
 presence, and LLM endpoint configuration) and reports
 machine-readable JSON suitable for CI pre-flight use.
 
-The package is on PyPI as `paperguard` (current 2.5.0), with a live
+The package is on PyPI as `paperguard` (current 2.6.1), with a live
 browser demo at
 [huggingface.co/spaces/exergyleizhou/paperguard-demo](https://huggingface.co/spaces/exergyleizhou/paperguard-demo)
 and multi-architecture Docker images
