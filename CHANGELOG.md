@@ -4,6 +4,54 @@ All notable changes to PaperGuard are documented in this file. Format follows
 [Keep a Changelog](https://keepachangelog.com/) and the project adheres to
 [Semantic Versioning](https://semver.org/).
 
+## [2.4.2] — 2026-05-23 — T7 inverted-threshold env var + Groq Llama hypothesis check
+
+### Added
+- **`PAPERGUARD_T7_INVERT_THRESHOLD=1` env var.** Flips T7 from
+  classical "low ppl = signal" mode to inverted "high ppl = signal"
+  mode. Use this for OpenAI gpt-4o family endpoints (per 2.4.1
+  data, LR+ = 8.0 at the calibrated inverted threshold = 1.463).
+  Without the env var, T7 behaviour is unchanged from 2.4.1 and
+  earlier.
+- `T7PerplexityDetector.INVERTED_THRESHOLD_{NOTE,SUSPICIOUS,CRITICAL}`
+  class attributes (1.46 / 1.56 / 1.70). Calibrated against the
+  2.4.1 gpt-4o study.
+- `t7_perplexity._invert_enabled()` helper. Public via the env var,
+  also overridable per-instance by patching the class attributes.
+- 4 new unit tests covering: inverted CRITICAL trigger, inverted
+  low-ppl no-finding, inverted NOTE-tier band, and classical-mode
+  no-regression when env var unset.
+
+### Validated (partially)
+- **The RLHF-suppression hypothesis from 2.4.1.** Direct
+  validation requires a self-hosted Llama-3.x reference LM with
+  real logprobs (vLLM-style), which Groq does not expose: tested
+  `llama-3.1-8b-instant`, `llama-3.3-70b-versatile`, and
+  `meta-llama/llama-4-scout-17b-16e-instruct` — all return
+  "`logprobs` is not supported with this model". The only Groq
+  model that does expose logprobs is `qwen/qwen3-32b` (tested in
+  2.2.6: textbook direction, LR+ = 1.69 weak).
+- **Indirect validation** from the existing two-endpoint contrast:
+    - Groq `qwen/qwen3-32b` (Alibaba alignment, moderate RLHF on
+      LLM-markers): **textbook** direction, AI ppl < human ppl,
+      LR+ 1.69.
+    - OpenAI `gpt-4o` (heavy "speak naturally" RLHF objective):
+      **reversed** direction, AI ppl > human ppl, LR+ 8.0 inverted.
+  The two endpoints disagree on direction in the way the RLHF
+  hypothesis predicts. Full validation deferred to a future
+  vLLM-Llama benchmark.
+
+### Changed
+- `docs/llm_detection_real_endpoints.md`: new section "How to flip
+  T7 into inverted-threshold mode" with the decision rule + an
+  expanded RLHF-validation table.
+
+### Verifications
+- pytest: **522 passed** (was 518; +4 inverted-mode tests), 3 deselected.
+- ruff: all checks passed.
+- mypy --strict: 102 source files, no issues.
+- privacy grep: clean.
+
 ## [2.4.1] — 2026-05-23 — T7 on gpt-4o: LR+ = 8.0 + 2.4.0 hypothesis disproved
 
 ### Added

@@ -231,3 +231,89 @@ def test_t7_does_not_say_fraud(monkeypatch: pytest.MonkeyPatch) -> None:
         ).lower()
         for word in forbidden:
             assert word not in bag, f"Forbidden word {word!r} in T7 finding"
+
+
+# ---------------------------------------------------------------------------
+# 2.4.2 — PAPERGUARD_T7_INVERT_THRESHOLD
+# ---------------------------------------------------------------------------
+
+
+def test_inverted_mode_high_perplexity_triggers_critical(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    monkeypatch.setenv("PAPERGUARD_PERPLEXITY_CHECK", "1")
+    monkeypatch.setenv("PAPERGUARD_T7_INVERT_THRESHOLD", "1")
+    monkeypatch.setenv("OPENAI_API_KEY", "sk-test")
+
+    # logprob -0.55 / token → perplexity ≈ 1.73 → inverted CRITICAL (> 1.70)
+    with patch(
+        "paperguard.detectors.t7_perplexity._call_openai_logprobs",
+        return_value=[-0.55] * 20,
+    ):
+        det = T7PerplexityDetector()
+        result = det.detect(_long_text())
+    assert result.applicable
+    assert len(result.findings) == 1
+    f = result.findings[0]
+    assert f.severity.name == "CRITICAL"
+    assert f.evidence["inverted_threshold_mode"] is True
+    # inverted summary mentions the > sign
+    assert "inverted-mode" in f.summary or "inverted" in f.detail
+
+
+def test_inverted_mode_low_perplexity_no_finding(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    """In inverted mode, low ppl (canonical AI signal) must NOT fire."""
+    monkeypatch.setenv("PAPERGUARD_PERPLEXITY_CHECK", "1")
+    monkeypatch.setenv("PAPERGUARD_T7_INVERT_THRESHOLD", "1")
+    monkeypatch.setenv("OPENAI_API_KEY", "sk-test")
+
+    # logprob -0.1 / token → perplexity ≈ 1.10 → below the inverted NOTE
+    # threshold (1.46), so no finding in inverted mode.
+    with patch(
+        "paperguard.detectors.t7_perplexity._call_openai_logprobs",
+        return_value=[-0.1] * 20,
+    ):
+        det = T7PerplexityDetector()
+        result = det.detect(_long_text())
+    assert result.applicable
+    assert result.findings == []
+
+
+def test_inverted_mode_note_tier(monkeypatch: pytest.MonkeyPatch) -> None:
+    monkeypatch.setenv("PAPERGUARD_PERPLEXITY_CHECK", "1")
+    monkeypatch.setenv("PAPERGUARD_T7_INVERT_THRESHOLD", "1")
+    monkeypatch.setenv("OPENAI_API_KEY", "sk-test")
+
+    # logprob -0.4 / token → perplexity ≈ 1.49 → between NOTE 1.46 and
+    # SUSPICIOUS 1.56 in inverted mode.
+    with patch(
+        "paperguard.detectors.t7_perplexity._call_openai_logprobs",
+        return_value=[-0.40] * 20,
+    ):
+        det = T7PerplexityDetector()
+        result = det.detect(_long_text())
+    assert result.findings
+    assert result.findings[0].severity.name == "NOTE"
+
+
+def test_classical_mode_unaffected_by_invert_unset(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    """Sanity: classical-mode behaviour unchanged when env var unset."""
+    monkeypatch.setenv("PAPERGUARD_PERPLEXITY_CHECK", "1")
+    monkeypatch.delenv("PAPERGUARD_T7_INVERT_THRESHOLD", raising=False)
+    monkeypatch.setenv("OPENAI_API_KEY", "sk-test")
+
+    # logprob -0.55 / token → ppl 1.73 → classical CRITICAL (< 5)
+    with patch(
+        "paperguard.detectors.t7_perplexity._call_openai_logprobs",
+        return_value=[-0.55] * 20,
+    ):
+        det = T7PerplexityDetector()
+        result = det.detect(_long_text())
+    assert result.findings
+    f = result.findings[0]
+    assert f.severity.name == "CRITICAL"
+    assert f.evidence["inverted_threshold_mode"] is False

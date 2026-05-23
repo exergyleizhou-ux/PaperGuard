@@ -69,14 +69,60 @@ logger = logging.getLogger(__name__)
 
 
 # Tiers — exposed as class attributes so callers / tests can override.
+#
+# Two threshold modes:
+#
+# - **Classical (default).** Low continuation-perplexity is the signal.
+#   Matches the original DetectGPT-literature framing. Use on
+#   self-hosted Llama-3.x, vLLM-style endpoints, or any reference LM
+#   that has NOT been RLHF-trained to suppress LLM-style markers.
+# - **Inverted** (2.4.2, opt-in via PAPERGUARD_T7_INVERT_THRESHOLD=1).
+#   HIGH continuation-perplexity is the signal. Use on OpenAI
+#   gpt-4o / gpt-4o-mini and similar RLHF-heavy endpoints: the
+#   2.4.1 study showed AI samples score systematically HIGHER ppl
+#   than human academic prose on these reference LMs because the
+#   model itself was trained to avoid LLM-style markers and therefore
+#   finds them surprising on input. LR+ measured at 8.0 on gpt-4o
+#   with the inverted threshold at 1.463 (TPR 80 % / FPR 10 %); see
+#   docs/llm_detection_real_endpoints.md.
 _DEFAULT_NOTE = 20.0
 _DEFAULT_SUSPICIOUS = 10.0
 _DEFAULT_CRITICAL = 5.0
+
+# Inverted-mode thresholds, calibrated against the 2.4.1 gpt-4o run:
+#   human  median 1.282  max 1.561
+#   ai     min    1.366  median 1.565  max 1.833
+# 1.46 = midpoint(min(AI), max(human)) = LR+ 8.0 calibration point.
+# Above 1.56 = max(human) → LR+ ∞ on the v2.4.1 corpus.
+_DEFAULT_INVERTED_NOTE = 1.46
+_DEFAULT_INVERTED_SUSPICIOUS = 1.56
+_DEFAULT_INVERTED_CRITICAL = 1.70
 
 
 def _opt_in_enabled() -> bool:
     """T7 is gated by an env var the CLI flag flips on."""
     return os.environ.get("PAPERGUARD_PERPLEXITY_CHECK", "").lower() in {
+        "1",
+        "true",
+        "yes",
+    }
+
+
+def _invert_enabled() -> bool:
+    """Whether to use the inverted threshold direction (2.4.2+).
+
+    Set ``PAPERGUARD_T7_INVERT_THRESHOLD=1`` to flip T7 into "HIGH
+    perplexity = signal" mode. Use this when the reference LM is a
+    heavily RLHF-tuned model (OpenAI gpt-4o family, Anthropic Claude
+    via a compatible logprobs endpoint, etc.) that has been trained
+    to avoid LLM-style markers and therefore finds them surprising on
+    input.
+
+    Defaults to ``False`` (classical direction, matches the
+    pre-2.4.2 behaviour). See module docstring for the empirical
+    justification and the per-endpoint compatibility matrix.
+    """
+    return os.environ.get("PAPERGUARD_T7_INVERT_THRESHOLD", "").lower() in {
         "1",
         "true",
         "yes",
@@ -289,6 +335,10 @@ class T7PerplexityDetector(BaseDetector):
     THRESHOLD_NOTE: ClassVar[float] = _DEFAULT_NOTE
     THRESHOLD_SUSPICIOUS: ClassVar[float] = _DEFAULT_SUSPICIOUS
     THRESHOLD_CRITICAL: ClassVar[float] = _DEFAULT_CRITICAL
+    # Inverted-mode thresholds (used when PAPERGUARD_T7_INVERT_THRESHOLD=1).
+    INVERTED_THRESHOLD_NOTE: ClassVar[float] = _DEFAULT_INVERTED_NOTE
+    INVERTED_THRESHOLD_SUSPICIOUS: ClassVar[float] = _DEFAULT_INVERTED_SUSPICIOUS
+    INVERTED_THRESHOLD_CRITICAL: ClassVar[float] = _DEFAULT_INVERTED_CRITICAL
 
     def check_applicability(self, data: Any) -> tuple[bool, str]:
         if not _opt_in_enabled():
@@ -342,46 +392,92 @@ class T7PerplexityDetector(BaseDetector):
                 )
             ]
 
+        inverted = _invert_enabled()
         severity: Severity | None = None
-        if perplexity < self.THRESHOLD_CRITICAL:
-            severity = Severity.CRITICAL
-        elif perplexity < self.THRESHOLD_SUSPICIOUS:
-            severity = Severity.SUSPICIOUS
-        elif perplexity < self.THRESHOLD_NOTE:
-            severity = Severity.NOTE
+        if inverted:
+            # HIGH perplexity = signal (RLHF-heavy reference LM, e.g.
+            # OpenAI gpt-4o). See module docstring + 2.4.1 study.
+            if perplexity > self.INVERTED_THRESHOLD_CRITICAL:
+                severity = Severity.CRITICAL
+            elif perplexity > self.INVERTED_THRESHOLD_SUSPICIOUS:
+                severity = Severity.SUSPICIOUS
+            elif perplexity > self.INVERTED_THRESHOLD_NOTE:
+                severity = Severity.NOTE
+        else:
+            # LOW perplexity = signal (classical DetectGPT-direction;
+            # self-hosted Llama-3, vLLM, etc.).
+            if perplexity < self.THRESHOLD_CRITICAL:
+                severity = Severity.CRITICAL
+            elif perplexity < self.THRESHOLD_SUSPICIOUS:
+                severity = Severity.SUSPICIOUS
+            elif perplexity < self.THRESHOLD_NOTE:
+                severity = Severity.NOTE
 
         if severity is None:
             # Perplexity is in the normal human-academic range → no finding.
             return []
 
+        if inverted:
+            summary = (
+                f"Continuation perplexity {perplexity:.2f} "
+                f"(> {self.INVERTED_THRESHOLD_NOTE:.2f}, inverted-mode); "
+                "weak LLM-authorship signal"
+            )
+            detail = (
+                f"Reference LM produces a continuation of the manuscript "
+                f"with perplexity {perplexity:.2f}. T7 is running in "
+                f"**inverted** threshold mode "
+                f"(PAPERGUARD_T7_INVERT_THRESHOLD=1) where HIGH perplexity "
+                f"is the signal. On RLHF-heavy reference LMs (OpenAI "
+                f"gpt-4o family) LLM-style markers themselves are "
+                f"low-probability for the reference LM, so AI-authored "
+                f"text scores HIGHER perplexity than human academic "
+                f"prose. Empirical anchor: 2.4.1 gpt-4o study, LR+ = 8.0 "
+                f"at threshold 1.46 (TPR 80 % / FPR 10 %). High "
+                f"perplexity in this mode is consistent with — but not "
+                f"proof of — LLM authorship."
+            )
+        else:
+            summary = (
+                f"Continuation perplexity {perplexity:.2f} "
+                f"(< {self.THRESHOLD_NOTE:.1f}); weak LLM-authorship signal"
+            )
+            detail = (
+                f"Reference LM produces a continuation of the manuscript "
+                f"with perplexity {perplexity:.2f}. Normal academic "
+                f"English typically sits above {self.THRESHOLD_NOTE:.0f}. "
+                "Lower perplexity is consistent with — but not proof "
+                "of — LLM authorship.\n\n"
+                "Methodology: continuation-perplexity proxy (NOT classical "
+                "input perplexity). The LM is asked to continue the text; "
+                "the per-token logprobs of its completion are aggregated. "
+                "This is a published-literature-inspired approximation "
+                "compatible with chat-completion APIs."
+            )
         return [
             Finding(
                 detector_id=self.id,
                 detector_name=self.name,
                 severity=severity,
-                summary=(
-                    f"Continuation perplexity {perplexity:.2f} "
-                    f"(< {self.THRESHOLD_NOTE:.1f}); weak LLM-authorship signal"
-                ),
-                detail=(
-                    f"Reference LM produces a continuation of the manuscript "
-                    f"with perplexity {perplexity:.2f}. Normal academic "
-                    f"English typically sits above {self.THRESHOLD_NOTE:.0f}. "
-                    "Lower perplexity is consistent with — but not proof "
-                    "of — LLM authorship.\n\n"
-                    "Methodology: continuation-perplexity proxy (NOT classical "
-                    "input perplexity). The LM is asked to continue the text; "
-                    "the per-token logprobs of its completion are aggregated. "
-                    "This is a published-literature-inspired approximation "
-                    "compatible with chat-completion APIs."
-                ),
+                summary=summary,
+                detail=detail,
                 test_statistic=perplexity,
                 test_name="continuation perplexity",
                 evidence={
                     "perplexity": perplexity,
-                    "threshold_note": self.THRESHOLD_NOTE,
-                    "threshold_suspicious": self.THRESHOLD_SUSPICIOUS,
-                    "threshold_critical": self.THRESHOLD_CRITICAL,
+                    "inverted_threshold_mode": inverted,
+                    "threshold_note": (
+                        self.INVERTED_THRESHOLD_NOTE if inverted
+                        else self.THRESHOLD_NOTE
+                    ),
+                    "threshold_suspicious": (
+                        self.INVERTED_THRESHOLD_SUSPICIOUS if inverted
+                        else self.THRESHOLD_SUSPICIOUS
+                    ),
+                    "threshold_critical": (
+                        self.INVERTED_THRESHOLD_CRITICAL if inverted
+                        else self.THRESHOLD_CRITICAL
+                    ),
                     "model": (
                         os.environ.get("PAPERGUARD_LLM_MODEL") or "default"
                     ),

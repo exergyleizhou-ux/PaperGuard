@@ -9,9 +9,9 @@ abstract: >
   forensics, and file metadata forensics.
 authors:
   - name: PaperGuard Contributors
-version: 2.4.1
-# 2.4.1 = T7 on gpt-4o (LR+ = 8.0 at calibrated inverted threshold) +
-# disproof of the 2.4.0 reference-LM-size hypothesis
+version: 2.4.2
+# 2.4.2 = PAPERGUARD_T7_INVERT_THRESHOLD env var (T7 inverted-mode
+# code path + partial validation of RLHF-suppression hypothesis)
 date-released: 2026-05-23
 license: MIT
 keywords:
