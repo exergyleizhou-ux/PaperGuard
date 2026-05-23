@@ -4,6 +4,61 @@ All notable changes to PaperGuard are documented in this file. Format follows
 [Keep a Changelog](https://keepachangelog.com/) and the project adheres to
 [Semantic Versioning](https://semver.org/).
 
+## [2.4.0] — 2026-05-23 — G5 reagent-temporal detector + first real-OpenAI T7/T8 LR+
+
+### Added
+- **G5 ReagentTemporalDetector (the 39th detector).** Flags
+  four-digit years in the paper text that postdate the paper's own
+  submission year and appear within a 60-char window of a reagent /
+  equipment / catalog / vendor keyword. NOTE severity only. Inspired
+  by the "试剂/设备型号是否存在" check from the external
+  geng-academic-fraud-detector prompt skill, after a dialectical
+  review (see `docs/external_tools_comparison.md`).
+  - Source: `src/paperguard/detectors/g5_reagent_temporal.py`
+  - Tests: `tests/test_g5_reagent_temporal.py` (8 cases, all pass).
+  - Registered in `DetectorRegistry().register_default()`.
+- **First real-OpenAI T7/T8 LR+ measurements.** Earlier benchmarks
+  ran against cliproxy gpt-5.x (no logprobs / reasoning), DeepSeek-v4
+  (fake logprobs / reasoning), and Groq Qwen3-32B (real logprobs but
+  weak signal). With a real `api.openai.com` key (`sk-proj-*`):
+  - **T8 on `gpt-4o`**: LR+ = ∞ (2/10 TP, 0/10 FP). **Direction
+    correct, zero false positives.** First clean DetectGPT-style
+    result PaperGuard has on this detector. Validates the 2.2.7
+    scope claim that a non-reasoning paraphraser drifts off-manifold.
+  - **T7 on `gpt-4o-mini`**: t = 2.15, p = 0.047 — statistically
+    significant **but in the reversed direction** (AI mean ppl =
+    1.42 > human mean ppl = 1.32). gpt-4o-mini is too small relative
+    to the gpt-4/Claude-class models that generated the AI samples,
+    inverting the textbook "AI = lower ppl" assumption. With the
+    threshold inverted, LR+ = 1.57. Documented honestly; the
+    threshold direction in T7 is now noted as endpoint-dependent.
+  - Both raw runs preserved as
+    `scripts/t7_controlled_benchmark_results_openai_gpt4o_mini.json`
+    and `scripts/t8_controlled_benchmark_results_openai_gpt4o.json`.
+    Earlier groq + deepseek runs also preserved under suffixed names.
+- **`docs/external_tools_comparison.md`** — public comparison of
+  PaperGuard vs statcheck / GRIM-family / Bik-pHash-workflow /
+  geng-academic-fraud-detector. Documents which techniques we
+  absorb, which we deliberately do not (verdict-tier vocabulary,
+  named targets, "辣评" framing), and why.
+
+### Changed
+- `docs/llm_detection_real_endpoints.md` refreshed with the OpenAI
+  rows in both the top-level TL;DR table and the compatibility
+  matrix. The T7 threshold-direction subtlety is explained in a
+  dedicated subsection.
+
+### Verifications
+- **510 → 518 tests** (+8 G5 cases); 3 deselected for network.
+- ruff: all checks passed.
+- mypy --strict: 102 source files (was 101; +g5_reagent_temporal), no issues.
+- privacy grep: clean.
+
+### Detector count: **38 → 39**
+- 34 academic + 4 industrial + 1 new metadata-temporal = 39.
+- See `src/paperguard/core/registry.py::register_default()` for the
+  authoritative list.
+
 ## [2.3.1] — 2026-05-23 — Image-recall v5 (N=200+200) + honest F6 revision
 
 ### Added

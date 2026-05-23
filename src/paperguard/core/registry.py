@@ -73,6 +73,9 @@ class DetectorRegistry:
         from paperguard.detectors.g4_metadata_forensics import (
             G4MetadataForensicsDetector,
         )
+        from paperguard.detectors.g5_reagent_temporal import (
+            G5ReagentTemporalDetector,
+        )
         from paperguard.detectors.i1_mass_balance import I1MassBalanceDetector
         from paperguard.detectors.i2_timestamp_integrity import (
             I2TimestampIntegrityDetector,
@@ -129,6 +132,7 @@ class DetectorRegistry:
             G1ExifTemporalDetector,
             G3RsidForensicsDetector,
             G4MetadataForensicsDetector,
+            G5ReagentTemporalDetector,
             M1PaperMillGraphDetector,
             T1TextSimilarityDetector,
             T2TrialConsistencyDetector,

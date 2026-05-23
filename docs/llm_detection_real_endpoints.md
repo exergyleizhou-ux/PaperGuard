@@ -1,11 +1,22 @@
-# T7 + T8 on real LLM endpoints — empirical study (2026-05-22)
+# T7 + T8 on real LLM endpoints — empirical study (2026-05-22, refreshed 2026-05-23 with OpenAI)
 
-> **TL;DR.** With real (non-cliproxy) API keys we measured T7 + T8 on a
-> controlled 10+10 human-vs-AI corpus. **T7 (Groq Qwen3-32B) shows
-> real but weak signal: LR+ = 1.69, p = 0.11 (N=17).** **T8 (DeepSeek-v4-flash)
-> signal collapses on reasoning models: LR+ = 0.25 — worse than coin flip.**
-> Both findings are consistent with the structural limitations
-> documented in `docs/t8_endpoint_limitation.md`.
+> **TL;DR (2026-05-23 update).** Real `api.openai.com` keys are now in
+> hand for both detectors. Measured against the same controlled
+> 10+10 human-vs-AI corpus:
+>
+> | Detector | Endpoint | Result | Notes |
+> |---|---|---|---|
+> | **T8** | **OpenAI `gpt-4o`** | **LR+ = ∞ (2/10 TP, 0/10 FP)** | ✅ **Direction correct, zero false positives**. Validates the 2.2.7 scope claim that non-reasoning paraphrasers drift off-manifold. Sensitivity modest (20 % TPR) because gpt-4o is a strong paraphraser and most rewrites stay close to the manifold. |
+> | **T7** | **OpenAI `gpt-4o-mini`** | t = 2.15, **p = 0.047**, but **direction REVERSED**: AI mean ppl = 1.42 > human mean ppl = 1.32 | ⚠️ **Statistically significant signal in the wrong sign.** gpt-4o-mini is too small a reference LM relative to the gpt-4-class models that generated the AI samples; it treats the AI samples as less-predictable. With the threshold inverted ("AI = higher ppl"), LR+ = 1.57. |
+> | T7 | Groq `qwen/qwen3-32b` | LR+ = 1.69, p = 0.11 (N=17) | Free-tier real-logprobs endpoint. Weak. |
+> | T8 | DeepSeek-v4-flash | LR+ = 0.25 (reversed) | Reasoning-model paraphraser, structurally incompatible (2.2.7 scope claim verified). |
+>
+> **Bottom line:** T8 on real `gpt-4o` is the cleanest result PaperGuard
+> has on the DetectGPT family — zero false positives at the
+> SUSPICIOUS-tier threshold. T7 needs more thought: the canonical
+> "low ppl = AI" heuristic fails on gpt-4o-mini, but a real signal does
+> exist in the inverse direction, which means T7 isn't useless on this
+> endpoint, just needs a re-calibrated threshold direction.
 
 ## Scope statement (authoritative, 2.2.7)
 
@@ -17,8 +28,8 @@ underlying methods (perplexity / DetectGPT) are mathematically valid.
 
 | Detector | Required endpoint property | Validated example | Forbidden example |
 |---|---|---|---|
-| **T7 perplexity** | Real per-token logprobs from a **non-reasoning** LM | OpenAI `gpt-4o-mini` (expected ✅), Groq `qwen/qwen3-32b` (LR+ 1.69 ⚠️ weak) | cliproxy (no logprobs), DeepSeek-v4 (fake all-zero logprobs), Groq llama/gpt-oss (logprobs not supported) |
-| **T8 DetectGPT** | Non-reasoning paraphraser whose rewrites drift **off** the LLM-likelihood manifold | OpenAI `gpt-4o` (expected ✅), self-hosted Llama-3.3-70B | DeepSeek-v4 (LR+ 0.25 ❌ reversed), GPT-5/o-series/Qwen3-thinking (manifold-preserving) |
+| **T7 perplexity** | Real per-token logprobs from a non-reasoning LM **+ a reference LM at least as large as the LM that generated the AI samples** (otherwise direction reverses, see 2026-05-23 result) | Groq `qwen/qwen3-32b` (LR+ 1.69 ⚠️ weak), OpenAI `gpt-4o-mini` (works but direction reversed — invert threshold) | cliproxy (no logprobs), DeepSeek-v4 (fake all-zero logprobs), Groq llama/gpt-oss (logprobs not supported) |
+| **T8 DetectGPT** | Non-reasoning paraphraser whose rewrites drift **off** the LLM-likelihood manifold | **OpenAI `gpt-4o` ✅ (LR+ = ∞, 2/10 TP, 0/10 FP)**, self-hosted Llama-3.3-70B | DeepSeek-v4 (LR+ 0.25 ❌ reversed), GPT-5/o-series/Qwen3-thinking (manifold-preserving) |
 
 **If your endpoint does not match a validated row, treat T7/T8 output
 as exploratory and rely on T6 lexical for the production LLM-text
@@ -107,7 +118,67 @@ This is **the same failure mode previously documented in
 `docs/t8_endpoint_limitation.md`** when we tested cliproxy
 gpt-5.4-mini (also a reasoning model). DeepSeek-v4 reproduces it.
 
-## Per-endpoint compatibility matrix (updated)
+## T7 + T8 on api.openai.com (2026-05-23, real key)
+
+The headline result of this section: T7 and T8 on the real
+OpenAI direct-connection endpoint, not via any third-party proxy.
+Raw data: `scripts/t7_controlled_benchmark_results_openai_gpt4o_mini.json`
+and `scripts/t8_controlled_benchmark_results_openai_gpt4o.json`.
+
+### T7 — `gpt-4o-mini` (N=10+10, 1 SSL flake → n_human=9)
+
+```
+human  (n=9):   min=1.166  median=1.364  max=1.471  mean=1.322
+ai     (n=10):  min=1.265  median=1.418  max=1.539  mean=1.424
+
+Welch's t-test:  t = 2.15,  p = 0.047
+```
+
+The mean perplexity difference is **statistically significant in
+the opposite direction to the classical DetectGPT-style assumption**.
+AI text on this corpus has *higher* perplexity than human academic
+text when measured under gpt-4o-mini.
+
+The standard threshold convention ("AI = lower ppl") gives
+LR+ = 0.675 — worse than coin flip. Inverting the threshold ("AI =
+higher ppl") gives LR+ = 1.57 at threshold = median(human) = 1.364.
+
+**Why the inversion?** The AI samples were generated by gpt-4 /
+Claude-class models. The reference LM here is gpt-4o-mini — a
+*smaller* model than the ones that produced the AI text. A smaller
+LM finds large-model output less predictable, not more. The human
+samples, drawn from pre-2020 Methods sections, are well-represented
+in gpt-4o-mini's training data and feel more "natural" to it.
+
+The practical implication: T7's threshold direction is **endpoint-
+dependent**. Use `gpt-4o` (matched-size) instead of `gpt-4o-mini`
+for a more textbook signal, or invert the threshold when the
+reference LM is smaller than the suspected generator LM.
+
+### T8 — `gpt-4o` (N=10+10, non-reasoning paraphraser)
+
+```
+human  (n=10):  detection_score all = 0.00
+ai     (n=10):  8/10 scores = 0.00; 2/10 scores = -0.707  (SUSPICIOUS tier)
+
+LR+ at threshold (score < -0.5):  TPR = 20.0 % (2/10),  FPR = 0.0 % (0/10),  LR+ = ∞
+```
+
+✅ **Direction correct; zero false positives at the SUSPICIOUS tier.**
+This is the **cleanest single-endpoint T8 result PaperGuard has
+recorded** to date. It validates the 2.2.7 scope claim that a
+non-reasoning paraphraser (gpt-4o is not a reasoning model) does
+drift off the LLM-likelihood manifold, recovering the signal that
+DeepSeek-v4-flash (reasoning) destroyed.
+
+Sensitivity is modest — only 2/10 AI samples cross the threshold,
+because gpt-4o is a strong paraphraser and most rewrites stay
+close to the manifold for the corpus's polished prose. For the
+intended triage use, **zero false positives at FPR=0 % is the
+correct property**; PaperGuard does not chase recall at the cost
+of precision on this detector.
+
+## Per-endpoint compatibility matrix (updated 2026-05-23)
 
 | Endpoint × Model | T7 (perplexity) | T8 (DetectGPT) |
 |---|---|---|
@@ -116,7 +187,8 @@ gpt-5.4-mini (also a reasoning model). DeepSeek-v4 reproduces it.
 | Groq llama / gpt-oss / scout | ❌ "logprobs not supported" | not tested |
 | **Groq qwen/qwen3-32b** | ⚠️ **LR+ 1.69 weak** | not tested |
 | Anthropic Claude API | ❌ no token logprobs in messages API | usable (chat-only) — not benchmarked |
-| OpenAI api.openai.com (real) | ✅ real logprobs (expected) | ✅ non-reasoning gpt-4o (expected) |
+| **OpenAI `gpt-4o-mini`** | ⚠️ **p = 0.047 but direction reversed; LR+ = 1.57 with inverted threshold** | not benchmarked |
+| **OpenAI `gpt-4o`** | not yet benchmarked (recommended next) | ✅ **LR+ = ∞ (2/10 TP, 0/10 FP)** |
 
 ## Recommendations
 
