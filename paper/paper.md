@@ -131,120 +131,67 @@ chat-completion endpoints that do not expose the legacy
 
 # Empirical calibration
 
-PaperGuard ships 13 public empirical studies, including a recall
-benchmark series (v1 – v10), four image-recall studies, an
-industrial-process recall study, two cross-validation studies, and
-two controlled LLM-endpoint benchmarks. All raw data and analysers
-are in the
-[`scripts/`](https://github.com/exergyleizhou-ux/PaperGuard/tree/main/scripts) directory of the repository; per-study writeups
-are in [`docs/`](https://github.com/exergyleizhou-ux/PaperGuard/tree/main/docs).
+PaperGuard ships 13 public empirical studies — a text-layer recall
+benchmark series, four image-recall studies, an industrial-process
+recall study, two cross-validation studies, and two controlled
+LLM-endpoint benchmarks. All raw data and analysers live in the
+repository's `scripts/` directory; per-study writeups are in `docs/`.
+Headlines:
 
-- **Text-layer recall (v10, 100 OpenAlex retracted + 100 matched
-  controls via Europe PMC; 95 with parsable full text).** At the default 0.003 lexical-density
-  threshold T6 has positive likelihood ratio LR+ ≈ 0 against
-  Nature-tier post-publication retractions — copy-editing largely
-  removes lexical LLM markers before publication. At a stricter
-  0.001 threshold T6 achieves **LR+ = ∞ (1 TP / 0 FP)**: one
-  retracted manuscript exceeds the density bar while every control
-  stays below. T6's operating point is therefore the
-  **pre-submission / preprint** stage, not post-publication
-  forensics. Both numbers are public; the conservative default is
-  the one shipped in the CLI.
+- **Text-layer recall (v10, 100 retracted + 100 OpenAlex matched
+  controls via Europe PMC, 95 analysable).** The T6 lexical detector
+  at its default 0.003 density threshold yields LR+ ≈ 0 against
+  Nature-tier post-publication retractions, where copy-editing
+  removes lexical LLM markers; at a stricter 0.001 threshold it
+  yields **LR+ = ∞ (1 TP / 0 FP)**. T6's operating point is the
+  pre-submission / preprint stage, not post-publication forensics
+  (see `docs/recall_test_v10.md`).
 - **Image-layer recall (v6, 163 retracted + 49 control = 212
-  analysable; raw arm sizes 200 + 83 before OA-fetch attrition,
-  with `has_pmid:true` filter on both arms to reduce v5's
-  attrition asymmetry).** At the documented `z=6 / cluster=8`
-  defaults all three image detectors converge to **LR+ ≈ 1**:
-  F6 (patch-splice) 0.89, 95 % Wilson CI [0.74, 1.12]; F4
-  (cross-paper pHash) 0.96 [0.28, 3.46]; F1 (intra-paper pHash)
-  1.09 [0.44, 2.86]. v5's apparent F4 LR+ = 4.36 (1 false
-  positive in 48 controls) collapses to 0.96 with 5 false
-  positives in 49 controls — that earlier figure was the
-  small-sample artifact v5 had already flagged but could not
-  yet quantify. The image layer at PaperGuard's published
-  defaults is **structurally tuned to the Bik-style
-  patch-splice / Western-blot-duplication failure mode**, which
-  is rare in randomly-sampled retracted papers; on the
-  biomedical OA corpus dominated by statistical-fabrication,
-  paper-mill, and image-reuse failures, the layer's single-
-  detector LR+ is indistinguishable from chance. PaperGuard
-  publishes this study at face value precisely because the
-  alternative — quoting v4's small-N LR+ of 1.63 as if it were
-  a calibrated operating point — would be the kind of
-  mis-calibration the tool exists to flag. The image layer
-  retains value as a contributor to the cross-detector
-  combiner; future work needs F6 calibration against a
-  Bik-curated patch-splice corpus that is not publicly
-  redistributable today.
-- **Industrial-layer recall (v1, 2 domains × N=50 clean + 50
-  tampered = 200 synthetic datasets total).** On the wastewater
-  domain at template-default thresholds, I5 (batch-repetition
-  detection) achieves **LR+ = ∞** (60 % TPR, 0 % FPR); I1
-  (mass-balance) and I2 (timestamp integrity) fire on 100 %
-  TPR / 100 % FPR at the same defaults, indicating their
-  out-of-the-box tolerances need calibration to the local plant's
-  noise floor before they discriminate. On the pharma domain all
-  three detectors fire at 100 % / 100 %. The industrial layer is
-  the most recent addition and has no direct prior art in the
-  academic-integrity literature; this study sets a **lower bound**
-  on detector capability against synthetic ground truth, not an
-  upper bound against real EPA / FDA enforcement actions.
-- **B4 statcheck cross-validation (N=41 ground-truth corpus).**
-  Against an independent scipy-based p-value reference, B4 achieves
-  recall = 100 % and decision-flip recall = 94.12 %. A separate
-  cross-validation directly against the R `statcheck` package on the
-  same corpus yields Cohen's κ = 0.79 (Landis-Koch substantial
-  agreement) on the decision-flip class
-  [@landis1977measurement; @nuijten2016statcheck].
+  analysable).** At the documented `z=6 / cluster=8` defaults all
+  three image detectors converge to **LR+ ≈ 1** (F1 1.09, F4 0.96,
+  F6 0.89, with 95 % Wilson CIs all bracketing 1). The image layer
+  is structurally tuned to the Bik-style patch-splice failure mode
+  [@bik2016prevalence], which is rare in randomly-sampled retracted
+  papers; on the biomedical OA corpus dominated by statistical-
+  fabrication, paper-mill, and image-reuse failures, single-
+  detector image LR+ is indistinguishable from chance. The layer
+  retains value as a contributor to the cross-detector combiner
+  (see `docs/recall_image_v6.md`).
+- **Industrial-layer recall (v1, 2 domains × 50+50 synthetic
+  datasets).** I5 (batch-repetition) achieves **LR+ = ∞** on the
+  wastewater domain at template defaults (60 % TPR / 0 % FPR);
+  I1 and I2 fire 100 % / 100 % indicating their tolerances need
+  per-plant calibration. No direct prior art exists in the
+  academic-integrity literature (see `docs/recall_industrial_v1.md`).
+- **B4 statcheck cross-validation (N=41).** Against the R
+  `statcheck` package on the same corpus, B4 achieves Cohen's
+  κ = 0.79 on the decision-flip class — Landis-Koch substantial
+  agreement [@landis1977measurement; @nuijten2016statcheck]
+  (see `docs/crossval_statcheck_kappa.md`).
 - **T7 controlled endpoint benchmark — five-endpoint study
-  (10+10 controlled corpus per run).** Across the five real-logprobs
-  endpoints tested, the four OpenAI models all show reversed
-  direction (AI continuation perplexity > human, opposite of the
-  classical DetectGPT assumption), while the one non-OpenAI
-  endpoint (Groq `qwen/qwen3-32b`) shows the textbook direction.
-  At an inverted threshold equal to the maximum human perplexity
-  observed in the corpus, three of four OpenAI runs yield
-  LR+ = ∞ (i.e. no false positive) at TPR 70–90 %:
-  `gpt-3.5-turbo` (LR+ = ∞, TPR 90 %, *p* = 0.0009),
-  `gpt-4` (LR+ = ∞, TPR 90 %, *p* = 2.1 × 10⁻⁶),
-  `gpt-4o` (LR+ = ∞, TPR 70 %, *p* = 0.0011);
-  `gpt-4o-mini` shows the same reversal more weakly
-  (*p* = 0.047, LR+ = 1.57 at median(human)).
-  Groq `qwen/qwen3-32b` gives textbook-direction LR+ = 1.69
-  (*p* = 0.11, weak). The pattern is **not monotonic in model
-  size** — both `gpt-3.5-turbo` (small, early) and `gpt-4` (older
-  base) outperform `gpt-4o` (newer, larger) at this task — so the
-  driver of the inversion is the specific RLHF training schedule
-  rather than parameter count. PaperGuard exposes the inversion
-  as a per-endpoint configuration choice
-  (`PAPERGUARD_T7_INVERT_THRESHOLD` env var, auto-detected for
-  OpenAI endpoints since 2.6.0). OpenAI reasoning models
-  (`o1`, `o3-mini`, `o4-mini`) cannot be used as T7 reference LMs
-  at all: the OpenAI API returns HTTP 400 *"You are not allowed
-  to request logprobs from this model"* — a clean infrastructure-
-  level confirmation of the structural-incompatibility claim
-  PaperGuard had previously argued only on empirical grounds.
-- **T8 controlled endpoint benchmark.** Two real-endpoint runs.
-  On a non-reasoning paraphraser (OpenAI `gpt-4o`, N=10+10) T8
-  yields LR+ = ∞ (2 / 10 TP, 0 / 10 FP) — the cleanest result
-  PaperGuard has on the DetectGPT family. On a reasoning-model
-  paraphraser (DeepSeek-v4-flash, N=10+10) the rewrites stay on
-  the LLM-likelihood manifold, the Mitchell-style probability-
-  curvature signal inverts, and measured LR+ collapses to 0.25 —
-  worse than coin flip — directly validating the structural
-  prediction made in [@mitchell2023detectgpt]. The detector ships
-  an authoritative compatibility matrix
-  (`docs/llm_detection_real_endpoints.md`) documenting which
-  endpoint classes the method is mathematically valid on
-  (non-reasoning `gpt-4o`, self-hosted Llama-3.3-70B) and which it
-  is structurally incompatible with (OpenAI o-series,
-  DeepSeek-v4, Qwen3-thinking, GPT-5).
+  (10 + 10 corpus).** All four OpenAI models with logprobs show
+  *reversed* direction (AI ppl > human ppl) at *p* ranging from
+  0.047 (`gpt-4o-mini`) to 2.1 × 10⁻⁶ (`gpt-4`), with three of
+  four giving LR+ = ∞ (TPR 70–90 %, FPR 0 %) at max(human)
+  threshold. The non-OpenAI endpoint (Groq `qwen/qwen3-32b`)
+  shows the textbook direction (LR+ = 1.69 weak). The pattern is
+  not monotonic in model size, and OpenAI reasoning models
+  (`o1`/`o3-mini`/`o4-mini`) API-block logprobs entirely. T7
+  inversion is exposed as a per-endpoint configuration choice
+  (auto-detected since 2.6.0) — see
+  `docs/llm_detection_real_endpoints.md`.
+- **T8 controlled endpoint benchmark.** On a non-reasoning
+  paraphraser (OpenAI `gpt-4o`, N=10+10) T8 yields **LR+ = ∞**
+  (2 / 10 TP, 0 / 10 FP). On a reasoning-model paraphraser
+  (DeepSeek-v4-flash) the rewrites stay on-manifold and LR+
+  collapses to 0.25 — directly validating the structural
+  prediction in [@mitchell2023detectgpt]. The detector ships an
+  authoritative endpoint-compatibility matrix.
 
-These transparent recall numbers — including the negative findings
-and structural-incompatibility notes — are an explicit design choice.
-PaperGuard publishes its own false-negative rate and per-endpoint
-failure modes alongside its detection methodology so users can
-calibrate trust.
+Publishing these numbers at face value — including the image-
+layer's LR+ ≈ 1 and the T7 inversion — is an explicit design
+choice. PaperGuard publishes its own false-negative rates and
+per-endpoint failure modes so users can calibrate trust.
 
 # Software quality
 
