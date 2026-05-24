@@ -328,12 +328,16 @@ to Landis–Koch "substantial agreement."
 
 **T7 controlled endpoint benchmark
 (`docs/llm_detection_real_endpoints.md`, 10 + 10 controlled corpus
-× 5 endpoints).** Across the five real-logprobs endpoints tested,
-the four OpenAI models (`gpt-3.5-turbo`, `gpt-4`, `gpt-4o-mini`,
-`gpt-4o`) all show *reversed* continuation-perplexity direction
-(AI ppl > human ppl), opposite to the classical DetectGPT
-assumption [@mitchell2023detectgpt]; the one non-OpenAI endpoint
-(Groq `qwen/qwen3-32b`) shows the textbook direction. At an
+× 5 endpoints).** T7 implements a continuation-perplexity probe in
+the GLTR / DetectGPT line of work
+[@gehrmann2019gltr; @mitchell2023detectgpt]. Across the five
+real-logprobs endpoints tested, the four OpenAI models
+(`gpt-3.5-turbo`, `gpt-4`, `gpt-4o-mini`, `gpt-4o`) all show
+*reversed* continuation-perplexity direction (AI ppl > human ppl),
+opposite to the classical assumption that LLM-authored prose
+exhibits *lower* reference-LM perplexity than human academic
+writing; the one non-OpenAI endpoint (Groq `qwen/qwen3-32b`) shows
+the textbook direction. At an
 inverted threshold equal to the maximum human perplexity in the
 corpus, three of four OpenAI runs yield LR+ = ∞ at TPR 70–90 %
 with *p* values from 0.0011 (`gpt-4o`) to 2.1 × 10⁻⁶ (`gpt-4`).
