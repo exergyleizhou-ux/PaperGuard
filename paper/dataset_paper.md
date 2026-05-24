@@ -1,8 +1,8 @@
 ---
 title: 'The PaperGuard research-integrity benchmark suite: a 13-dataset corpus for empirical evaluation of statistical, image, and LLM-text anomaly detectors'
 authors:
-  - name: PaperGuard Contributors
-    orcid: 0000-0000-0000-0000
+  - name: Lei Zhou
+    orcid: 0009-0000-9073-1349
     affiliation: 1
 affiliations:
   - name: Independent
@@ -188,7 +188,8 @@ Nuijten for the statistical foundations.
 1. **JOSS DOI must be obtained first** — Scientific Data papers
    typically cite the tool DOI; submitting both in parallel
    complicates editorial review.
-2. **ORCID** must be filled in (replace `0000-0000-0000-0000`).
+2. ~~**ORCID** must be filled in (replace `0000-0000-0000-0000`).~~
+   **Done** — Lei Zhou / 0009-0000-9073-1349 (since 24 May 2026).
 3. **Zenodo archive** must be created and DOI minted; this is
    ~30 min of work post-JOSS-DOI.
 4. **Hand-checked retraction labels** for v10 — currently we
