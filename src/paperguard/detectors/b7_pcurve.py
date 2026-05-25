@@ -45,7 +45,8 @@ class B7PCurveDetector(BaseDetector):
     data_requirements: ClassVar[list[str]] = ["multi_study_p_values"]
     assumption_cluster: ClassVar[str] = "publication_bias"
 
-    MIN_SIG_P: ClassVar[int] = 5  # 至少需要 5 个 p < 0.05 才有意义
+    # W3: raised minimum from 5 to 10 for small-n graceful degradation
+    MIN_SIG_P: ClassVar[int] = 10
 
     def check_applicability(self, data: Any) -> tuple[bool, str]:
         if not isinstance(data, PCurveInput):
@@ -58,6 +59,9 @@ class B7PCurveDetector(BaseDetector):
     def _detect(self, data: PCurveInput, seed: int) -> list[Finding]:
         sig = sorted([p for p in data.p_values if 0 < p < 0.05])
         n = len(sig)
+
+        # W3: small-n graceful degradation
+        low_power = n < 50
 
         # Bin counts
         low_n = sum(1 for p in sig if p <= 0.025)
@@ -104,6 +108,10 @@ class B7PCurveDetector(BaseDetector):
         if severity < Severity.CONCERN:
             return []
 
+        # W3: cap severity for low-power samples (10 <= n < 50)
+        if low_power and severity > Severity.NOTE:
+            severity = Severity.NOTE
+
         return [
             Finding(
                 detector_id=self.id,
@@ -136,6 +144,7 @@ class B7PCurveDetector(BaseDetector):
                     "far_alpha_count": far_alpha_n,
                     "binomial_left_tail_p": p_left_skew,
                     "near_far_ratio": ratio_near_far,
+                    "low_power_note": low_power,
                 },
                 innocent_explanations=[
                     "样本量小（n < 30 显著 p）时 p-curve 不稳定",

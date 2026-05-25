@@ -129,13 +129,13 @@ class A1TerminalDigitDetector(BaseDetector):
         if not isinstance(data, pd.DataFrame):
             return False, "Expected pd.DataFrame"
 
-        settings = get_settings()
         numeric_cols = data.select_dtypes(include=[np.number]).columns
+        small_n = 10
         valid_cols = [
-            c for c in numeric_cols if len(data[c].dropna()) >= settings.a1_min_n
+            c for c in numeric_cols if len(data[c].dropna()) >= small_n
         ]
         if not valid_cols:
-            return False, f"No numeric column with N ≥ {settings.a1_min_n}"
+            return False, f"No numeric column with N ≥ {small_n}"
         return True, ""
 
     def _detect(self, data: pd.DataFrame, seed: int) -> list[Finding]:
@@ -148,9 +148,10 @@ class A1TerminalDigitDetector(BaseDetector):
 
         for col in numeric_cols:
             values = data[col].dropna()
-            if len(values) < settings.a1_min_n:
+            if len(values) < 10:
                 continue
 
+            low_power = len(values) < 50
             digits = [get_last_significant_digit(v) for v in values]
             col_digits[str(col)] = digits
             n = len(digits)
@@ -170,6 +171,9 @@ class A1TerminalDigitDetector(BaseDetector):
                     severity = Severity.SUSPICIOUS
                 else:
                     severity = Severity.CRITICAL
+
+                if low_power:
+                    severity = Severity.NOTE
 
                 zero_five_ratio = (counts.get(0, 0) + counts.get(5, 0)) / n
                 extra_note = ""
@@ -206,6 +210,7 @@ class A1TerminalDigitDetector(BaseDetector):
                             },
                             "expected_per_digit": n / 10,
                             "zero_five_ratio": zero_five_ratio,
+                            "low_power_note": low_power,
                         },
                         innocent_explanations=[
                             "仪器量化（如显示步长为 0.05 的天平）",

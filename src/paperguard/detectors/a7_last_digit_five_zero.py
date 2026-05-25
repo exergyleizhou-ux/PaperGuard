@@ -45,7 +45,8 @@ class A7LastDigitFiveZeroDetector(BaseDetector):
     data_requirements: ClassVar[list[str]] = ["raw_numeric_values"]
     assumption_cluster: ClassVar[str] = "digit_distribution"
 
-    MIN_N: ClassVar[int] = 30
+    SMALL_N: ClassVar[int] = 10
+    MIN_N: ClassVar[int] = 50
     P_CONCERN: ClassVar[float] = 0.005
     P_SUSPICIOUS: ClassVar[float] = 1e-5
     P_CRITICAL: ClassVar[float] = 1e-15
@@ -54,17 +55,18 @@ class A7LastDigitFiveZeroDetector(BaseDetector):
         if not isinstance(data, pd.DataFrame):
             return False, "Expected pd.DataFrame"
         for col in data.select_dtypes(include=[np.number]).columns:
-            if len(data[col].dropna()) >= self.MIN_N:
+            if len(data[col].dropna()) >= self.SMALL_N:
                 return True, ""
-        return False, f"No numeric column with N ≥ {self.MIN_N}"
+        return False, f"No numeric column with N ≥ {self.SMALL_N}"
 
     def _detect(self, data: pd.DataFrame, seed: int) -> list[Finding]:
         findings: list[Finding] = []
         for col in data.select_dtypes(include=[np.number]).columns:
             values = data[col].dropna()
             n = len(values)
-            if n < self.MIN_N:
+            if n < self.SMALL_N:
                 continue
+            low_power = n < self.MIN_N
             digits = [get_last_significant_digit(v) for v in values]
             counts = Counter(digits)
             zf_count = counts.get(0, 0) + counts.get(5, 0)
@@ -87,6 +89,9 @@ class A7LastDigitFiveZeroDetector(BaseDetector):
                 severity = Severity.SUSPICIOUS
             else:
                 severity = Severity.CONCERN
+
+            if low_power:
+                severity = Severity.NOTE
 
             findings.append(
                 Finding(
@@ -120,6 +125,7 @@ class A7LastDigitFiveZeroDetector(BaseDetector):
                         "zero_five_ratio": zf_ratio,
                         "direction": direction,
                         "frequency_table": {str(d): int(c) for d, c in counts.items()},
+                        "low_power_note": low_power,
                     },
                     innocent_explanations=[
                         "数据仪器步长本就是 0.05 的倍数（如某些天平）",

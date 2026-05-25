@@ -52,8 +52,8 @@ def test_b7_flags_near_alpha_pileup() -> None:
 
 
 def test_b7_passes_normal_pcurve() -> None:
-    # 右偏：低 p 多
-    ps = [0.001, 0.005, 0.01, 0.02, 0.001, 0.003, 0.008, 0.015]
+    # 右偏：低 p 多 (W3: need >=10 significant p-values)
+    ps = [0.001, 0.005, 0.01, 0.02, 0.001, 0.003, 0.008, 0.015, 0.002, 0.007]
     result = B7PCurveDetector().detect(PCurveInput(p_values=ps), seed=42)
     assert result.applicable
     assert len(result.findings) == 0

@@ -201,7 +201,8 @@ def test_e1_detector_smoke() -> None:
 def test_b5_meta_signals_fire_on_pathological_set() -> None:
     """All p-values clustered around 0.04 → low z-variance + p-hacking signature."""
     detector = B5TIVADetector()
-    inp = TIVAInput(p_values=[0.041, 0.042, 0.039, 0.04, 0.043, 0.038, 0.041, 0.04])
+    # W3: minimum n raised to 10
+    inp = TIVAInput(p_values=[0.041, 0.042, 0.039, 0.04, 0.043, 0.038, 0.041, 0.04, 0.042, 0.039])
     result = detector.detect(inp, seed=42)
     assert len(result.findings) >= 1
     finding = result.findings[0]
