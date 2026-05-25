@@ -29,6 +29,7 @@ from paperguard.extractor.excel import parse_data_file
 from paperguard.extractor.inline_numbers import extract_text_from_docx
 from paperguard.extractor.pdf_text import extract_pdf_tables, extract_pdf_text
 from paperguard.fetcher.crossref import CrossRefClient
+from paperguard.fetcher.oa_pdf import fetch_oa_pdf
 from paperguard.fetcher.openalex import OpenAlexClient
 from paperguard.fetcher.orcid import OrcidCandidate, disambiguate_author
 from paperguard.fetcher.pubpeer import PubPeerClient
@@ -2233,6 +2234,128 @@ def who(name: str, affiliation: str | None) -> None:
             str(c.works_count),
         )
     console.print(table)
+
+
+@main.command("scan-author")
+@click.argument("orcid_id")
+@click.option("--max-papers", default=20, show_default=True, help="Max papers to scan.")
+@click.option(
+    "--output-json",
+    type=click.Path(path_type=Path),
+    default=None,
+    help="Write aggregated JSON report to this path.",
+)
+def scan_author(orcid_id: str, max_papers: int, output_json: Path | None) -> None:
+    """Batch-scan an author's papers by ORCID ID.
+
+    Fetches the author's works via OpenAlex, downloads OA PDFs,
+    runs the full PaperGuard pipeline on each, and prints an
+    aggregated summary.
+    """
+    import json as _json
+    import tempfile
+
+    console = Console(legacy_windows=False)
+    console.print(f"[bold]Scanning author ORCID {orcid_id}…[/]")
+
+    try:
+        oal = OpenAlexClient()
+        works = oal.get_author_works(
+            f"https://orcid.org/{orcid_id}", per_page=max_papers,
+        )
+        oal.close()
+    except Exception as exc:
+        console.print(f"[red]OpenAlex query failed: {exc}[/]")
+        raise SystemExit(1) from exc
+
+    if not works:
+        console.print("[yellow]No works found for this ORCID.[/]")
+        return
+
+    console.print(f"Found {len(works)} works. Downloading OA PDFs…")
+
+    all_findings: list[dict[str, object]] = []
+    scanned = 0
+    skipped = 0
+
+    with tempfile.TemporaryDirectory(prefix="pg_author_") as tmpdir:
+        for i, work in enumerate(works[:max_papers]):
+            doi: str = (work.get("doi") or "").replace("https://doi.org/", "")
+            title: str = work.get("title") or f"work-{i}"
+            if not doi:
+                skipped += 1
+                continue
+
+            oa_url: str | None = None
+            oa_loc = work.get("best_oa_location") or {}
+            if isinstance(oa_loc, dict):
+                oa_url = oa_loc.get("pdf_url") or oa_loc.get("url_for_pdf")
+
+            dest = Path(tmpdir) / f"{doi.replace('/', '_')}.pdf"
+            try:
+                result = fetch_oa_pdf(doi, dest, openalex_oa_url=oa_url)
+            except Exception:
+                skipped += 1
+                continue
+
+            if not result.success:
+                skipped += 1
+                continue
+
+            console.print(f"  [{i+1}/{len(works)}] {title[:60]}… ", end="")
+            try:
+                report = _scan_single_file(dest, seed=42)
+                n = len(report.all_findings)
+                sev = report.overall_severity
+                console.print(f"[green]{n} findings, severity {sev}[/]")
+                for f in report.all_findings:
+                    entry: dict[str, object] = {
+                        "doi": doi,
+                        "title": title,
+                        "detector_id": f.detector_id,
+                        "severity": f.severity.value,
+                        "summary": f.summary,
+                    }
+                    all_findings.append(entry)
+                scanned += 1
+            except Exception as exc:
+                console.print(f"[red]error: {exc}[/]")
+                skipped += 1
+
+    # Summary
+    console.print()
+    console.print(
+        f"[bold]Author scan complete:[/] {scanned} scanned, {skipped} skipped",
+    )
+    if all_findings:
+        table = Table(show_header=True, header_style="bold")
+        table.add_column("DOI", width=30)
+        table.add_column("Detector")
+        table.add_column("Sev", width=4)
+        table.add_column("Summary")
+        for row in all_findings:
+            table.add_row(
+                str(row["doi"])[:30],
+                str(row["detector_id"]),
+                str(row["severity"]),
+                str(row["summary"])[:60],
+            )
+        console.print(table)
+    else:
+        console.print("[green]No anomalies detected across scanned papers.[/]")
+
+    if output_json:
+        payload = {
+            "orcid_id": orcid_id,
+            "papers_scanned": scanned,
+            "papers_skipped": skipped,
+            "total_findings": len(all_findings),
+            "findings": all_findings,
+        }
+        output_json.write_text(
+            _json.dumps(payload, indent=2, ensure_ascii=False),
+        )
+        console.print(f"JSON report written to {output_json}")
 
 
 @main.command("scan-industrial")
