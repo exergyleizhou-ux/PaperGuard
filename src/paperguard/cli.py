@@ -33,6 +33,7 @@ from paperguard.fetcher.oa_pdf import fetch_oa_pdf
 from paperguard.fetcher.openalex import OpenAlexClient
 from paperguard.fetcher.orcid import OrcidCandidate, disambiguate_author
 from paperguard.fetcher.pubpeer import PubPeerClient
+from paperguard.fetcher.semantic_scholar import SemanticScholarClient
 from paperguard.fetcher.unpaywall import UnpaywallClient
 from paperguard.reporter.html_export import export_html
 from paperguard.reporter.json_export import export_json
@@ -2222,6 +2223,95 @@ def search(
         console.print(table)
     finally:
         oa.close()
+
+
+@main.command("search-cn")
+@click.argument("query")
+@click.option(
+    "--year",
+    default=None,
+    help="Year filter, e.g. '2020' or '2018-2023'.",
+)
+@click.option(
+    "--limit",
+    "max_results",
+    default=20,
+    show_default=True,
+    help="Max results to show.",
+)
+@click.option(
+    "--output-json",
+    type=click.Path(path_type=Path),
+    default=None,
+    help="Write results as JSON to this path.",
+)
+def search_cn(
+    query: str,
+    year: str | None,
+    max_results: int,
+    output_json: Path | None,
+) -> None:
+    """Search Chinese & multilingual papers via Semantic Scholar.
+
+    Accepts Chinese or English queries. Results include DOI, title,
+    authors, venue, year, citation count, and open-access status.
+    Papers with DOIs can be scanned with ``paperguard scan <file>``.
+    """
+    import json as _json
+
+    console = Console(legacy_windows=False)
+    client = SemanticScholarClient()
+    try:
+        with console.status("[bold]Searching Semantic Scholar…[/]"):
+            papers = client.search(query, limit=max_results, year=year)
+    finally:
+        client.close()
+
+    if not papers:
+        console.print("[yellow]No papers found for this query.[/]")
+        return
+
+    table = Table(show_header=True, header_style="bold")
+    table.add_column("Year", width=6)
+    table.add_column("Title", max_width=50)
+    table.add_column("Authors", max_width=30)
+    table.add_column("DOI", width=25)
+    table.add_column("Cite", justify="right", width=5)
+    table.add_column("OA", width=3)
+
+    for p in papers:
+        authors_str = ", ".join(p.authors[:3])
+        if len(p.authors) > 3:
+            authors_str += " et al."
+        table.add_row(
+            str(p.year or ""),
+            p.title[:50],
+            authors_str[:30],
+            p.doi[:25] if p.doi else "-",
+            str(p.citation_count),
+            "Y" if p.is_open_access else "",
+        )
+    console.print(table)
+    console.print(f"[dim]{len(papers)} results[/]")
+
+    if output_json:
+        payload = [
+            {
+                "paper_id": p.paper_id,
+                "title": p.title,
+                "doi": p.doi,
+                "authors": p.authors,
+                "year": p.year,
+                "venue": p.venue,
+                "citation_count": p.citation_count,
+                "is_open_access": p.is_open_access,
+            }
+            for p in papers
+        ]
+        output_json.write_text(
+            _json.dumps(payload, indent=2, ensure_ascii=False),
+        )
+        console.print(f"JSON written to {output_json}")
 
 
 @main.command()
