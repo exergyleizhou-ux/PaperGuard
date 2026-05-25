@@ -1,11 +1,11 @@
 """Gradio app for the PaperGuard HuggingFace Space.
 
-Deploy (as of 2.2.7):
+Deploy (as of 2.15.0):
     1. Create a new Space at https://huggingface.co/new-space
        SDK = Gradio. Hardware = CPU basic is sufficient.
     2. Copy this file to the Space repo as `app.py`.
     3. Copy `examples/hf_space_requirements.txt` as `requirements.txt`
-       (gradio>=5.0,<6.0 + paperguard>=2.2.7).
+       (gradio>=5.0,<6.0 + paperguard>=2.15.0).
     4. Copy `examples/hf_space_readme.md` as `README.md` — the
        frontmatter pins sdk_version: 5.34.0 and python_version: "3.11"
        which are both required (HF default container moved to Py 3.13
@@ -43,7 +43,7 @@ from paperguard.reporter.json_export import export_json
 
 # --- Empirical LR+ data from docs/recall_test_v8.md, surfaced in the UI ---
 EMPIRICAL_FINDINGS_MD = f"""
-**PaperGuard v{__version__}** — 38 detectors active (academic 34 + industrial 4).
+**PaperGuard v{__version__}** — 40 detectors active (academic 36 + industrial 4).
 
 **Validated performance**
 
@@ -60,7 +60,7 @@ EMPIRICAL_FINDINGS_MD = f"""
   out before publication — T6 is a preprint / submission-stage screen,
   not a post-publication forensics signal.
 
-**T7 / T8 scope (2.2.7).** T7 needs a non-reasoning LM with real per-token
+**T7 / T8 scope.** T7 needs a non-reasoning LM with real per-token
 logprobs (OpenAI `gpt-4o-mini` recommended; Groq Qwen3-32B gave a weak
 LR+ 1.69 at N = 17). T8 needs a non-reasoning paraphraser that drifts
 off-manifold — **reasoning models (o-series, DeepSeek-v4, Qwen3-thinking)

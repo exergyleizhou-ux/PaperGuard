@@ -9,15 +9,19 @@ python_version: "3.11"
 app_file: app.py
 pinned: false
 license: mit
-short_description: Statistical anomaly screener — flags anomalies, never fraud
+short_description: 40-detector research integrity screener — flags anomalies, never fraud
 ---
 
 # PaperGuard Demo
 
 Public demo for [PaperGuard](https://github.com/exergyleizhou-ux/PaperGuard) —
 a statistical anomaly screener for tabular research data.
+**40 detectors** (academic 36 + industrial 4) covering terminal-digit,
+Benford, GRIM/GRIMMER/SPRITE, statcheck, Carlisle baseline balance,
+image duplication (pHash), EXIF temporal forensics, docx RSID forensics,
+file metadata forensics, AI-text heuristics, and more.
 
-**Upload a `.csv`, `.xlsx`, `.docx`, or `.pdf`** (≤ 25 MB) → get back:
+**Paste a DOI or manuscript text** → get back:
 
 - A Markdown summary of all findings, grouped by severity
 - A WCAG 2.1 AA HTML report (same one the CLI exports)
@@ -36,6 +40,10 @@ for the honest performance characteristics.
 - Install locally: `pip install paperguard`
 - This demo's `app.py` is a thin Gradio wrapper around the
   PaperGuard detector pipeline.
+- **New in 2.15.0**: OCR table extraction for scanned PDFs,
+  Chinese scholar search via Semantic Scholar, batch author audit,
+  author name disambiguation, EXIF temporal forensics, docx RSID
+  forensics, decimal consistency detector.
 
 ## License
 

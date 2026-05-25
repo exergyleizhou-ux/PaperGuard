@@ -1,2 +1,2 @@
 gradio>=5.0,<6.0
-paperguard>=2.2.7
+paperguard>=2.15.0
