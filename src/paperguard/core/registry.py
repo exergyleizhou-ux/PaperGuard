@@ -68,6 +68,7 @@ class DetectorRegistry:
         )
         from paperguard.detectors.f5_exif_clustering import F5ExifClusteringDetector
         from paperguard.detectors.f6_patch_splice import F6PatchSpliceDetector
+        from paperguard.detectors.f7_gan_spectral import F7GanSpectralDetector
         from paperguard.detectors.g1_exif_temporal import G1ExifTemporalDetector
         from paperguard.detectors.g3_rsid_forensics import G3RsidForensicsDetector
         from paperguard.detectors.g4_metadata_forensics import (
@@ -125,6 +126,7 @@ class DetectorRegistry:
             F4CrossPaperImageDetector,
             F5ExifClusteringDetector,
             F6PatchSpliceDetector,
+            F7GanSpectralDetector,
             I1MassBalanceDetector,
             I2TimestampIntegrityDetector,
             I5BatchRepetitionDetector,

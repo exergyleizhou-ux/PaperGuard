@@ -11,11 +11,11 @@ authors:
   - given-names: Lei
     family-names: Zhou
     orcid: "https://orcid.org/0009-0000-9073-1349"
-version: 2.6.1
-# 2.6.1 = image-recall v6 (PMID-indexed both arms, N=163+49 usable)
-# confirms v5's hard truth — F1/F4/F6 at defaults give LR+ ≈ 1 on
-# un-curated OpenAlex retracted-paper corpus. v5's F4 LR+ 4.36
-# was a 1-FP small-N artifact, v6 collapses it to 0.96.
+version: 2.7.0
+# 2.7.0 = F7 GAN / diffusion-model image spectral-signature detector
+# (Zhang+2019 high-freq FFT ridge + Corvi+2023 bilateral residual,
+# pure scipy/cv2, no ML training required). Brings detector count
+# to 40.
 date-released: 2026-05-23
 license: MIT
 keywords:

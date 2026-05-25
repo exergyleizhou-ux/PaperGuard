@@ -4,6 +4,72 @@ All notable changes to PaperGuard are documented in this file. Format follows
 [Keep a Changelog](https://keepachangelog.com/) and the project adheres to
 [Semantic Versioning](https://semver.org/).
 
+## [2.7.0] — 2026-05-25 — F7 GAN / diffusion-model image spectral signature
+
+### Added
+- **F7 — GAN / diffusion-model image-spectral-signature detector**
+  (`src/paperguard/detectors/f7_gan_spectral.py`). Combines two
+  complementary signals, neither requiring a trained ML model:
+  - **GAN ridge probe** — 2D FFT → radial-averaged log magnitude →
+    robust z-score of the high-frequency peak. Catches the
+    transposed-convolution stride aliasing documented by
+    Zhang+2019 and Wang+2020 (StyleGAN, BigGAN, ProGAN, image-to-
+    image translation).
+  - **Diffusion residual probe** — bilateral filter (d=9,
+    σ_colour=75, σ_space=75); mean per-pixel residual normalised
+    by 25.0. Catches the Corvi+2023 signature where diffusion
+    models leave a low-residual after denoising compared to real
+    photos.
+  - Severity tiers (calibration source documented in module
+    docstring): no finding → NOTE → CONCERN → SUSPICIOUS →
+    CRITICAL based on which probes fire and how strongly.
+  - Pure scipy / opencv DSP; no GPU, no model weights, no
+    training data needed. Adds zero new dependency surface.
+- Six new unit tests covering: inapplicable-without-paths,
+  real-photo-like inputs do not over-trigger, denoised synthetic
+  fires the residual probe, periodic-pattern fires the ridge probe
+  in isolation, ≥ 5 innocent explanations + iron-rule word audit,
+  too-small images are correctly skipped.
+
+### Changed
+- `DetectorRegistry().register_default()` now ships **40 built-in
+  detectors** (was 39). F7 sits in the `image_synthesis_forensics`
+  assumption cluster — its own cluster, not merged with
+  F1-F6's `image_pHash_forensics` because the failure modes are
+  orthogonal: F1-F6 detect *re-used* real images, F7 detects
+  *synthesised* fake images.
+- `tests/test_plugin_registry.py::test_register_default_with_
+  plugins_disabled` updated 39 → 40.
+
+### Scope and known limitations (documented in F7 docstring)
+- F7 is tuned against typical GAN / diffusion artefacts circa
+  2020-2024. State-of-the-art 2024+ models (Stable Diffusion 3+,
+  Midjourney v6+) increasingly suppress the spectral ridge;
+  F7's ridge signal will weaken on the newest outputs.
+- The residual probe also fires on legitimately heavily-denoised
+  real photos (low-light astronomy, wavelet-denoised microscopy).
+  Five innocent explanations cover this on every Finding.
+- F7 does not claim a flagged image is the result of misconduct.
+  As with every PaperGuard detector, the finding ships with five
+  innocent explanations and is appropriate as a triage input,
+  not a verdict.
+
+### Verifications
+- pytest: **545 passed** (was 539; +6 F7 tests), 3 deselected for network.
+- ruff: all checks passed.
+- mypy --strict: 104 source files, no issues.
+- privacy grep: clean.
+
+### Why this release matters
+PaperGuard's existing F1-F6 image detectors are perceptual-hash /
+ORB-style — they catch *re-used* images. They are blind to
+*synthesised* images. F7 closes that gap with two pure-DSP probes
+calibrated against the published GAN-detection and diffusion-
+detection literature. A future 3.0 release (in preparation, see
+`notebooks/train_t9_bert_llm_detector.ipynb`) will add a
+BERT-based T9 LLM-text classifier trained on Google Colab GPU as
+the next layer of ML-defense.
+
 ## [2.6.1] — 2026-05-23 — Image-recall v6: F4 LR+ collapses, v5 hard truth confirmed
 
 ### Added
