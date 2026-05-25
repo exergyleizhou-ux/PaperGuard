@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "paperguard"
-version = "2.14.0"
+version = "2.15.0"
 description = "Statistical anomaly screener for tabular research data"
 readme = "README.md"
 requires-python = ">=3.11"

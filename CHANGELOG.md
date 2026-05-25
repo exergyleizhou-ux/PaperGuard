@@ -4,6 +4,17 @@ All notable changes to PaperGuard are documented in this file. Format follows
 [Keep a Changelog](https://keepachangelog.com/) and the project adheres to
 [Semantic Versioning](https://semver.org/).
 
+## [2.15.0] — 2026-05-25 — Chinese database integration (W4)
+
+### Added
+- **W4 — Chinese & multilingual paper search via Semantic Scholar.**
+  New `paperguard search-cn <query>` searches papers using the free
+  Semantic Scholar API. Supports Chinese character queries, `--year`
+  filter (e.g. "2020" or "2018-2023"), `--limit`, and `--output-json`.
+- New `SemanticScholarClient` fetcher with `search()` and `get_paper()`
+  methods in `src/paperguard/fetcher/semantic_scholar.py`.
+- 10 mocked tests covering parsing, search, error handling, and CLI.
+
 ## [2.14.0] — 2026-05-25 — OCR table extraction (W2)
 
 ### Added
