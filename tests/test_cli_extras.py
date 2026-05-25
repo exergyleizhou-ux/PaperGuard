@@ -141,3 +141,26 @@ def test_scan_single_file_backward_compat(tmp_path: Path) -> None:
     r = runner.invoke(main, ["scan", str(f)])
     assert r.exit_code == 0
     assert "solo.csv" in r.output
+
+
+# --- W5: --no-image-extract flag -------------------------------------------
+
+
+def test_no_image_extract_flag_accepted(tmp_path: Path) -> None:
+    """--no-image-extract should be accepted and skip image detectors."""
+    f = tmp_path / "data.csv"
+    f.write_text("x,y\n1,2\n3,4\n")
+    runner = CliRunner()
+    r = runner.invoke(main, ["scan", "--no-image-extract", str(f)])
+    assert r.exit_code == 0
+    assert "data.csv" in r.output
+
+
+def test_no_image_extract_skips_images(tmp_path: Path) -> None:
+    """With --no-image-extract, no 'Extracted ... image(s)' message."""
+    f = tmp_path / "data.csv"
+    f.write_text("x,y\n1,2\n3,4\n")
+    runner = CliRunner()
+    r = runner.invoke(main, ["scan", "--no-image-extract", str(f)])
+    assert r.exit_code == 0
+    assert "image(s)" not in r.output

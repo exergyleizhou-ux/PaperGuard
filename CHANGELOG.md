@@ -4,6 +4,23 @@ All notable changes to PaperGuard are documented in this file. Format follows
 [Keep a Changelog](https://keepachangelog.com/) and the project adheres to
 [Semantic Versioning](https://semver.org/).
 
+## [2.8.0] — 2026-05-25 — Full F1-F7 image forensics on PDF/DOCX scan
+
+### Added
+- **W5 — Auto-extract images from PDF/DOCX for all F-detectors.**
+  Previously only F1 (pHash) and F4 (cross-paper) ran on extracted
+  images. Now F2 (ORB duplication), F3 (splice/copy-move), F5 (EXIF
+  clustering), F6 (patch splice), and F7 (GAN/diffusion spectral)
+  also run automatically when scanning PDF/DOCX files.
+- `--no-image-extract` CLI flag to skip image extraction for faster
+  text/statistics-only scans.
+- Console message showing number of images extracted per file.
+
+### Verifications
+- pytest: 557 passed (was 549; +8 W5 tests), 3 deselected.
+- ruff: all checks passed.
+- mypy --strict: clean.
+
 ## [2.7.1] — 2026-05-25 — Windows GBK fix + multi-file positional CLI
 
 ### Fixed
