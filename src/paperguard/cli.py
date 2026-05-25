@@ -1,9 +1,17 @@
 """CLI 入口。"""
 from __future__ import annotations
 
+import os
+import sys
 import uuid
 from pathlib import Path
 from typing import Any
+
+if sys.platform == "win32":
+    os.environ.setdefault("PYTHONIOENCODING", "utf-8")
+    for _stream in (sys.stdout, sys.stderr):
+        if hasattr(_stream, "reconfigure"):
+            _stream.reconfigure(encoding="utf-8", errors="replace")
 
 import click
 from rich.console import Console
@@ -339,13 +347,18 @@ def main() -> None:
 
 
 @main.command()
+@click.argument(
+    "paths",
+    nargs=-1,
+    type=click.Path(exists=True, path_type=Path),
+)
 @click.option(
     "--file",
     "-f",
     "files",
     multiple=True,
     type=click.Path(exists=True, path_type=Path),
-    help="本地数据文件路径（可多次使用）。",
+    help="本地数据文件路径（可多次使用）。也可直接传位置参数。",
 )
 @click.option("--doi", help="论文 DOI（可选，用于获取元数据 + 撤稿状态）。")
 @click.option(
@@ -434,6 +447,7 @@ def main() -> None:
     ),
 )
 def scan(
+    paths: tuple[Path, ...],
     files: tuple[Path, ...],
     doi: str | None,
     output_json: Path | None,
@@ -447,8 +461,18 @@ def scan(
     detectgpt_check: bool,
     t6_abstract_only: bool,
 ) -> None:
-    """扫描本地数据文件 + 可选 DOI 元数据。"""
+    """扫描本地数据文件 + 可选 DOI 元数据。
+
+    支持位置参数和 --file/-f 选项两种方式传入文件：
+
+      paperguard scan a.pdf b.pdf
+
+      paperguard scan -f a.pdf -f b.pdf
+    """
     import os as _os
+
+    all_files: tuple[Path, ...] = tuple(dict.fromkeys((*paths, *files)))
+    files = all_files
 
     console = Console(legacy_windows=False)
     settings = get_settings()

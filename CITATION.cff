@@ -11,12 +11,9 @@ authors:
   - given-names: Lei
     family-names: Zhou
     orcid: "https://orcid.org/0009-0000-9073-1349"
-version: 2.7.0
-# 2.7.0 = F7 GAN / diffusion-model image spectral-signature detector
-# (Zhang+2019 high-freq FFT ridge + Corvi+2023 bilateral residual,
-# pure scipy/cv2, no ML training required). Brings detector count
-# to 40.
-date-released: 2026-05-23
+version: 2.7.1
+# 2.7.1 = W8 Windows GBK fix + W9 multi-file positional CLI args
+date-released: 2026-05-25
 license: MIT
 keywords:
   - research-integrity
