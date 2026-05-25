@@ -247,24 +247,39 @@ with `HANDOFF_THREAD_B.md` for continuity.
 
 ## 8. W1-W10 backlog state
 
-| ID | Status | Owner | Branch |
+| ID | Status | Shipped | Branch |
 |---|---|---|---|
-| W1 | open (P0) | Thread A | feat/w1-auto-fetch (planned) |
-| W2 | open (P0) | Thread A | feat/w2-pdf-ocr-tables (planned) |
-| W3 | open (P1) | Thread A | feat/w3-small-n-relaxed (planned) |
-| W4 | open (P1) | Thread A | feat/w4-chinese-databases (planned) |
-| W5 | open (P1) | Thread A | feat/w5-pdf-auto-images (planned) |
-| W6 | open (P2) | Thread A | feat/w6-statcheck-multidiscipline (planned) |
-| W7 | open (P2) | Thread A | feat/w7-batch-author-audit (planned) |
-| W8 | open (P3) — start here | Thread A | fix/w8-windows-gbk (planned) |
-| W9 | open (P3) — bundle with W8 | Thread A | feat/w9-multi-file-cli (planned) |
-| W10 | open (P2) | Thread A | feat/w10-orcid-helper (planned) |
+| W1 | ✅ merged | v2.13.0 (2026-05-25) | feat/w1-scan-name |
+| W2 | ✅ merged | v2.14.0 (2026-05-25) | feat/w2-ocr-tables |
+| W3 | ✅ merged | v2.9.0 (2026-05-25) | feat/w3-small-n-relaxed |
+| W4 | ✅ merged | v2.15.0 (2026-05-25) | feat/w4-chinese-scholar |
+| W5 | ✅ merged | v2.8.0 (2026-05-25) | feat/w5-pdf-auto-images |
+| W6 | ✅ merged | v2.10.0 (2026-05-25) | feat/w6-statcheck-multidiscipline |
+| W7 | ✅ merged | v2.12.0 (2026-05-25) | feat/w7-scan-author |
+| W8 | ✅ merged | v2.7.1 (2026-05-25) | fix/w8-w9-cli-improvements (bundle) |
+| W9 | ✅ merged | v2.7.1 (2026-05-25) | fix/w8-w9-cli-improvements (bundle) |
+| W10 | ✅ merged | v2.11.0 (2026-05-25) | feat/w10-orcid-helper |
 
-When Thread A's PR merges, update the row to `merged in vX.Y.Z`
-and add to the in-doc CHANGELOG below.
+**Status: 10 / 10 closed.** Thread A completed the W-backlog in a
+single intensive session, 9 PRs from 2.7.1 through 2.15.0. Test
+count rose 545 → 609 (+64). PyPI 2.15.0 live; HF Space synced.
 
-### W1-W10 ship log (append on merge)
-- (empty — Thread A has not opened any PR yet)
+### W1-W10 ship log
+- 2026-05-25 v2.7.1 — W8 (Windows GBK) + W9 (multi-file CLI) bundle
+- 2026-05-25 v2.8.0 — W5 (PDF auto-image extraction for F1-F7)
+- 2026-05-25 v2.9.0 — W3 (small-n graceful degradation: NOTE-cap at n ≥ 10)
+- 2026-05-25 v2.10.0 — W6 (statcheck multi-discipline regex)
+- 2026-05-25 v2.11.0 — W10 (ORCID public-API disambiguation helper)
+- 2026-05-25 v2.12.0 — W7 (`paperguard scan-author <orcid>` CLI)
+- 2026-05-25 v2.13.0 — W1 (`paperguard scan-name <name>` auto-fetch)
+- 2026-05-25 v2.14.0 — W2 (OCR table extraction for scanned PDFs)
+- 2026-05-25 v2.15.0 — W4 (Chinese / multilingual paper search via Semantic Scholar)
+
+### Remaining big backlog
+- **Plan C** — BERT Colab notebook (`notebooks/train_t9_bert_llm_detector.ipynb`).
+  Not yet started as of 2026-05-25 `a9c5f2c`. Spec lives in
+  `HANDOFF_THREAD_A.md` §6. Lei has Google Colab account
+  registered; can run free T4 GPU when ready.
 
 ---
 
