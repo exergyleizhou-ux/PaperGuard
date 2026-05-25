@@ -151,7 +151,7 @@ class A1TerminalDigitDetector(BaseDetector):
             if len(values) < 10:
                 continue
 
-            low_power = len(values) < settings.a1_min_n
+            low_power = len(values) < 50
             digits = [get_last_significant_digit(v) for v in values]
             col_digits[str(col)] = digits
             n = len(digits)

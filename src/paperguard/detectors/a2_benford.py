@@ -199,6 +199,7 @@ class A2BenfordDetector(BaseDetector):
                         "benford_expected": {
                             str(d): float(expected[d - 1]) for d in range(1, 10)
                         },
+                        "low_power_note": low_power,
                     },
                     innocent_explanations=[
                         "数据并非自然跨多数量级（人为窗口约束或单位归一化）",

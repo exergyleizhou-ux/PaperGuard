@@ -46,7 +46,7 @@ class A7LastDigitFiveZeroDetector(BaseDetector):
     assumption_cluster: ClassVar[str] = "digit_distribution"
 
     SMALL_N: ClassVar[int] = 10
-    MIN_N: ClassVar[int] = 30
+    MIN_N: ClassVar[int] = 50
     P_CONCERN: ClassVar[float] = 0.005
     P_SUSPICIOUS: ClassVar[float] = 1e-5
     P_CRITICAL: ClassVar[float] = 1e-15
@@ -125,6 +125,7 @@ class A7LastDigitFiveZeroDetector(BaseDetector):
                         "zero_five_ratio": zf_ratio,
                         "direction": direction,
                         "frequency_table": {str(d): int(c) for d, c in counts.items()},
+                        "low_power_note": low_power,
                     },
                     innocent_explanations=[
                         "数据仪器步长本就是 0.05 的倍数（如某些天平）",

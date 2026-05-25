@@ -58,11 +58,14 @@ class B5TIVADetector(BaseDetector):
     data_requirements: ClassVar[list[str]] = ["multi_study_p_values"]
     assumption_cluster: ClassVar[str] = "summary_statistic_consistency"
 
+    # W3: raised minimum from 4 to 10 for small-n graceful degradation
+    SMALL_N: ClassVar[int] = 10
+
     def check_applicability(self, data: Any) -> tuple[bool, str]:
         if not isinstance(data, TIVAInput):
             return False, "Expected TIVAInput"
-        if len(data.p_values) < 4:
-            return False, "TIVA 需要至少 4 个独立 p 值"
+        if len(data.p_values) < self.SMALL_N:
+            return False, f"TIVA needs at least {self.SMALL_N} independent p-values"
         return True, ""
 
     def _detect(self, data: TIVAInput, seed: int) -> list[Finding]:
@@ -70,8 +73,11 @@ class B5TIVADetector(BaseDetector):
 
         zs = [_p_to_z(p) for p in data.p_values if 0 < p < 1]
         k = len(zs)
-        if k < 4:
+        if k < self.SMALL_N:
             return []
+
+        # W3: small-n graceful degradation
+        low_power = k < 50
 
         # 样本方差 (TIVA)
         mean_z = sum(zs) / k
@@ -146,6 +152,10 @@ class B5TIVADetector(BaseDetector):
         if p_combined < 0.01 and meta_signals:
             severity = Severity.SUSPICIOUS
 
+        # W3: cap severity for low-power samples (10 <= k < 50)
+        if low_power and severity > Severity.NOTE:
+            severity = Severity.NOTE
+
         return [
             Finding(
                 detector_id=self.id,
@@ -194,6 +204,7 @@ class B5TIVADetector(BaseDetector):
                     "cochran_q_p": q_p,
                     "i_squared": i_sq,
                     "meta_signals_triggered": meta_signals,
+                    "low_power_note": low_power,
                 },
                 innocent_explanations=[
                     "所有研究共享同一稳定真实效应（罕见且应有强先验）",

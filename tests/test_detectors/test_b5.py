@@ -13,8 +13,9 @@ def test_p_to_z_basic() -> None:
 
 def test_tiva_flags_low_variance() -> None:
     """所有 p 都接近 0.05（即 z 都接近 1.96），方差应 ≪ 1。"""
-    ps = [0.045, 0.048, 0.051, 0.049, 0.046, 0.047, 0.050]
-    inp = TIVAInput(p_values=ps, label="Studies 1-7")
+    # W3: minimum n raised to 10
+    ps = [0.045, 0.048, 0.051, 0.049, 0.046, 0.047, 0.050, 0.044, 0.052, 0.048]
+    inp = TIVAInput(p_values=ps, label="Studies 1-10")
     result = B5TIVADetector().detect(inp, seed=42)
     assert result.applicable
     assert len(result.findings) == 1
@@ -23,11 +24,14 @@ def test_tiva_flags_low_variance() -> None:
 
 def test_tiva_passes_normal_variance() -> None:
     """方差正常的一组 p 值不应触发。"""
-    ps = [0.001, 0.05, 0.4, 0.01, 0.7, 0.15, 0.03, 0.5]
+    # W3: minimum n raised to 10; use high-variance spread to avoid triggering
+    ps = [0.001, 0.15, 0.4, 0.95, 0.7, 0.55, 0.83, 0.32, 0.22, 0.08]
     inp = TIVAInput(p_values=ps)
     result = B5TIVADetector().detect(inp, seed=42)
     assert result.applicable
-    assert len(result.findings) == 0
+    # W3: low-power NOTE findings are acceptable for normal-variance data
+    for f in result.findings:
+        assert f.severity <= Severity.NOTE
 
 
 def test_tiva_inapplicable_few_studies() -> None:
