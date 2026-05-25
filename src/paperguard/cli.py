@@ -2236,6 +2236,65 @@ def who(name: str, affiliation: str | None) -> None:
     console.print(table)
 
 
+@main.command("scan-name")
+@click.argument("name")
+@click.option("--affiliation", default=None, help="Filter ORCID candidates by affiliation.")
+@click.option("--pick", default=1, show_default=True, help="Pick the Nth candidate (1-based).")
+@click.option("--max-papers", default=20, show_default=True, help="Max papers to scan.")
+@click.option(
+    "--output-json",
+    type=click.Path(path_type=Path),
+    default=None,
+    help="Write aggregated JSON report to this path.",
+)
+def scan_name(
+    name: str,
+    affiliation: str | None,
+    pick: int,
+    max_papers: int,
+    output_json: Path | None,
+) -> None:
+    """Auto-fetch: disambiguate author by name, then batch-scan papers.
+
+    Combines ORCID disambiguation (W10) with batch author audit (W7)
+    into a single command.  Resolves the author name to an ORCID ID,
+    then fetches works via OpenAlex, downloads OA PDFs, and runs the
+    full PaperGuard pipeline on each.
+    """
+    import asyncio as _asyncio
+
+    console = Console(legacy_windows=False)
+    console.print(f"[bold]Resolving author: {name}[/]")
+
+    with console.status("[bold]Searching ORCID…[/]"):
+        candidates: list[OrcidCandidate] = _asyncio.run(
+            disambiguate_author(name, affiliation),
+        )
+
+    if not candidates:
+        console.print("[yellow]No ORCID candidates found for this name.[/]")
+        return
+
+    if pick < 1 or pick > len(candidates):
+        console.print(f"[red]--pick {pick} out of range (1–{len(candidates)}).[/]")
+        raise SystemExit(1)
+
+    chosen = candidates[pick - 1]
+    console.print(
+        f"[green]Selected:[/] {chosen.name}  ORCID {chosen.orcid_id}"
+        f"  ({chosen.works_count} works)",
+    )
+
+    # Delegate to scan_author logic via its Click context
+    ctx = click.get_current_context()
+    ctx.invoke(
+        scan_author,
+        orcid_id=chosen.orcid_id,
+        max_papers=max_papers,
+        output_json=output_json,
+    )
+
+
 @main.command("scan-author")
 @click.argument("orcid_id")
 @click.option("--max-papers", default=20, show_default=True, help="Max papers to scan.")
