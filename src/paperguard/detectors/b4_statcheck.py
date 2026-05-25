@@ -11,6 +11,13 @@ algorithm: statcheck.io
 - chi2(df) = X, p = Y  /  χ²(df) = X, p = Y
 - r(df) = X, p = Y     (df = N-2)
 - z = X, p = Y
+- Q(df) = X, p = Y     (meta-analysis heterogeneity)
+
+2.10.0 W6 multi-discipline additions:
+- R²/r² = X, n = N, p = Y  (chemistry / materials / ecology regression)
+  → F = (R²/1) / ((1-R²)/(n-2)) with df (1, n-2) for simple regression
+- χ² = X, df = N, p = Y  (ecology / biology separated-df notation)
+- H(df) = X, p = Y  (Kruskal-Wallis; χ² approximation)
 
 不支持（未来扩展）：
 - p 值给出区间（"p < 0.05"）无精确 reported_p，本检测器跳过这类
@@ -85,6 +92,36 @@ _RE_Q = re.compile(
     r"[Pp]\s*(?P<ineq>[<=≤])\s*(?P<p>\d*\.\d+|\.\d+)"
 )
 
+# --- W6 multi-discipline patterns ---
+
+# R²/r² with sample size n → F-test recomputation
+# Matches: "r² = 0.85, n = 30, p = 0.001", "R² = 0.72, N = 45, P < 0.05"
+_RE_R2 = re.compile(
+    r"(?:[Rr]²|[Rr]2|[Rr]\^2)\s*[<>≤≥]?=?\s*"
+    r"(?P<r2>0?\.\d+|1\.0+)\s*,?\s*"
+    r"[nN]\s*=\s*(?P<n>\d+)\s*,?\s*"
+    r"[Pp]\s*(?P<ineq>[<=≤])\s*(?P<p>\d*\.\d+|\.\d+)",
+    flags=re.IGNORECASE,
+)
+
+# Separated-df chi-square: "χ² = 15.3, df = 4, p = 0.004"
+# (ecology / biology / chemistry — df not in parentheses)
+_RE_CHI2_SEP = re.compile(
+    r"(?:chi2|χ²|χ2|χ\^2)\s*[<>≤≥]?=?\s*"
+    r"(?P<stat>\d+\.\d+)\s*,\s*"
+    r"(?:df|DF|d\.f\.)\s*=\s*(?P<df>\d+)\s*,\s*"
+    r"[Pp]\s*(?P<ineq>[<=≤])\s*(?P<p>\d*\.\d+|\.\d+)",
+    flags=re.IGNORECASE,
+)
+
+# Kruskal-Wallis H test: "H(2) = 8.5, p = 0.014"
+# (biology / ecology nonparametric; χ² approximation)
+_RE_H = re.compile(
+    r"\bH\s*\(\s*(?P<df>\d+)\s*\)\s*[<>≤≥]?=?\s*"
+    r"(?P<stat>\d+\.\d+)\s*,?\s*"
+    r"[Pp]\s*(?P<ineq>[<=≤])\s*(?P<p>\d*\.\d+|\.\d+)"
+)
+
 
 def _compute_p(
     test_type: str,
@@ -116,6 +153,18 @@ def _compute_p(
         return p_one if one_tailed else 2 * p_one
     if test_type == "Q":
         # Q 是 χ² 的特例（meta-analysis 异质性）
+        return float(1 - stats.chi2.cdf(stat, df=df1))
+    if test_type == "r2":
+        # R² → F-test: F = (R²/1) / ((1-R²)/(n-2)), df1=1, df2=n-2
+        # Here stat = R², df1 = n (sample size)
+        r2 = stat
+        n = df1
+        if r2 >= 1.0 or r2 <= 0.0 or n <= 2:
+            return 1.0
+        f_stat = (r2 / 1.0) / ((1.0 - r2) / (n - 2))
+        return float(1 - stats.f.cdf(f_stat, 1, n - 2))
+    if test_type == "H":
+        # Kruskal-Wallis H ≈ χ²(df)
         return float(1 - stats.chi2.cdf(stat, df=df1))
     raise ValueError(f"Unknown test type: {test_type}")
 
@@ -235,6 +284,55 @@ def _extract_matches(text: str) -> list[StatcheckMatch]:
             )
         )
 
+    # --- W6 multi-discipline extractors ---
+
+    for m in _RE_R2.finditer(text):
+        r2 = float(m.group("r2"))
+        n = float(m.group("n"))
+        reported_p = float(m.group("p"))
+        ineq = m.group("ineq")
+        if r2 <= 0.0 or r2 >= 1.0 or n <= 2:
+            continue
+        try:
+            computed_p = _compute_p("r2", r2, n, None)
+        except ValueError:
+            continue
+        matches.append(
+            StatcheckMatch(
+                "r2", n, None, r2, reported_p, computed_p, ineq, m.group(0),
+            )
+        )
+
+    for m in _RE_CHI2_SEP.finditer(text):
+        df = float(m.group("df"))
+        stat = float(m.group("stat"))
+        reported_p = float(m.group("p"))
+        ineq = m.group("ineq")
+        try:
+            computed_p = _compute_p_two_tailed("chi2", stat, df, None)
+        except ValueError:
+            continue
+        matches.append(
+            StatcheckMatch(
+                "chi2", df, None, stat, reported_p, computed_p, ineq, m.group(0),
+            )
+        )
+
+    for m in _RE_H.finditer(text):
+        df = float(m.group("df"))
+        stat = float(m.group("stat"))
+        reported_p = float(m.group("p"))
+        ineq = m.group("ineq")
+        try:
+            computed_p = _compute_p("H", stat, df, None)
+        except ValueError:
+            continue
+        matches.append(
+            StatcheckMatch(
+                "H", df, None, stat, reported_p, computed_p, ineq, m.group(0),
+            )
+        )
+
     # 全文级单尾修正：对 t / r / z 匹配做"如果换算单尾就一致"的回查
     if text_has_one_tailed_keyword:
         for mt in matches:
@@ -312,7 +410,9 @@ class B4StatcheckDetector(BaseDetector):
 
     id: ClassVar[str] = "B4"
     name: ClassVar[str] = "Statcheck p-value Recomputation"
-    description: ClassVar[str] = "扫描论文文本中 t/F/χ²/r/z 检验的报告 p 值，重算并比对。"
+    description: ClassVar[str] = (
+        "扫描论文文本中 t/F/χ²/r/z/Q/R²/H 检验的报告 p 值，重算并比对。"
+    )
     academic_basis: ClassVar[str] = (
         "Nuijten et al. (2016). The prevalence of statistical reporting errors in "
         "psychology. Behavior Research Methods, 48(4), 1205-1226."
