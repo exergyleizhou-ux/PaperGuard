@@ -11,8 +11,8 @@ authors:
   - given-names: Lei
     family-names: Zhou
     orcid: "https://orcid.org/0009-0000-9073-1349"
-version: 2.9.0
-# 2.9.0 = W3 small-n graceful degradation for A1/A2/A7/B5/B7
+version: 2.10.0
+# 2.10.0 = W6 statcheck multi-discipline format support
 date-released: 2026-05-25
 license: MIT
 keywords:

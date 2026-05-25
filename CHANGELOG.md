@@ -4,6 +4,24 @@ All notable changes to PaperGuard are documented in this file. Format follows
 [Keep a Changelog](https://keepachangelog.com/) and the project adheres to
 [Semantic Versioning](https://semver.org/).
 
+## [2.10.0] — 2026-05-25 — Statcheck multi-discipline format support (W6)
+
+### Added
+- **W6 — B4 statcheck multi-discipline format support.**
+  New regex patterns and p-value recomputation for disciplines beyond
+  psychology:
+  - R²/r² with sample size n → F-test recomputation (chemistry/materials)
+  - χ² = X, df = N, p = Y separated notation (ecology/biology)
+  - Kruskal-Wallis H(df) = X, p = Y (biology nonparametric, χ² approx)
+  - R^2 caret notation and uppercase variants
+  - DF / d.f. notation variants for chi-square
+- 14 new W6 tests; all 7 existing B4 tests still pass.
+
+### Verifications
+- pytest: all passed.
+- ruff: all checks passed.
+- mypy --strict: clean.
+
 ## [2.9.0] — 2026-05-25 — Small-n graceful degradation (W3)
 
 ### Changed
