@@ -4,6 +4,23 @@ All notable changes to PaperGuard are documented in this file. Format follows
 [Keep a Changelog](https://keepachangelog.com/) and the project adheres to
 [Semantic Versioning](https://semver.org/).
 
+## [2.11.0] — 2026-05-25 — ORCID disambiguation helper (W10)
+
+### Added
+- **W10 — ORCID author disambiguation helper.**
+  New `paperguard who <name> --affiliation X` CLI command queries the
+  ORCID public API (expanded-search + per-candidate works count) and
+  prints a Rich table of up to 10 candidates with ORCID ID, name,
+  affiliations, and works count.
+- `src/paperguard/fetcher/orcid.py`: async `disambiguate_author()`
+  with 1 req/sec rate limiting, `OrcidCandidate` dataclass.
+- 4 new W10 tests (3 async + 1 CLI).
+
+### Verifications
+- pytest: all passed.
+- ruff: all checks passed.
+- mypy --strict: clean.
+
 ## [2.10.0] — 2026-05-25 — Statcheck multi-discipline format support (W6)
 
 ### Added

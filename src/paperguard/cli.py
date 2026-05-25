@@ -30,6 +30,7 @@ from paperguard.extractor.inline_numbers import extract_text_from_docx
 from paperguard.extractor.pdf_text import extract_pdf_tables, extract_pdf_text
 from paperguard.fetcher.crossref import CrossRefClient
 from paperguard.fetcher.openalex import OpenAlexClient
+from paperguard.fetcher.orcid import OrcidCandidate, disambiguate_author
 from paperguard.fetcher.pubpeer import PubPeerClient
 from paperguard.fetcher.unpaywall import UnpaywallClient
 from paperguard.reporter.html_export import export_html
@@ -2201,6 +2202,37 @@ def search(
         console.print(table)
     finally:
         oa.close()
+
+
+@main.command()
+@click.argument("name")
+@click.option("--affiliation", default=None, help="机构名过滤。")
+def who(name: str, affiliation: str | None) -> None:
+    """ORCID 作者消歧 — 按姓名搜索 ORCID 候选人。"""
+    import asyncio as _asyncio
+
+    console = Console(legacy_windows=False)
+    with console.status("[bold]Searching ORCID…[/]"):
+        candidates: list[OrcidCandidate] = _asyncio.run(
+            disambiguate_author(name, affiliation)
+        )
+    if not candidates:
+        console.print("[yellow]No candidates found.[/]")
+        return
+
+    table = Table(show_header=True, header_style="bold")
+    table.add_column("ORCID", width=20)
+    table.add_column("Name")
+    table.add_column("Affiliation(s)")
+    table.add_column("Works", justify="right", width=6)
+    for c in candidates:
+        table.add_row(
+            c.orcid_id,
+            c.name,
+            ", ".join(c.affiliations) if c.affiliations else "-",
+            str(c.works_count),
+        )
+    console.print(table)
 
 
 @main.command("scan-industrial")

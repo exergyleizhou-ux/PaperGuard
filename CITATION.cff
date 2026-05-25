@@ -11,8 +11,8 @@ authors:
   - given-names: Lei
     family-names: Zhou
     orcid: "https://orcid.org/0009-0000-9073-1349"
-version: 2.10.0
-# 2.10.0 = W6 statcheck multi-discipline format support
+version: 2.11.0
+# 2.11.0 = W10 ORCID disambiguation helper
 date-released: 2026-05-25
 license: MIT
 keywords:
