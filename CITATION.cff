@@ -11,8 +11,8 @@ authors:
   - given-names: Lei
     family-names: Zhou
     orcid: "https://orcid.org/0009-0000-9073-1349"
-version: 2.7.1
-# 2.7.1 = W8 Windows GBK fix + W9 multi-file positional CLI args
+version: 2.8.0
+# 2.8.0 = W5 auto-extract PDF/DOCX images for full F1-F7 forensics
 date-released: 2026-05-25
 license: MIT
 keywords:

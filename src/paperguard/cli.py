@@ -66,6 +66,8 @@ def _run_detectors_on_file(
     seed: int,
     audit: AuditLog | None = None,
     console: Console | None = None,
+    *,
+    skip_images: bool = False,
 ) -> None:
     """Run the common detector flow on a single file.
 
@@ -221,19 +223,30 @@ def _run_detectors_on_file(
         report.detector_results.append(result)
         report.all_findings.extend(result.findings)
 
-    # --- 4) Image forensics (F1 intra-paper + F4 cross-paper) -------------
-    f1 = registry.get("F1")
-    f4 = registry.get("F4")
-    if (f1 is not None or f4 is not None) and suffix in {
-        ".docx", ".pdf", ".doc", ".docb"
-    }:
+    # --- 4) Image forensics (F1-F7) -----------------------------------------
+    if not skip_images and suffix in {".docx", ".pdf", ".doc", ".docb"}:
         from tempfile import TemporaryDirectory
 
         from paperguard.detectors.f1_image_duplication import (
             ImageDuplicationInput,
         )
+        from paperguard.detectors.f2_internal_duplication import (
+            InternalDuplicationInput,
+        )
+        from paperguard.detectors.f3_splice_forensics import (
+            SpliceForensicsInput,
+        )
         from paperguard.detectors.f4_cross_paper_image import (
             CrossPaperImageInput,
+        )
+        from paperguard.detectors.f5_exif_clustering import (
+            ExifClusteringInput,
+        )
+        from paperguard.detectors.f6_patch_splice import (
+            PatchSpliceInput,
+        )
+        from paperguard.detectors.f7_gan_spectral import (
+            GanSpectralInput,
         )
         from paperguard.extractor.images import (
             extract_docx_images,
@@ -257,8 +270,14 @@ def _run_detectors_on_file(
                     "images_extracted",
                     {"file": str(file_path), "n_images": len(imgs)},
                 )
+            if console is not None and imgs:
+                console.print(
+                    f"[dim]  Extracted {len(imgs)} image(s) from "
+                    f"{file_path.name} for F1-F7[/]"
+                )
 
-            # F1: intra-paper duplication (needs ≥ 2 images)
+            # F1: intra-paper pHash duplication (needs ≥ 2 images)
+            f1 = registry.get("F1")
             if f1 is not None and len(imgs) >= 2:
                 result = f1.detect(
                     ImageDuplicationInput(image_paths=imgs), seed=seed
@@ -266,10 +285,43 @@ def _run_detectors_on_file(
                 report.detector_results.append(result)
                 report.all_findings.extend(result.findings)
 
+            # F2: internal ORB-based duplication (needs ≥ 2 images)
+            f2 = registry.get("F2")
+            if f2 is not None and len(imgs) >= 2:
+                try:
+                    result = f2.detect(
+                        InternalDuplicationInput(image_paths=imgs),
+                        seed=seed,
+                    )
+                except Exception as e:  # noqa: BLE001
+                    if audit is not None:
+                        audit.log_event(
+                            "f2_failed",
+                            {"file": str(file_path), "error": str(e)},
+                        )
+                else:
+                    report.detector_results.append(result)
+                    report.all_findings.extend(result.findings)
+
+            # F3: splice / copy-move forensics (per-image)
+            f3 = registry.get("F3")
+            if f3 is not None and imgs:
+                try:
+                    result = f3.detect(
+                        SpliceForensicsInput(image_paths=imgs), seed=seed
+                    )
+                except Exception as e:  # noqa: BLE001
+                    if audit is not None:
+                        audit.log_event(
+                            "f3_failed",
+                            {"file": str(file_path), "error": str(e)},
+                        )
+                else:
+                    report.detector_results.append(result)
+                    report.all_findings.extend(result.findings)
+
             # F4: cross-paper duplication via persistent corpus.
-            # Auto-builds at ~/.paperguard/image_corpus.db. Every scan
-            # both reads and writes the corpus, so over time hits
-            # accumulate signal across papers without manual setup.
+            f4 = registry.get("F4")
             if f4 is not None and imgs:
                 from paperguard.config import get_settings as _gs
 
@@ -302,6 +354,60 @@ def _run_detectors_on_file(
                                 "n_findings": len(result.findings),
                             },
                         )
+
+            # F5: EXIF cross-image clustering (needs ≥ 3 images)
+            f5 = registry.get("F5")
+            if f5 is not None and len(imgs) >= 3:
+                try:
+                    result = f5.detect(
+                        ExifClusteringInput(
+                            image_paths=imgs, label=file_path.name,
+                        ),
+                        seed=seed,
+                    )
+                except Exception as e:  # noqa: BLE001
+                    if audit is not None:
+                        audit.log_event(
+                            "f5_failed",
+                            {"file": str(file_path), "error": str(e)},
+                        )
+                else:
+                    report.detector_results.append(result)
+                    report.all_findings.extend(result.findings)
+
+            # F6: per-channel histogram patch splice (per-image)
+            f6 = registry.get("F6")
+            if f6 is not None and imgs:
+                try:
+                    result = f6.detect(
+                        PatchSpliceInput(image_paths=imgs), seed=seed
+                    )
+                except Exception as e:  # noqa: BLE001
+                    if audit is not None:
+                        audit.log_event(
+                            "f6_failed",
+                            {"file": str(file_path), "error": str(e)},
+                        )
+                else:
+                    report.detector_results.append(result)
+                    report.all_findings.extend(result.findings)
+
+            # F7: GAN / diffusion spectral signature (per-image)
+            f7 = registry.get("F7")
+            if f7 is not None and imgs:
+                try:
+                    result = f7.detect(
+                        GanSpectralInput(image_paths=imgs), seed=seed
+                    )
+                except Exception as e:  # noqa: BLE001
+                    if audit is not None:
+                        audit.log_event(
+                            "f7_failed",
+                            {"file": str(file_path), "error": str(e)},
+                        )
+                else:
+                    report.detector_results.append(result)
+                    report.all_findings.extend(result.findings)
 
     # --- 5) PDF-specific: C1 Carlisle on auto-extracted baseline tables ---
     if suffix == ".pdf":
@@ -446,6 +552,17 @@ def main() -> None:
         "screening; full-text T6 is the default for pre-submission."
     ),
 )
+@click.option(
+    "--no-image-extract",
+    is_flag=True,
+    default=False,
+    help=(
+        "Skip automatic image extraction from PDF/DOCX files. "
+        "When set, F1-F7 image-forensics detectors will not run. "
+        "Useful for faster scans when only statistical / text "
+        "detectors are needed."
+    ),
+)
 def scan(
     paths: tuple[Path, ...],
     files: tuple[Path, ...],
@@ -460,6 +577,7 @@ def scan(
     perplexity_check: bool,
     detectgpt_check: bool,
     t6_abstract_only: bool,
+    no_image_extract: bool,
 ) -> None:
     """扫描本地数据文件 + 可选 DOI 元数据。
 
@@ -534,7 +652,8 @@ def scan(
             {"path": str(file_path), "sha256": file_hash},
         )
         _run_detectors_on_file(
-            file_path, registry, report, seed, audit=audit, console=console
+            file_path, registry, report, seed, audit=audit, console=console,
+            skip_images=no_image_extract,
         )
 
     # Auto-NCT → T2 trial outcome consistency
