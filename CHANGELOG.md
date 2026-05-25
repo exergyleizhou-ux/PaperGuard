@@ -4,6 +4,19 @@ All notable changes to PaperGuard are documented in this file. Format follows
 [Keep a Changelog](https://keepachangelog.com/) and the project adheres to
 [Semantic Versioning](https://semver.org/).
 
+## [2.14.0] — 2026-05-25 — OCR table extraction (W2)
+
+### Added
+- **W2 — OCR table extraction for scanned PDFs.**
+  When pdfplumber finds no embedded tables, falls back to Tesseract OCR:
+  renders pages as images via pymupdf, extracts text with bounding boxes,
+  clusters into rows/columns, and builds DataFrames.
+- New optional dependency group: `pip install paperguard[ocr]`
+  (pytesseract + Pillow). Graceful no-op when Tesseract is not installed.
+- New module `src/paperguard/extractor/ocr_tables.py` with `ocr_pdf_tables()`.
+- 7 mocked tests covering TSV parsing, confidence filtering, full pipeline,
+  and CLI fallback integration.
+
 ## [2.13.0] — 2026-05-25 — Author auto-fetch (W1)
 
 ### Added
