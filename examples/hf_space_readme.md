@@ -9,7 +9,7 @@ python_version: "3.11"
 app_file: app.py
 pinned: false
 license: mit
-short_description: 40-detector research integrity screener — flags anomalies, never fraud
+short_description: 40-detector screener — flags anomalies, not fraud
 ---
 
 # PaperGuard Demo
