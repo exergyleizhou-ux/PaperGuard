@@ -99,6 +99,7 @@ class A2BenfordDetector(BaseDetector):
     assumption_cluster: ClassVar[str] = "digit_distribution"
 
     # 检测参数（暂时硬编码，未来可移入 config.Settings）
+    SMALL_N: ClassVar[int] = 10
     MIN_N: ClassVar[int] = 50
     MIN_DECADES: ClassVar[float] = 2.0  # log10(max/min) 至少跨 2 个数量级
     P_CONCERN: ClassVar[float] = 0.01
@@ -112,7 +113,7 @@ class A2BenfordDetector(BaseDetector):
         for col in numeric_cols:
             values = data[col].dropna()
             values = values[values != 0]
-            if len(values) < self.MIN_N:
+            if len(values) < self.SMALL_N:
                 continue
             positives = values[values > 0]
             if len(positives) < 2:
@@ -121,7 +122,7 @@ class A2BenfordDetector(BaseDetector):
             if ratio > 0 and math.log10(ratio) >= self.MIN_DECADES:
                 return True, ""
         return False, (
-            f"无满足 N ≥ {self.MIN_N} 且动态范围 ≥ "
+            f"无满足 N ≥ {self.SMALL_N} 且动态范围 ≥ "
             f"{self.MIN_DECADES} 数量级的数值列"
         )
 
@@ -132,7 +133,7 @@ class A2BenfordDetector(BaseDetector):
         for col in numeric_cols:
             values = data[col].dropna()
             values = values[values != 0]
-            if len(values) < self.MIN_N:
+            if len(values) < self.SMALL_N:
                 continue
             positives = values[values > 0]
             if len(positives) < 2:
@@ -142,10 +143,11 @@ class A2BenfordDetector(BaseDetector):
             if decades < self.MIN_DECADES:
                 continue
 
+            low_power = len(values) < self.MIN_N
             digits = [_first_digit(v) for v in values]
             digits_clean = [d for d in digits if d is not None]
             n = len(digits_clean)
-            if n < self.MIN_N:
+            if n < self.SMALL_N:
                 continue
 
             counts = Counter(digits_clean)
@@ -164,6 +166,9 @@ class A2BenfordDetector(BaseDetector):
                 severity = Severity.SUSPICIOUS
             else:
                 severity = Severity.CRITICAL
+
+            if low_power:
+                severity = Severity.NOTE
 
             findings.append(
                 Finding(
