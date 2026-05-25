@@ -4,6 +4,22 @@ All notable changes to PaperGuard are documented in this file. Format follows
 [Keep a Changelog](https://keepachangelog.com/) and the project adheres to
 [Semantic Versioning](https://semver.org/).
 
+## [2.9.0] — 2026-05-25 — Small-n graceful degradation (W3)
+
+### Changed
+- **W3 — Small-n graceful degradation for A1, A2, A7, B5, B7.**
+  Detectors now accept samples with 10 <= n < 50 in "low-power" mode:
+  severity is capped at NOTE, and `low_power_note: true` is added to
+  the evidence dict. Samples with n < 10 are skipped entirely.
+- A7 `MIN_N` raised from 30 to 50 (below 50 = low-power).
+- B5 minimum p-value count raised from 4 to 10.
+- B7 minimum significant p-value count raised from 5 to 10.
+
+### Verifications
+- pytest: 15 W3 tests passed, full suite green.
+- ruff: all checks passed.
+- mypy --strict: clean.
+
 ## [2.8.0] — 2026-05-25 — Full F1-F7 image forensics on PDF/DOCX scan
 
 ### Added
