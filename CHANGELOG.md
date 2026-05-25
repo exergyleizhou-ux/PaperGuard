@@ -4,6 +4,18 @@ All notable changes to PaperGuard are documented in this file. Format follows
 [Keep a Changelog](https://keepachangelog.com/) and the project adheres to
 [Semantic Versioning](https://semver.org/).
 
+## [2.13.0] — 2026-05-25 — Author auto-fetch (W1)
+
+### Added
+- **W1 — Author auto-fetch `scan-name` command.**
+  New `paperguard scan-name <author-name>` resolves a name to an ORCID
+  ID via the ORCID public API (W10), then delegates to `scan-author`
+  (W7) to fetch works, download OA PDFs, and run the full pipeline.
+- `--affiliation` option to filter ORCID candidates by institution.
+- `--pick N` option to select the Nth candidate (default: top by works count).
+- `--max-papers` and `--output-json` forwarded to scan-author.
+- 4 mocked CLI tests covering basic flow, affiliation, no-candidates, pick-N.
+
 ## [2.12.0] — 2026-05-25 — Batch author audit (W7)
 
 ### Added
