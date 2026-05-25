@@ -46,11 +46,30 @@ def _safe_pdf_tables(file_path: Path) -> tuple[dict[str, Any], str | None]:
     Returns ``(sheets, error_message_or_None)``. Empty dict + message
     when the parser raises. Saves callers from having to know which
     publisher PDFs trip up pdfplumber/pdfminer.
+
+    Since 2.14.0 (W2): when pdfplumber returns no tables, falls back
+    to OCR-based extraction (requires ``pip install paperguard[ocr]``).
     """
+    err: str | None = None
     try:
-        return dict(extract_pdf_tables(file_path)), None
+        sheets = dict(extract_pdf_tables(file_path))
     except Exception as e:  # noqa: BLE001
-        return {}, f"{type(e).__name__}: {e}"
+        sheets = {}
+        err = f"{type(e).__name__}: {e}"
+
+    # W2 OCR fallback: when pdfplumber finds no embedded tables,
+    # try Tesseract-based extraction (requires paperguard[ocr]).
+    if not sheets:
+        try:
+            from paperguard.extractor.ocr_tables import ocr_pdf_tables
+
+            ocr_sheets = dict(ocr_pdf_tables(file_path))
+            if ocr_sheets:
+                return ocr_sheets, None
+        except Exception:  # noqa: BLE001
+            pass
+
+    return sheets, err
 
 
 def _safe_pdf_text(file_path: Path) -> tuple[str, str | None]:
