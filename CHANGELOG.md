@@ -4,6 +4,33 @@ All notable changes to PaperGuard are documented in this file. Format follows
 [Keep a Changelog](https://keepachangelog.com/) and the project adheres to
 [Semantic Versioning](https://semver.org/).
 
+## [2.7.1] — 2026-05-25 — Windows GBK fix + multi-file positional CLI
+
+### Fixed
+- **W8 — Windows GBK shell encoding** (`cli.py`). On `win32`,
+  `sys.stdout` and `sys.stderr` are reconfigured to UTF-8 with
+  `errors="replace"` at module import time. Also sets
+  `PYTHONIOENCODING=utf-8` as belt-and-suspenders. Chinese and
+  other non-ASCII CLI output no longer raises
+  `UnicodeEncodeError` on GBK-default Windows shells.
+
+### Added
+- **W9 — Multi-file positional CLI arguments**. `paperguard scan`
+  now accepts files as positional arguments in addition to
+  `--file/-f`:
+
+      paperguard scan a.pdf b.pdf c.xlsx
+
+  The existing `-f` option still works and can be mixed with
+  positional args. Duplicates are deduplicated preserving order.
+  Single-file behaviour is backward-compatible (no cross-file
+  summary when n_files == 1).
+
+### Verifications
+- pytest: 549 passed (was 545; +4 W8/W9 tests), 3 deselected.
+- ruff: all checks passed.
+- mypy --strict: clean.
+
 ## [2.7.0] — 2026-05-25 — F7 GAN / diffusion-model image spectral signature
 
 ### Added
