@@ -4,6 +4,19 @@ All notable changes to PaperGuard are documented in this file. Format follows
 [Keep a Changelog](https://keepachangelog.com/) and the project adheres to
 [Semantic Versioning](https://semver.org/).
 
+## [2.12.0] — 2026-05-25 — Batch author audit (W7)
+
+### Added
+- **W7 — Batch author audit CLI command.**
+  New `paperguard scan-author <orcid-id>` fetches an author's works
+  from OpenAlex, downloads OA PDFs, runs the full PaperGuard pipeline
+  on each paper, and prints an aggregated summary table.
+- `--max-papers N` option (default 20) to limit the number of papers.
+- `--output-json PATH` writes a structured JSON report with per-paper
+  findings (DOI, title, detector_id, severity, summary).
+- 4 mocked CLI tests covering basic scan, empty works, fetch failure,
+  and clean-paper scenarios.
+
 ## [2.11.0] — 2026-05-25 — ORCID disambiguation helper (W10)
 
 ### Added
