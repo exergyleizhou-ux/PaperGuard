@@ -62,6 +62,11 @@ webui = [
     # it; install only when running multi-worker production.
     "redis>=4.0",
 ]
+# 2.14.0 — OCR table extraction for scanned PDFs.
+ocr = [
+    "pytesseract>=0.3.10",
+    "Pillow>=10.0",
+]
 # 2.1.17 — legacy Word format support.
 legacy-doc = [
     "olefile>=0.47",
