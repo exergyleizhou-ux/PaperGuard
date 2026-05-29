@@ -40,7 +40,9 @@ for the honest performance characteristics.
 - Install locally: `pip install paperguard`
 - This demo's `app.py` is a thin Gradio wrapper around the
   PaperGuard detector pipeline.
-- **New in 2.15.0**: OCR table extraction for scanned PDFs,
+- **New in 2.16.0**: T9 learned TF-IDF/LR LLM-text classifier (offline,
+  opt-in via `--ml-check`), bringing the detector count to 41.
+- **In 2.15.0**: OCR table extraction for scanned PDFs,
   Chinese scholar search via Semantic Scholar, batch author audit,
   author name disambiguation, EXIF temporal forensics, docx RSID
   forensics, decimal consistency detector.
