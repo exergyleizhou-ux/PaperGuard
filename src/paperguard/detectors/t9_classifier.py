@@ -43,6 +43,12 @@ MIN_WORDS = 150
 _CONCERN_THRESHOLD = 0.70  # NOTE < 0.70 <= CONCERN < SUSPICIOUS
 _NOTE_THRESHOLD = 0.50
 _SEGMENT_CHARS = 1500  # ~ one HC3 answer; keeps inference in-distribution
+# Minimum FRACTION of segments that must read LLM-like at a tier before the
+# document is flagged at that tier. Density, not max: on a long full-text paper
+# a single spiking segment is a multiple-comparisons artifact, not a signal.
+# For a single-segment input (e.g. an abstract) the fraction is 1.0, so the
+# original abstract-level behaviour is preserved exactly.
+_DENSITY_FLOOR = 0.25
 
 
 def _opt_in_enabled() -> bool:
@@ -178,17 +184,25 @@ class T9ClassifierDetector(BaseDetector):
             return []
         segments = self._segment(data) or [data]
         probs = [model.prob_llm(seg) for seg in segments]
+        n_seg = len(probs)
         p_max = max(probs)
-        p_mean = sum(probs) / len(probs)
+        p_mean = sum(probs) / n_seg
+        # Density-based tiering: the fraction of segments reading LLM-like at
+        # each tier must clear _DENSITY_FLOOR. This kills the long-document
+        # false-positive artifact (one spiking segment among dozens) while a
+        # single-segment abstract — fraction 1.0 — keeps its original tier.
+        frac_susp = sum(p >= model.threshold for p in probs) / n_seg
+        frac_concern = sum(p >= _CONCERN_THRESHOLD for p in probs) / n_seg
+        frac_note = sum(p >= _NOTE_THRESHOLD for p in probs) / n_seg
 
-        if p_max >= model.threshold:
+        if frac_susp >= _DENSITY_FLOOR:
             severity = Severity.SUSPICIOUS
-        elif p_max >= _CONCERN_THRESHOLD:
+        elif frac_concern >= _DENSITY_FLOOR:
             severity = Severity.CONCERN
-        elif p_max >= _NOTE_THRESHOLD:
+        elif frac_note >= _DENSITY_FLOOR:
             severity = Severity.NOTE
         else:
-            return []  # reads human-like; emit nothing
+            return []  # no sustained LLM-like density; reads human-like
 
         n_flagged = sum(1 for p in probs if p >= _CONCERN_THRESHOLD)
         return [
@@ -197,23 +211,28 @@ class T9ClassifierDetector(BaseDetector):
                 detector_name=self.name,
                 severity=severity,
                 summary=(
-                    f"A passage scores p(LLM-style)={p_max:.2f} on the learned "
-                    "TF-IDF/LR classifier"
+                    f"{n_flagged} of {n_seg} text segment(s) read LLM-like "
+                    f"(max p={p_max:.2f}) on the learned TF-IDF/LR classifier"
                 ),
                 detail=(
                     "A logistic-regression classifier trained on the HC3 "
                     "human-vs-ChatGPT corpus assigns a high LLM-style "
-                    f"probability to {n_flagged} of {len(segments)} text "
-                    "segment(s). This is a stylistic similarity signal against "
-                    "2023-era ChatGPT prose, not a determination of authorship."
+                    f"probability to {n_flagged} of {n_seg} text segment(s) "
+                    f"({100 * frac_concern:.0f}% — above the "
+                    f"{100 * _DENSITY_FLOOR:.0f}% density floor). This is a "
+                    "stylistic similarity signal against 2023-era ChatGPT "
+                    "prose, not a determination of authorship."
                 ),
                 test_statistic=round(p_max, 4),
                 test_name="tfidf_lr_prob_llm",
                 evidence={
                     "p_llm_max": round(p_max, 4),
                     "p_llm_mean": round(p_mean, 4),
-                    "n_segments": len(segments),
+                    "n_segments": n_seg,
                     "n_flagged": n_flagged,
+                    "frac_suspicious": round(frac_susp, 3),
+                    "frac_concern": round(frac_concern, 3),
+                    "density_floor": _DENSITY_FLOOR,
                     "threshold": model.threshold,
                     "model_holdout_accuracy": model.accuracy,
                     "model_lr_plus_at_threshold": model.lr_plus,
