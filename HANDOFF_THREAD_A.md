@@ -270,6 +270,12 @@ branch + one PR + one Thread-B review cycle.**
 
 ## 6. Plan C — BERT Colab notebook (separate big task)
 
+> **STATUS (2026-05-29 `710d1a7`): notebook DELIVERED.** The spec below was
+> implemented as `notebooks/train_t9_bert_llm_detector.ipynb` (resumable,
+> prints accuracy + LR+, exports to `~/.paperguard/models/t9/`, and embeds a
+> drop-in `t9_distilbert.py` template). What remains is *running* it on Colab
+> T4 and shipping the trained detector as 3.0.0 — see "After model lands".
+
 > The user (Lei) registered Google Colab. Plan C is to train a
 > small BERT-family LLM-text classifier on free Colab GPU.
 

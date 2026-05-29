@@ -277,9 +277,10 @@ count rose 545 → 609 (+64). PyPI 2.15.0 live; HF Space synced.
 
 ### Remaining big backlog
 - **Plan C** — BERT Colab notebook (`notebooks/train_t9_bert_llm_detector.ipynb`).
-  Not yet started as of 2026-05-25 `a9c5f2c`. Spec lives in
-  `HANDOFF_THREAD_A.md` §6. Lei has Google Colab account
-  registered; can run free T4 GPU when ready.
+  ✅ **Notebook delivered 2026-05-29 `710d1a7`** (spec = `HANDOFF_THREAD_A.md` §6).
+  Self-contained, resumable, ships a drop-in `t9_distilbert.py` detector template.
+  **Remaining (needs Lei's GPU):** run on free Colab T4 → download model to
+  `~/.paperguard/models/t9/` → add the T9 detector → ship 3.0.0 (detector 41).
 
 ---
 
