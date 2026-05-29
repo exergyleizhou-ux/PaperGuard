@@ -5,6 +5,7 @@ from scipy import stats
 
 from paperguard.core.types import Severity
 from paperguard.detectors.b4_statcheck import B4StatcheckDetector, _extract_matches
+from paperguard.fetcher.europepmc import parse_jats
 
 
 def test_t_test_consistent() -> None:
@@ -60,3 +61,28 @@ def test_z_extraction() -> None:
 def test_inapplicable_short_text() -> None:
     result = B4StatcheckDetector().detect("x", seed=42)
     assert not result.applicable
+
+
+def test_statcheck_recall_on_jats_fulltext() -> None:
+    """End-to-end: JATS full text with escaped operators must still be checked.
+
+    Regression for the full-text recall=0 bug — reported stats used the dominant
+    'p &lt; .05' form plus italic/superscript markup. After parse_jats decodes
+    entities, statcheck must recompute and flag the inconsistent ones.
+    """
+    xml = (
+        "<article><body><sec><title>Results</title><p>"
+        # t with escaped '<' and an impossible p (real two-tailed p ≈ .15)
+        "Between groups, <italic>t</italic>(20) = 1.50, <italic>p</italic> &lt; .001. "
+        # chi-square via split italic+superscript markup; real p(3)≈.006, reported .9
+        "Association, <italic>&#x3C7;</italic><sup>2</sup>(3) = 12.40, "
+        "<italic>p</italic> = .9."
+        "</p></sec></body></article>"
+    )
+    text = parse_jats(xml)["full_text"]
+    matches = _extract_matches(text)
+    types = {m.test_type for m in matches}
+    assert "t" in types  # escaped-operator t-test recovered
+    assert "chi2" in types  # superscript chi-square recovered
+    findings = B4StatcheckDetector().detect(text).findings
+    assert len(findings) >= 2  # both inconsistencies flagged

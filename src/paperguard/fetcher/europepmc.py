@@ -19,6 +19,7 @@ paragraphs, then optionally extract <sec> blocks (Methods / Results
 """
 from __future__ import annotations
 
+import html
 import re
 from dataclasses import dataclass, field
 
@@ -85,6 +86,10 @@ def fetch_full_text_xml(pmcid: str, timeout: float = 60.0) -> str | None:
 
 
 _TAG_RE = re.compile(r"<[^>]+>")
+# <sup>/<sub> are dropped WITHOUT inserting whitespace so the test symbol and
+# its superscript stay adjacent: "R<sup>2</sup>" -> "R2", "χ<sup>2</sup>" -> "χ2".
+# (Other tags become spaces to keep words separated.)
+_SUPSUB_RE = re.compile(r"</?(?:sup|sub)\b[^>]*>", re.IGNORECASE)
 _SEC_RE = re.compile(
     r"<sec\b[^>]*>(.*?)</sec>", re.DOTALL | re.IGNORECASE
 )
@@ -96,7 +101,17 @@ _BODY_RE = re.compile(r"<body\b[^>]*>(.*?)</body>", re.DOTALL | re.IGNORECASE)
 
 
 def _strip_markup(s: str) -> str:
-    return re.sub(r"\s+", " ", _TAG_RE.sub(" ", s)).strip()
+    # Drop sup/sub markup with no padding so "p &lt; 10<sup>-3</sup>" and
+    # "χ<sup>2</sup>(3)" survive intact for downstream regexes.
+    s = _SUPSUB_RE.sub("", s)
+    # Replace all remaining tags with a space so adjacent words don't merge.
+    s = _TAG_RE.sub(" ", s)
+    # Decode XML/HTML entities AFTER tag-stripping: "&lt;" -> "<", "&gt;" -> ">",
+    # "&#x3C7;" -> "χ", "&alpha;" -> "α". Done last so a decoded "<" can never be
+    # re-interpreted as tag markup. This is the fix that lets B4 statcheck see the
+    # dominant reporting form "p &lt; .05" as "p < .05" (was silently dropped).
+    s = html.unescape(s)
+    return re.sub(r"\s+", " ", s).strip()
 
 
 def parse_jats(xml: str) -> dict[str, str]:

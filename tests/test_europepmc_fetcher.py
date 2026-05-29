@@ -92,6 +92,33 @@ def test_parse_jats_extracts_sections() -> None:
     assert "p=0.04" in parsed["results"]
 
 
+def test_parse_jats_decodes_entities() -> None:
+    """XML entities must be decoded so escaped operators survive parsing.
+
+    In JATS, '<' is mandatorily escaped as '&lt;', so a reported 'p < .05'
+    arrives as 'p &lt; .05'. Without decoding, every inequality-form statistic
+    is invisible to downstream detectors (this was the statcheck recall=0 bug).
+    """
+    xml = (
+        "<article><body><sec><title>Results</title>"
+        "<p>Effect was significant, <italic>t</italic>(28) = 2.10, "
+        "<italic>p</italic> &lt; .001. Greek: <italic>&#x3C7;</italic>"
+        "<sup>2</sup>(3) = 12.4, AT&amp;T.</p></sec></body></article>"
+    )
+    text = parse_jats(xml)["full_text"]
+    assert "p < .001" in text
+    assert "&lt;" not in text and "&amp;" not in text
+    # superscript markup collapses without a stray space when symbol is adjacent
+    assert "χ" in text
+
+
+def test_parse_jats_supsub_no_merge_space() -> None:
+    """<sup>/<sub> drop without inserting space so 'R<sup>2</sup>' -> 'R2'."""
+    xml = "<article><body><p>Fit was R<sup>2</sup> = 0.85.</p></body></article>"
+    text = parse_jats(xml)["full_text"]
+    assert "R2 = 0.85" in text
+
+
 def test_fetch_article_full_pipeline() -> None:
     """End-to-end with mocked search + fullTextXML."""
     search_payload = {

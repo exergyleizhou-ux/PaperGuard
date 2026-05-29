@@ -67,7 +67,9 @@ _RE_F = re.compile(
 )
 
 _RE_CHI2 = re.compile(
-    r"(?:chi2|χ²|χ2|χ\^2)\s*\(\s*(?P<df>\d+)\s*\)\s*[<>≤≥]?=?\s*"
+    # χ\s*2 / χ\s*² tolerate the space left when JATS markup splits the symbol
+    # from its superscript ("<italic>χ</italic><sup>2</sup>" -> "χ 2").
+    r"(?:chi2|χ\s*²|χ\s*2|χ\s*\^2)\s*\(\s*(?P<df>\d+)\s*\)\s*[<>≤≥]?=?\s*"
     r"(?P<stat>\d+\.\d+)\s*,?\s*"
     r"[Pp]\s*(?P<ineq>[<=≤])\s*(?P<p>\d*\.\d+|\.\d+)",
     flags=re.IGNORECASE,
@@ -107,7 +109,7 @@ _RE_R2 = re.compile(
 # Separated-df chi-square: "χ² = 15.3, df = 4, p = 0.004"
 # (ecology / biology / chemistry — df not in parentheses)
 _RE_CHI2_SEP = re.compile(
-    r"(?:chi2|χ²|χ2|χ\^2)\s*[<>≤≥]?=?\s*"
+    r"(?:chi2|χ\s*²|χ\s*2|χ\s*\^2)\s*[<>≤≥]?=?\s*"
     r"(?P<stat>\d+\.\d+)\s*,\s*"
     r"(?:df|DF|d\.f\.)\s*=\s*(?P<df>\d+)\s*,\s*"
     r"[Pp]\s*(?P<ineq>[<=≤])\s*(?P<p>\d*\.\d+|\.\d+)",
