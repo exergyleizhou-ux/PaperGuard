@@ -43,7 +43,7 @@ from paperguard.reporter.json_export import export_json
 
 # --- Empirical LR+ data from docs/recall_test_v8.md, surfaced in the UI ---
 EMPIRICAL_FINDINGS_MD = f"""
-**PaperGuard v{__version__}** — 40 detectors active (academic 36 + industrial 4).
+**PaperGuard v{__version__}** — 41 detectors active (academic 37 + industrial 4).
 
 **Validated performance**
 

@@ -16,7 +16,7 @@ short_description: 40-detector screener — flags anomalies, not fraud
 
 Public demo for [PaperGuard](https://github.com/exergyleizhou-ux/PaperGuard) —
 a statistical anomaly screener for tabular research data.
-**40 detectors** (academic 36 + industrial 4) covering terminal-digit,
+**41 detectors** (academic 37 + industrial 4) covering terminal-digit,
 Benford, GRIM/GRIMMER/SPRITE, statcheck, Carlisle baseline balance,
 image duplication (pHash), EXIF temporal forensics, docx RSID forensics,
 file metadata forensics, AI-text heuristics, and more.
