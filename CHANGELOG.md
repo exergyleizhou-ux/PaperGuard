@@ -15,14 +15,21 @@ All notable changes to PaperGuard are documented in this file. Format follows
   model ships as a 130 KB bundled artifact (`paperguard/data/t9_classifier.npz`,
   8 000-term vocab). The trainer cross-checks the NumPy scorer against
   scikit-learn `predict_proba` (max abs diff < 1e-9) before shipping.
-- Opt-in via `PAPERGUARD_ML_CHECK=1` (mirrors T7/T8 gating), so default scans
-  are unchanged. Iron rule preserved: probability output, no verdict language,
-  ≥ 3 innocent explanations per finding.
+- Opt-in via the `--ml-check` CLI flag (or `PAPERGUARD_ML_CHECK=1`), wired into
+  `scan`, `batch`, `scan-pmc`, and `notify`; default scans are unchanged. Iron
+  rule preserved: probability output, no verdict language, ≥ 3 innocent
+  explanations per finding.
 - New dev-time trainer `scripts/train_t9_classifier.py` and the upgrade-path
   Colab notebook `notebooks/train_t9_bert_llm_detector.ipynb` (DistilBERT) for
   users who want a stronger model.
-- 6 new tests (golden-probability reproduction, opt-in gating, finding shape,
-  no-verdict-language, registry registration).
+- 7 new tests (golden-probability reproduction, opt-in gating, finding shape,
+  no-verdict-language, registry registration, CLI `--ml-check` wiring).
+
+### Docs
+- Regenerated `docs/detectors/*` to cover all 41 detectors and added
+  `docs/detectors/T9.md`. F7/G5/I1/I2/I5/I6 were previously undocumented;
+  the index (`docs/detectors/README.md`) now lists every detector including a
+  new Industrial-process-forensics cluster. README "What's new" refreshed.
 
 ## [2.15.0] — 2026-05-25 — Chinese database integration (W4)
 

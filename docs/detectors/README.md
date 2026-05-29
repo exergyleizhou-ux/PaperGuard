@@ -1,12 +1,13 @@
 # Detector Reference
 
-PaperGuard 2.5.x ships **39 built-in detectors** (35 academic + 4
-industrial; G5 reagent-temporal added in 2.4.0) organized into 8 clusters. Each has its own deep-dive
+PaperGuard 2.16.x ships **41 built-in detectors** (37 academic + 4
+industrial) organized into clusters. Each has its own deep-dive
 page below. The dedicated LLM-text guide
 [`../llm_detection_v2.md`](../llm_detection_v2.md) covers T6 + T7 +
 T8 together with empirical calibration; the endpoint scope statement
 for T7/T8 lives in
 [`../llm_detection_real_endpoints.md`](../llm_detection_real_endpoints.md).
+T9 (new in 2.16.0) is the offline learned complement — no endpoint needed.
 
 ## Index by cluster
 
@@ -45,14 +46,22 @@ for T7/T8 lives in
 - [F5 EXIF Cross-Image Clustering](F5.md) — multi-image timeline + camera consistency
 - ⭐ [F6 Per-Channel Histogram Patch Splice](F6.md) — Bik 2016 mechanised
   (new in 2.1.7; [empirically calibrated in 2.1.9](../recall_image_v2.md))
+- ⭐ [F7 GAN/Diffusion Spectral Signatures](F7.md) — frequency-domain residuals of synthetic images (new in 2.7.0)
 
 ### Metadata forensics
 - [G1 EXIF Temporal](G1.md) — per-image acquisition time vs claimed dates
 - [G3 Docx rsid](G3.md) — python-docx / pandoc vs Word edit detection
 - [G4 File Metadata](G4.md) — creator / created / revision audit
+- [G5 Reagent-Year Temporal](G5.md) — reagent catalog year vs claimed study dates (new in 2.4.0)
 
 ### Paper-mill graph
 - [M1 Paper-Mill Graph](M1.md) — co-authorship community detection
+
+### Industrial process forensics
+- [I1 Mass-Balance Closure](I1.md) — input/output conservation check
+- [I2 SCADA Timestamp Integrity](I2.md) — sensor-log temporal consistency
+- [I5 Batch Repetition](I5.md) — duplicated process batches
+- [I6 Trend Over-Smoothness](I6.md) — implausibly smooth process trends
 
 ### Text / trial / LLM forensics
 - [T1 Text Similarity (n-gram)](T1.md) — Jaccard against user corpus
@@ -66,6 +75,8 @@ for T7/T8 lives in
   needs logprobs-capable endpoint)
 - ⭐ [T8 DetectGPT-style curvature](T8.md) — paraphrase + naturalness score
   (new in 2.0.16; [needs GPT-4-class endpoint](../t8_endpoint_limitation.md))
+- ⭐ [T9 TF-IDF/LR LLM-text classifier](T9.md) — learned HC3 classifier, offline,
+  opt-in via `--ml-check` (new in 2.16.0; held-out acc 0.984)
 
 ## How to read a detector page
 

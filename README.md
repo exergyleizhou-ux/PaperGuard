@@ -6,7 +6,7 @@
 [![CI](https://github.com/exergyleizhou-ux/PaperGuard/actions/workflows/ci.yml/badge.svg)](https://github.com/exergyleizhou-ux/PaperGuard/actions/workflows/ci.yml)
 [![PyPI](https://img.shields.io/pypi/v/paperguard?label=PyPI)](https://pypi.org/project/paperguard/)
 ![python](https://img.shields.io/badge/python-3.11%2B-blue)
-![tests](https://img.shields.io/badge/tests-615%20passing-brightgreen)
+![tests](https://img.shields.io/badge/tests-616%20passing-brightgreen)
 ![detectors](https://img.shields.io/badge/detectors-41-blue)
 ![license](https://img.shields.io/badge/license-MIT-green)
 ![i18n](https://img.shields.io/badge/i18n-en%20%7C%20zh%20%7C%20es%20%7C%20ja%20%7C%20de-blue)
@@ -15,8 +15,15 @@
 
 [**📚 docs/INDEX.md**](docs/INDEX.md) · [**Technical report**](docs/paperguard_technical_report.md) · [**JOSS paper**](paper/paper.md) · [**HuggingFace Space**](https://huggingface.co/spaces/exergyleizhou/paperguard-demo) · [**中文 README**](README.zh.md)
 
-## What's new — 2.1.12
+## What's new — 2.16.0
 
+> **T9 learned LLM-text classifier (41st detector).** A TF-IDF + logistic-
+> regression model trained on HC3 ships as a 130 KB bundled artifact with
+> pure-NumPy inference (no scikit-learn / torch / network at runtime). Held-out
+> accuracy **0.984**; LR+ **≈1015** at the SUSPICIOUS threshold. Offline learned
+> complement to T6/T7/T8, opt-in via `--ml-check`. See
+> [`docs/detectors/T9.md`](docs/detectors/T9.md).
+>
 > **First true post-publication positive at N=200.** Text-layer study v10
 > identified a 2024 PLOS ONE retraction (`10.1371/journal.pone.0295951`) at
 > the T6 0.001-density threshold — **LR+ = ∞** (1 TP / 0 FP across N=200).

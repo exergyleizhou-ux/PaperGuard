@@ -561,6 +561,16 @@ def main() -> None:
     ),
 )
 @click.option(
+    "--ml-check",
+    is_flag=True,
+    default=False,
+    help=(
+        "Opt-in: run T9 learned TF-IDF/LR LLM-text classifier on the "
+        "manuscript text. Offline — no API key or network; uses a bundled "
+        "model trained on HC3. Reports a probability, not a verdict."
+    ),
+)
+@click.option(
     "--t6-abstract-only",
     is_flag=True,
     default=False,
@@ -598,6 +608,7 @@ def scan(
     llm_review: bool,
     perplexity_check: bool,
     detectgpt_check: bool,
+    ml_check: bool,
     t6_abstract_only: bool,
     no_image_extract: bool,
 ) -> None:
@@ -620,11 +631,13 @@ def scan(
     audit_dir = settings.cache_dir / "audits" / run_id
     audit = AuditLog(run_id=run_id, output_dir=audit_dir)
 
-    # T7/T8 opt-in: flip env vars the detectors check during applicability.
+    # T7/T8/T9 opt-in: flip env vars the detectors check during applicability.
     if perplexity_check:
         _os.environ["PAPERGUARD_PERPLEXITY_CHECK"] = "1"
     if detectgpt_check:
         _os.environ["PAPERGUARD_DETECTGPT_CHECK"] = "1"
+    if ml_check:
+        _os.environ["PAPERGUARD_ML_CHECK"] = "1"
     if t6_abstract_only:
         _os.environ["PAPERGUARD_T6_ABSTRACT_ONLY"] = "1"
 
@@ -1250,12 +1263,19 @@ def server_cmd(host: str, port: int, workers: int, api_token: str | None) -> Non
     default=False,
     help="Run T8 DetectGPT detector on each file (requires OPENAI_API_KEY).",
 )
+@click.option(
+    "--ml-check",
+    is_flag=True,
+    default=False,
+    help="Run T9 offline LLM-text classifier on each file (no API key).",
+)
 @click.option("--seed", type=int, default=42, show_default=True)
 def batch(
     patterns: tuple[str, ...],
     out_dir: Path,
     perplexity_check: bool,
     detectgpt_check: bool,
+    ml_check: bool,
     seed: int,
 ) -> None:
     """批量扫描：按 glob 展开所有匹配的文件，逐个 scan。"""
@@ -1268,6 +1288,8 @@ def batch(
         _os_local.environ["PAPERGUARD_PERPLEXITY_CHECK"] = "1"
     if detectgpt_check:
         _os_local.environ["PAPERGUARD_DETECTGPT_CHECK"] = "1"
+    if ml_check:
+        _os_local.environ["PAPERGUARD_ML_CHECK"] = "1"
 
     all_files: list[Path] = []
     for pattern in patterns:
@@ -1366,6 +1388,12 @@ def _scan_single_file(
     ),
 )
 @click.option(
+    "--ml-check",
+    is_flag=True,
+    default=False,
+    help="Run T9 offline LLM-text classifier on the PMC text (no API key).",
+)
+@click.option(
     "--t6-abstract-only",
     is_flag=True,
     default=False,
@@ -1382,6 +1410,7 @@ def scan_pmc(
     llm_review: bool,
     perplexity_check: bool,
     detectgpt_check: bool,
+    ml_check: bool,
     t6_abstract_only: bool,
     seed: int,
 ) -> None:
@@ -1432,13 +1461,15 @@ def scan_pmc(
 
     text = article.full_text
     # T7 / T8 / T6-abstract opt-in: flip the env vars the detectors check.
-    if perplexity_check or detectgpt_check or t6_abstract_only:
+    if perplexity_check or detectgpt_check or ml_check or t6_abstract_only:
         import os as _os
 
         if perplexity_check:
             _os.environ["PAPERGUARD_PERPLEXITY_CHECK"] = "1"
         if detectgpt_check:
             _os.environ["PAPERGUARD_DETECTGPT_CHECK"] = "1"
+        if ml_check:
+            _os.environ["PAPERGUARD_ML_CHECK"] = "1"
         if t6_abstract_only:
             _os.environ["PAPERGUARD_T6_ABSTRACT_ONLY"] = "1"
 
@@ -1547,6 +1578,12 @@ def scan_pmc(
     default=False,
     help="Run T8 DetectGPT detector on each file.",
 )
+@click.option(
+    "--ml-check",
+    is_flag=True,
+    default=False,
+    help="Run T9 offline LLM-text classifier on each file (no API key).",
+)
 @click.option("--seed", type=int, default=42, show_default=True)
 def notify(
     patterns: tuple[str, ...],
@@ -1554,6 +1591,7 @@ def notify(
     min_severity: str,
     perplexity_check: bool,
     detectgpt_check: bool,
+    ml_check: bool,
     seed: int,
 ) -> None:
     """Batch-scan a glob, POST a summary of high-severity findings to a webhook.
@@ -1575,6 +1613,8 @@ def notify(
         _os_local.environ["PAPERGUARD_PERPLEXITY_CHECK"] = "1"
     if detectgpt_check:
         _os_local.environ["PAPERGUARD_DETECTGPT_CHECK"] = "1"
+    if ml_check:
+        _os_local.environ["PAPERGUARD_ML_CHECK"] = "1"
 
     import httpx
 

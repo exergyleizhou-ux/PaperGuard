@@ -86,3 +86,16 @@ def test_t9_finding_has_no_verdict_language(monkeypatch: pytest.MonkeyPatch) -> 
 def test_t9_registered_in_default_registry() -> None:
     registry = DetectorRegistry().register_default(load_plugins=False)
     assert "T9" in registry._detectors
+
+
+def test_t9_ml_check_flag_on_all_commands() -> None:
+    # The opt-in --ml-check flag must be wired into every text-scan command.
+    from click.testing import CliRunner
+
+    from paperguard.cli import batch, notify, scan, scan_pmc
+
+    runner = CliRunner()
+    for cmd in (scan, batch, scan_pmc, notify):
+        result = runner.invoke(cmd, ["--help"])
+        assert result.exit_code == 0
+        assert "--ml-check" in result.output
