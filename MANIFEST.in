@@ -11,7 +11,8 @@ include .env.example
 
 recursive-include docs *.md
 recursive-include src/paperguard *.py
-recursive-include tests/fixtures *.csv *.py
+recursive-include src/paperguard *.npz
+recursive-include tests/fixtures *.csv *.py *.json
 
 global-exclude __pycache__
 global-exclude *.py[cod]

@@ -276,11 +276,13 @@ count rose 545 → 609 (+64). PyPI 2.15.0 live; HF Space synced.
 - 2026-05-25 v2.15.0 — W4 (Chinese / multilingual paper search via Semantic Scholar)
 
 ### Remaining big backlog
-- **Plan C** — BERT Colab notebook (`notebooks/train_t9_bert_llm_detector.ipynb`).
-  ✅ **Notebook delivered 2026-05-29 `710d1a7`** (spec = `HANDOFF_THREAD_A.md` §6).
-  Self-contained, resumable, ships a drop-in `t9_distilbert.py` detector template.
-  **Remaining (needs Lei's GPU):** run on free Colab T4 → download model to
-  `~/.paperguard/models/t9/` → add the T9 detector → ship 3.0.0 (detector 41).
+- **Plan C — DONE.** ✅ Shipped **T9 detector in 2.16.0 (2026-05-29)** via a
+  GPU-free alternative: a TF-IDF + logistic-regression classifier trained on
+  HC3 (`src/paperguard/detectors/t9_classifier.py`, bundled 130 KB NumPy
+  artifact, pure-NumPy inference, opt-in `PAPERGUARD_ML_CHECK`). Held-out acc
+  0.984, LR+ ≈1015. Detector count → **41**. The DistilBERT Colab notebook
+  (`notebooks/train_t9_bert_llm_detector.ipynb`, `710d1a7`) remains as an
+  **optional upgrade path** if a stronger model is ever wanted — not a blocker.
 
 ---
 

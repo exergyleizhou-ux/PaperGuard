@@ -6,8 +6,8 @@
 [![CI](https://github.com/exergyleizhou-ux/PaperGuard/actions/workflows/ci.yml/badge.svg)](https://github.com/exergyleizhou-ux/PaperGuard/actions/workflows/ci.yml)
 [![PyPI](https://img.shields.io/pypi/v/paperguard?label=PyPI)](https://pypi.org/project/paperguard/)
 ![python](https://img.shields.io/badge/python-3.11%2B-blue)
-![tests](https://img.shields.io/badge/tests-394%20passing-brightgreen)
-![detectors](https://img.shields.io/badge/detectors-34-blue)
+![tests](https://img.shields.io/badge/tests-615%20passing-brightgreen)
+![detectors](https://img.shields.io/badge/detectors-41-blue)
 ![license](https://img.shields.io/badge/license-MIT-green)
 ![i18n](https://img.shields.io/badge/i18n-en%20%7C%20zh%20%7C%20es%20%7C%20ja%20%7C%20de-blue)
 ![wcag](https://img.shields.io/badge/WCAG-2.1%20AA-success)
@@ -34,7 +34,7 @@
 
 ## Status
 
-**Stable (2.5.0)**. 39 built-in detectors (35 academic + 4 industrial)
+**Stable (2.16.0)**. 41 built-in detectors (37 academic + 4 industrial)
 + 12 industrial-domain templates + plugin system + opt-in multi-tenant
 Web UI. Covers numeric forensics, statistical recomputation
 (statcheck one- and two-tailed; GRIM/GRIMMER/SPRITE/TIVA/P-curve), Carlisle
@@ -43,7 +43,8 @@ pHash cross-image, Bik-style intra-image ORB matching, splice/copy-move
 forensics, persistent cross-paper pHash store), EXIF/rsid metadata
 forensics, text similarity vs corpus, tortured phrases (150+ paper-mill
 fingerprints), AI-text heuristics (T6 lexical + T7 perplexity + T8
-DetectGPT — see [docs/llm_detection_real_endpoints.md](docs/llm_detection_real_endpoints.md)
+DetectGPT + T9 learned TF-IDF/LR classifier, opt-in — see
+[docs/llm_detection_real_endpoints.md](docs/llm_detection_real_endpoints.md)
 for the endpoint scope statement), stylometry, clinical-trial outcome
 consistency, paper-mill citation-graph signatures, industrial process
 forensics (mass-balance closure, SCADA timestamp integrity,

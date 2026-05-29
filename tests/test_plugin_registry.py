@@ -77,7 +77,7 @@ def test_plugin_handles_load_exception(monkeypatch: pytest.MonkeyPatch) -> None:
 
 def test_register_default_with_plugins_disabled() -> None:
     reg = DetectorRegistry().register_default(load_plugins=False)
-    # 40 built-ins: 30 through 2.0.13 + E1 (2.0.14) + T7 (2.0.15)
+    # 41 built-ins: 30 through 2.0.13 + E1 (2.0.14) + T7 (2.0.15)
     # + T8 (2.0.16) + F6 (2.1.7) + I1/I2/I5 (2.2.0) + I6 (2.2.3)
-    # + G5 (2.4.0) + F7 (2.7.0)
-    assert len(reg.all()) == 40
+    # + G5 (2.4.0) + F7 (2.7.0) + T9 (2.16.0)
+    assert len(reg.all()) == 41

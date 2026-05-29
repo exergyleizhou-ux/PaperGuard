@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "paperguard"
-version = "2.15.0"
+version = "2.16.0"
 description = "Statistical anomaly screener for tabular research data"
 readme = "README.md"
 requires-python = ">=3.11"
@@ -101,6 +101,10 @@ dev = [
 
 [project.scripts]
 paperguard = "paperguard.cli:main"
+
+[tool.setuptools.package-data]
+# Ship the bundled T9 TF-IDF/LR classifier weights (pure-NumPy inference).
+"paperguard.data" = ["*.npz"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

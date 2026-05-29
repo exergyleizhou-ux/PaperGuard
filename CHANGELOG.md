@@ -4,6 +4,26 @@ All notable changes to PaperGuard are documented in this file. Format follows
 [Keep a Changelog](https://keepachangelog.com/) and the project adheres to
 [Semantic Versioning](https://semver.org/).
 
+## [2.16.0] — 2026-05-29 — T9 learned LLM-text classifier (Plan C)
+
+### Added
+- **T9 — TF-IDF + logistic-regression LLM-text classifier** (41st detector).
+  A learned complement to the lexical T6 and statistical T7/T8 signals,
+  fitted on the public HC3 corpus (Guo et al., 2023). Held-out accuracy
+  **0.984**; LR+ **≈1015** at the SUSPICIOUS threshold (specificity 0.999).
+- Inference is **pure NumPy** — no scikit-learn/torch/network at runtime. The
+  model ships as a 130 KB bundled artifact (`paperguard/data/t9_classifier.npz`,
+  8 000-term vocab). The trainer cross-checks the NumPy scorer against
+  scikit-learn `predict_proba` (max abs diff < 1e-9) before shipping.
+- Opt-in via `PAPERGUARD_ML_CHECK=1` (mirrors T7/T8 gating), so default scans
+  are unchanged. Iron rule preserved: probability output, no verdict language,
+  ≥ 3 innocent explanations per finding.
+- New dev-time trainer `scripts/train_t9_classifier.py` and the upgrade-path
+  Colab notebook `notebooks/train_t9_bert_llm_detector.ipynb` (DistilBERT) for
+  users who want a stronger model.
+- 6 new tests (golden-probability reproduction, opt-in gating, finding shape,
+  no-verdict-language, registry registration).
+
 ## [2.15.0] — 2026-05-25 — Chinese database integration (W4)
 
 ### Added
