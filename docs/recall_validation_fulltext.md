@@ -44,4 +44,25 @@ exactly where recall is missing.
 3. Build figure/data extraction so image + numeric detectors can run on full
    papers (where real data fabrication lives).
 
+## Post-fix confirmation — T9 density tiering (commit 4893c8b)
+
+After changing T9 from max-segment to density-based tiering (a tier needs
+≥25 % of segments LLM-like), the full-text re-run shows:
+
+| | T9 control false-positive rate (full text) |
+|---|---|
+| before fix (max-segment) | 52.5 % (N=40) |
+| **after fix (density)** | **10.0 % (N=30)** |
+
+A ~5× reduction — the long-document false-positive artifact is fixed. T9's
+recall on the retracted cohort is ~0 %, which is **correct**: most retractions
+are not AI-written text, so T9 should rarely fire on them; the point of the fix
+is that it no longer fires on *normal* papers either. Abstract-level behaviour
+(single segment → fraction 1.0) is unchanged, so the HC3 golden tests and the
+OA calibration (0 % FP at the ship threshold) still hold.
+
+Note: overall text-layer discrimination remains modest (T4 LR+ ≈ 1.5). The
+decisive anti-fabrication families (numeric recompute + image forensics) still
+need full-text table/figure extraction — the next firepower milestone.
+
 Aggregate only; no per-paper or per-author verdicts.
