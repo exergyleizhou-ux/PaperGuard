@@ -31,6 +31,34 @@ def benjamini_hochberg(p_values: list[float], alpha: float = 0.05) -> list[float
     return q_values
 
 
+def _convergence_statement(n_clusters: int, cluster_names: list[str]) -> str:
+    """Build a convergence narrative for the combined-evidence summary.
+
+    Convergent signals from *independent* methods are far less likely to
+    share one innocent explanation than any single signal. We state this
+    plainly so reviewers cannot wave away a multi-method pattern — but we
+    frame it strictly as grounds to INVESTIGATE, never as a verdict that a
+    person committed misconduct (IRON RULE).
+
+    Returns an empty string when fewer than two independent clusters fire
+    (a single line of evidence is not "convergent" and must not be hyped).
+    """
+    if n_clusters < 2:
+        return ""
+    listed = ", ".join(cluster_names) if cluster_names else "multiple methods"
+    strength = "strong" if n_clusters >= 3 else "notable"
+    return (
+        f" | CONVERGENCE ({strength}): {n_clusters} independent "
+        f"methodological lines flag anomalies ({listed}). Independent methods "
+        "rarely share a single innocent explanation, so a convergent pattern "
+        "is much harder to dismiss than any one signal. This warrants "
+        "editorial / institutional INVESTIGATION and author response — it is "
+        "evidence to be examined, NOT a determination of wrongdoing by any "
+        "person. Each underlying finding lists innocent explanations that "
+        "must be ruled out before any conclusion."
+    )
+
+
 def combine_evidence(report: AuditReport) -> AuditReport:
     """汇总所有发现，做 FDR 校正，确定总体严重性。
 
@@ -89,11 +117,24 @@ def combine_evidence(report: AuditReport) -> AuditReport:
     )
     n_concern = sum(1 for f in report.all_findings if f.severity == Severity.CONCERN)
 
-    report.combined_evidence_strength = (
+    cluster_names = ", ".join(sorted(clusters)) if clusters else "none"
+    base = (
         f"Total findings: {n_total} | "
         f"CRITICAL: {n_critical}, SUSPICIOUS: {n_suspicious}, "
         f"CONCERN: {n_concern} | "
-        f"Independent evidence clusters: {cross_cluster_concerns}"
+        f"Independent evidence clusters: {cross_cluster_concerns} "
+        f"({cluster_names})"
+    )
+
+    # --- 2.17: convergence narrative ---
+    # When >= 2 INDEPENDENT methodological clusters flag anomalies, the
+    # signals are far less likely to share a single innocent explanation
+    # than any one signal alone. We state that convergence plainly so the
+    # evidence is hard to dismiss — but we frame it as grounds to
+    # INVESTIGATE, never as a determination that any person committed
+    # misconduct (IRON RULE: evidence + innocent explanations, no verdict).
+    report.combined_evidence_strength = base + _convergence_statement(
+        cross_cluster_concerns, sorted(clusters)
     )
 
     # --- 2.0.14: Stouffer cross-detector integrity score ---
