@@ -66,3 +66,54 @@ decisive anti-fabrication families (numeric recompute + image forensics) still
 need full-text table/figure extraction — the next firepower milestone.
 
 Aggregate only; no per-paper or per-author verdicts.
+
+## P1 follow-up — statcheck (B4) extraction fix + honest recall finding (2026-05-30)
+
+### What was fixed (commit 2a86a7e)
+The JATS parser (`fetcher/europepmc.py: _strip_markup`) stripped tags but never
+**decoded XML entities**. In JATS, `<` is mandatorily escaped as `&lt;`, so the
+dominant reporting form `p < .05` arrived downstream as `p &lt; .05` and every
+inequality-form statistic was invisible to B4's regexes. Fix: `html.unescape`
+after tag-stripping (so a decoded `<` cannot be re-read as markup), plus
+`<sup>/<sub>` dropped without padding (`R<sup>2</sup>` → `R2`,
+`χ<sup>2</sup>` → `χ2`) and chi-square regexes tolerant of one space left when
+italic+superscript markup splits the symbol. Benefits T4/T6/T9 too.
+
+Correctness is proven deterministically: on a representative JATS snippet the
+extractor went from **1 → 5** matches (t, F, r, χ²-in-parens, χ²-separated).
+On the live full-text cohort, B4 control FP moved 0 → 2.5 % — i.e. B4 now fires
+where it parses, confirming the path is live.
+
+### Honest recall finding — it is a COHORT mismatch, not an extraction bug
+Re-running `validate_recall_fulltext.py --n 40` after the fix:
+
+| Detector | recall % (retracted) | FP % (control) | LR+ |
+|---|---|---|---|
+| B4 statcheck | 0.0 | 2.5 | 0.00 |
+| T4 tortured phrases | 7.5 | 5.0 | 1.50 |
+| T6 lexical | 0.0 | 0.0 | — |
+| T9 classifier | 0.0 | 10.0 | 0.00 |
+
+An extraction-coverage diagnostic on the same 40 retracted papers explains the 0:
+
+- **0/40 retracted papers contain *any* statcheck-extractable statistic.**
+- 16/40 do report p-values (`p < .05`-style), but the test statistic + df + p
+  almost never appear in the inline adjacency statcheck recomputes:
+  `t(` 3/40, `F(` 1/40, `r(` 0/40, chi-related 9/40.
+
+**Conclusion:** statcheck (a psychology-NHST recomputation tool) cannot score a
+generic `PUB_TYPE:"Retracted Publication"` OA cohort, which is dominated by
+biology / medicine / materials retractions (image manipulation, plagiarism,
+paper-mill) that do not report inline NHST. B4 recall = 0 here is **expected and
+correct**, not a detector failure. The extraction fix was still necessary: it is
+what lets B4 work at all on the disciplines where it *does* apply.
+
+### Next steps for B4 (carried to the network-validation batch)
+1. Measure B4 on a **psychology/neuroscience-filtered** retracted cohort (where
+   inline NHST is actually reported) to obtain a meaningful recall number.
+2. Optionally add **table-aware / proximity extraction** so a statistic split
+   across a sentence or table cell (`t = 2.1 … df = 28 … p = .01`) is recovered.
+3. Treat B4 as a high-precision convergent signal for specific disciplines, not
+   a primary recall driver across all retractions.
+
+Aggregate only; no per-paper or per-author verdicts.
