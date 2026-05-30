@@ -72,14 +72,18 @@ def main() -> None:
     args = ap.parse_args()
 
     from paperguard.core.types import Severity
-    from paperguard.evidence.figure_pipeline import run_figure_pipeline
+    from paperguard.evidence.figure_pipeline import (
+        _run_baseline_detector,
+        _run_image_detectors,
+    )
+    from paperguard.extractor.pmc_figures import fetch_pmc_figure_images
     from paperguard.fetcher.oa_pdf import _pmc_pdf_url, _try_download
 
     def run_cohort(query: str, label: str, tmp: Path) -> dict[str, int]:
         print(f"\n[{label}] searching Europe PMC ...", flush=True)
         pmcids = epmc_pmcids(query, args.n * 6)
-        print(f"  {len(pmcids)} OA candidates; downloading up to {args.n} PDFs ...",
-              flush=True)
+        print(f"  {len(pmcids)} OA candidates; fetching figure panels for up to "
+              f"{args.n} ...", flush=True)
         counts = {k: 0 for k in ALL_KEYS}
         got = 0
         n_with_images = 0
@@ -87,25 +91,38 @@ def main() -> None:
         for pmcid in pmcids:
             if got >= args.n:
                 break
-            pdf_path = tmp / f"{pmcid}.pdf"
-            ok, _sha_or_err, _ctype = _try_download(_pmc_pdf_url(pmcid), pdf_path)
-            if not ok:
-                continue
-            work = tmp / f"work_{pmcid}"
+            # PANEL-LEVEL figures from the PMC OA package (not page rasters).
+            fig_dir = tmp / f"figs_{pmcid}"
             try:
-                res = run_figure_pipeline(pdf_path, work_dir=work)
+                images = fetch_pmc_figure_images(pmcid, fig_dir)
             except Exception:
+                images = []
+
+            # C1 still needs the PDF's baseline tables; fetch PDF best-effort.
+            n_tables = 0
+            baseline_results: list = []
+            pdf_path = tmp / f"{pmcid}.pdf"
+            ok, _sha, _ct = _try_download(_pmc_pdf_url(pmcid), pdf_path)
+            if ok:
+                try:
+                    n_tables, baseline_results = _run_baseline_detector(pdf_path)
+                except Exception:
+                    n_tables, baseline_results = 0, []
                 pdf_path.unlink(missing_ok=True)
-                continue
-            # only count papers we could actually extract SOMETHING from
-            if not res.image_paths and res.n_baseline_tables == 0:
-                pdf_path.unlink(missing_ok=True)
+
+            # only count papers we could extract real panels or tables from
+            if len(images) < 2 and n_tables == 0:
                 continue
             got += 1
-            n_with_images += int(bool(res.image_paths))
-            n_with_tables += int(res.n_baseline_tables > 0)
+            n_with_images += int(len(images) >= 2)
+            n_with_tables += int(n_tables > 0)
+
+            results = list(baseline_results)
+            if len(images) >= 2:
+                results.extend(_run_image_detectors(images))
+
             flags = {k: False for k in ALL_KEYS}
-            for r in res.results:
+            for r in results:
                 if r.detector_id in flags and any(
                     f.severity >= Severity.CONCERN for f in r.findings
                 ):
@@ -113,16 +130,14 @@ def main() -> None:
             flags["ANY"] = any(flags[k] for k in (*IMAGE_DETECTORS, "C1"))
             for k in ALL_KEYS:
                 counts[k] += int(flags[k])
-            pdf_path.unlink(missing_ok=True)
             print(f"    {got}/{args.n} scored "
-                  f"(imgs={len(res.image_paths)}, tables={res.n_baseline_tables})",
-                  flush=True)
+                  f"(panels={len(images)}, tables={n_tables})", flush=True)
             time.sleep(0.2)
         counts["N"] = got
         counts["with_images"] = n_with_images
         counts["with_tables"] = n_with_tables
         print(f"  scored {got} papers "
-              f"({n_with_images} had images, {n_with_tables} had baseline tables)",
+              f"({n_with_images} had >=2 panels, {n_with_tables} had tables)",
               flush=True)
         return counts
 
