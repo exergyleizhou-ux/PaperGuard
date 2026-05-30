@@ -4,6 +4,47 @@ All notable changes to PaperGuard are documented in this file. Format follows
 [Keep a Changelog](https://keepachangelog.com/) and the project adheres to
 [Semantic Versioning](https://semver.org/).
 
+## [2.17.0] — 2026-05-30 — Statcheck full-text fix · stronger T4 · convergence evidence
+
+### Fixed
+- **B4 statcheck full-text extraction.** The JATS parser stripped tags but never
+  decoded XML entities, so the dominant reporting form `p < .05` arrived as
+  `p &lt; .05` and every inequality-form statistic was invisible to B4's regexes
+  (full-text recall was 0). `fetcher/europepmc._strip_markup` now `html.unescape`s
+  after tag-stripping (a decoded `<` can no longer be re-read as markup) and drops
+  `<sup>/<sub>` without padding (`R<sup>2</sup>` → `R2`, `χ<sup>2</sup>` → `χ2`).
+  Chi-square regexes tolerate the one space left when italic+superscript markup
+  splits the symbol. Deterministic repro: matches 1 → 5 on a representative
+  snippet. Benefits T4/T6/T9 full-text parsing too.
+
+### Changed
+- **T4 tortured-phrase dictionary 140 → 161 entries.** Added 34 curated
+  high-precision phrases (residual/attention/transfer-learning, gradient-descent,
+  PCA, regression, hypothesis-testing, confusion/covariance matrix, simulated
+  annealing, …) from the Cabanac PPS list and retraction literature. Removed 13
+  false-positive / no-op entries that fired on normal papers and depressed LR+
+  (the bogus `X disease` → `X cancer` block — `skin/lung/prostate/colorectal/
+  rectal/ovarian/cervical disease` are legitimate terms — plus no-op self-maps
+  and normal-English phrases like `drug treatment`, `surface region`).
+- **Convergence evidence in the combiner.** When ≥ 2 *independent* methodological
+  clusters flag anomalies, `combine_evidence` now states the convergence plainly
+  in `combined_evidence_strength` and lists the cluster names, so a multi-method
+  pattern is hard to wave away (`notable` at 2 clusters, `strong` at ≥ 3). Iron
+  rule preserved: framed strictly as grounds to **investigate**, explicitly not a
+  determination of wrongdoing, pointing back to each finding's innocent
+  explanations.
+
+### Docs
+- `docs/recall_validation_fulltext.md`: honest statcheck finding — the extraction
+  fix is verified, but B4 recall stays 0 on a *generic* retracted-OA cohort
+  because 0/40 such papers report any inline NHST statcheck can recompute. This is
+  a cohort mismatch (statcheck is a psychology-NHST tool), not a detector failure.
+
+### Tests
+- +5 tests (JATS entity-decode end-to-end, sup/sub no-merge, T4 no-false-positive
+  on normal medical text, T4 new-additions, convergence framing/empty/strong/
+  end-to-end). 625 passing; ruff + mypy clean; 41 detectors unchanged.
+
 ## [2.16.0] — 2026-05-29 — T9 learned LLM-text classifier (Plan C)
 
 ### Added

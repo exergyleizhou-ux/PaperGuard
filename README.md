@@ -15,8 +15,21 @@
 
 [**📚 docs/INDEX.md**](docs/INDEX.md) · [**Technical report**](docs/paperguard_technical_report.md) · [**JOSS paper**](paper/paper.md) · [**HuggingFace Space**](https://huggingface.co/spaces/exergyleizhou/paperguard-demo) · [**中文 README**](README.zh.md)
 
-## What's new — 2.16.0
+## What's new — 2.17.0
 
+> **Statcheck full-text fix.** The JATS parser never decoded XML entities, so
+> the dominant reporting form `p < .05` arrived as `p &lt; .05` and every
+> inequality-form statistic was invisible to B4 (full-text recall was 0). Fixed
+> by `html.unescape` after tag-stripping plus `<sup>/<sub>` handling; benefits
+> T4/T6/T9 parsing too. Honest follow-up: B4 recall stays 0 on a *generic*
+> retracted-OA cohort because such papers rarely report inline NHST — a cohort
+> mismatch, not a detector failure (see `docs/recall_validation_fulltext.md`).
+>
+> **Stronger T4 + convergence evidence.** Tortured-phrase dictionary 140 → 161
+> (curated high-precision additions; removed false-positive entries that fired
+> on normal papers). The combiner now states multi-cluster **convergence**
+> plainly — framed strictly as grounds to *investigate*, never a verdict.
+>
 > **T9 learned LLM-text classifier (41st detector).** A TF-IDF + logistic-
 > regression model trained on HC3 ships as a 130 KB bundled artifact with
 > pure-NumPy inference (no scikit-learn / torch / network at runtime). Held-out
@@ -41,7 +54,7 @@
 
 ## Status
 
-**Stable (2.16.0)**. 41 built-in detectors (37 academic + 4 industrial)
+**Stable (2.17.0)**. 41 built-in detectors (37 academic + 4 industrial)
 + 12 industrial-domain templates + plugin system + opt-in multi-tenant
 Web UI. Covers numeric forensics, statistical recomputation
 (statcheck one- and two-tailed; GRIM/GRIMMER/SPRITE/TIVA/P-curve), Carlisle
