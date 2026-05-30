@@ -59,4 +59,34 @@ treated as image-forensics evidence** — it is a fallback for "a figure exists
 on this page", not a panel-level forensic input. Reporting code already shows
 `applicable=False` / empty notes honestly; no verdict language is emitted.
 
+## Panel-level run attempt (2026-05-31) — fix wired, numbers still pending
+
+The discrimination fix above was implemented: `scripts/validate_recall_figures.py`
+now feeds **per-figure panels** from the PMC OA package
+(`extractor.pmc_figures.fetch_pmc_figure_images`) to F1–F7 instead of page
+rasters, keeping the PDF only for C1 baseline tables. The page-raster path is
+gone.
+
+A run still could **not** produce trustworthy recall numbers here, for two
+honest reasons (neither a code fault):
+
+1. **Low OA figure-package coverage for retractions.** The retracted cohort
+   yielded **0/6** papers with ≥2 extractable OA figure panels. Many retracted
+   PMC articles either are not in the OA *package* subset (oa.fcgi returns no
+   `.tgz`) or their package carries <2 figure files. So even with correct
+   panel extraction, the *retracted ∩ has-OA-figure-package* set is small and
+   needs a much larger candidate sweep (or a figure-rich sub-cohort, e.g.
+   cell-biology / Western-blot papers) to score meaningfully.
+2. **Environment TLS instability.** The control phase aborted on
+   `SSL: DECRYPTION_FAILED_OR_BAD_RECORD_MAC` during a plain Europe PMC search —
+   an environment/proxy-level TLS failure, not a logic error. Sustained HTTPS in
+   this sandbox is unreliable (same root cause as background tasks dying
+   silently and `gh run watch` dropping mid-stream).
+
+**Next run (stable network):** sweep a larger candidate pool (`--n` higher, and
+raise the `* 6` over-fetch), and consider filtering the retracted cohort to
+figure-heavy disciplines so F1–F7 have real panels to score. Until then the
+panel-level pipeline is *wired and unit-tested* but its real-paper recall is
+**unmeasured** — stated plainly rather than papered over.
+
 Aggregate only; no per-paper or per-author verdicts.
