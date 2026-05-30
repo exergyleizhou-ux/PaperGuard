@@ -16,17 +16,57 @@ from **stronger, convergent evidence** (like Bik / statcheck / Carlisle), not
 from louder accusations. Removing this rule = defamation risk + instant loss of
 scientific/journal credibility. Do NOT cross it.
 
+## 0.5 Progress log — 2026-05-30 (read this before the roadmap below)
+
+Roadmap items **P1, P3, P4 are done**, and the **offline half of P2** is done.
+All shipped on `main` and tagged `v2.17.0`. The roadmap in §4 still describes
+the original plan; this log records what actually landed.
+
+| Item | Status | Commits |
+|---|---|---|
+| **P1 statcheck** | ✅ Extraction fixed; honest finding documented | `2a86a7e`, `34a45ac` |
+| **P3 T4 tortured phrases** | ✅ Dict 140→161, FP entries removed | `48a7459` |
+| **P4 convergence evidence** | ✅ Multi-cluster narrative (investigate-framed) | `c51a456` |
+| **2.17.0 release** | ✅ Tagged, GitHub CI green | `2f35351` |
+| **P2 figure/table wiring** | ✅ *offline* connector + tests | `45200c8` |
+
+Key corrections to the original §4 assumptions:
+- **P1 was NOT an extraction bug in the usual sense.** The real bug was that
+  `parse_jats` never decoded XML entities, so `p &lt; .05` was invisible to B4
+  (fixed). But B4 recall on a *generic* `PUB_TYPE:"Retracted Publication"` OA
+  cohort is **0 and that is correct** — 0/40 such papers report any inline NHST
+  statcheck can recompute (only 3/40 have `t(`, 1/40 `F(`, 0/40 `r(`). statcheck
+  is a psychology-NHST tool; a generic retraction cohort is the wrong cohort.
+  See `docs/recall_validation_fulltext.md`.
+- **P2 extractors already existed** (`extractor/images.py` with PDF-embedded +
+  vector-figure raster fallback; `extractor/baseline_tables.py` for RCT tables;
+  `extractor/inline_numbers.py` for mean±SD). The missing piece was *wiring*,
+  now provided by `evidence/figure_pipeline.py: run_figure_pipeline(path)` →
+  feeds F1/F2/F3/F5/F6/F7 + C1 from one local `.pdf`/`.docx`. Pure offline
+  orchestration, 5 tests.
+
+### P2 — remaining work (network; deferred by design)
+The offline connector is in place but has **not** been run on real papers yet:
+1. Build a **PMC OA PDF / figure fetcher** (PMC OA package or figure URLs;
+   OA only, never paywalled) that downloads a retracted paper's PDF locally.
+2. Call `run_figure_pipeline()` on those PDFs inside a new validation script (or
+   extend `scripts/validate_recall_fulltext.py`) and measure image-forensics +
+   C1 recall vs control. This is where image-manipulation fraud is actually
+   caught — the highest-ceiling, still-unmeasured family.
+3. For B4: measure on a **psychology/neuroscience-filtered** retracted cohort
+   (where inline NHST exists) to get a meaningful statcheck recall number.
+
 ## 1. Project facts
 
 | | |
 |---|---|
 | Repo path | `C:\Users\10420\Desktop\新建文件夹\PaperGuard` (NOT the shell cwd) |
 | GitHub | https://github.com/exergyleizhou-ux/PaperGuard (account exergyleizhou-ux) |
-| PyPI | account `exergyleizhou0505`; **2.16.0 is live** |
+| PyPI | account `exergyleizhou0505`; **2.16.0 is live** (2.17.0 tagged on GitHub but **not yet on PyPI** — no PyPI publish workflow; manual `twine upload` needed with a fresh token) |
 | Python | `.venv/Scripts/python.exe` (3.12). Always prefix `PYTHONIOENCODING=utf-8`. |
-| Latest commit | `5a7fb22` (as of 2026-05-29) |
-| 3-gate | `pytest -m "not network" -q` · `ruff check src/ tests/ examples/` · `mypy src/` (strict) |
-| Current state | 41 detectors, ~616 tests passing, ruff+mypy clean, CI green |
+| Latest commit | `45200c8` (as of 2026-05-30); tag `v2.17.0` |
+| 3-gate | `pytest -m "not network" -q` · `ruff check src/ tests/ examples/` · `mypy src/` (strict). **Run tools via `python -m ruff` / `python -m mypy`** — the `.exe` wrappers report a misleading exit 1 under PowerShell redirection even when clean. |
+| Current state | 41 detectors, **630 tests passing**, ruff+mypy clean, CI green (ci/release-please/JOSS ✅) |
 
 ## 2. Environment quirks that WILL waste your time if you don't know them
 
