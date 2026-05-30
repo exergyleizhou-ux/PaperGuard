@@ -34,15 +34,41 @@ IMAGE_DETECTORS = ["F1", "F2", "F3", "F5", "F6", "F7"]
 ALL_KEYS = [*IMAGE_DETECTORS, "C1", "ANY"]
 
 
+def _get_with_retry(
+    client: httpx.Client, params: dict[str, object], tries: int = 4
+) -> httpx.Response | None:
+    """GET with exponential backoff. Returns None if all tries fail.
+
+    This environment has intermittent TLS faults (SSL bad-record-mac) on
+    sustained HTTPS; a transient failure should skip a page, not abort the run.
+    """
+    delay = 1.0
+    for attempt in range(tries):
+        try:
+            r = client.get(EPMC_SEARCH, params=params)
+            r.raise_for_status()
+            return r
+        except httpx.HTTPError:
+            if attempt == tries - 1:
+                return None
+            time.sleep(delay)
+            delay *= 2
+    return None
+
+
 def epmc_pmcids(query: str, want: int) -> list[str]:
-    """Return PMCIDs (with full text in EPMC) matching a Europe PMC query."""
+    """Return PMCIDs (with full text in EPMC) matching a Europe PMC query.
+
+    Resilient to transient TLS/network errors: a failed page is retried with
+    backoff, then skipped, so the whole run is not aborted by one bad record.
+    """
     ids: list[str] = []
     cursor = "*"
     with httpx.Client(timeout=40.0) as client:
         while len(ids) < want and cursor:
-            r = client.get(
-                EPMC_SEARCH,
-                params={
+            r = _get_with_retry(
+                client,
+                {
                     "query": query,
                     "format": "json",
                     "pageSize": 100,
@@ -50,7 +76,8 @@ def epmc_pmcids(query: str, want: int) -> list[str]:
                     "resultType": "lite",
                 },
             )
-            r.raise_for_status()
+            if r is None:
+                break  # network gave up; return what we have
             data = r.json()
             for res in data.get("resultList", {}).get("result", []):
                 pmcid = res.get("pmcid")
@@ -69,6 +96,19 @@ def epmc_pmcids(query: str, want: int) -> list[str]:
 def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--n", type=int, default=15, help="papers scored per cohort")
+    ap.add_argument(
+        "--over-fetch", type=int, default=6,
+        help="candidate-pool multiplier: fetch n*over_fetch PMCIDs per cohort "
+             "(raise this when OA figure-package coverage is low, e.g. for "
+             "retractions)",
+    )
+    ap.add_argument(
+        "--discipline", default="",
+        help="optional Europe PMC sub-query to bias toward figure-heavy fields "
+             "so F1-F7 have real panels to score, e.g. "
+             "'(western blot OR immunohistochemistry OR microscopy OR flow "
+             "cytometry)'",
+    )
     args = ap.parse_args()
 
     from paperguard.core.types import Severity
@@ -81,7 +121,7 @@ def main() -> None:
 
     def run_cohort(query: str, label: str, tmp: Path) -> dict[str, int]:
         print(f"\n[{label}] searching Europe PMC ...", flush=True)
-        pmcids = epmc_pmcids(query, args.n * 6)
+        pmcids = epmc_pmcids(query, args.n * max(1, args.over_fetch))
         print(f"  {len(pmcids)} OA candidates; fetching figure panels for up to "
               f"{args.n} ...", flush=True)
         counts = {k: 0 for k in ALL_KEYS}
@@ -141,15 +181,17 @@ def main() -> None:
               flush=True)
         return counts
 
+    disc = f" AND {args.discipline}" if args.discipline else ""
     with tempfile.TemporaryDirectory(prefix="pg_figrecall_") as td:
         tmp = Path(td)
         retracted = run_cohort(
-            'PUB_TYPE:"Retracted Publication" AND OPEN_ACCESS:Y AND IN_EPMC:Y',
+            'PUB_TYPE:"Retracted Publication" AND OPEN_ACCESS:Y AND IN_EPMC:Y'
+            + disc,
             "RETRACTED", tmp,
         )
         control = run_cohort(
             'OPEN_ACCESS:Y AND IN_EPMC:Y AND NOT PUB_TYPE:"Retracted Publication" '
-            'AND FIRST_PDATE:[2018-01-01 TO 2023-12-31]',
+            'AND FIRST_PDATE:[2018-01-01 TO 2023-12-31]' + disc,
             "CONTROL", tmp,
         )
 
