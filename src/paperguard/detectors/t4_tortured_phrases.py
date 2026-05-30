@@ -10,8 +10,10 @@ network") 经多轮机器翻译/同义词替换 ("profound neural organization")
 以规避剽窃检测。这些短语在自然学术写作中几乎不可能出现。
 
 实现：保守的字典匹配。命中即 SUSPICIOUS（这种短语在合法文本中假阳性
-率极低）。本字典是 PPS 公开列表的子集 + ar5iv 全文摘录，约 50 项；
-社区贡献可扩展至 7500+。
+率极低）。本字典是 PPS 公开列表的高精度子集 + ar5iv 全文摘录，约 160 项；
+社区贡献可扩展至 7500+。字典刻意只收"在自然学术写作中几乎不可能出现"
+的条目——已剔除会误伤正常论文的词（如 "skin disease"、"drug treatment"、
+"surface region"）以保持高 LR+。
 """
 from __future__ import annotations
 
@@ -127,30 +129,29 @@ TORTURED_PHRASES: dict[str, str] = {
     "kidney disappointment": "kidney failure",
     "liver disappointment": "liver failure",
     "lactose narrow mindedness": "lactose intolerance",
-    "rectal disease": "rectal cancer",
-    "colorectal disease": "colorectal cancer",
-    "prostate disease": "prostate cancer",
-    "lung disease": "lung cancer",
-    "ovarian disease": "ovarian cancer",
-    "cervical disease": "cervical cancer",
-    "skin disease": "skin cancer",
+    # NOTE: removed "X disease" -> "X cancer" entries (rectal/colorectal/
+    # prostate/lung/ovarian/cervical/skin) — "lung disease", "skin disease"
+    # etc. are legitimate, common medical terms, not documented tortured
+    # phrases; they generated false positives on normal papers. The genuine
+    # cancer tortures are "bosom danger"/"bosom growth" (kept above).
+    # Also removed no-op self-maps ("diabetic patient","glucose level"),
+    # the over-generic "circulatory strain", and normal-English
+    # "drug treatment"/"compound treatment"/"radiation treatment".
     "blood circulatory strain": "blood pressure",
-    "circulatory strain": "blood pressure",
     "coronary illness": "heart disease",
     "cardiovascular illness": "cardiovascular disease",
-    "diabetic patient": "diabetic patient",
-    "glucose level": "glucose level",
     "insulin opposition": "insulin resistance",
     "white platelet": "white blood cell",
     "red platelet": "red blood cell",
     "platelet check": "platelet count",
     "regenerative wellbeing": "reproductive health",
     "imperative signs": "vital signs",
-    "drug treatment": "drug therapy",
-    "compound treatment": "chemotherapy",
-    "radiation treatment": "radiation therapy",
     # === Other common ===
-    "surface region": "surface area",
+    # NOTE: removed "surface region" (legit math/physics term), "increasing
+    # speed" (normal English), "deceleration" (no-op self-map), and the no-op
+    # self-maps "diabetic patient"/"glucose level" / generic "circulatory
+    # strain" / normal-English "drug treatment"/"radiation treatment"/
+    # "compound treatment" — all false-positive sources that lowered LR+.
     "Joined States": "United States",
     "Joined Realm": "United Kingdom",
     "atomic vitality": "nuclear energy",
@@ -164,8 +165,6 @@ TORTURED_PHRASES: dict[str, str] = {
     "ozone harming substance": "greenhouse gas",
     "non-renewable energy source": "fossil fuel",
     "stockpile and request": "supply and demand",
-    "increasing speed": "acceleration",
-    "deceleration": "deceleration",
     "thickness work": "density function",
     "warm vitality": "thermal energy",
     "warm conductivity": "thermal conductivity",
@@ -176,6 +175,47 @@ TORTURED_PHRASES: dict[str, str] = {
     "long short-term memory organization": "long short-term memory network",
     "creating ill-disposed organization": "generative adversarial network",
     "ill-disposed organization": "adversarial network",
+    # === 2026 curated high-precision additions (Cabanac PPS + literature) ===
+    # Each chosen to be near-impossible in natural academic writing.
+    # --- CS / ML ---
+    "leftover organization": "residual network",
+    "consideration mechanism": "attention mechanism",
+    "consideration component": "attention mechanism",
+    "move learning": "transfer learning",
+    "shrouded layer": "hidden layer",
+    "shrouded Markov model": "hidden Markov model",
+    "computerized reasoning": "artificial intelligence",
+    "man-made brainpower": "artificial intelligence",
+    "profound conviction organization": "deep belief network",
+    "outfit learning": "ensemble learning",
+    "bunching calculation": "clustering algorithm",
+    "fluffy rationale": "fuzzy logic",
+    "fluffy set": "fuzzy set",
+    "harsh set": "rough set",
+    "slope plummet": "gradient descent",
+    "angle plunge": "gradient descent",
+    "back proliferation": "backpropagation",
+    "actuation work": "activation function",
+    "misfortune work": "loss function",
+    # --- Statistics / math ---
+    "relapse investigation": "regression analysis",
+    "straight relapse": "linear regression",
+    "calculated relapse": "logistic regression",
+    "head part investigation": "principal component analysis",
+    "relationship coefficient": "correlation coefficient",
+    "covariance grid": "covariance matrix",
+    "disarray grid": "confusion matrix",
+    "lattice duplication": "matrix multiplication",
+    "likelihood circulation": "probability distribution",
+    "Gaussian circulation": "Gaussian distribution",
+    "certainty span": "confidence interval",
+    "speculation testing": "hypothesis testing",
+    "invalid speculation": "null hypothesis",
+    "elective speculation": "alternative hypothesis",
+    "centrality level": "significance level",
+    "reproduced strengthening": "simulated annealing",
+    # --- Biomedical ---
+    "coronary corridor": "coronary artery",
 }
 
 
