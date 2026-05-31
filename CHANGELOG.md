@@ -4,6 +4,46 @@ All notable changes to PaperGuard are documented in this file. Format follows
 [Keep a Changelog](https://keepachangelog.com/) and the project adheres to
 [Semantic Versioning](https://semver.org/).
 
+## [2.16.0](https://github.com/exergyleizhou-ux/PaperGuard/compare/v2.15.0...v2.16.0) (2026-05-31)
+
+
+### Features
+
+* add T9 DistilBERT training notebook (Plan C) ([710d1a7](https://github.com/exergyleizhou-ux/PaperGuard/commit/710d1a7face8db0c9c15796a4d632f9b892485f5))
+* **evidence:** convergence narrative for multi-cluster findings ([c51a456](https://github.com/exergyleizhou-ux/PaperGuard/commit/c51a4568e1dbdb5d1a4bac9f9aeb01ddb0359a2b))
+* **evidence:** offline figure/table pipeline wiring F1-F7 + C1 ([45200c8](https://github.com/exergyleizhou-ux/PaperGuard/commit/45200c8f1fb22960d7f2239e738af5504bc00a3e))
+* **extractor:** PMC OA package figure fetcher for panel-level image forensics ([01481db](https://github.com/exergyleizhou-ux/PaperGuard/commit/01481dbca415c7e1db54def4b5107317a6391e88))
+* **scripts:** figure/table recall validation harness (PMC OA -&gt; F1-F7 + C1) ([0f02838](https://github.com/exergyleizhou-ux/PaperGuard/commit/0f02838260102c1caf1d4d388212d3e2ec08d3a4))
+* **scripts:** harden figure-recall harness for the next stable-network run ([e4462f4](https://github.com/exergyleizhou-ux/PaperGuard/commit/e4462f4ba263c1ccca589befd94ce0f364a860cc))
+* ship T9 learned LLM-text classifier (2.16.0, Plan C, GPU-free) ([b5f267c](https://github.com/exergyleizhou-ux/PaperGuard/commit/b5f267c0d9cd29a29467071c6de962a6b23fc566))
+* **t4:** expand tortured-phrase dictionary and remove false-positive entries ([48a7459](https://github.com/exergyleizhou-ux/PaperGuard/commit/48a7459e4de0f5bdae3bf48ea39db9bce57f3e07))
+* T9 --ml-check CLI flag + complete detector docs (2.16.0) ([0e6f48d](https://github.com/exergyleizhou-ux/PaperGuard/commit/0e6f48d431e3b7143091198e84529cd8830d35da))
+
+
+### Bug Fixes
+
+* **b4:** decode XML entities in JATS parse so statcheck sees escaped operators ([2a86a7e](https://github.com/exergyleizhou-ux/PaperGuard/commit/2a86a7ea10380902276e7c1663c86af6fd0c8d5b))
+* shorten HF Space short_description to &lt;=60 chars ([a9c5f2c](https://github.com/exergyleizhou-ux/PaperGuard/commit/a9c5f2cd78c26c3d0b81c4e8917f2856e1e3fac0))
+* **t9:** density-based tiering to kill full-text false positives ([4893c8b](https://github.com/exergyleizhou-ux/PaperGuard/commit/4893c8b9cd5ecdc06e18624d380cacbcdd9a990e))
+
+
+### Documentation
+
+* **b4:** honest statcheck finding — extraction fixed, 0 recall is cohort mismatch ([34a45ac](https://github.com/exergyleizhou-ux/PaperGuard/commit/34a45ac2393b43ed036987df91d38dfd375d2b15))
+* firepower roadmap handoff for next session ([8090d40](https://github.com/exergyleizhou-ux/PaperGuard/commit/8090d405bbfdc634a8967647a35c1a0f7892cc49))
+* **handoff:** mark Plan C notebook delivered (710d1a7) ([c2d577e](https://github.com/exergyleizhou-ux/PaperGuard/commit/c2d577e2c809a2a9707dae91622d48e83dfa3b74))
+* **handoff:** record P1/P3/P4 + P2-offline done; flag P2 network work remaining ([42cc8d1](https://github.com/exergyleizhou-ux/PaperGuard/commit/42cc8d185c90d311dee75747cc85e21a1694b895))
+* **hf-space:** bump demo to 2.16.0 and note T9 (41 detectors) ([3de0541](https://github.com/exergyleizhou-ux/PaperGuard/commit/3de0541e6e2293f7bd45e96f42d862ef2085273a))
+* **hf-space:** fix hardcoded detector count 40-&gt;41 (academic 37) ([73c02f1](https://github.com/exergyleizhou-ux/PaperGuard/commit/73c02f1b4ff84e6a0df64f8f88076b3e6cdbb097))
+* **t9:** confirm density fix — full-text control FP 52.5% -&gt; 10.0% ([5a7fb22](https://github.com/exergyleizhou-ux/PaperGuard/commit/5a7fb22cf99bbeb71da649c5874e47bb7e564e78))
+* **t9:** false-positive calibration on 400 real OA papers (0% FP at ship threshold) ([e10142d](https://github.com/exergyleizhou-ux/PaperGuard/commit/e10142dc071e19448edfdcf2498051933d4d87c6))
+* **thread-b:** update W1-W10 tracker to reflect Thread A completion ([2b44c7f](https://github.com/exergyleizhou-ux/PaperGuard/commit/2b44c7f6f4692e792f3113b12ba0296ccf38b03e))
+* **validation:** full-text recall diagnostic on retracted papers ([1e4bafd](https://github.com/exergyleizhou-ux/PaperGuard/commit/1e4bafd02633f75d9e06753d97ce0dfd4f1c3da1))
+* **validation:** hardened run on working network — image recall blocked by OA-package data coverage ([0e24a41](https://github.com/exergyleizhou-ux/PaperGuard/commit/0e24a41b7a38f1b20a5ae0b26a93fcbfe6c8f8f4))
+* **validation:** honest figure/table recall result — pipeline live, page-raster has no discrimination ([1855346](https://github.com/exergyleizhou-ux/PaperGuard/commit/185534641145bd7925a658eb5f2808b30f3a75f4))
+* **validation:** honest NULL result — abstract-level text recall on retractions ([6f888a5](https://github.com/exergyleizhou-ux/PaperGuard/commit/6f888a578df8ef04f81cd3798deb8359e5b6fcb7))
+* **validation:** record panel-level fix wired; real-paper recall still unmeasured ([64ccd1f](https://github.com/exergyleizhou-ux/PaperGuard/commit/64ccd1fbf4043349b4923562760ec792a96f0fea))
+
 ## [2.17.0] — 2026-05-30 — Statcheck full-text fix · stronger T4 · convergence evidence
 
 ### Fixed
