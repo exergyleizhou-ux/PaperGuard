@@ -89,4 +89,39 @@ figure-heavy disciplines so F1–F7 have real panels to score. Until then the
 panel-level pipeline is *wired and unit-tested* but its real-paper recall is
 **unmeasured** — stated plainly rather than papered over.
 
+## Hardened run on a working network (2026-05-31) — data-source wall identified
+
+With the hardened harness (retry/backoff, `--over-fetch 12`, and a figure-heavy
+`--discipline "(western blot OR microscopy OR flow cytometry OR
+immunohistochemistry)"` filter) and a network that was up this time
+(96 candidates were retrieved per cohort; no TLS crash — the earlier
+bad-record-mac was intermittent), the run still could not measure image-forensics
+recall:
+
+```
+RETRACTED: 96 candidates -> 1 scored (panels=0, tables=1)
+CONTROL  : 96 candidates -> 0 scored (panels=0, tables=0)  -> clean exit
+```
+
+**Root cause is data availability, not code or network.** Almost no article —
+retracted or control — returned a PMC OA *package* (`oa.fcgi` gives no `.tgz`)
+with ≥2 extractable figure panels. The OA *full text* exists, but the OA
+*image package* mostly does not. Even biasing toward figure-heavy disciplines
+and over-fetching 12× did not yield a scoreable image cohort.
+
+### Conclusion for image forensics (F1–F7)
+The whole stack is **correct and exercised** — fetch → panel extraction →
+F1–F7 all run end-to-end (the smoke test in this doc and the unit tests prove
+it). What is missing is a **figure-image data source with coverage**. The PMC
+OA package route cannot supply enough real panels to compute recall. Measuring
+F1–F7 recall needs a different source, e.g.:
+  * publisher per-figure image URLs (EPMC `fullTextImages` / supplementary), or
+  * a curated image-manipulation benchmark (e.g. the Bik et al. labelled set).
+
+That is a separate data-engineering effort, out of scope here. C1 (baseline
+tables) did fire on 1 paper, confirming the table path works; a meaningful C1
+number needs an RCT-filtered cohort. **Image-forensics recall remains
+unmeasured — stated plainly, not papered over.** Code, pipeline, fetcher, and
+harness are all done and green; the blocker is external data coverage.
+
 Aggregate only; no per-paper or per-author verdicts.
